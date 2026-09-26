@@ -1,0 +1,26 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { permittedDataUrl, extractRows, normalizeRows, validateMappingConfig } from '../server/normalize.js';
+import { fetchJsonLimited, safeDomain } from '../server/http.js';
+import configHandler from '../api/config.js';
+import vworldHandler from '../api/vworld.js';
+import publicHandler from '../api/public-data.js';
+function mockRes() { return { headers: {}, statusCode: 200, setHeader(k, v) { this.headers[k] = v; }, end(body) { this.body = body; } }; }
+const req = (url, method = 'GET') => ({ url, method, headers: { host: 'localhost' }, socket: { remoteAddress: 'test' } });
+test('Only exact approved HTTPS public data hosts are allowed', () => { assert.ok(permittedDataUrl('https://api.odcloud.kr/api/123/v1/test')); assert.equal(permittedDataUrl('http://api.odcloud.kr/api/1'), null); assert.equal(permittedDataUrl('https://api.odcloud.kr.evil.example/a'), null); assert.equal(permittedDataUrl('http://127.0.0.1/private'), null); assert.equal(permittedDataUrl('https://user:secret@api.odcloud.kr/api'), null); });
+test('Domains are normalized to origins and malformed values rejected', () => { assert.equal(safeDomain('https://example.com/a'), 'https://example.com'); assert.equal(safeDomain('javascript:alert(1)'), ''); assert.equal(safeDomain('https://user:pass@example.com'), ''); });
+test('odcloud response supported', () => assert.deepEqual(extractRows({ data: [{ a: 1 }], totalCount: 2 }), { rows: [{ a: 1 }], total: 2 }));
+test('data.go.kr nested response supported', () => assert.equal(extractRows({ response: { body: { items: { item: [{ a: 1 }] }, totalCount: 10 } } }).total, 10));
+test('Single row object supported', () => assert.equal(extractRows({ response: { body: { items: { item: { a: 1 } }, totalCount: 1 } } }).rows.length, 1));
+test('Unknown JSON schema gives an explicit error', () => assert.throws(() => extractRows({ arbitrary: [] }), /API_SHAPE_UNSUPPORTED/));
+test('Normalization checks coordinates and does not fabricate monthly data', () => { const r = normalizeRows([{ n: '테스트', x: 126.86, y: 35.15 }, { n: '서울', x: 127, y: 37.5 }], { name: 'n', longitude: 'x', latitude: 'y', category: 'park' }, '시험출처', '2026-01-01'); assert.equal(r.features.length, 1); assert.equal(r.excluded, 1); assert.deepEqual(r.features[0].properties.monthly, {}); });
+test('Blank coordinates do not become zero', () => { const r = normalizeRows([{ n: 'test', x: '', y: 35 }], { name: 'n', longitude: 'x', latitude: 'y', category: 'park' }, 'source', '2026-01-01'); assert.equal(r.features.length, 0); });
+test('Missing API configuration is explicit', () => assert.ok(validateMappingConfig({}).error));
+test('Redirects are explicitly rejected', async () => { let options; await fetchJsonLimited('https://api.odcloud.kr/a', 1000, async (url, o) => { options = o; return new Response('{"ok":true}'); }); assert.equal(options.redirect, 'error'); });
+test('Non-JSON upstream response rejected', async () => { await assert.rejects(() => fetchJsonLimited('https://api.odcloud.kr/a', 1000, async () => new Response('<html>error</html>')), /UPSTREAM_NOT_JSON/); });
+test('Oversize upstream response rejected', async () => { await assert.rejects(() => fetchJsonLimited('https://api.odcloud.kr/a', 1000, async () => new Response('{}', { headers: { 'content-length': '9999999' } })), /UPSTREAM_TOO_LARGE/); });
+test('Config never exposes secret values', () => { const saved = process.env.VWORLD_API_KEY; process.env.VWORLD_API_KEY = 'SHOULD_NOT_APPEAR_ABC'; const res = mockRes(); configHandler(req('/api/config'), res); assert.equal(res.statusCode, 200); assert.ok(!res.body.includes('SHOULD_NOT_APPEAR_ABC')); if (saved === undefined) delete process.env.VWORLD_API_KEY; else process.env.VWORLD_API_KEY = saved; });
+test('Methods other than GET rejected', () => { const res = mockRes(); configHandler(req('/api/config', 'POST'), res); assert.equal(res.statusCode, 405); });
+test('Different browser origin rejected', () => { const res = mockRes(), r = req('/api/config'); r.headers.origin = 'https://evil.example'; configHandler(r, res); assert.equal(res.statusCode, 403); });
+test('Unconfigured VWorld gives 503 not a fabricated result', async () => { const key = process.env.VWORLD_API_KEY; delete process.env.VWORLD_API_KEY; const res = mockRes(); await vworldHandler(req('/api/vworld?kind=search&q=test'), res); assert.equal(res.statusCode, 503); if (key !== undefined) process.env.VWORLD_API_KEY = key; });
+test('Unconfigured public API gives 503', async () => { const url = process.env.DATA_PORTAL_URL; delete process.env.DATA_PORTAL_URL; const res = mockRes(); await publicHandler(req('/api/public-data'), res); assert.equal(res.statusCode, 503); if (url !== undefined) process.env.DATA_PORTAL_URL = url; });

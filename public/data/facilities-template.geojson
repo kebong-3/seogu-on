@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [126.86, 35.15] },
+      "properties": {
+        "id": "REPLACE-WITH-REAL-ID",
+        "name": "양식 예시·실제 시설 아님 (실제 명칭으로 교체)",
+        "category": "park",
+        "sourceName": "실제 자료 제공기관과 자료명으로 교체",
+        "sourceDate": "2026-01-01",
+        "address": "실제 주소로 교체",
+        "note": "위치와 실적은 예시이므로 실제 값으로 교체 후 사용",
+        "metricName": "운영량", "metricUnit": "건",
+        "monthly": { "2026-01": null, "2026-02": null }
+      }
+    }
+  ]
+}

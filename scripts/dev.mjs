@@ -1,0 +1,31 @@
+import { createServer } from 'node:http';
+import { readFile, stat } from 'node:fs/promises';
+import { resolve, dirname, extname, relative, sep } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const base = process.argv.includes('--dist') ? resolve(root, 'dist') : root;
+const port = Number(process.env.PORT || 4173);
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.geojson': 'application/geo+json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png' };
+const server = createServer(async (req, res) => {
+  try {
+    const url = new URL(req.url, 'http://localhost'); const path = decodeURIComponent(url.pathname);
+    if (path.startsWith('/api/')) {
+      const name = path.slice(5);
+      if (!['config', 'vworld', 'vworld-scene', 'public-data'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
+      const mod = await import(pathToFileURL(resolve(root, 'api', `${name}.js`)).href);
+      await mod.default(req, res); return;
+    }
+    let filePath;
+    if (path === '/') filePath = resolve(base, 'index.html');
+    else if (/^\/(src|data)\//.test(path) || path === '/favicon.svg' || path === '/index.html') {
+      const isPublic = path.startsWith('/data/') || path === '/favicon.svg';
+      filePath = resolve(base, process.argv.includes('--dist') || !isPublic ? `.${path}` : `public${path}`);
+    } else { res.writeHead(404); res.end('Not found'); return; }
+    const rel = relative(base, filePath);
+    if (rel.startsWith(`..${sep}`) || rel === '..') { res.writeHead(403); res.end('Forbidden'); return; }
+    if (!(await stat(filePath)).isFile()) throw new Error('not file');
+    res.writeHead(200, { 'Content-Type': types[extname(filePath)] || 'application/octet-stream', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+    res.end(await readFile(filePath));
+  } catch (error) { if (!res.headersSent) res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end('요청한 자료를 찾지 못했습니다.'); }
+});
+server.listen(port, '127.0.0.1', () => console.log(`SEO:ON running: http://127.0.0.1:${port}\nOffline design preview: http://127.0.0.1:${port}/?preview=1`));

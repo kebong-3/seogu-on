@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { validateImport, makeDemoData } from '../src/data.js';
+const baseFeature = makeDemoData().facilities.features[1];
+const wrap = features => ({ type: 'FeatureCollection', features });
+test('Valid import is never declared verified or real automatically', () => { const r = validateImport(wrap([baseFeature])); assert.equal(r.accepted.length, 1); assert.equal(r.accepted[0].properties.dataKind, 'provided'); assert.equal(r.accepted[0].properties.reviewStatus, 'unverified'); });
+test('Non GeoJSON is rejected', () => assert.throws(() => validateImport({ data: [] })));
+test('Excess number of rows rejected', () => assert.throws(() => validateImport(wrap(Array(5001).fill(baseFeature)))));
+test('Duplicate ids are not counted twice', () => { const r = validateImport(wrap([baseFeature, baseFeature])); assert.equal(r.accepted.length, 1); assert.equal(r.rejected, 1); });
+test('Wrong coordinate system is rejected', () => { const f = structuredClone(baseFeature); f.geometry.coordinates = [14121870, 4186000]; assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Swapped lat/lon is rejected', () => { const f = structuredClone(baseFeature); f.geometry.coordinates.reverse(); assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Missing source name is rejected', () => { const f = structuredClone(baseFeature); delete f.properties.sourceName; assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Impossible source dates are rejected', () => { const f = structuredClone(baseFeature); f.properties.sourceDate = '2026-02-30'; assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Reversed validity periods are rejected', () => { const f = structuredClone(baseFeature); f.properties.validFrom = '2026-09-01'; f.properties.validTo = '2026-08-01'; assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Bad category rejected', () => { const f = structuredClone(baseFeature); f.properties.category = 'unsupported'; assert.equal(validateImport(wrap([f])).accepted.length, 0); });
+test('Bad monthly values are excluded but valid facility retained', () => { const f = structuredClone(baseFeature); f.properties.monthly = { '2026-01': '100', '2026-02': -1, '2026-03': 0, '2026-04': null }; const r = validateImport(wrap([f])); assert.equal(r.accepted.length, 1); assert.equal(r.errors.length, 2); assert.deepEqual(r.accepted[0].properties.monthly, { '2026-03': 0, '2026-04': null }); });

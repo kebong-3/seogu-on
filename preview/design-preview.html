@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="ko" data-theme="dark" data-offline-preview="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1722">
+  <meta name="description" content="펀온워크가 만드는 서구 공간행정 시제품. 지도·기간·근거를 함께 살펴보는 도시 데이터 워크스페이스.">
+  <title>SEO:ON 디자인 미리보기 · 가상 도시 / 실제 지도 아님</title>
+  
+  <style>:root{--bg:#0b1722;--panel:rgba(16,31,44,.95);--panel-soft:#142a38;--header:#0d1b27;--text:#e7f0f3;--muted:#8fa7b7;--line:rgba(138,171,189,.16);--primary:#6ee1c5;--primary-dark:#123e3b;--gold:#f0bd72;--shadow:0 20px 70px rgba(0,0,0,.22);--soft:#172b3a;--radius:18px;color-scheme:dark;font-family:'Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif}
+:root[data-theme=light]{--bg:#eaf0ef;--panel:rgba(255,255,249,.94);--panel-soft:#f0f5f0;--header:#fbfcf7;--text:#1f3b40;--muted:#67828a;--line:rgba(59,88,94,.14);--primary:#168c73;--primary-dark:#e4f5ec;--gold:#9b691f;--shadow:0 16px 50px rgba(37,61,59,.12);--soft:#f0f4ef;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:var(--bg);color:var(--text)}button,input,a{font:inherit}button,a,input{ -webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit;border:0;background:none}button:disabled{cursor:not-allowed;opacity:.5}a{color:inherit;text-decoration:none}button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--primary);outline-offset:4px}button:hover{filter:brightness(1.09)}.icon{width:19px;height:19px;flex:none;vertical-align:middle}.skip-link{position:absolute;top:-100px;left:20px;padding:10px;background:var(--primary);color:var(--bg);z-index:200}.skip-link:focus{top:5px}.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;gap:24px;background:var(--header);border-bottom:1px solid var(--line);position:relative;z-index:10}.brand{display:flex;align-items:center;gap:12px;min-width:236px}.brand-mark{display:grid;place-items:center;width:43px;height:43px;border:1px solid #64ccb34d;border-radius:14px;background:linear-gradient(135deg,#214b4a,#15323e);color:#83eed2}.brand-mark .icon{width:27px;height:27px}.brand strong{font-size:25px;letter-spacing:1.2px;font-weight:780;line-height:1.1}.brand strong span{color:var(--primary)}.brand small{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:1px;margin-top:4px;color:var(--muted)}.brand small b{font-size:8px;font-weight:400;letter-spacing:1.7px}.workspace-tabs{display:flex;align-items:center;gap:4px;padding:5px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.workspace-tabs button{display:flex;align-items:center;gap:8px;padding:10px 15px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;color:var(--muted);transition:.15s}.workspace-tabs button.active{background:var(--primary);color:#103832;box-shadow:0 3px 14px #0d33252c}.workspace-tabs .icon{width:16px;height:16px}.header-actions{display:flex;align-items:center;gap:13px}.beta{font-family:ui-monospace,monospace;font-size:10px;color:var(--muted);letter-spacing:1px}.icon-button{display:grid;place-items:center;width:36px;height:36px;border-radius:10px}.icon-button:hover{background:var(--soft)}.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:11px 15px;border-radius:10px;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap;border:1px solid transparent;transition:background .15s,transform .15s}.btn:active{transform:translateY(1px)}.btn .icon{width:16px;height:16px}.btn.primary{background:var(--primary);color:#103e35}.btn.secondary{background:var(--soft);color:var(--text);border-color:var(--line)}.btn.full{width:100%}.btn.compact{padding:8px 12px}.workspace{height:calc(100dvh - 78px);min-height:550px;position:relative;overflow:hidden}#map-stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}.map-vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,19,27,.10),transparent 20%,transparent 70%,rgba(8,19,27,.2))}.preview-canvas{display:block;cursor:grab}.preview-canvas:active{cursor:grabbing}.vworld-frame{width:100%;height:100%;border:0}.icon-rail{position:absolute;inset:0 auto 0 0;width:72px;padding:22px 12px 22px;background:var(--header);border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;z-index:3}.icon-rail>div{display:flex;flex-direction:column;align-items:center;gap:12px}.rail-button{width:43px;height:43px;display:grid;place-items:center;border-radius:12px;color:var(--muted)}.rail-button:hover{background:var(--soft);color:var(--text)}.rail-button.active{background:var(--primary-dark);color:var(--primary);border:1px solid #69d8ba20}.rail-wordmark{font-size:18px;font-weight:800;letter-spacing:-2px;color:var(--muted);padding-top:10px}.rail-wordmark span{color:var(--primary)}.panel{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(18px);border-radius:var(--radius)}.analysis-panel{position:absolute;left:94px;top:22px;bottom:48px;width:326px;padding:24px 22px 16px;overflow:auto;scrollbar-width:thin;scrollbar-color:#50708255 transparent;z-index:4}.panel-topline{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:21px}.section-index{font-size:9px;letter-spacing:1.65px;font-weight:700;color:var(--muted);font-family:ui-monospace,monospace}.badge{display:inline-flex;align-items:center;padding:4px 7px;border:1px solid var(--line);border-radius:5px;color:var(--muted);font-size:9px;line-height:1.3;white-space:nowrap}.badge.amber{color:var(--gold);background:rgba(195,139,45,.10);border-color:rgba(195,139,45,.18)}.badge.mint{color:var(--primary);background:rgba(54,177,146,.08)}h1,h2,h3,p{margin:0}h1{font-size:27px;line-height:1.45;letter-spacing:-1.35px;font-weight:740;margin:2px 0 11px}.panel-description{color:var(--muted);font-size:11px;line-height:1.85;margin-bottom:18px;word-break:keep-all}.search-box{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--soft);height:40px}.search-box>span{color:var(--muted);display:flex;align-items:center}.search-box .icon{width:15px;height:15px}.search-box input{border:0;background:none;outline:none;font-size:11px;min-width:0;width:100%;color:var(--text);padding:9px 8px}.search-box input::placeholder{color:var(--muted)}.search-go{width:26px;height:30px;display:grid;place-items:center;color:var(--primary)}.search-actions{display:flex;justify-content:space-between;margin:8px 0 16px}.text-button{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);padding:0}.text-button:hover{color:var(--primary)}.text-button .icon{width:13px;height:13px}.metric-row{display:grid;grid-template-columns:1fr 1fr;padding-bottom:17px;border-bottom:1px solid var(--line);margin-bottom:17px;gap:12px}.metric+.metric{border-left:1px solid var(--line);padding-left:15px}.metric>span{color:var(--muted);font-size:10px}.metric strong{display:block;font-size:30px;font-weight:680;line-height:1.3;letter-spacing:-1px;margin-top:4px;font-variant-numeric:tabular-nums}.metric strong small{font-size:11px;letter-spacing:0;font-weight:400;color:var(--muted);margin-left:5px}.metric em{font-size:9px;color:var(--muted);font-style:normal;letter-spacing:.1px}.insight-card{padding:15px 14px;background:linear-gradient(120deg,rgba(69,167,149,.10),rgba(69,167,149,.03));border:1px solid #65c9aa29;border-radius:12px;margin-bottom:21px}.card-label{display:flex;align-items:center;gap:6px;margin-bottom:10px}.card-label>.icon{width:15px;height:15px;color:var(--primary)}.card-label strong{font-size:11px;color:var(--primary);font-weight:650}.card-label span{font-size:8px;color:var(--muted);margin-left:auto;border:1px solid var(--line);padding:2px 4px;border-radius:4px}.insight-card p{font-size:11px;line-height:1.9;word-break:keep-all}.evidence-line{display:flex;align-items:flex-start;gap:6px;font-size:8px;color:var(--muted);line-height:1.7;margin-top:9px}.evidence-line i{width:4px;height:4px;border-radius:50%;background:var(--primary);flex:none;margin-top:5px}.caution-line{font-size:8px;color:var(--gold);line-height:1.7;margin-top:5px}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.section-heading h2,.section-heading h3{font-size:11px;font-weight:620;display:flex;align-items:center;gap:6px}.section-heading h2 .icon{width:15px}.section-heading>span{font-size:9px;color:var(--muted)}.chart-section{margin-bottom:21px}.mini-chart{height:89px;display:flex;gap:5px;align-items:stretch;border-bottom:1px solid var(--line);padding-top:8px}.chart-column{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:0;min-width:0}.bar-track{flex:1;display:flex;align-items:flex-end;width:100%;max-width:15px;padding-bottom:4px}.bar-track i{display:block;width:100%;border-radius:3px 3px 0 0;background:rgba(109,175,175,.28);transition:height .3s,background .2s}.chart-column.current .bar-track i{background:linear-gradient(180deg,var(--primary),#439d9066);box-shadow:0 0 18px #5fdeae1e}.chart-column>span:last-child{font-family:ui-monospace,monospace;font-size:8px;color:var(--muted);height:18px}.chart-column.current>span:last-child{color:var(--primary)}.chart-column .no-value{background:var(--line)}.chart-footnote{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:8px;color:var(--muted)}.chart-footnote>span:last-child{color:var(--primary);font-weight:600;font-size:11px}.micro{font-size:9px;color:var(--muted);line-height:1.8;word-break:keep-all}.micro button{font:inherit;text-decoration:underline;color:var(--primary);padding:0}.chart-section .micro{margin-top:5px;font-size:8px}.empty-chart{font-size:10px;color:var(--muted);padding:18px 10px;text-align:center;line-height:1.9;background:var(--soft);border-radius:8px}.facility-list{margin:0 0 15px}.facility-row{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}.facility-row>i{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--cat) 12%,transparent);color:var(--cat);flex:none}.facility-row>i .icon{width:15px;height:15px}.facility-row>span{min-width:0;flex:1}.facility-row strong{font-size:10px;font-weight:520;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.facility-row small{display:block;font-size:8px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.facility-row>b{color:var(--muted)}.facility-row>b .icon{width:13px}.panel-bottom-actions{display:flex;gap:9px;margin-top:18px}.panel-bottom-actions .btn{flex:1;padding:9px 5px;font-size:10px}.panel-footer-note{font-size:8px;line-height:1.9;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:18px}.panel-footer-note strong{font-weight:450}.selection-card{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}.selection-card h3{font-size:12px;margin-bottom:7px}.selection-card p{font-size:9px;line-height:1.8;color:var(--muted)}.selection-values{display:flex;align-items:center;justify-content:space-between;margin:12px 0;font-size:10px}.selection-values b{color:var(--primary);font-size:15px}.pair-row{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}.pair-row>span{color:var(--gold)}.pair-row strong{display:block;font-size:10px;font-weight:500}.pair-row small{display:block;font-size:8px;color:var(--muted);margin-top:5px}.access-box{background:var(--soft);border:1px solid var(--line);padding:12px;border-radius:11px;margin-bottom:15px}.access-box>div:first-child{display:flex;gap:7px;align-items:center;font-size:11px}.access-box .icon{width:15px;color:var(--primary)}.radius-options{display:flex;gap:5px;margin:12px 0}.radius-options button{flex:1;padding:6px 3px;border:1px solid var(--line);border-radius:6px;font-size:10px;color:var(--muted)}.radius-options button.active{color:var(--primary);border-color:var(--primary);background:var(--primary-dark)}.access-box .btn{font-size:10px;padding:8px}.access-box .micro{margin-top:7px;font-size:8px}.map-caption{position:absolute;top:35px;left:450px;right:308px;pointer-events:none}.eyebrow{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:2px;font-weight:600;color:var(--muted)}.map-caption>strong{display:block;font-size:17px;font-weight:530;letter-spacing:-.45px;margin-top:8px;text-shadow:0 2px 8px var(--bg)}.viewpoints{display:flex;align-items:center;gap:7px;margin-top:17px;pointer-events:auto}.viewpoints button{padding:6px 10px;border:1px solid var(--line);background:var(--panel);font-size:9px;border-radius:20px;backdrop-filter:blur(10px);color:var(--muted)}.viewpoints button:hover{color:var(--primary);border-color:var(--primary)}.map-status{position:absolute;left:450px;top:140px;max-width:480px;display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:7px;background:var(--panel);color:var(--muted);font-size:8px;border:1px solid var(--line);pointer-events:none}.map-status.preview{color:var(--gold)}.map-status.error{color:#eea090}.status-dot{height:5px;width:5px;border-radius:50%;display:inline-block;background:var(--primary);flex:none;box-shadow:0 0 10px #5cdeaf45}.amber-dot,.map-status.preview .status-dot{background:var(--gold);box-shadow:none}.map-status.error .status-dot{background:#eb947d}.map-status.loading .status-dot{animation:blink 1.2s infinite}@keyframes blink{50%{opacity:.2}}.layer-panel{position:absolute;right:24px;top:22px;width:246px;padding:22px 19px 18px;max-height:calc(100% - 190px);overflow:auto;scrollbar-width:thin;scrollbar-color:#50708244 transparent;z-index:4}.layer-panel .panel-topline{margin-bottom:16px}.layer-panel .panel-topline>.icon{width:15px;color:var(--muted)}.layer-title{font-size:14px;font-weight:600;letter-spacing:-.3px;margin-bottom:17px}.data-mode{display:flex;align-items:center;justify-content:space-between;gap:5px}.data-mode>div{display:flex;align-items:center;gap:7px}.data-mode strong{font-size:10px;font-weight:600}.switch{width:31px;height:18px;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:2px;display:flex;align-items:center}.switch i{width:12px;height:12px;border-radius:50%;background:var(--muted);transition:transform .2s}.switch.on{background:#255e52;border-color:#558673}.switch.on i{transform:translateX(12px);background:#93e5c6}.mode-note{font-size:8px;margin-top:8px;line-height:1.85}.layer-options{display:flex;flex-direction:column;gap:1px;margin-top:12px}.layer-option{display:flex;align-items:center;gap:9px;padding:10px 0;font-size:11px;cursor:pointer}.layer-option input{position:absolute;opacity:0;width:0;height:0}.checkbox{display:grid;place-items:center;width:16px;height:16px;border-radius:4px;border:1px solid var(--cat);background:none;color:transparent}.checkbox .icon{width:10px;height:10px;stroke-width:3}.layer-option input:checked+.checkbox{background:color-mix(in srgb,var(--cat) 20%,transparent);color:var(--cat);box-shadow:0 0 9px color-mix(in srgb,var(--cat) 7%,transparent)}.layer-option input:focus-visible+.checkbox{outline:2px solid var(--primary);outline-offset:4px}.layer-name{flex:1}.layer-option>small{color:var(--muted);font-size:10px;font-family:ui-monospace,monospace}.divider{height:1px;background:var(--line);margin:15px 0}.render-options{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}.render-option{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:8px;padding:8px 6px;color:var(--muted);font-size:9px}.render-option>.icon{width:13px;height:13px}.render-option>i{height:4px;width:4px;background:var(--line);border-radius:50%;margin-left:auto}.render-option.active{background:var(--soft);color:var(--text)}.render-option.active>i{background:var(--primary)}.engine-options{display:flex;flex-direction:column;gap:5px}.engine-options button{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:7px;font-size:10px;border:1px solid transparent;color:var(--muted);text-align:left}.engine-options button span{font-size:8px;color:var(--muted)}.engine-options button.active{background:var(--primary-dark);border-color:#6ac8b026;color:var(--primary)}.tour-button{margin-top:14px;font-size:10px}.tour-button.touring{border-color:var(--primary);color:var(--primary)}.connection-box{margin-top:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}.connection-box>div{display:flex;align-items:center;gap:6px}.connection-box strong{font-size:9px;font-weight:600}.connection-box p{font-size:8px;color:var(--muted);margin:7px 0}.connection-box .text-button{color:var(--primary);font-size:9px}.map-tools{position:absolute;left:444px;bottom:232px;display:flex;flex-direction:column;align-items:center;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--panel);backdrop-filter:blur(12px);z-index:2}.map-tools>.tool{display:grid;place-items:center;width:30px;height:33px;font-size:10px;font-weight:700;border-radius:6px;color:var(--muted)}.tool .icon{width:15px;height:15px}.map-tools>.tool:hover,.map-tools>.tool.active{color:var(--primary);background:var(--primary-dark)}.map-tools>span{height:1px;background:var(--line);width:18px;margin:4px 0}.map-disclosure{position:absolute;left:450px;bottom:160px;right:297px;display:flex;align-items:flex-start;gap:7px;font-size:9px;color:var(--muted);text-shadow:0 1px 5px var(--bg);pointer-events:none}.map-disclosure .icon{width:14px;height:14px;margin-top:1px}.map-disclosure b{font-weight:600;color:var(--gold)}.map-disclosure small{display:block;font-size:8px;margin-top:4px}.timeline{position:absolute;bottom:42px;left:442px;right:24px;min-height:99px;padding:17px 22px;display:flex;align-items:center;gap:20px;z-index:4}.timeline-meta{min-width:135px;border-right:1px solid var(--line);padding-right:16px}.timeline-meta .eyebrow{font-size:8px;letter-spacing:1.5px}.timeline-meta strong{display:block;font-size:24px;font-weight:540;line-height:1.4;letter-spacing:-.3px;font-variant-numeric:tabular-nums}.timeline-meta strong small{font-size:8px;padding:3px 5px;border:1px solid var(--line);border-radius:4px;color:var(--gold);vertical-align:middle;margin-left:5px}.timeline-meta>span:last-child{display:block;font-size:8px;color:var(--muted);margin-top:3px}.play-button{width:31px;height:31px;border-radius:50%;background:var(--primary-dark);border:1px solid #66d6b635;display:grid;place-items:center;color:var(--primary);flex:none}.play-button .icon{width:13px;height:13px}.timeline-bars{display:flex;flex:1;position:relative;gap:7px;min-width:100px;height:61px;align-items:stretch;overflow:hidden}.time-tick{flex:1;display:flex;flex-direction:column;align-items:center;padding:0;min-width:13px;z-index:1}.time-bar{display:flex;align-items:flex-end;height:37px;flex:1;width:100%;padding-bottom:9px}.time-bar i{display:block;width:100%;background:#5d929633;border-radius:3px 3px 0 0;max-height:37px;transition:.25s}.time-tick.active .time-bar i{background:var(--primary);box-shadow:0 0 18px #72e6c930}.time-tick>span:last-child{font-size:8px;color:var(--muted);height:15px;white-space:nowrap}.time-tick.active>span:last-child{color:var(--primary);font-weight:700}.time-baseline{position:absolute;height:1px;background:var(--line);left:0;right:0;bottom:20px}.timeline-info{display:flex;align-items:center;gap:9px;border-left:1px solid var(--line);padding-left:16px;font-size:9px;color:var(--muted);min-width:128px}.timeline-info .icon{width:18px}.timeline-info small{font-size:8px;display:block;margin-top:6px;white-space:nowrap}.bottom-brand{position:absolute;bottom:13px;left:443px;right:25px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:8px;letter-spacing:.2px}.bottom-brand>span:first-child{font-weight:700;letter-spacing:1.3px;font-family:ui-monospace,monospace}.bottom-brand b{font-weight:400;color:var(--primary)}.map-error{position:absolute;left:calc(50% + 63px);top:46%;transform:translate(-50%,-50%);width:380px;z-index:3;padding:25px;border-radius:16px;text-align:center;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}.map-error[hidden]{display:none}.error-map-icon{color:var(--primary);display:block;margin-bottom:16px}.error-map-icon .icon{width:32px;height:32px}.map-error h2{font-size:18px;margin-bottom:12px}.map-error p{font-size:11px;line-height:1.85;color:var(--muted);margin-bottom:12px}.map-error>div{display:flex;justify-content:center;gap:8px;margin-top:19px}.map-error .btn{font-size:10px;padding:9px 10px}.empty-row{font-size:10px;color:var(--muted);padding:18px 0}.picking #map-stage canvas{cursor:crosshair!important}.toast{position:fixed;bottom:165px;left:55%;transform:translateX(-50%);background:var(--header);color:var(--text);padding:13px 19px;max-width:550px;font-size:11px;line-height:1.7;border:1px solid var(--primary);border-radius:10px;z-index:30;box-shadow:var(--shadow);pointer-events:none}.toast[hidden]{display:none}dialog{border:1px solid var(--line);border-radius:18px;color:var(--text);background:var(--header);padding:0;width:min(860px,92vw);max-height:88dvh;box-shadow:0 30px 110px #0008}dialog::backdrop{background:#071119a8;backdrop-filter:blur(5px)}.dialog-header{padding:19px 25px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--header);z-index:2}.dialog-header>div{font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px}.dialog-header .icon{color:var(--primary)}#dialog-body{padding:24px 26px;overflow-wrap:anywhere}.dialog-lead{font-size:12px;line-height:1.95;color:var(--muted);margin-bottom:23px;word-break:keep-all}.dialog-lead strong{color:var(--text);font-weight:500}.connector-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.connector{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:17px}.connector h3{font-size:12px}.connector code{font-size:10px;line-height:1.8;color:var(--primary);background:var(--primary-dark);display:block;padding:8px 10px;border-radius:6px;margin:11px 0}.connector p{font-size:10px;line-height:1.9;color:var(--muted);margin:10px 0}.connector .btn{font-size:10px;padding:8px 12px}.upload-section{padding:22px 0;border-bottom:1px solid var(--line)}.upload-section h3,.source-log h3{font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:7px}.upload-section p{font-size:11px;line-height:1.9;color:var(--muted)}.upload-section .micro{font-size:9px}.dialog-actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 12px}.source-log{padding:20px 0 4px}.source-log p{font-size:10px;color:var(--muted);line-height:1.9}.notice{padding:13px 16px;border:1px solid #bd934733;background:#b78b1610;border-radius:9px;font-size:10px;line-height:1.95;color:var(--gold);margin:16px 0}.snapshot-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.snapshot-card{padding:20px;border:1px solid var(--line);background:var(--soft);border-radius:12px}.snapshot-card h3{font-size:17px;margin:15px 0 6px}.snapshot-card p{font-size:11px;color:var(--muted);line-height:1.85}.snapshot-card small{font-size:10px;color:var(--muted)}.big-value{font-size:38px;color:var(--primary);margin:15px 0}.big-value small{font-size:14px;margin-left:6px}.snapshot-card.empty{display:flex;flex-direction:column;justify-content:center;gap:15px;align-items:center;text-align:center;border-style:dashed}.snapshot-card.empty strong{font-size:15px;color:var(--muted)}.data-table-wrap{max-height:420px;overflow:auto}.data-table{border-collapse:collapse;width:100%;font-size:10px}.data-table th,.data-table td{padding:11px 9px;text-align:left;border-bottom:1px solid var(--line)}.data-table th{position:sticky;top:0;background:var(--soft);font-weight:500;color:var(--muted)}.data-table td small{display:block;color:var(--muted);font-size:9px;margin-top:4px}.help-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}.help-steps>div{background:var(--soft);padding:16px;border-radius:10px}.help-steps b{display:block;font-family:ui-monospace,monospace;font-size:24px;color:var(--primary);font-weight:400;margin-bottom:15px}.help-steps h3{font-size:12px;margin-bottom:10px}.help-steps p{font-size:10px;line-height:1.9;color:var(--muted)}#dialog-body>h3{font-size:13px;margin:20px 0 8px}#dialog-body>p:not(.dialog-lead):not(.notice):not(.micro){font-size:12px;line-height:1.9;color:var(--muted)}.remote-results button{padding:14px 12px;display:grid;grid-template-columns:1fr 20px;gap:7px;width:100%;text-align:left;border-bottom:1px solid var(--line)}.remote-results strong{font-size:12px;font-weight:500}.remote-results span{font-size:10px;color:var(--muted);grid-row:2}.remote-results .icon{grid-column:2;grid-row:1/3;color:var(--primary)}.mobile-analysis{display:none}.maplibregl-control-container .maplibregl-ctrl-bottom-right{bottom:148px;right:14px}.maplibregl-control-container .maplibregl-ctrl-bottom-left{bottom:204px;left:488px}.maplibregl-ctrl-attrib{background:var(--panel)!important;color:var(--muted)!important;max-width:275px;font-size:8px!important;line-height:1.5!important;border-radius:5px;border:1px solid var(--line);padding:4px 7px!important}.maplibregl-ctrl-attrib a{color:var(--muted)!important}.maplibregl-ctrl-scale{border-color:var(--muted)!important;color:var(--muted)!important;background:transparent!important;font-size:8px!important}body:has(dialog[open]) .toast{z-index:100}
+@media(min-width:1700px){.analysis-panel{width:350px;padding:28px 26px;left:102px}.map-caption,.map-status,.map-disclosure{left:490px}.timeline{left:478px;right:30px}.bottom-brand{left:480px}.layer-panel{right:30px;width:270px;padding:25px 22px}.map-tools{left:478px}.metric strong{font-size:34px}.panel-description,.insight-card p{font-size:12px}.facility-row strong{font-size:11px}.layer-option{font-size:12px}.topbar{padding:0 30px}}
+@media(max-width:1270px){.topbar{gap:10px;padding:0 18px}.brand{min-width:204px}.brand small b{font-size:7px}.workspace-tabs button{padding:9px 10px;gap:6px;font-size:11px}.header-actions{gap:6px}.beta{display:none}.analysis-panel{left:84px;width:300px;padding:21px 18px}.layer-panel{right:17px;width:219px;padding:20px 15px}.map-caption,.map-status,.map-disclosure{left:407px;right:252px}.map-caption>strong{font-size:15px}.map-tools{left:405px}.timeline{left:401px;right:17px;padding:16px;gap:13px}.timeline-meta{min-width:108px}.timeline-info{display:none}.bottom-brand{left:403px;right:18px}.map-disclosure{bottom:153px;font-size:8px}.maplibregl-control-container .maplibregl-ctrl-bottom-left{left:452px}}
+@media(max-width:1050px){.workspace-tabs button span{display:none}.workspace-tabs button{padding:10px 14px}.brand small b{display:none}.brand{min-width:160px}.layer-panel{width:200px}.analysis-panel{width:280px}.map-caption,.map-status{left:388px;right:230px}.map-caption>strong{font-size:13px}.map-caption .eyebrow{font-size:7px;letter-spacing:1px}.viewpoints{gap:4px;flex-wrap:wrap}.viewpoints button{font-size:8px;padding:5px 8px}.map-tools{left:384px}.timeline{left:385px}.bottom-brand{left:385px}.map-disclosure{left:386px}.map-error{width:310px;left:58%}.map-error>div{flex-wrap:wrap}.timeline-meta{min-width:95px;padding-right:10px}.timeline-meta .eyebrow{letter-spacing:.9px}.timeline-meta strong{font-size:21px}.bottom-brand>span:last-child{display:none}}
+@media(max-height:800px) and (min-width:761px){.analysis-panel{top:16px;bottom:28px;padding-top:19px}.analysis-panel h1{font-size:24px;margin-top:0}.panel-topline{margin-bottom:15px}.panel-description{margin-bottom:12px}.layer-panel{top:16px;max-height:calc(100% - 174px)}.timeline{bottom:29px;min-height:89px;padding-top:12px;padding-bottom:12px}.bottom-brand{bottom:8px}.map-disclosure{bottom:134px}.maplibregl-control-container .maplibregl-ctrl-bottom-right{bottom:128px}.map-tools{bottom:205px}}
+@media(max-width:760px){body{overflow:hidden}.topbar{height:64px;padding:0 14px;gap:9px}.brand{min-width:auto;gap:8px}.brand-mark{width:34px;height:34px;border-radius:10px}.brand-mark .icon{width:23px;height:23px}.brand strong{font-size:20px}.brand small{font-size:8px}.workspace-tabs{position:absolute;top:77px;left:15px;right:15px;justify-content:space-between;z-index:12;padding:4px;background:var(--panel);backdrop-filter:blur(12px)}.workspace-tabs button{flex:1;justify-content:center;padding:9px 5px;gap:5px;font-size:10px}.workspace-tabs button span{display:inline;font-size:9px}.workspace-tabs .icon{width:14px}.header-actions{margin-left:auto}.header-actions .btn{font-size:10px;padding:7px 9px}.header-actions .icon-button{width:30px}.workspace{height:calc(100dvh - 64px);min-height:500px}.icon-rail{display:none}.analysis-panel{display:none;left:12px;right:12px;top:76px;width:auto;bottom:148px;padding:22px;z-index:10}.analysis-panel.mobile-open{display:block}.analysis-panel h1{font-size:25px}.layer-panel{display:none}.map-caption{top:82px;left:20px;right:15px}.map-caption .eyebrow{font-size:7px;letter-spacing:1.4px}.map-caption>strong{font-size:15px}.viewpoints{margin-top:12px}.viewpoints button{font-size:9px;padding:6px 10px}.map-status{top:186px;left:18px;right:18px;max-width:none;font-size:8px;line-height:1.6;padding:5px 8px}.map-tools{left:auto;right:15px;bottom:248px;padding:4px}.map-tools .tool{width:29px;height:29px}.map-disclosure{left:17px;right:15px;bottom:171px;font-size:8px}.map-disclosure small{font-size:7px}.timeline{left:13px;right:13px;bottom:58px;min-height:96px;padding:13px 12px;gap:8px}.timeline-meta{min-width:78px;padding-right:6px}.timeline-meta .eyebrow{font-size:6px;letter-spacing:.6px}.timeline-meta strong{font-size:19px}.timeline-meta strong small{font-size:6px;margin-left:2px;padding:2px}.timeline-meta>span:last-child{display:none}.play-button{width:24px;height:24px}.play-button .icon{width:10px}.timeline-bars{gap:3px;height:57px;min-width:0}.time-tick{min-width:7px}.time-tick>span:last-child{font-size:6px}.time-tick:nth-child(2n)>span:last-child{visibility:hidden}.time-bar{padding-bottom:8px}.time-baseline{bottom:20px}.bottom-brand{left:17px;bottom:38px;right:17px;font-size:7px}.bottom-brand>span:last-child{display:inline;font-size:6px}.mobile-analysis{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:var(--panel);padding:7px 16px;border-radius:20px;border:1px solid var(--line);font-size:10px;color:var(--primary);z-index:12}.mobile-analysis .icon{width:13px;height:13px}.map-error{left:50%;top:46%;width:calc(100% - 90px);padding:18px}.map-error h2{font-size:15px}.map-error p{font-size:10px}.map-error>div{gap:6px}.map-error .btn{font-size:9px;padding:8px}.toast{left:50%;max-width:90vw;width:max-content;bottom:177px;font-size:10px;padding:11px 14px}.connector-grid,.snapshot-grid{grid-template-columns:1fr}.help-steps{grid-template-columns:1fr 1fr}.dialog-header{padding:15px 17px}.dialog-header>div{font-size:14px}#dialog-body{padding:20px 17px}.dialog-lead{font-size:11px}.maplibregl-control-container .maplibregl-ctrl-bottom-right{bottom:220px;right:11px}.maplibregl-ctrl-attrib{font-size:6px!important;max-width:220px}.maplibregl-control-container .maplibregl-ctrl-bottom-left{bottom:232px;left:7px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.mobile-settings-button{display:none}@media(max-width:760px){.mobile-settings-button{display:flex}#mobile-layer-settings .layer-options{max-width:none}}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#insights">분석 패널로 바로가기</a>
+  <div id="app"></div>
+  <noscript>이 서비스는 JavaScript와 WebGL을 지원하는 최신 브라우저가 필요합니다.</noscript>
+  <script type="module">
+// MODULE: config
+const APP = Object.freeze({
+  name: 'SEO:ON', koreanName: '서구온', version: '0.1.0',
+  maker: 'FUNONWORK LAB', center: [126.859, 35.151],
+  // 화면 조작용 범위이며 행정경계가 아닙니다.
+  bounds: [[126.77, 35.07], [126.95, 35.23]],
+  mapVersion: '5.6.1',
+});
+const CATEGORIES = Object.freeze({
+  park: { name: '공원·녹지', color: '#58d6b2', icon: 'tree', unit: '건' },
+  recycle: { name: '자원순환', color: '#f6bb61', icon: 'recycle', unit: '건' },
+  shelter: { name: '생활안전', color: '#76b9ff', icon: 'shield', unit: '건' },
+  care: { name: '돌봄·생활', color: '#b29afa', icon: 'heart', unit: '건' },
+});
+const WORKSPACES = Object.freeze({
+  overview: { name: '도시 한눈에', icon: 'layers', eyebrow: 'CITY OVERVIEW', title: '서구를 한눈에,\n판단은 근거 있게.', description: '공간·시간·시설을 하나의 화면에서 연결합니다.' },
+  access: { name: '생활권 살피기', icon: 'target', eyebrow: 'SPATIAL ACCESS', title: '우리 주변에는\n무엇이 있을까요?', description: '지점을 고르고 직선거리 안의 시설을 확인하세요.' },
+  trend: { name: '운영 추이', icon: 'chart', eyebrow: 'TIME & CHANGE', title: '숫자의 변화,\n지도에서 읽다.', description: '같은 대상을 같은 기간으로 비교합니다.' },
+  projects: { name: '사업 함께보기', icon: 'route', eyebrow: 'PROJECT CONTEXT', title: '같은 공간,\n겹치는 일정.', description: '근접 사업의 일정 겹침을 검토합니다. 우선순위 판단은 하지 않습니다.' },
+});
+const CAMERAS = Object.freeze([
+  { id: 'sangmu', name: '상무권역', center: [126.850, 35.151], zoom: 15.0, pitch: 58, bearing: -25 },
+  { id: 'nongseong', name: '농성권역', center: [126.886, 35.153], zoom: 15.1, pitch: 56, bearing: -38 },
+  { id: 'pungam', name: '풍암권역', center: [126.878, 35.126], zoom: 15.0, pitch: 58, bearing: 18 },
+]);
+const MONTHS = Array.from({ length: 12 }, (_, i) => `2026-${String(i + 1).padStart(2, '0')}`);
+const DATA_KINDS = { demo: '합성 시연', provided: '사용자 자료·미검수', external: 'API 수집·미검수' };
+
+
+// MODULE: icons
+const paths = {
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
+  target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/>',
+  chart: '<path d="M4 4v16h17M8 15l4-5 4 3 5-8"/>',
+  route: '<circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v6a3 3 0 0 0 3 3h6a3 3 0 0 0 0-6H9"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+  tree: '<path d="m12 3-7 8h3l-4 5h16l-4-5h3l-7-8ZM12 16v5"/>',
+  recycle: '<path d="m9 4 3-2 3 5m0-3v3h-3M20 11l2 4-6 1m4 1-3-1 1-3M8 20H3l2-6m-3 3 3-3 3 2"/>',
+  shield: '<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/>',
+  heart: '<path d="M20 5c-3-3-6-1-8 1-2-2-5-4-8-1-5 5 8 15 8 15S25 10 20 5Z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/>',
+  moon: '<path d="M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11Z"/>',
+  settings: '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/>',
+  download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+  upload: '<path d="M12 16V4m-5 5 5-5 5 5M4 17v4h16v-4"/>',
+  plus: '<path d="M12 4v16M4 12h16"/>',
+  minus: '<path d="M4 12h16"/>',
+  home: '<path d="m3 11 9-8 9 8M5 9v12h14V9M9 21v-7h6v7"/>',
+  rotate: '<path d="M21 7v5h-5M3 17v-5h5"/><path d="M5 8a8 8 0 0 1 13-3l3 4M3 15l3 4a8 8 0 0 0 13-3"/>',
+  play: '<path d="m8 4 12 8-12 8V4Z"/>',
+  pause: '<path d="M8 4v16M16 4v16"/>',
+  expand: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
+  close: '<path d="m5 5 14 14M5 19 19 5"/>',
+  arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+  pin: '<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+  check: '<path d="m5 12 4 4 10-10"/>',
+  cube: '<path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M12 13 3 8m9 5v9"/>',
+  compare: '<path d="M3 4h7v16H3zM14 4h7v16h-7z"/>',
+  book: '<path d="M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/>',
+  spark: '<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 11h18"/>',
+  data: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
+  external: '<path d="M14 3h7v7m0-7L10 14M10 3H4v17h17v-6"/>',
+  eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+};
+function icon(name, cls = '') { return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.layers}</svg>`; }
+
+
+// MODULE: geo
+/** Deterministic geometry functions. WGS84 degree coordinates; radius uses a spherical model. */
+const EARTH_M = 6371008.8;
+const RAD = Math.PI / 180;
+function validCoordinate(c) {
+  return Array.isArray(c) && c.length >= 2 && Number.isFinite(c[0]) && Number.isFinite(c[1]) && Math.abs(c[0]) <= 180 && Math.abs(c[1]) <= 90;
+}
+function distanceMeters(a, b) {
+  if (!validCoordinate(a) || !validCoordinate(b)) throw new TypeError('경도·위도 좌표가 올바르지 않습니다.');
+  const dl = (b[1] - a[1]) * RAD, dn = (b[0] - a[0]) * RAD;
+  const h = Math.sin(dl / 2) ** 2 + Math.cos(a[1] * RAD) * Math.cos(b[1] * RAD) * Math.sin(dn / 2) ** 2;
+  return 2 * EARTH_M * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+function circlePolygon(center, radius, steps = 64) {
+  if (!validCoordinate(center) || !Number.isFinite(radius) || radius <= 0) throw new TypeError('원 반경이 올바르지 않습니다.');
+  const lat = center[1] * RAD, lon = center[0] * RAD, d = radius / EARTH_M;
+  const ring = Array.from({ length: steps }, (_, i) => {
+    const theta = 2 * Math.PI * i / steps;
+    const phi = Math.asin(Math.sin(lat) * Math.cos(d) + Math.cos(lat) * Math.sin(d) * Math.cos(theta));
+    const lam = lon + Math.atan2(Math.sin(theta) * Math.sin(d) * Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(phi));
+    return [lam / RAD, phi / RAD];
+  });
+  ring.push([...ring[0]]);
+  return { type: 'Polygon', coordinates: [ring] };
+}
+function collection(features = []) { return { type: 'FeatureCollection', features }; }
+function pointFeature(coordinates, properties = {}) { return { type: 'Feature', geometry: { type: 'Point', coordinates }, properties }; }
+function monthOverlaps(start, end, month) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) return false;
+  // Lexical ISO comparison is safe after import date validation.
+  const first = `${month}-01`;
+  const [year, m] = month.split('-').map(Number);
+  const last = `${month}-${String(new Date(Date.UTC(year, m, 0)).getUTCDate()).padStart(2, '0')}`;
+  return (!start || start <= last) && (!end || end >= first);
+}
+function metricAt(feature, month) {
+  const value = feature.properties?.monthly?.[month];
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+function filterFacilities(features, state) {
+  const q = String(state.search || '').trim().toLowerCase();
+  return features.filter(f => {
+    const p = f.properties;
+    return state.categories.includes(p.category)
+      && (!q || `${p.name} ${p.address || ''}`.toLowerCase().includes(q))
+      && monthOverlaps(p.validFrom, p.validTo, state.month)
+      && (!state.radiusCenter || distanceMeters(state.radiusCenter, f.geometry.coordinates) <= state.radiusMeters);
+  });
+}
+function summarize(features, month) {
+  const values = features.map(f => metricAt(f, month)).filter(v => v !== null);
+  return { count: features.length, measured: values.length, missing: features.length - values.length,
+    total: values.length ? values.reduce((sum, value) => sum + value, 0) : null };
+}
+function percentChange(current, previous) {
+  if (!Number.isFinite(current) || !Number.isFinite(previous) || previous === 0) return null;
+  return (current - previous) / Math.abs(previous) * 100;
+}
+function compareSameCohort(features, currentMonth, previousMonth) {
+  const both = features.filter(f => metricAt(f, currentMonth) !== null && metricAt(f, previousMonth) !== null);
+  if (!both.length) return { n: 0, current: null, previous: null, percent: null };
+  const current = both.reduce((s, f) => s + metricAt(f, currentMonth), 0);
+  const previous = both.reduce((s, f) => s + metricAt(f, previousMonth), 0);
+  return { n: both.length, current, previous, percent: percentChange(current, previous) };
+}
+function validDate(s) {
+  if (typeof s !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+  const date = new Date(`${s}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === s;
+}
+function geometryCenter(geometry) {
+  if (geometry.type === 'Point') return geometry.coordinates;
+  const pts = geometry.type === 'LineString' ? geometry.coordinates : geometry.type === 'Polygon' ? geometry.coordinates[0] : [];
+  if (!pts.length) return null;
+  return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
+}
+function projectProximityPairs(projects, month, threshold = 500) {
+  // Not a polygon-overlap calculation: compares representative points + common dates.
+  const active = projects.filter(p => monthOverlaps(p.properties.start, p.properties.end, month));
+  const pairs = [];
+  for (let i = 0; i < active.length; i++) for (let j = i + 1; j < active.length; j++) {
+    const a = active[i], b = active[j];
+    if (a.properties.start > b.properties.end || b.properties.start > a.properties.end) continue;
+    const meters = distanceMeters(geometryCenter(a.geometry), geometryCenter(b.geometry));
+    if (meters <= threshold) pairs.push({ a, b, meters: Math.round(meters) });
+  }
+  return pairs;
+}
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+}
+function safeCsvCell(value) {
+  let text = String(value ?? '');
+  if (/^[\s]*[=+\-@]/.test(text)) text = `'${text}`;
+  return `"${text.replaceAll('"', '""')}"`;
+}
+
+
+// MODULE: data
+
+
+function seededRandom(seed = 417) {
+  let n = seed >>> 0;
+  return () => { n = (Math.imul(n, 1664525) + 1013904223) >>> 0; return n / 4294967296; };
+}
+/** All features here are deliberately synthetic; no real facility locations or performance values. */
+function makeDemoData() {
+  const rng = seededRandom(4199);
+  const centers = [[126.846, 35.156], [126.861, 35.150], [126.884, 35.152], [126.878, 35.128], [126.866, 35.169], [126.852, 35.139]];
+  const facilities = Array.from({ length: 48 }, (_, i) => {
+    const category = Object.keys(CATEGORIES)[i % 4], c = centers[Math.floor(i / 8)];
+    const monthly = Object.fromEntries(MONTHS.map((m, j) => [m, i % 13 === 0 && j % 4 === 0 ? null : Math.round(20 + rng() * 110 + Math.sin(j / 2 + i) * 12)]));
+    return pointFeature([c[0] + (rng() - 0.5) * 0.014, c[1] + (rng() - 0.5) * 0.009], {
+      id: `demo-${String(i + 1).padStart(3, '0')}`, name: `${CATEGORIES[category].name} 시연 ${String(i + 1).padStart(2, '0')}`,
+      category, dataKind: 'demo', sourceName: '펀온워크 합성 시연 데이터', sourceDate: '2026-01-01',
+      note: '임의 위치·수치입니다. 실제 서구 시설·이용실적이 아닙니다.', address: '실제 시설 주소 없음 · 시연용 위치',
+      monthly, metricName: '운영량', metricUnit: '건', reviewStatus: 'synthetic',
+    });
+  });
+  const projects = Array.from({ length: 6 }, (_, i) => {
+    const c = centers[i % 3], start = i % 2 ? '2026-05-01' : '2026-03-01';
+    const lon = c[0] + (i > 2 ? 0.002 : 0), lat = c[1] + (i > 2 ? 0.001 : 0);
+    return { type: 'Feature', geometry: { type: 'LineString', coordinates: [[lon - 0.002, lat - 0.001], [lon, lat], [lon + 0.003, lat + 0.001]] }, properties: {
+      id: `demo-project-${i + 1}`, name: `생활시설 정비 시연 ${String.fromCharCode(65 + i)}`, dataKind: 'demo', start, end: i % 2 ? '2026-09-30' : '2026-11-30', sourceName: '펀온워크 합성 시연 데이터', sourceDate: '2026-01-01', department: '담당부서 시연', note: '실제 사업·위치·일정이 아닙니다.',
+    } };
+  });
+  return { facilities: collection(facilities), projects: collection(projects) };
+}
+
+function validateImport(raw) {
+  if (!raw || raw.type !== 'FeatureCollection' || !Array.isArray(raw.features)) throw new Error('GeoJSON FeatureCollection 파일을 선택하세요.');
+  if (raw.features.length > 5000) throw new Error('한 번에 5,000개 이하의 시설만 가져올 수 있습니다.');
+  const accepted = [], errors = [], ids = new Set();
+  raw.features.forEach((f, i) => {
+    const p = f?.properties || {}, prefix = `${i + 1}행`;
+    if (f?.geometry?.type !== 'Point' || !validCoordinate(f.geometry.coordinates)) { errors.push(`${prefix}: Point 형식의 유효한 [경도, 위도]가 필요합니다.`); return; }
+    const [lon, lat] = f.geometry.coordinates;
+    if (lon < 126.70 || lon > 127.05 || lat < 34.98 || lat > 35.35) { errors.push(`${prefix}: 광주 주변 범위를 벗어난 좌표입니다. EPSG:4326인지 확인하세요.`); return; }
+    if (!CATEGORIES[p.category]) { errors.push(`${prefix}: category는 park/recycle/shelter/care 중 하나여야 합니다.`); return; }
+    if (typeof p.name !== 'string' || !p.name.trim()) { errors.push(`${prefix}: 시설명이 없습니다.`); return; }
+    if (!p.sourceName || !validDate(p.sourceDate)) { errors.push(`${prefix}: sourceName과 YYYY-MM-DD 형식 sourceDate가 필요합니다.`); return; }
+    if ((p.validFrom && !validDate(p.validFrom)) || (p.validTo && !validDate(p.validTo)) || (p.validFrom && p.validTo && p.validFrom > p.validTo)) { errors.push(`${prefix}: 유효기간을 확인하세요.`); return; }
+    const id = String(p.id ?? `import-${i + 1}`).slice(0, 120);
+    if (ids.has(id)) { errors.push(`${prefix}: 중복 id ${id}`); return; }
+    ids.add(id);
+    const monthly = {};
+    for (const [month, v] of Object.entries(p.monthly || {})) {
+      if (/^\d{4}-(0[1-9]|1[0-2])$/.test(month) && (v === null || (typeof v === 'number' && Number.isFinite(v) && v >= 0))) monthly[month] = v;
+      else { errors.push(`${prefix}: 잘못된 월별 값(${month})을 제외했습니다.`); }
+    }
+    accepted.push(pointFeature([...f.geometry.coordinates].slice(0, 2), {
+      id, name: p.name.trim().slice(0, 150), category: p.category, dataKind: 'provided', reviewStatus: 'unverified',
+      sourceName: String(p.sourceName).slice(0, 200), sourceDate: p.sourceDate,
+      address: String(p.address || '').slice(0, 250), note: String(p.note || '').slice(0, 500),
+      monthly, metricName: String(p.metricName || '운영량').slice(0, 40), metricUnit: String(p.metricUnit || '건').slice(0, 20),
+      validFrom: p.validFrom || null, validTo: p.validTo || null,
+    }));
+  });
+  return { accepted, errors, rejected: raw.features.length - accepted.length };
+}
+
+async function loadPublishedData() {
+  const response = await fetch('/data/facilities.geojson', { signal: AbortSignal.timeout(7000) });
+  if (!response.ok) throw new Error('공개 시설자료를 불러오지 못했습니다.');
+  const parsed = validateImport(await response.json());
+  return { ...parsed, projects: [] };
+}
+
+
+// MODULE: preview-scene
+
+
+
+/**
+ * Offline DESIGN preview only. Every building, road, park and water shape is synthetic.
+ * This renderer is never silently used as a replacement for a failed real map.
+ */
+class PreviewScene {
+  constructor(container, onSelect, onMapClick) {
+    this.container = container; this.onSelect = onSelect; this.onMapClick = onMapClick;
+    this.canvas = document.createElement('canvas'); this.canvas.className = 'preview-canvas';
+    this.canvas.setAttribute('aria-label', '가상 도시 도형으로 만든 디자인 미리보기. 실제 서구 지도 아님.');
+    container.replaceChildren(this.canvas); this.ctx = this.canvas.getContext('2d');
+    this.camera = { center: [...APP.center], zoom: 14.7, pitch: 57, bearing: -28 };
+    this.theme = 'dark'; this.features = []; this.projects = []; this.scenario = null; this.state = null;
+    this.hitTargets = []; this.dragged = false;
+    const rand = seededRandom(5703); this.buildings = [];
+    for (let row = -31; row <= 31; row++) for (let col = -35; col <= 35; col++) {
+      const x = col * 86, y = row * 100;
+      const edge = (x / 3450) ** 2 + (y / 3280) ** 2;
+      const river = -2450 + 200 * Math.sin(y / 900);
+      const park = ((x - 900) / 550) ** 2 + ((y - 250) / 730) ** 2 < 1;
+      if (edge > 1 || x < river || park || col % 9 === 0 || row % 10 === 0 || rand() < .14) continue;
+      const h = rand() > .9 ? 55 + rand() * 155 : 7 + rand() * 30;
+      this.buildings.push({ x: x + rand() * 9, y: y + rand() * 8, w: 34 + rand() * 35, d: 34 + rand() * 42, h, tone: rand() });
+    }
+    this.observer = new ResizeObserver(() => this.draw()); this.observer.observe(container);
+    this.canvas.addEventListener('pointerdown', e => { this.drag = { x: e.clientX, y: e.clientY, b: this.camera.bearing }; this.dragged = false; });
+    this.canvas.addEventListener('pointermove', e => {
+      if (this.drag && e.buttons === 1) {
+        const dx = e.clientX - this.drag.x;
+        if (Math.abs(dx) > 4) this.dragged = true;
+        this.camera.bearing = this.drag.b + dx * .12; this.draw();
+      }
+    });
+    this.canvas.addEventListener('pointerup', () => { this.drag = null; });
+    this.canvas.addEventListener('click', e => {
+      if (this.dragged) return;
+      const r = this.canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      const hit = this.hitTargets.find(p => Math.hypot(p.x - x, p.y - y) < 14);
+      if (hit) this.onSelect?.(hit.feature);
+      else this.onMapClick?.(this.unproject(x, y));
+    });
+    this.canvas.addEventListener('wheel', e => { e.preventDefault(); this.camera.zoom = Math.min(16.2, Math.max(13.7, this.camera.zoom - e.deltaY * .002)); this.draw(); }, { passive: false });
+    this.draw();
+  }
+  world(c) { return [(c[0] - APP.center[0]) * 91000, (APP.center[1] - c[1]) * 111000]; }
+  project(x, y, z = 0) {
+    const c = this.world(this.camera.center), a = this.camera.bearing * Math.PI / 180;
+    x -= c[0]; y -= c[1];
+    const xx = x * Math.cos(a) - y * Math.sin(a), yy = x * Math.sin(a) + y * Math.cos(a);
+    const s = .133 * 2 ** (this.camera.zoom - 14.7) * Math.min(1.32, this.w / 1280);
+    const tilt = this.camera.pitch < 10 ? 1 : .51;
+    const zscale = this.camera.pitch < 10 ? 0 : .93;
+    return [this.w * .53 + xx * s, this.h * .54 + yy * s * tilt - z * s * zscale];
+  }
+  unproject(sx, sy) {
+    const a = this.camera.bearing * Math.PI / 180, c = this.world(this.camera.center);
+    const s = .133 * 2 ** (this.camera.zoom - 14.7) * Math.min(1.32, this.w / 1280);
+    const xx = (sx - this.w * .53) / s, yy = (sy - this.h * .54) / s / (this.camera.pitch < 10 ? 1 : .51);
+    const x = xx * Math.cos(a) + yy * Math.sin(a) + c[0], y = -xx * Math.sin(a) + yy * Math.cos(a) + c[1];
+    return [APP.center[0] + x / 91000, APP.center[1] - y / 111000];
+  }
+  path(pts, fill, stroke, lineWidth = 1) {
+    const ctx = this.ctx; ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(...p) : ctx.moveTo(...p)); ctx.closePath();
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lineWidth; ctx.stroke(); }
+  }
+  draw() {
+    if (!this.ctx) return;
+    const rect = this.container.getBoundingClientRect(); this.w = rect.width || 1400; this.h = rect.height || 850;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.canvas.width = this.w * dpr; this.canvas.height = this.h * dpr;
+    this.canvas.style.width = `${this.w}px`; this.canvas.style.height = `${this.h}px`;
+    const ctx = this.ctx; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const dark = this.theme === 'dark';
+    ctx.fillStyle = dark ? '#0c1923' : '#e5eae9'; ctx.fillRect(0, 0, this.w, this.h);
+    const gradient = ctx.createRadialGradient(this.w * .58, this.h * .5, 10, this.w * .58, this.h * .5, this.w * .65);
+    gradient.addColorStop(0, dark ? '#193440' : '#f7f7ef'); gradient.addColorStop(1, dark ? '#09131d' : '#dce4e3');
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, this.w, this.h);
+    // World grid is an illustrative coordinate plane, not cadastral data.
+    ctx.lineWidth = .6; ctx.strokeStyle = dark ? 'rgba(83,125,145,.13)' : 'rgba(65,91,101,.12)';
+    for (let i = -5000; i <= 5000; i += 400) {
+      ctx.beginPath(); ctx.moveTo(...this.project(i, -5000)); ctx.lineTo(...this.project(i, 5000)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(...this.project(-5000, i)); ctx.lineTo(...this.project(5000, i)); ctx.stroke();
+    }
+    const land = Array.from({ length: 70 }, (_, i) => { const a = i / 70 * Math.PI * 2; return this.project(Math.cos(a) * 3420, Math.sin(a) * 3200); });
+    this.path(land, dark ? '#24343d' : '#d9dcd3', dark ? '#548f8b70' : '#adc0b8', 1.5);
+    const riverLeft = [], riverRight = [];
+    for (let y = -4200; y <= 4200; y += 180) { const x = -2560 + Math.sin(y / 900) * 200; riverLeft.push(this.project(x - 220, y)); riverRight.push(this.project(x + 130, y)); }
+    this.path([...riverLeft, ...riverRight.reverse()], dark ? '#102d3b' : '#abc9cd', dark ? '#345769' : '#97b9c1');
+    const park = Array.from({ length: 40 }, (_, i) => { const a = i / 40 * Math.PI * 2; return this.project(900 + Math.cos(a) * 550, 250 + Math.sin(a) * 730); });
+    this.path(park, dark ? '#234b44' : '#b7cdb6', dark ? '#42776880' : '#a2bba3');
+    // Major avenues.
+    for (const row of [-2000, -1000, 0, 1000, 2000]) {
+      ctx.beginPath(); ctx.moveTo(...this.project(-2700, row)); ctx.lineTo(...this.project(2900, row));
+      ctx.strokeStyle = dark ? '#83949f3a' : '#fbfaf0'; ctx.lineWidth = 5; ctx.stroke();
+    }
+    for (const x of [-1550, -770, 0, 770, 1550, 2300]) {
+      ctx.beginPath(); ctx.moveTo(...this.project(x, -2700)); ctx.lineTo(...this.project(x, 2700));
+      ctx.strokeStyle = dark ? '#70869644' : '#fbfaf0'; ctx.lineWidth = 4; ctx.stroke();
+    }
+    const sorted = [...this.buildings].sort((a, b) => this.project(a.x, a.y)[1] - this.project(b.x, b.y)[1]);
+    for (const b of sorted) {
+      if (this.state?.layers?.buildings === false) continue;
+      const h = b.h * (this.camera.pitch < 10 ? 0 : 1.35);
+      const a = this.project(b.x, b.y), c = this.project(b.x + b.w, b.y), d = this.project(b.x + b.w, b.y + b.d), e = this.project(b.x, b.y + b.d);
+      const at = this.project(b.x, b.y, h), ct = this.project(b.x + b.w, b.y, h), dt = this.project(b.x + b.w, b.y + b.d, h), et = this.project(b.x, b.y + b.d, h);
+      this.path([c, d, dt, ct], dark ? '#435764' : '#b3bab9');
+      this.path([d, e, et, dt], dark ? '#304450' : '#c2c7c1');
+      this.path([at, ct, dt, et], dark ? (b.h > 55 ? '#79929e' : '#526d7b') : (b.h > 55 ? '#f5f4e9' : '#e2e3d9'), dark ? '#90adb42b' : '#a1afa82a', .4);
+    }
+    if (this.state?.layers?.projects) for (const p of this.projects) {
+      const pts = p.geometry.coordinates.map(c => this.project(...this.world(c), 4));
+      ctx.beginPath(); pts.forEach((c, i) => i ? ctx.lineTo(...c) : ctx.moveTo(...c));
+      ctx.strokeStyle = '#ecb273'; ctx.lineWidth = 3; ctx.setLineDash([7, 4]); ctx.stroke(); ctx.setLineDash([]);
+    }
+    if (this.state?.radiusCenter) {
+      const [x, y] = this.world(this.state.radiusCenter), radius = this.state.radiusMeters;
+      const ring = Array.from({ length: 70 }, (_, i) => { const a = i / 70 * Math.PI * 2; return this.project(x + Math.cos(a) * radius, y + Math.sin(a) * radius, 3); });
+      this.path(ring, '#6adbb426', '#75e6c9', 2);
+    }
+    this.hitTargets = [];
+    const fs = [...this.features].sort((a, b) => this.project(...this.world(a.geometry.coordinates))[1] - this.project(...this.world(b.geometry.coordinates))[1]);
+    for (const f of fs) {
+      const [x, y] = this.world(f.geometry.coordinates), [sx, sy] = this.project(x, y, 6);
+      const color = CATEGORIES[f.properties.category]?.color || '#5ed8b2';
+      if (this.state?.layers?.columns && this.camera.pitch > 10) {
+        const value = metricAt(f, this.state.month);
+        if (value !== null) {
+          const height = 55 + value * 1.8, [tx, ty] = this.project(x, y, height), width = 8;
+          const g = ctx.createLinearGradient(tx - width, ty, tx + width, ty); g.addColorStop(0, color + 'ac'); g.addColorStop(.6, color); g.addColorStop(1, color + 'bf');
+          ctx.fillStyle = g; ctx.fillRect(tx - width, ty, width * 2, Math.max(0, sy - ty));
+          ctx.beginPath(); ctx.ellipse(tx, ty, width, 3.5, 0, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill();
+          ctx.strokeStyle = color + '30'; ctx.lineWidth = 8; ctx.stroke();
+          if (f.properties.id === this.selectedId) { ctx.fillStyle = dark ? '#e9f8f4' : '#173530'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(String(value), tx + 14, ty + 4); }
+        }
+      }
+      if (this.state?.layers?.facilities !== false) {
+        ctx.beginPath(); ctx.arc(sx, sy, 4.5, 0, Math.PI * 2); ctx.fillStyle = color; ctx.shadowBlur = 12; ctx.shadowColor = color; ctx.fill(); ctx.shadowBlur = 0;
+        ctx.strokeStyle = dark ? '#0c2531' : '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+        if (f.properties.id === this.selectedId) { ctx.beginPath(); ctx.arc(sx, sy, 11, 0, Math.PI * 2); ctx.strokeStyle = color; ctx.stroke(); }
+        this.hitTargets.push({ x: sx, y: sy, feature: f });
+      }
+    }
+    if (this.scenario) {
+      const [sx, sy] = this.project(...this.world(this.scenario), 4);
+      ctx.strokeStyle = '#f9e3a0'; ctx.setLineDash([4, 4]); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.ellipse(sx, sy, 42, 21, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#f9e3a0'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('가상 시설', sx + 9, sy - 12);
+    }
+    // A permanent disclosure is part of the canvas (also survives screenshots).
+    ctx.save(); ctx.fillStyle = dark ? '#d8e9ee' : '#30464c'; ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center'; ctx.globalAlpha = .9;
+    ctx.fillText('DESIGN PREVIEW  ·  가상 도시 도형 — 실제 서구 지도·건물 아님', this.w * .55, this.h - 172); ctx.restore();
+  }
+  update(features, projects, state) { this.features = features; this.projects = projects; this.state = state; this.theme = state.theme; this.scenario = state.scenario; this.selectedId = state.selectedId; this.draw(); }
+  flyTo(camera) { this.camera = { ...this.camera, ...camera }; this.draw(); }
+  setPitch(value) { this.camera.pitch = value; this.draw(); }
+  zoomBy(value) { this.camera.zoom = Math.max(13.7, Math.min(16.2, this.camera.zoom + value)); this.draw(); }
+  rotate(value) { this.camera.bearing += value; this.draw(); }
+  screenshot() { return this.canvas.toDataURL('image/png'); }
+  destroy() { this.observer.disconnect(); this.container.replaceChildren(); }
+}
+
+
+// MODULE: map
+
+
+
+function loadClassicScript(src, timeoutMs = 9000) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script'); script.src = src; script.async = true;
+    const timer = setTimeout(() => { script.remove(); reject(new Error('지도 라이브러리 접속 시간 초과')); }, timeoutMs);
+    script.onload = () => { clearTimeout(timer); resolve(); };
+    script.onerror = () => { clearTimeout(timer); script.remove(); reject(new Error('지도 라이브러리 접속 실패')); };
+    document.head.append(script);
+  });
+}
+async function ensureMapLibre() {
+  if (window.maplibregl?.Map) return window.maplibregl;
+  let lastError;
+  for (const host of ['https://unpkg.com', 'https://cdn.jsdelivr.net/npm']) {
+    const base = `${host}/maplibre-gl@${APP.mapVersion}/dist/`;
+    try {
+      await loadClassicScript(`${base}maplibre-gl.js`);
+      if (!window.maplibregl?.Map) throw new Error('지도 라이브러리 형식 확인 실패');
+      const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = `${base}maplibre-gl.css`; document.head.append(css);
+      return window.maplibregl;
+    } catch (error) { lastError = error; }
+  }
+  throw lastError;
+}
+
+class CityMap {
+  constructor(container, callbacks) {
+    this.container = container; this.callbacks = callbacks; this.mode = null; this.map = null; this.preview = null; this.frame = null;
+    this.ready = false; this.generation = 0; this.last = null; this.boundary = null; this.markers = [];
+    this.messageListener = event => {
+      if (!this.frame || event.origin !== location.origin || event.source !== this.frame.contentWindow || !event.data?.seoOn) return;
+      if (event.data.type === 'ready') { this.ready = true; this.callbacks.status('connected', '브이월드 3D 연결 · 자료 최신성 별도 확인'); if (this.last) this.update(...this.last); }
+      if (event.data.type === 'error') this.callbacks.status('error', String(event.data.message || '브이월드 연결 실패'));
+      if (event.data.type === 'select') {
+        const f = this.last?.[0].find(f => f.properties.id === event.data.id); if (f) this.callbacks.select(f);
+      }
+      if (event.data.type === 'click' && Array.isArray(event.data.coordinates)) this.callbacks.click(event.data.coordinates);
+    };
+    window.addEventListener('message', this.messageListener);
+  }
+  async start(mode, theme) {
+    const run = ++this.generation; this.cleanup(); this.mode = mode; this.theme = theme; this.ready = false;
+    if (mode === 'preview') {
+      this.preview = new PreviewScene(this.container, this.callbacks.select, this.callbacks.click); this.ready = true;
+      this.callbacks.status('preview', '디자인 미리보기 · 가상 도시 / 실제 지도 아님');
+      if (this.last) this.update(...this.last); return;
+    }
+    if (mode === 'vworld') {
+      this.callbacks.status('loading', '브이월드 인증·3D 지도 연결 중');
+      this.frame = document.createElement('iframe'); this.frame.className = 'vworld-frame'; this.frame.title = '브이월드 3D 서구 지도'; this.frame.src = '/api/vworld-scene';
+      this.container.append(this.frame);
+      this.frameTimeout = setTimeout(() => { if (!this.ready) this.callbacks.status('error', '브이월드 연결 대기 초과 · 키/도메인/서비스 승인 확인'); }, 20000);
+      return;
+    }
+    this.callbacks.status('loading', '실제 서구 지도 연결 중 · OpenStreetMap');
+    try {
+      const gl = await ensureMapLibre(); if (run !== this.generation) return;
+      // MapLibre 5.6.1 does not export maplibregl.supported(). The Map constructor
+      // performs WebGL initialization; its errors are handled by the catch below.
+      if (typeof gl.Map !== 'function') throw new Error('지도 라이브러리 초기화에 실패했습니다.');
+      const response = await fetch(`https://tiles.openfreemap.org/styles/${theme === 'dark' ? 'dark' : 'positron'}`, { signal: AbortSignal.timeout(10000) });
+      if (!response.ok) throw new Error('기본 지도 서버에서 지도를 받지 못했습니다.');
+      const style = await response.json(); if (run !== this.generation) return;
+      // Declutter small POI text; labels and roads remain real provider data.
+      style.layers = style.layers.filter(layer => !/poi|housenumber/i.test(layer.id));
+      for (const layer of style.layers) if (layer.type === 'fill-extrusion') layer.layout = { ...layer.layout, visibility: 'none' };
+      this.map = new gl.Map({ container: this.container, style, center: APP.center, zoom: 14.5, pitch: 57, bearing: -28,
+        maxPitch: 70, minZoom: 11, maxZoom: 18.5, maxBounds: APP.bounds,
+        canvasContextAttributes: { antialias: true, preserveDrawingBuffer: true }, attributionControl: false });
+      this.map.addControl(new gl.AttributionControl({ compact: false }), 'bottom-right');
+      this.map.addControl(new gl.ScaleControl({ maxWidth: 90, unit: 'metric' }), 'bottom-left');
+      this.map.once('load', () => {
+        if (run !== this.generation) return;
+        try { this.addLayers(); this.ready = true; this.callbacks.status('connected', '실제 지도 · OSM 건물 / 높이는 추정 포함'); if (this.last) this.update(...this.last); }
+        catch (e) { this.callbacks.status('error', e.message || '지도 레이어 초기화 실패'); }
+      });
+      let tileErrors = 0;
+      this.map.on('error', event => {
+        tileErrors++;
+        if (!this.ready || tileErrors > 5) this.callbacks.status('error', '지도 또는 일부 타일을 불러오지 못했습니다. 네트워크를 확인하세요.');
+        console.warn('Map provider error', event.error?.name || 'MapError');
+      });
+      this.map.on('click', event => {
+        if (!this.ready) return;
+        const selected = this.map.queryRenderedFeatures(event.point, { layers: ['facility-dot', 'metric-columns'] });
+        if (selected.length) {
+          const feature = this.last?.[0].find(f => f.properties.id === selected[0].properties?.id);
+          if (feature) { this.callbacks.select(feature); return; }
+        }
+        this.callbacks.click([event.lngLat.lng, event.lngLat.lat]);
+      });
+      this.map.on('mouseenter', 'facility-dot', () => { this.map.getCanvas().style.cursor = 'pointer'; });
+      this.map.on('mouseleave', 'facility-dot', () => { this.map.getCanvas().style.cursor = ''; });
+      this.loadTimeout = setTimeout(() => { if (!this.ready) this.callbacks.status('error', '지도 초기화 시간이 초과되었습니다. 네트워크나 WebGL 설정을 확인하세요.'); }, 22000);
+    } catch (error) { if (run === this.generation) this.callbacks.status('error', error.message || '지도 연결 실패'); }
+  }
+  addLayers() {
+    const map = this.map;
+    map.addSource('seo-buildings', { type: 'vector', url: 'https://tiles.openfreemap.org/planet' });
+    map.addLayer({ id: 'seo-buildings', source: 'seo-buildings', 'source-layer': 'building', type: 'fill-extrusion', minzoom: 13,
+      filter: ['!=', ['get', 'hide_3d'], true], paint: {
+        'fill-extrusion-color': this.theme === 'dark' ? '#5b7482' : '#d6dacf',
+        'fill-extrusion-height': ['case', ['has', 'render_height'], ['max', 3, ['to-number', ['get', 'render_height'], 8]], 8],
+        'fill-extrusion-base': ['max', 0, ['to-number', ['get', 'render_min_height'], 0]],
+        'fill-extrusion-opacity': .9, 'fill-extrusion-vertical-gradient': true,
+      } });
+    for (const name of ['facilities', 'columns', 'radius', 'projects', 'scenario', 'boundary']) map.addSource(name, { type: 'geojson', data: collection() });
+    map.addLayer({ id: 'boundary-line', type: 'line', source: 'boundary', paint: { 'line-color': '#68d4c0', 'line-width': 2, 'line-opacity': .85 } });
+    map.addLayer({ id: 'radius-fill', type: 'fill', source: 'radius', paint: { 'fill-color': '#66dec0', 'fill-opacity': .12 } });
+    map.addLayer({ id: 'radius-line', type: 'line', source: 'radius', paint: { 'line-color': '#6fe8c6', 'line-width': 2, 'line-dasharray': [3, 2] } });
+    map.addLayer({ id: 'project-lines', type: 'line', source: 'projects', paint: { 'line-color': '#f0bc6b', 'line-width': 4, 'line-dasharray': [3, 2] } });
+    map.addLayer({ id: 'metric-columns', type: 'fill-extrusion', source: 'columns', paint: { 'fill-extrusion-color': ['get', 'color'], 'fill-extrusion-height': ['get', 'renderHeight'], 'fill-extrusion-opacity': .86, 'fill-extrusion-vertical-gradient': true } });
+    map.addLayer({ id: 'facility-glow', type: 'circle', source: 'facilities', paint: { 'circle-color': ['get', 'color'], 'circle-radius': 11, 'circle-blur': 1, 'circle-opacity': .5 } });
+    map.addLayer({ id: 'facility-dot', type: 'circle', source: 'facilities', paint: { 'circle-color': ['get', 'color'], 'circle-radius': ['case', ['get', 'selected'], 7, 4.5], 'circle-stroke-color': this.theme === 'dark' ? '#172c37' : '#fff', 'circle-stroke-width': 1.8 } });
+    map.addLayer({ id: 'scenario-dot', type: 'circle', source: 'scenario', paint: { 'circle-color': '#e7cb89', 'circle-radius': 10, 'circle-stroke-width': 3, 'circle-stroke-color': '#fff5c9', 'circle-opacity': .6 } });
+  }
+  update(features, projects, state) {
+    this.last = [features, projects, state];
+    if (!this.ready) return;
+    if (this.preview) { this.preview.update(features, projects, state); return; }
+    if (this.frame) { this.send({ type: 'update', features: features.slice(0, 500), projects, state }); return; }
+    if (!this.map) return;
+    const draw = features.slice(0, 1000).map(f => ({ ...f, properties: { id: f.properties.id, name: f.properties.name, color: CATEGORIES[f.properties.category].color, selected: f.properties.id === state.selectedId } }));
+    this.map.getSource('facilities').setData(collection(draw));
+    const cols = features.slice(0, 500).filter(f => metricAt(f, state.month) !== null).map(f => ({ type: 'Feature', geometry: circlePolygon(f.geometry.coordinates, 33, 16), properties: {
+      id: f.properties.id, color: CATEGORIES[f.properties.category].color, renderHeight: Math.min(600, 40 + metricAt(f, state.month) * 1.8),
+    } }));
+    this.map.getSource('columns').setData(collection(cols));
+    this.map.getSource('radius').setData(state.radiusCenter ? collection([{ type: 'Feature', properties: {}, geometry: circlePolygon(state.radiusCenter, state.radiusMeters) }]) : collection());
+    this.map.getSource('projects').setData(collection(projects));
+    this.map.getSource('scenario').setData(state.scenario ? collection([pointFeature(state.scenario)]) : collection());
+    const vis = (id, value) => this.map.setLayoutProperty(id, 'visibility', value ? 'visible' : 'none');
+    vis('seo-buildings', state.layers.buildings); vis('metric-columns', state.layers.columns && state.is3D);
+    vis('facility-dot', state.layers.facilities); vis('facility-glow', state.layers.facilities); vis('project-lines', state.layers.projects);
+    if (this.boundary) this.map.getSource('boundary').setData(this.boundary);
+  }
+  send(message) { this.frame?.contentWindow?.postMessage({ seoOn: true, ...message }, location.origin); }
+  flyTo(camera) {
+    if (this.preview) this.preview.flyTo(camera);
+    else if (this.frame) this.send({ type: 'camera', camera });
+    else this.map?.flyTo({ ...camera, duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1800, essential: false });
+  }
+  set3D(is3D) { if (this.preview) this.preview.setPitch(is3D ? 57 : 0); else if (this.frame) this.send({ type: 'tilt', is3D }); else this.map?.easeTo({ pitch: is3D ? 57 : 0, duration: 700 }); }
+  zoomBy(value) { if (this.preview) this.preview.zoomBy(value); else if (this.frame) this.send({ type: 'zoom', value }); else this.map?.zoomTo(this.map.getZoom() + value, { duration: 350 }); }
+  rotate(value = 20) { if (this.preview) this.preview.rotate(value); else if (this.frame) this.send({ type: 'rotate', value }); else if (this.map) this.map.easeTo({ bearing: this.map.getBearing() + value, duration: 900 }); }
+  setBoundary(data) { this.boundary = data; if (this.map?.getSource('boundary')) this.map.getSource('boundary').setData(data); if (this.frame) this.send({ type: 'boundary', data }); }
+  screenshot() { try { return this.preview?.screenshot() || this.map?.getCanvas().toDataURL('image/png') || null; } catch { return null; } }
+  cleanup() {
+    clearTimeout(this.frameTimeout); clearTimeout(this.loadTimeout); this.preview?.destroy(); this.preview = null;
+    this.map?.remove(); this.map = null; this.frame?.remove(); this.frame = null; this.container.replaceChildren(); this.ready = false;
+  }
+  destroy() { this.generation++; this.cleanup(); window.removeEventListener('message', this.messageListener); }
+}
+
+
+// MODULE: ui
+
+
+
+function fmt(value, digits = 0) { return value === null || value === undefined || !Number.isFinite(value) ? '—' : value.toLocaleString('ko-KR', { maximumFractionDigits: digits }); }
+function metricCompatibility(features) {
+  const types = [...new Set(features.map(f => `${f.properties.metricName || '운영량'}|${f.properties.metricUnit || '건'}`))];
+  return { compatible: types.length <= 1, name: types[0]?.split('|')[0] || '운영량', unit: types[0]?.split('|')[1] || '건' };
+}
+function badge(text, cls = '') { return `<span class="badge ${cls}">${escapeHTML(text)}</span>`; }
+function baseLayout() {
+  return `
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="서구온 첫 화면"><span class="brand-mark">${icon('layers')}</span><div><strong>SEO<span>:</span>ON</strong><small>서구온 <b>SPACE × EVIDENCE</b></small></div></a>
+    <nav class="workspace-tabs" aria-label="업무분야">${Object.entries(WORKSPACES).map(([id, w]) => `<button data-workspace="${id}">${icon(w.icon)}<span>${w.name}</span></button>`).join('')}</nav>
+    <div class="header-actions"><button class="icon-button mobile-settings-button" data-act="mobile-settings" aria-label="지도와 자료 설정" title="지도와 자료 설정">${icon('layers')}</button><span class="beta">LAB / 0.1</span><button class="icon-button" data-act="theme" aria-label="테마 전환" title="밝은·어두운 테마 전환">${icon('sun')}</button><button class="btn secondary compact" data-act="report">${icon('download')}<span>검토표</span></button></div>
+  </header>
+  <main class="workspace">
+    <div id="map-stage" aria-label="도시 지도"></div>
+    <div class="map-vignette"></div>
+    <nav class="icon-rail" aria-label="도구">
+      <div><button data-act="home" class="rail-button active" aria-label="지도 처음으로" title="서구 화면으로">${icon('layers')}</button><button data-act="pick-radius" class="rail-button" aria-label="반경 조회" title="반경 조회">${icon('target')}</button><button data-act="scenario" class="rail-button" aria-label="가상 시설 배치" title="가상 시설 배치">${icon('pin')}</button><button data-act="compare" class="rail-button" aria-label="조건 비교" title="조건 비교">${icon('compare')}</button></div>
+      <div><button data-act="data" class="rail-button" aria-label="자료 연결" title="자료 연결">${icon('data')}</button><button data-act="help" class="rail-button" aria-label="이용 안내" title="이용 안내">${icon('book')}</button><span class="rail-wordmark">F<span>W</span></span></div>
+    </nav>
+    <aside id="insights" class="panel analysis-panel" aria-label="행정분석" tabindex="-1"></aside>
+    <div class="map-caption"><span class="eyebrow">GWANGJU SEO-GU · DIGITAL WORKSPACE</span><strong>도시의 정보를, 판단의 근거로.</strong><div class="viewpoints"><button data-camera="sangmu">상무권역</button><button data-camera="nongseong">농성권역</button><button data-camera="pungam">풍암권역</button></div></div>
+    <div id="map-status" class="map-status" role="status"></div>
+    <div id="map-error" class="map-error" hidden></div>
+    <aside id="layers-panel" class="panel layer-panel" aria-label="표시 정보와 지도 설정"></aside>
+    <div class="map-tools"><button class="tool" data-act="3d" title="2D·3D 전환" aria-label="2D·3D 전환" id="dimension-button">3D</button><span></span><button class="tool" data-act="zoom-in" title="확대" aria-label="확대">${icon('plus')}</button><button class="tool" data-act="zoom-out" title="축소" aria-label="축소">${icon('minus')}</button><span></span><button class="tool" data-act="rotate" title="지도 회전" aria-label="지도 회전">${icon('rotate')}</button><button class="tool" data-act="fullscreen" title="전체 화면" aria-label="전체 화면">${icon('expand')}</button></div>
+    <div id="map-disclosure" class="map-disclosure"></div>
+    <section id="timeline" class="panel timeline" aria-label="기간 선택"></section>
+    <div class="bottom-brand"><span>FUNONWORK <b>LAB</b></span><span>공개 시험서비스 · 공식 행정판단 자료 아님</span></div>
+    <button class="mobile-analysis" data-act="mobile-panel">${icon('chart')} 분석 패널</button>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="dialog"><div class="dialog-header"><div id="dialog-title"></div><button class="icon-button" data-act="close-dialog" aria-label="창 닫기">${icon('close')}</button></div><div id="dialog-body"></div></dialog>
+  <input id="file-input" type="file" accept=".json,.geojson,application/json,application/geo+json" hidden>
+  `;
+}
+
+function smallChart(features, state, months, compatibility) {
+  if (!compatibility.compatible) return `<div class="empty-chart">단위가 다른 자료는 합산하지 않습니다.<br>같은 지표의 자료를 선택하세요.</div>`;
+  const totals = months.map(m => summarize(features, m).total), max = Math.max(1, ...totals.filter(v => v !== null));
+  return `<div class="mini-chart" role="group" aria-label="현재 조회 시설의 월별 ${escapeHTML(compatibility.name)}">
+    ${totals.map((v, i) => `<button class="chart-column ${months[i] === state.month ? 'current' : ''}" data-month="${months[i]}" title="${months[i]} ${fmt(v)} ${escapeHTML(compatibility.unit)}" aria-label="${months[i]} ${v === null ? '자료 없음' : fmt(v) + compatibility.unit}"><span class="bar-track"><i style="height:${v === null ? 2 : Math.max(4, v / max * 100)}%;" class="${v === null ? 'no-value' : ''}"></i></span><span>${Number(months[i].slice(5))}</span></button>`).join('')}
+  </div>`;
+}
+function renderInsights(features, allCount, projects, state, months, sourceName) {
+  const w = WORKSPACES[state.workspace], stats = summarize(features, state.month), comp = metricCompatibility(features);
+  const previous = months[Math.max(0, months.indexOf(state.month) - 1)];
+  const comparison = previous === state.month ? null : compareSameCohort(features, state.month, previous);
+  const selected = features.find(f => f.properties.id === state.selectedId);
+  const demo = state.dataset === 'demo';
+  const label = demo ? '합성 시연자료' : state.dataset === 'imported' ? '사용자 자료 · 미검수' : '연결 자료 · 미검수';
+  const sourceLabel = `${demo ? '시연 위치·수치 / 실제 시설 아님' : sourceName || '출처를 확인하세요'}`;
+  const facts = stats.count ? `${fmt(stats.count)}개 시설을 조회했습니다. ${state.month} 값이 있는 시설은 ${fmt(stats.measured)}개입니다.` : '현재 조건에 맞는 등록자료가 없습니다. 시설이 없다는 의미는 아닙니다.';
+  const actualFacts = !comp.compatible ? `${fmt(stats.count)}개 시설을 조회했습니다. 서로 다른 지표·단위가 포함되어 합계와 증감률을 표시하지 않습니다.` : facts;
+  const pairs = projectProximityPairs(projects, state.month);
+  return `
+  <div class="panel-topline"><span class="section-index">01 / INTELLIGENCE</span>${badge(label, demo ? 'amber' : 'mint')}</div>
+  <h1>${w.title.split('\n').map(escapeHTML).join('<br>')}</h1>
+  <p class="panel-description">${escapeHTML(w.description)}</p>
+  <form id="search-form" class="search-box"><span>${icon('search')}</span><input id="search-input" type="search" autocomplete="off" placeholder="등록된 시설 검색" value="${escapeHTML(state.search)}" aria-label="등록된 시설 검색"><button type="submit" class="search-go" aria-label="검색 실행">${icon('arrow')}</button></form>
+  <div class="search-actions"><button class="text-button" data-act="remote-search">브이월드 장소검색 ${icon('external')}</button>${state.search ? '<button class="text-button" data-act="clear-search">검색 해제</button>' : ''}</div>
+  <div class="metric-row"><div class="metric"><span>현재 조회 시설</span><strong>${fmt(stats.count)}<small>개</small></strong><em>등록 ${fmt(allCount)}개 중</em></div><div class="metric"><span>${escapeHTML(comp.name)}${demo ? ' · 시연' : ''}</span><strong>${comp.compatible ? fmt(stats.total) : '—'}<small>${escapeHTML(comp.unit)}</small></strong><em>${stats.missing ? `미입력 ${fmt(stats.missing)}개 제외` : '조회 시설 기준'}</em></div></div>
+  ${state.workspace === 'access' ? `<div class="access-box"><div>${icon('target')}<strong>직선거리 반경 조회</strong></div><div class="radius-options">${[300, 500, 800, 1000].map(m => `<button data-radius="${m}" class="${state.radiusMeters === m ? 'active' : ''}">${m}m</button>`).join('')}</div><button class="btn primary full" data-act="pick-radius">${icon('pin')}${state.pickMode === 'radius' ? '지도에서 기준점을 클릭하세요' : '지도에서 기준점 선택'}</button>${state.radiusCenter ? `<p class="micro">${state.radiusCenter.map(c => c.toFixed(5)).join(', ')} · <button data-act="clear-radius">반경 해제</button></p>` : '<p class="micro">보행시간·법정 서비스 기준이 아닌 직선거리입니다.</p>'}</div>` : ''}
+  <section class="insight-card"><div class="card-label">${icon('spark')}<strong>근거 브리핑</strong><span>규칙 기반</span></div><p>${escapeHTML(actualFacts)}</p><div class="evidence-line"><i></i><span>${escapeHTML(sourceLabel)}</span></div>${demo ? '<div class="caution-line">행정판단에 사용하지 않는 시연 결과입니다.</div>' : '<div class="caution-line">수집·입력 자료의 정확성은 별도로 검수해야 합니다.</div>'}</section>
+  ${state.workspace === 'projects' ? `<section class="chart-section"><div class="section-heading"><h2>가까운 사업 · 겹치는 일정</h2><span>${fmt(pairs.length)}쌍</span></div><p class="micro">대표점 간 500m 이내 + 일정 중첩. 실제 사업구역 중첩 판정이 아닙니다.</p>${pairs.slice(0, 3).map(p => `<div class="pair-row"><span>${icon('route')}</span><div><strong>${escapeHTML(p.a.properties.name)}</strong><small>↔ ${escapeHTML(p.b.properties.name)} · 약 ${fmt(p.meters)}m</small></div></div>`).join('') || '<div class="empty-row">조건에 맞는 사업자료 없음</div>'}</section>` : `<section class="chart-section"><div class="section-heading"><h2>시간을 따라 살펴보기</h2><span>${escapeHTML(comp.unit)}${demo ? ' · 시연' : ''}</span></div>${smallChart(features, state, months, comp)}<div class="chart-footnote"><span>현재 조회 시설 기준 · 결측 제외</span><span>${comparison?.percent !== null && comparison?.percent !== undefined && comp.compatible ? `${comparison.percent >= 0 ? '+' : ''}${comparison.percent.toFixed(1)}%` : '비교값 없음'}</span></div>${comparison?.n ? `<p class="micro">${previous} 대비 · 두 달 모두 값이 있는 ${comparison.n}개 시설만 비교</p>` : ''}</section>`}
+  ${selected ? `<section class="selection-card"><div class="section-heading"><h2>${icon(CATEGORIES[selected.properties.category].icon)} 선택한 시설</h2><button class="text-button" data-act="clear-selection">닫기</button></div><h3>${escapeHTML(selected.properties.name)}</h3><p>${escapeHTML(selected.properties.address || '주소 미입력')}</p><div class="selection-values"><span>${state.month} ${escapeHTML(selected.properties.metricName)}</span><b>${fmt(metricAt(selected, state.month))} ${escapeHTML(selected.properties.metricUnit)}</b></div><p class="micro">${escapeHTML(selected.properties.sourceName)} · ${escapeHTML(selected.properties.sourceDate)}</p>${selected.properties.note ? `<p class="micro">${escapeHTML(selected.properties.note)}</p>` : ''}</section>` : `<section class="facility-list"><div class="section-heading"><h2>조회 시설</h2><button class="text-button" data-act="list">전체 ${fmt(features.length)}개 ${icon('arrow')}</button></div>${features.slice(0, 3).map(f => `<button class="facility-row" data-feature="${escapeHTML(f.properties.id)}"><i style="--cat:${CATEGORIES[f.properties.category].color}">${icon(CATEGORIES[f.properties.category].icon)}</i><span><strong>${escapeHTML(f.properties.name)}</strong><small>${escapeHTML(DATA_KINDS[f.properties.dataKind] || '미검수 자료')} · ${escapeHTML(f.properties.sourceDate)}</small></span><b>${icon('arrow')}</b></button>`).join('') || '<div class="empty-row">자료를 연결하거나 조회조건을 변경하세요.</div>'}</section>`}
+  <div class="panel-bottom-actions"><button class="btn secondary" data-act="compare">${icon('compare')} 조건 비교</button><button class="btn secondary" data-act="csv">${icon('download')} 조회자료</button></div>
+  <div class="panel-footer-note">지도는 공간을 보여주고,<br><strong>최종 판단은 담당자가 합니다.</strong></div>
+  `;
+}
+function renderLayers(features, state, config) {
+  return `<div class="panel-topline"><span class="section-index">02 / MAP LAYERS</span>${icon('layers')}</div>
+  <h2 class="layer-title">어떤 정보를 볼까요?</h2>
+  <div class="data-mode"><div><span class="status-dot ${state.dataset === 'demo' ? 'amber-dot' : ''}"></span><strong>${state.dataset === 'demo' ? '시연자료 표시 중' : '등록자료 표시 중'}</strong></div><button class="switch ${state.dataset === 'demo' ? 'on' : ''}" role="switch" aria-checked="${state.dataset === 'demo'}" aria-label="시연자료 표시" data-act="toggle-demo"><i></i></button></div>
+  <p class="micro mode-note">${state.dataset === 'demo' ? '위치·실적 모두 합성입니다. 실제 시설 자료와 혼합하지 않습니다.' : '자료 없음은 시설 없음과 다릅니다. 출처·기준일을 확인하세요.'}</p>
+  <div class="layer-options">${Object.entries(CATEGORIES).map(([key, c]) => `<label class="layer-option"><input type="checkbox" data-category="${key}" ${state.categories.includes(key) ? 'checked' : ''}><span class="checkbox" style="--cat:${c.color}">${icon('check')}</span><span class="layer-name">${escapeHTML(c.name)}</span><small>${features.filter(f => f.properties.category === key).length}</small></label>`).join('')}</div>
+  <div class="divider"></div><div class="section-heading"><h3>표현 방식</h3><span class="micro">겹쳐보기</span></div>
+  <div class="render-options">${[['buildings', 'cube', '입체 건물'], ['columns', 'chart', '통계기둥'], ['facilities', 'pin', '시설 위치'], ['projects', 'route', '사업구간']].map(([id, i, label]) => `<button data-layer="${id}" class="render-option ${state.layers[id] ? 'active' : ''}" aria-pressed="${state.layers[id]}" ${id === 'buildings' && state.engine === 'vworld' ? 'disabled title="브이월드 원본 건물은 이 버튼으로 제어하지 않습니다."' : ''}>${icon(i)}<span>${label}</span><i></i></button>`).join('')}</div>
+  <p class="micro">통계기둥 높이는 값의 시각적 표현이며 건물 높이와 무관합니다. 단위 혼합 시 중지됩니다.</p>
+  <div class="divider"></div><div class="section-heading"><h3>지도 엔진</h3><button class="text-button" data-act="help">${icon('info')}</button></div>
+  <div class="engine-options"><button data-engine="maplibre" class="${state.engine === 'maplibre' ? 'active' : ''}">기본 웹지도 <span>OSM</span></button><button data-engine="vworld" class="${state.engine === 'vworld' ? 'active' : ''}">브이월드 3D <span>${config?.vworld3d ? '설정됨' : '키 필요'}</span></button><button data-engine="preview" class="${state.engine === 'preview' ? 'active' : ''}">디자인 미리보기 <span>가상</span></button></div>
+  <button class="btn secondary full tour-button ${state.touring ? 'touring' : ''}" data-act="tour">${icon(state.touring ? 'pause' : 'play')}${state.touring ? '카메라 투어 중지' : '카메라 투어'}</button>
+  <div class="connection-box"><div><span class="status-dot"></span><strong>데이터 연결 센터</strong></div><p>키·자료 연결 상태를 확인하세요.</p><button class="text-button" data-act="data">연결 설정 살펴보기 ${icon('arrow')}</button></div>`;
+}
+function renderTimeline(features, state, months) {
+  const comp = metricCompatibility(features), totals = months.map(m => comp.compatible ? summarize(features, m).total : null);
+  const max = Math.max(1, ...totals.filter(v => v !== null));
+  return `<div class="timeline-meta"><span class="eyebrow">TIME EXPLORER</span><strong>${state.month.replace('-', '.')} <small>${state.dataset === 'demo' ? '시연' : '조회'}</small></strong><span>기준월을 이동해 비교하세요</span></div><button class="play-button" data-act="play" aria-label="${state.playing ? '시간 재생 중지' : '월별 시간 재생'}">${icon(state.playing ? 'pause' : 'play')}</button><div class="timeline-bars">${months.map((m, i) => `<button data-month="${m}" class="time-tick ${state.month === m ? 'active' : ''}" aria-label="${m} 선택" aria-pressed="${state.month === m}"><span class="time-bar"><i style="height:${totals[i] === null ? 3 : Math.max(8, totals[i] / max * 100)}%"></i></span><span>${Number(m.slice(5))}월</span></button>`).join('')}<div class="time-baseline"></div></div><div class="timeline-info">${icon('calendar')}<span>${state.dataset === 'demo' ? '합성 시계열' : '입력된 시계열'}<small>관측값 없는 월은 — 처리</small></span></div>`;
+}
+
+
+// MODULE: app
+
+
+
+
+
+
+const root = document.getElementById('app');
+root.innerHTML = baseLayout();
+const offlineDesign = document.documentElement.dataset.offlinePreview === 'true' || new URLSearchParams(location.search).get('preview') === '1';
+let savedTheme = 'dark';
+try { savedTheme = localStorage.getItem('seoon:theme') === 'light' ? 'light' : 'dark'; } catch { /* Storage may be disabled. */ }
+const state = {
+  workspace: 'overview', dataset: 'demo', engine: offlineDesign ? 'preview' : 'maplibre', theme: savedTheme,
+  categories: Object.keys(CATEGORIES), month: '2026-07', search: '',
+  radiusCenter: null, radiusMeters: 500, selectedId: null, pickMode: null,
+  scenario: null, is3D: true, touring: false, playing: false,
+  layers: { buildings: true, columns: true, facilities: true, projects: false },
+};
+const demoData = makeDemoData();
+let actualFacilities = [], actualProjects = [], config = null, months = [...MONTHS], sourceName = '',
+  filtered = [], activeProjects = [], viewSnapshots = [], loadToken = 0, sourceMessages = [], previousActualMode = 'published';
+let playTimer, tourTimer, toastTimer, lastMapStatus = { kind: 'loading', message: '지도 연결 준비 중' };
+const map = new CityMap(document.getElementById('map-stage'), {
+  select(feature) {
+    if (state.pickMode) { mapClicked(feature.geometry.coordinates); return; }
+    state.selectedId = feature.properties.id; render();
+  }, click: mapClicked, status: mapStatus,
+});
+function activeFeatures() { return state.dataset === 'demo' ? demoData.facilities.features : actualFacilities; }
+function currentProjectSource() { return state.dataset === 'demo' ? demoData.projects.features : actualProjects; }
+function render() {
+  const source = activeFeatures();
+  filtered = filterFacilities(source, state);
+  if (state.selectedId && !filtered.some(f => f.properties.id === state.selectedId)) state.selectedId = null;
+  activeProjects = currentProjectSource().filter(f => monthOverlaps(f.properties.start, f.properties.end, state.month));
+  document.documentElement.dataset.theme = state.theme;
+  document.getElementById('insights').innerHTML = renderInsights(filtered, source.length, activeProjects, state, months, sourceName);
+  document.getElementById('layers-panel').innerHTML = renderLayers(source, state, config);
+  const mobileLayers = document.getElementById('mobile-layer-settings');
+  if (mobileLayers) mobileLayers.innerHTML = renderLayers(source, state, config);
+  document.getElementById('timeline').innerHTML = renderTimeline(filtered, state, months);
+  document.querySelectorAll('[data-workspace]').forEach(button => { button.classList.toggle('active', button.dataset.workspace === state.workspace); button.setAttribute('aria-pressed', String(button.dataset.workspace === state.workspace)); });
+  document.getElementById('dimension-button').textContent = state.is3D ? '3D' : '2D';
+  document.getElementById('dimension-button').classList.toggle('active', state.is3D);
+  document.querySelector('[data-act="theme"]').innerHTML = icon(state.theme === 'dark' ? 'sun' : 'moon');
+  const comp = metricCompatibility(filtered);
+  map.update(filtered, activeProjects, { ...state, layers: { ...state.layers, columns: state.layers.columns && comp.compatible } });
+  const limit = state.engine === 'vworld' ? 500 : 1000;
+  const capNote = (filtered.length > limit ? ` · 시설 표시 ${limit}개 제한 / 표 ${filtered.length}개` : '') + (filtered.length > 500 && state.layers.columns ? ' · 통계기둥 최대 500개 표시' : '');
+  document.getElementById('map-disclosure').innerHTML = `${icon('info')}<span>${state.engine === 'preview' ? '<b>가상 도시 · 실제 지도 아님</b>' : state.engine === 'vworld' ? '브이월드 3D · 지형/건물 기준일 별도 확인' : 'OpenStreetMap · 건물 누락·추정 높이 포함 가능'}<small>${state.dataset === 'demo' ? '시설 위치·수치·사업은 모두 합성 시연자료' : '등록자료는 제공·입력 범위만 표시 · 별도 검수 필요'}${capNote}</small></span>`;
+  document.querySelector('.workspace').classList.toggle('picking', !!state.pickMode);
+  if (state.pickMode) toast(state.pickMode === 'radius' ? '지도에서 반경 조회의 기준점을 선택하세요.' : '지도에서 가상 시설을 놓을 위치를 선택하세요.', 6000);
+}
+function mapStatus(kind, message) {
+  lastMapStatus = { kind, message };
+  const status = document.getElementById('map-status');
+  status.className = `map-status ${kind}`; status.innerHTML = `<span class="status-dot"></span>${escapeHTML(message)}`;
+  const err = document.getElementById('map-error');
+  err.hidden = kind !== 'error';
+  if (kind === 'error') err.innerHTML = `<span class="error-map-icon">${icon('layers')}</span><h2>지도 연결을 확인해주세요</h2><p>${escapeHTML(message)}</p><p>실제 지도를 가상 지도와 자동으로 바꾸지 않습니다.<br>디자인만 확인하려면 미리보기를 선택하세요.</p><div><button class="btn primary" data-act="retry-map">다시 연결</button><button class="btn secondary" data-engine="preview">디자인 미리보기</button></div>`;
+}
+function toast(message, timeout = 3000) { const el = document.getElementById('toast'); el.textContent = message; el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, timeout); }
+function showDialog(title, html) {
+  document.getElementById('dialog-title').innerHTML = title;
+  document.getElementById('dialog-body').innerHTML = html;
+  const dialog = document.getElementById('dialog'); if (!dialog.open) dialog.showModal();
+}
+function closeDialog() { document.getElementById('dialog').close(); }
+function mapClicked(coordinates) {
+  if (state.pickMode === 'radius') { state.radiusCenter = coordinates; state.workspace = 'access'; state.pickMode = null; state.selectedId = null; render(); toast(`${state.radiusMeters}m 직선거리 반경으로 조회했습니다.`); }
+  else if (state.pickMode === 'scenario') {
+    state.scenario = coordinates; state.pickMode = null; render();
+    const nearby = activeFeatures().filter(f => distanceMeters(coordinates, f.geometry.coordinates) <= state.radiusMeters).length;
+    toast(`가상 시설 배치 · 주변 ${state.radiusMeters}m 내 등록자료 ${nearby}개. 수요 예측이 아닙니다.`, 6000);
+  }
+}
+function stopTimers() { clearInterval(playTimer); clearInterval(tourTimer); state.playing = false; state.touring = false; }
+function syncMonths() {
+  const all = [...new Set(activeFeatures().flatMap(f => Object.keys(f.properties.monthly || {})))].sort();
+  months = all.length ? all.slice(-24) : [...MONTHS];
+  if (!months.includes(state.month)) state.month = months[months.length - 1];
+}
+function resetFilters() { state.search = ''; state.radiusCenter = null; state.selectedId = null; state.categories = Object.keys(CATEGORIES); state.pickMode = null; }
+async function switchEngine(engine) {
+  if (engine === 'vworld' && !config?.vworld3d) { openDataCenter(); toast('Vercel 환경변수에 VWORLD_BROWSER_KEY와 VWORLD_DOMAIN을 먼저 등록하세요.', 5000); return; }
+  stopTimers(); state.engine = engine; state.is3D = true; render();
+  await map.start(engine, state.theme); map.set3D(state.is3D);
+}
+function saveDownload(name, content, type = 'application/json;charset=utf-8') {
+  const url = URL.createObjectURL(new Blob([content], { type })), a = document.createElement('a');
+  a.href = url; a.download = name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function currentSnapshot() {
+  const comp = metricCompatibility(filtered), stats = summarize(filtered, state.month);
+  return { version: APP.version, savedAt: new Date().toISOString(), workspace: WORKSPACES[state.workspace].name,
+    dataset: state.dataset, demo: state.dataset === 'demo', preview: state.engine === 'preview', month: state.month,
+    categories: [...state.categories], query: state.search, radiusMeters: state.radiusCenter ? state.radiusMeters : null,
+    radiusCenter: state.radiusCenter, count: stats.count, measured: stats.measured, missing: stats.missing,
+    total: comp.compatible ? stats.total : null, metricName: comp.name, metricUnit: comp.unit,
+    scenario: state.scenario, source: [...new Set(filtered.map(f => `${f.properties.sourceName} (${f.properties.sourceDate})`))],
+    includedIds: filtered.map(f => f.properties.id), notes: sourceMessages,
+  };
+}
+function openCompare() {
+  const snapshot = currentSnapshot(); viewSnapshots = [...viewSnapshots, snapshot].slice(-2);
+  const cards = viewSnapshots.map((s, i) => `<section class="snapshot-card"><span class="section-index">VIEW ${i === 0 ? 'A' : 'B'}</span><h3>${escapeHTML(s.workspace)}</h3><p>${s.month} · ${s.demo ? '합성 시연' : '등록 자료'}</p><div class="big-value">${fmt(s.count)}<small>개</small></div><p>${s.radiusMeters ? s.radiusMeters + 'm 직선거리' : '반경 조건 없음'}</p><p>${escapeHTML(s.categories.map(c => CATEGORIES[c].name).join(' · '))}</p><small>${escapeHTML(s.query || '검색조건 없음')}</small></section>`).join('');
+  showDialog(`${icon('compare')} 조회조건 비교`, `<p class="dialog-lead">현재 조건을 ${viewSnapshots.length === 1 ? 'A로' : 'B로'} 저장했습니다. 기간·지역·대상 조건이 다르면 단순 증감으로 해석하지 마세요.</p><div class="snapshot-grid">${cards}${viewSnapshots.length === 1 ? '<section class="snapshot-card empty"><strong>B 조건을 추가하세요</strong><p>창을 닫고 기간·반경·시설 종류를 바꾼 뒤<br>‘조건 비교’를 다시 누르세요.</p></section>' : ''}</div><p class="notice">비교 결과는 시설 부족·사업 우선순위·정책 효과를 자동 판정하지 않습니다. 이 비교는 현재 브라우저 메모리에만 있습니다.</p><div class="dialog-actions"><button class="btn secondary" data-act="clear-comparison">비교 지우기</button><button class="btn primary" data-act="save-comparison">조건 JSON 내보내기</button></div>`);
+}
+function openFacilityList() {
+  showDialog(`${icon('data')} 조회시설 ${fmt(filtered.length)}개`, `<p class="dialog-lead">${state.month} · ${state.dataset === 'demo' ? '모든 위치·수치는 합성 시연입니다.' : '자료 최신성·위치 정확도를 별도로 검수하세요.'}</p><div class="data-table-wrap"><table class="data-table"><thead><tr><th>시설명</th><th>종류</th><th>값</th><th>출처·기준일</th></tr></thead><tbody>${filtered.slice(0, 300).map(f => `<tr><td><button class="text-button" data-feature="${escapeHTML(f.properties.id)}">${escapeHTML(f.properties.name)}</button></td><td>${CATEGORIES[f.properties.category].name}</td><td>${fmt(metricAt(f, state.month))} ${escapeHTML(f.properties.metricUnit)}</td><td>${escapeHTML(f.properties.sourceName)}<small>${escapeHTML(f.properties.sourceDate)}</small></td></tr>`).join('')}</tbody></table></div><p class="micro">화면 표는 최대 300개입니다. ‘조회자료 내보내기’에는 현재 조회한 전체 자료가 포함됩니다.</p><div class="dialog-actions"><button class="btn primary" data-act="csv">${icon('download')} 조회자료 내보내기</button></div>`);
+}
+function openDataCenter() {
+  showDialog(`${icon('data')} 데이터 연결 센터`, `
+  <p class="dialog-lead">지도 배경과 행정자료는 별도로 연결합니다. <strong>‘설정됨’은 인증 성공이나 데이터 검수 완료를 의미하지 않습니다.</strong></p>
+  <div class="connector-grid">
+    <div class="connector"><div class="section-heading"><h3>기본 지도 · OSM</h3><span class="badge mint">키 불필요</span></div><p>OpenFreeMap 타일과 OSM 건물. 외부 접속이 필요하고 자료 누락·추정 높이가 있을 수 있습니다.</p></div>
+    <div class="connector"><div class="section-heading"><h3>브이월드 3D</h3><span class="badge ${config?.vworld3d ? 'mint' : 'amber'}">${config?.vworld3d ? '환경변수 설정됨' : '미설정'}</span></div><code>VWORLD_BROWSER_KEY<br>VWORLD_DOMAIN</code><p>SDK용 공개키는 브라우저에 전달됩니다. 도메인 등록·API 승인이 필요합니다.</p><button class="btn secondary" data-engine="vworld">3D 연결 시험</button></div>
+    <div class="connector"><div class="section-heading"><h3>브이월드 검색·경계</h3><span class="badge ${config?.vworldRest ? 'mint' : 'amber'}">${config?.vworldRest ? '환경변수 설정됨' : '미설정'}</span></div><code>VWORLD_API_KEY<br>VWORLD_DOMAIN<br>VWORLD_SIG_CODE</code><p>서버에서 키를 사용합니다. 경계조회는 제공기관의 시군구 코드 확인이 필요합니다.</p><button class="btn secondary" data-act="load-boundary">경계 연결 시험</button></div>
+    <div class="connector"><div class="section-heading"><h3>공공데이터 · 시설</h3><span class="badge ${config?.publicData ? 'mint' : 'amber'}">${config?.publicData ? '필수값 설정됨' : '미설정'}</span></div><code>DATA_GO_KR_SERVICE_KEY<br>DATA_PORTAL_URL<br>DATA_FIELD_MAP<br>DATA_SOURCE_NAME / DATE</code><p>선택한 API의 주소·열 이름을 지정해야 합니다. JSON 응답만 지원합니다.</p><button class="btn secondary" data-act="load-api-data">API 자료 불러오기</button></div>
+  </div>
+  <section class="upload-section"><h3>${icon('upload')} 파일로 먼저 연결하기</h3><p>GeoJSON Point 자료를 현재 브라우저에만 불러옵니다. 파일을 서버나 AI에 보내지 않습니다. 새로고침하면 가져온 자료는 사라집니다.</p><div class="dialog-actions"><button class="btn primary" data-act="import">GeoJSON 가져오기</button><a class="btn secondary" href="/data/facilities-template.geojson" download>입력 양식</a><button class="btn secondary" data-act="published">저장소 공개자료 읽기</button></div><p class="micro">좌표계 EPSG:4326 / 최대 2MB·5,000개 / 개인정보를 넣지 마세요. 공개 사이트용 자료는 검수 후 public/data/facilities.geojson에 반영하세요.</p></section>
+  <section class="source-log"><h3>최근 처리 기록</h3>${sourceMessages.length ? sourceMessages.map(t => `<p>${escapeHTML(t)}</p>`).join('') : '<p>아직 실제 API 자료를 수집하지 않았습니다.</p>'}<p>지도 상태: ${escapeHTML(lastMapStatus.message)}</p></section>
+  <p class="notice">원본 API마다 명세가 다릅니다. 인증키 하나로 모든 시설·민원·인구가 자동 수집되거나 학습되지 않습니다. 이 버전은 실제 행정경계·시설 최신성을 보증하지 않습니다.</p>`);
+}
+function openHelp() {
+  showDialog(`${icon('book')} 서구온 사용 안내`, `
+    <p class="dialog-lead">공간을 보는 화면과 근거를 읽는 패널이 연결되는 웹 시제품입니다.</p>
+    <div class="help-steps"><div><b>01</b><h3>지도 확인</h3><p>기본 웹지도는 실제 OSM 지리정보를 사용합니다. 디자인 미리보기는 외형만 확인하는 가상 도시입니다.</p></div><div><b>02</b><h3>업무 선택</h3><p>생활권 살피기에서 반경을 지정하고, 운영 추이에서는 월별 값을 확인하세요.</p></div><div><b>03</b><h3>조건 비교</h3><p>첫 화면 조건을 A로 저장한 뒤 조건을 바꾸고 다시 비교하면 B가 추가됩니다.</p></div><div><b>04</b><h3>근거 남기기</h3><p>검토표·CSV·조건 JSON을 내보낼 수 있습니다. 자료 성격과 기준일도 함께 기록합니다.</p></div></div>
+    <h3>이 버전이 하는 일</h3><p>지도 조회, 시설 필터, 직선거리 반경, 월별 값의 표시, 같은 시설의 전월 대비 증감, 대표점 간 근접 사업의 일정 중첩 조회입니다.</p>
+    <h3>이 버전이 하지 않는 일</h3><p>보행시간 분석, 시설 부족 판정, 실제 침수·교통·일조 예측, 민원시스템 연계, 공사 영향 추정, AI 모델 학습은 포함하지 않습니다. ‘근거 브리핑’은 검증 가능한 규칙 기반 설명이며 LLM 호출이 아닙니다.</p>
+    <p class="notice">기본 배경의 건물은 측량 모델이 아닙니다. OSM 누락과 높이 추정이 있을 수 있습니다. 브이월드 연결 후에도 서구 제공범위·기준일·정확도를 확인해야 합니다.</p>
+    <div class="dialog-actions"><button class="btn primary" data-act="data">자료 연결하기</button><button class="btn secondary" data-act="tour">카메라 투어</button></div>`);
+}
+function exportCsv() {
+  const headers = ['id', '시설명', '분류', '경도', '위도', '조회월', '지표', '값', '단위', '자료성격', '출처', '기준일'];
+  const rows = filtered.map(f => [f.properties.id, f.properties.name, CATEGORIES[f.properties.category].name, ...f.geometry.coordinates, state.month, f.properties.metricName, metricAt(f, state.month) ?? '', f.properties.metricUnit, DATA_KINDS[f.properties.dataKind], f.properties.sourceName, f.properties.sourceDate]);
+  saveDownload(`서구온_${state.dataset === 'demo' ? '시연_' : ''}${state.month}_조회자료.csv`, '\uFEFF' + [headers, ...rows].map(r => r.map(safeCsvCell).join(',')).join('\r\n'), 'text/csv;charset=utf-8');
+}
+function exportReport() {
+  const s = currentSnapshot(), image = map.screenshot(), disclaimer = s.demo ? '합성 시연자료 — 실제 서구 시설·실적·사업이 아닙니다. 행정판단에 사용하지 마세요.' : '입력·수집 자료 — 위치·최신성·완전성 검수 전 참고용입니다.';
+  const html = `<!doctype html><html lang="ko"><meta charset="utf-8"><title>서구온 검토표 ${escapeHTML(s.month)}</title><style>body{font:15px/1.65 system-ui,sans-serif;color:#19313b;max-width:1000px;margin:40px auto;padding:0 28px}header{border-bottom:3px solid #157762;padding-bottom:20px}h1{font-size:28px}small{color:#586c73}.notice{background:#fff3da;padding:14px;border:1px solid #e8c884}img{width:100%;max-height:480px;object-fit:cover}table{width:100%;border-collapse:collapse}td,th{padding:10px;text-align:left;border-bottom:1px solid #d9e2e4}h2{margin-top:28px}button{padding:10px 20px}footer{margin-top:30px;border-top:1px solid #d9e2e4;padding-top:16px}@media print{button{display:none}body{margin:0;font-size:12px}.notice{-webkit-print-color-adjust:exact}h2{break-after:avoid}tr{break-inside:avoid}}</style><header><small>FUNONWORK LAB / SEO:ON v${APP.version}</small><h1>서구 공간행정 검토표</h1><p>${escapeHTML(s.workspace)} · ${escapeHTML(s.month)}</p></header><p class="notice">${escapeHTML(disclaimer)}</p>${image ? `<img src="${image}" alt="조회 화면 지도"><p><small>${s.preview ? '가상 도시 디자인 미리보기 — 실제 지도 아님' : 'OpenFreeMap · © OpenMapTiles · © OpenStreetMap contributors / ODbL. 건물 높이는 추정 포함.'}</small></p>` : '<p>이 지도 엔진에서는 캡처가 포함되지 않습니다. 현재 화면을 별도로 기록하세요.</p>'}<h2>1. 조회 조건</h2><table><tr><th>업무</th><td>${escapeHTML(s.workspace)}</td></tr><tr><th>분류</th><td>${escapeHTML(s.categories.map(k => CATEGORIES[k].name).join(', '))}</td></tr><tr><th>검색</th><td>${escapeHTML(s.query || '전체')}</td></tr><tr><th>반경</th><td>${s.radiusMeters ? `${s.radiusMeters}m · 직선거리 / 기준좌표 ${s.radiusCenter.map(c => c.toFixed(6)).join(', ')}` : '반경 조건 없음'}</td></tr></table><h2>2. 확인된 값</h2><table><tr><th>조회 시설</th><td>${fmt(s.count)}개</td></tr><tr><th>${escapeHTML(s.metricName)} 합계</th><td>${fmt(s.total)} ${escapeHTML(s.metricUnit)} (단위 혼합·결측만 있으면 —)</td></tr><tr><th>결측</th><td>${fmt(s.missing)}개 / 값 있는 시설 ${fmt(s.measured)}개</td></tr></table><h2>3. 출처와 한계</h2>${s.source.map(t => `<p>${escapeHTML(t)}</p>`).join('') || '<p>조회된 출처 없음</p>'}<p>행정구역 전체 시설 현황이 아닐 수 있습니다. 직선거리와 보행 접근성은 다르며, 표시 건수만으로 시설 부족·수요·사업효과를 판단하지 않습니다. 통계기둥은 건물 높이가 아닙니다.</p>${s.notes.map(t => `<p>${escapeHTML(t)}</p>`).join('')}<h2>4. 담당자 검토의견</h2><p>__________________________________________________________________</p><p>__________________________________________________________________</p><footer><small>생성 ${escapeHTML(s.savedAt)} / 펀온워크 공개 시험서비스 / 최종 판단은 담당자 수행<br>OSM: https://www.openstreetmap.org/copyright · OpenFreeMap: https://openfreemap.org</small></footer></html>`;
+  saveDownload(`서구온_${s.demo ? '시연_' : ''}${s.month}_검토표.html`, html, 'text/html;charset=utf-8');
+  toast('지도·출처·주의사항을 포함한 HTML 검토표를 저장했습니다. 브라우저에서 열어 인쇄할 수 있습니다.', 5500);
+}
+async function loadConfig() {
+  try { const r = await fetch('/api/config', { signal: AbortSignal.timeout(6000) }); if (r.ok) config = await r.json(); }
+  catch { /* Static preview remains usable without server functions. */ }
+  render();
+}
+async function usePublished() {
+  const token = ++loadToken; stopTimers(); toast('저장소의 공개자료를 읽고 있습니다.');
+  try {
+    const parsed = await loadPublishedData(); if (token !== loadToken) return;
+    actualFacilities = parsed.accepted; actualProjects = parsed.projects; state.dataset = 'published'; previousActualMode = 'published'; sourceName = '저장소 공개 GeoJSON'; resetFilters();
+    sourceMessages = [`저장소 자료 ${parsed.accepted.length}개 / 제외 ${parsed.rejected}개`, ...parsed.errors.slice(0, 8)]; syncMonths(); render(); closeDialog();
+    toast(parsed.accepted.length ? `${parsed.accepted.length}개 자료를 읽었습니다. 미검수 자료입니다.` : '아직 공개 시설자료가 없습니다. GeoJSON을 가져오거나 API를 연결하세요.', 5000);
+  } catch (error) { toast(error.message, 5000); }
+}
+async function loadApiData() {
+  const token = ++loadToken; stopTimers(); toast('공공데이터 API를 조회하고 있습니다.');
+  try {
+    const r = await fetch('/api/public-data', { signal: AbortSignal.timeout(12000) }), data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || '자료 조회 실패');
+    if (token !== loadToken) return;
+    const parsed = validateImport(data.geojson);
+    actualFacilities = parsed.accepted.map(f => ({ ...f, properties: { ...f.properties, dataKind: 'external' } })); actualProjects = [];
+    state.dataset = 'external'; previousActualMode = 'external'; sourceName = data.sourceName; resetFilters();
+    sourceMessages = [...(data.notices || []), ...parsed.errors.slice(0, 8), `수집 ${new Date().toLocaleString('ko-KR')} / 검수 전`]; syncMonths(); render(); closeDialog();
+    toast(`${actualFacilities.length}개 수집. ${data.partial ? '일부 자료만 수집되었습니다.' : '위치·최신성 검수가 필요합니다.'}`, 5500);
+  } catch (error) { sourceMessages = [`API 오류: ${error.message}`]; toast(error.message, 6000); openDataCenter(); }
+}
+async function loadBoundary() {
+  toast('브이월드 행정경계를 조회하고 있습니다.');
+  try {
+    const r = await fetch('/api/vworld?kind=boundary', { signal: AbortSignal.timeout(12000) }), data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || '경계 조회 실패');
+    map.setBoundary(data.geojson); sourceMessages.push(`브이월드 경계 조회 · 요청 시군구 코드 ${data.code} · 제공기관 현행자료 확인 필요`);
+    closeDialog(); toast('제공된 경계를 연결했습니다. 요청 코드와 대상 구역이 일치하는지 확인하세요.', 6000);
+  } catch (error) { sourceMessages.push(`경계 미수집: ${error.message}`); toast(error.message, 6000); }
+}
+async function remoteSearch() {
+  const q = document.getElementById('search-input')?.value.trim();
+  if (!q || q.length < 2) { toast('시설 검색창에 2자 이상의 장소명을 입력한 뒤 눌러주세요.'); return; }
+  toast('브이월드에서 장소를 검색합니다.');
+  try {
+    const r = await fetch(`/api/vworld?kind=search&q=${encodeURIComponent(q)}`, { signal: AbortSignal.timeout(12000) }), data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.error || '검색 실패');
+    showDialog(`${icon('search')} 브이월드 장소검색`, `<p class="dialog-lead">‘${escapeHTML(q)}’ 검색 결과입니다. 외부 검색 지점은 등록된 행정자료에 자동 추가하지 않습니다.</p><div class="remote-results">${data.items.map(item => `<button data-remote-lon="${item.longitude}" data-remote-lat="${item.latitude}"><strong>${escapeHTML(item.name)}</strong><span>${escapeHTML(item.address)}</span>${icon('arrow')}</button>`).join('') || '<p>요청한 주변 범위의 검색 결과가 없습니다.</p>'}</div>`);
+  } catch (error) { toast(error.message, 6000); }
+}
+
+const actions = {
+  theme() { state.theme = state.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('seoon:theme', state.theme); } catch {} render(); if (state.engine === 'maplibre') map.start(state.engine, state.theme).then(() => map.set3D(state.is3D)); },
+  home() { resetFilters(); state.scenario = null; state.workspace = 'overview'; render(); map.flyTo({ center: APP.center, zoom: 14.5, pitch: state.is3D ? 57 : 0, bearing: -28 }); },
+  'pick-radius'() { state.workspace = 'access'; state.pickMode = 'radius'; closeDialog(); render(); },
+  'clear-radius'() { state.radiusCenter = null; state.pickMode = null; render(); },
+  scenario() { if (state.scenario && !state.pickMode) { state.scenario = null; render(); toast('가상 시설을 지웠습니다.'); return; } state.pickMode = state.pickMode === 'scenario' ? null : 'scenario'; if (!state.pickMode) state.scenario = null; render(); },
+  'clear-search'() { state.search = ''; render(); },
+  'clear-selection'() { state.selectedId = null; render(); },
+  'zoom-in'() { map.zoomBy(.6); }, 'zoom-out'() { map.zoomBy(-.6); }, rotate() { map.rotate(25); },
+  '3d'() { state.is3D = !state.is3D; map.set3D(state.is3D); render(); },
+  fullscreen() { if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); else document.documentElement.requestFullscreen?.().catch(() => toast('브라우저에서 전체화면 전환을 허용하지 않았습니다.')); },
+  tour() {
+    closeDialog(); if (state.touring) { clearInterval(tourTimer); state.touring = false; render(); return; }
+    clearInterval(playTimer); state.playing = false; state.touring = true; let i = 0;
+    const hop = () => { const camera = CAMERAS[i++ % CAMERAS.length]; map.flyTo({ ...camera, pitch: state.is3D ? camera.pitch : 0 }); toast(`${camera.name} 카메라 이동 · 지리정보의 행정경계 선택이 아닙니다.`, 2700); };
+    hop(); tourTimer = setInterval(hop, 7000); render();
+  },
+  play() {
+    if (state.playing) { clearInterval(playTimer); state.playing = false; render(); return; }
+    clearInterval(tourTimer); state.touring = false; state.playing = true;
+    playTimer = setInterval(() => { state.month = months[(months.indexOf(state.month) + 1) % months.length]; render(); }, 1700); render();
+  },
+  'toggle-demo'() {
+    ++loadToken; stopTimers(); resetFilters();
+    if (state.dataset === 'demo') { state.dataset = previousActualMode; if (!actualFacilities.length) { usePublished(); return; } }
+    else { state.dataset = 'demo'; }
+    syncMonths(); render();
+  },
+  data: openDataCenter, help: openHelp, compare: openCompare, list: openFacilityList,
+  csv: exportCsv, report: exportReport, 'close-dialog': closeDialog,
+  'retry-map'() { map.start(state.engine, state.theme).then(() => map.set3D(state.is3D)); },
+  'clear-comparison'() { viewSnapshots = []; closeDialog(); toast('비교조건을 지웠습니다.'); },
+  'save-comparison'() { saveDownload('서구온_조회조건비교.json', JSON.stringify(viewSnapshots, null, 2)); },
+  import() { document.getElementById('file-input').click(); },
+  published: usePublished, 'load-api-data': loadApiData, 'load-boundary': loadBoundary, 'remote-search': remoteSearch,
+  'mobile-settings'() { showDialog(`${icon('layers')} 지도와 자료 설정`, `<div id="mobile-layer-settings">${renderLayers(activeFeatures(), state, config)}</div><div class="dialog-actions"><button class="btn secondary" data-act="compare">조건 비교</button><button class="btn secondary" data-act="help">이용 안내</button></div>`); },
+  'mobile-panel'() { document.querySelector('.analysis-panel').classList.toggle('mobile-open'); },
+};
+document.addEventListener('click', event => {
+  const button = event.target.closest('button'); if (!button) return;
+  if (button.dataset.act && actions[button.dataset.act]) { actions[button.dataset.act](); return; }
+  if (button.dataset.workspace) { state.workspace = button.dataset.workspace; state.pickMode = null; state.layers.projects = state.workspace === 'projects'; render(); return; }
+  if (button.dataset.camera) { const camera = CAMERAS.find(c => c.id === button.dataset.camera); if (camera) map.flyTo({ ...camera, pitch: state.is3D ? camera.pitch : 0 }); return; }
+  if (button.dataset.engine) { closeDialog(); switchEngine(button.dataset.engine); return; }
+  if (button.dataset.layer) { const key = button.dataset.layer; state.layers[key] = !state.layers[key]; render(); return; }
+  if (button.dataset.month) { clearInterval(playTimer); state.playing = false; state.month = button.dataset.month; render(); return; }
+  if (button.dataset.radius) { state.radiusMeters = Number(button.dataset.radius); render(); return; }
+  if (button.dataset.feature) {
+    const f = filtered.find(f => f.properties.id === button.dataset.feature); if (!f) return;
+    state.selectedId = f.properties.id; closeDialog(); render(); map.flyTo({ center: f.geometry.coordinates, zoom: 15.7, pitch: state.is3D ? 57 : 0 }); return;
+  }
+  if (button.dataset.remoteLon) { closeDialog(); map.flyTo({ center: [Number(button.dataset.remoteLon), Number(button.dataset.remoteLat)], zoom: 16, pitch: state.is3D ? 55 : 0 }); }
+});
+document.addEventListener('change', event => {
+  if (event.target.matches('[data-category]')) {
+    const key = event.target.dataset.category; state.categories = event.target.checked ? [...new Set([...state.categories, key])] : state.categories.filter(c => c !== key); render();
+  }
+});
+document.addEventListener('submit', event => {
+  if (event.target.id !== 'search-form') return; event.preventDefault(); state.search = document.getElementById('search-input').value.trim(); render();
+});
+document.getElementById('file-input').addEventListener('change', async event => {
+  const file = event.target.files?.[0]; if (!file) return; ++loadToken; stopTimers();
+  try {
+    if (file.size > 2 * 1024 * 1024) throw new Error('2MB 이하 파일만 가져올 수 있습니다.');
+    const parsed = validateImport(JSON.parse(await file.text()));
+    if (!parsed.accepted.length && parsed.errors.length) throw new Error(parsed.errors.slice(0, 3).join('\n'));
+    actualFacilities = parsed.accepted; actualProjects = []; state.dataset = 'imported'; previousActualMode = 'imported'; sourceName = file.name;
+    sourceMessages = [`브라우저에서 ${file.name} 가져옴 · 서버 전송 없음`, `수락 ${parsed.accepted.length} / 제외 ${parsed.rejected}`, ...parsed.errors.slice(0, 8)];
+    resetFilters(); syncMonths(); render(); closeDialog(); toast(`${parsed.accepted.length}개 불러오기 완료 · 제외 ${parsed.rejected}개 · 사용자 자료 미검수`, 6000);
+    if (actualFacilities[0]) map.flyTo({ center: actualFacilities[0].geometry.coordinates, zoom: 14.8 });
+  } catch (error) { toast(error.message || '자료 형식 확인 실패', 7000); }
+  event.target.value = '';
+});
+document.addEventListener('keydown', event => { if (event.key === 'Escape') { state.pickMode = null; stopTimers(); render(); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { stopTimers(); render(); } });
+window.addEventListener('beforeunload', () => { stopTimers(); map.destroy(); });
+render(); map.start(state.engine, state.theme); loadConfig();
+
+</script>
+</body>
+</html>

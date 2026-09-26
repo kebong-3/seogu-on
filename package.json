@@ -1,0 +1,16 @@
+{
+  "name": "seo-on-digital-twin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "펀온워크 · 서구 공간행정 웹 시제품",
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "preview": "node scripts/dev.mjs --dist"
+  },
+  "license": "MIT"
+}
