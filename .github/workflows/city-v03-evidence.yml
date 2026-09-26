@@ -1,0 +1,64 @@
+name: City v0.3 public evidence
+on:
+  push:
+    branches: [feature/city-camera-v0.3]
+    paths: [.github/workflows/city-v03-evidence.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect public assets without credentials
+        shell: bash
+        run: |
+          mkdir -p evidence/vendor evidence/sources
+          python3 - <<'PY'
+          import urllib.request,json,pathlib,concurrent.futures,hashlib,datetime
+          root=pathlib.Path('evidence')
+          urls={
+            'vendor/polygon-clipping.js':'https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.7/dist/polygon-clipping.umd.min.js',
+            'vendor/polygon-clipping.LICENSE':'https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.7/LICENSE.md',
+            'vendor/hls.min.js':'https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js',
+            'vendor/hls.LICENSE':'https://cdn.jsdelivr.net/npm/hls.js@1.6.13/LICENSE',
+            'vendor/maplibre-gl.js':'https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.js',
+            'vendor/maplibre-gl.css':'https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.css',
+            'vendor/maplibre.LICENSE':'https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/LICENSE.txt',
+            'sources/its-cctv.html':'https://www.its.go.kr/opendata/opendataList?service=cctv',
+            'sources/its-events.html':'https://www.its.go.kr/opendata/opendataList?service=event',
+            'sources/vworld-reference.html':'https://www.vworld.kr/dev/v4dv_3dmap2_s001.do',
+            'sources/config.json':'https://seogu-on.vercel.app/api/config',
+          }
+          def one(item):
+            name,url=item
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'SeoOn-development-source-check/0.3'})
+              with urllib.request.urlopen(req,timeout=35) as r: data=r.read(12000000);status=r.status
+              (root/name).write_bytes(data)
+              return {'file':name,'url':url,'status':status,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+            except Exception as e:return {'file':name,'url':url,'error':type(e).__name__}
+          results=list(concurrent.futures.ThreadPoolExecutor(max_workers=5).map(one,urls.items()))
+          query='[out:json][timeout:45];(way["leisure"="park"](35.07,126.77,35.22,126.94);relation["leisure"="park"](35.07,126.77,35.22,126.94););out geom;'
+          for endpoint in ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']:
+            try:
+              req=urllib.request.Request(endpoint,data=query.encode(),headers={'Content-Type':'text/plain','User-Agent':'SeoOn-development-source-check/0.3'})
+              with urllib.request.urlopen(req,timeout=60) as r: data=r.read(8000000)
+              obj=json.loads(data)
+              if 'elements' not in obj:raise ValueError('No elements')
+              (root/'sources/osm-parks.json').write_bytes(data)
+              results.append({'file':'sources/osm-parks.json','url':endpoint,'query':query,'elements':len(obj['elements']),'sha256':hashlib.sha256(data).hexdigest()});break
+            except Exception as e:results.append({'url':endpoint,'error':type(e).__name__})
+          (root/'manifest.json').write_text(json.dumps({'collectedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'results':results},ensure_ascii=False,indent=2))
+          PY
+      - name: Collect isolated Cesium test engine
+        run: |
+          npm pack cesium@1.121.0 --pack-destination /tmp
+          mkdir -p evidence/test-engine
+          tar -xzf /tmp/cesium-1.121.0.tgz -C evidence/test-engine package/Build/Cesium package/LICENSE.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: city-v03-public-evidence
+          path: evidence/
+          retention-days: 7
