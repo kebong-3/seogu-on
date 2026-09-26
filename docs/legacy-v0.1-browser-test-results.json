@@ -1,0 +1,134 @@
+{
+  "environment": "Chromium via Playwright set_content; synthetic renderer only",
+  "liveMapTested": false,
+  "liveApiTested": false,
+  "vercelDeploymentTested": false,
+  "passed": 31,
+  "checks": [
+    {
+      "name": "initial facility count is 48",
+      "passed": true
+    },
+    {
+      "name": "initial synthetic total is 3732",
+      "passed": true
+    },
+    {
+      "name": "synthetic geometry and data disclosure visible",
+      "passed": true
+    },
+    {
+      "name": "category filter updates linked count",
+      "passed": true
+    },
+    {
+      "name": "registered name search narrows result",
+      "passed": true
+    },
+    {
+      "name": "month drives timeline and analysis",
+      "passed": true
+    },
+    {
+      "name": "top-down switch changes dimension state",
+      "passed": true
+    },
+    {
+      "name": "light theme changes html state",
+      "passed": true
+    },
+    {
+      "name": "map click creates radius condition",
+      "passed": true
+    },
+    {
+      "name": "radius is explicitly straight-line",
+      "passed": true
+    },
+    {
+      "name": "radius buttons update selected state",
+      "passed": true
+    },
+    {
+      "name": "scenario is explicitly not demand prediction",
+      "passed": true
+    },
+    {
+      "name": "scenario can be removed",
+      "passed": true
+    },
+    {
+      "name": "snapshot A stored",
+      "passed": true
+    },
+    {
+      "name": "snapshot B compares explicit conditions",
+      "passed": true
+    },
+    {
+      "name": "JSON export keeps both condition snapshots and demo flag",
+      "passed": true
+    },
+    {
+      "name": "project method discloses representative point not polygon overlap",
+      "passed": true
+    },
+    {
+      "name": "facility table linked to current count",
+      "passed": true
+    },
+    {
+      "name": "CSV includes disclosure and source columns",
+      "passed": true
+    },
+    {
+      "name": "facility row opens selection details",
+      "passed": true
+    },
+    {
+      "name": "HTML report contains map image and synthetic disclosure",
+      "passed": true
+    },
+    {
+      "name": "missing API settings visible without secrets",
+      "passed": true
+    },
+    {
+      "name": "uploaded data replaces demo, no mixed datasets",
+      "passed": true
+    },
+    {
+      "name": "null observations stay missing",
+      "passed": true
+    },
+    {
+      "name": "zero observations remain zero",
+      "passed": true
+    },
+    {
+      "name": "untrusted facility name is text not image or executed JS",
+      "passed": true
+    },
+    {
+      "name": "mobile has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "mobile analysis opens",
+      "passed": true
+    },
+    {
+      "name": "mobile map/layer settings reachable",
+      "passed": true
+    },
+    {
+      "name": "mobile category filter persists after render",
+      "passed": true
+    },
+    {
+      "name": "no unhandled browser errors",
+      "passed": true
+    }
+  ],
+  "browserErrors": []
+}

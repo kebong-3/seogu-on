@@ -1,0 +1,5 @@
+{
+  "type": "FeatureCollection",
+  "features": [],
+  "_instructions": "실제 사업 Point/LineString/Polygon/MultiPolygon을 넣으세요. properties 필수: id(위치번호),projectId(사업번호),name,start,end,sourceName,sourceDate. 좌표 EPSG:4326. YYYY-MM-DD. 예산 자동합산 없음. 개인정보·비공개자료 입력 금지."
+}

@@ -11,7 +11,7 @@ const server = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost'); const path = decodeURIComponent(url.pathname);
     if (path.startsWith('/api/')) {
       const name = path.slice(5);
-      if (!['config', 'vworld', 'vworld-scene', 'public-data'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
+      if (!['config', 'vworld', 'vworld-scene', 'public-data', 'layers', 'weather', 'geocode'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
       const mod = await import(pathToFileURL(resolve(root, 'api', `${name}.js`)).href);
       await mod.default(req, res); return;
     }

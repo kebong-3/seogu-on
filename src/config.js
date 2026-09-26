@@ -1,5 +1,5 @@
 export const APP = Object.freeze({
-  name: 'SEO:ON', koreanName: '서구온', version: '0.1.0',
+  name: 'SEO:ON', koreanName: '서구온', version: '0.2.0',
   maker: 'FUNONWORK LAB', center: [126.859, 35.151],
   // 화면 조작용 범위이며 행정경계가 아닙니다.
   bounds: [[126.77, 35.07], [126.95, 35.23]],
@@ -9,6 +9,11 @@ export const CATEGORIES = Object.freeze({
   park: { name: '공원·녹지', color: '#58d6b2', icon: 'tree', unit: '건' },
   recycle: { name: '자원순환', color: '#f6bb61', icon: 'recycle', unit: '건' },
   shelter: { name: '생활안전', color: '#76b9ff', icon: 'shield', unit: '건' },
+  admin: { name: '행정·공공', color: '#7fcbd6', icon: 'layers', unit: '개' },
+  parking: { name: '교통·주차', color: '#c4b06e', icon: 'pin', unit: '개' },
+  health: { name: '보건·의료', color: '#f29baa', icon: 'heart', unit: '개' },
+  culture: { name: '문화·도서관', color: '#83bdeb', icon: 'book', unit: '개' },
+  toilet: { name: '생활편의', color: '#9fc9b4', icon: 'pin', unit: '개' },
   care: { name: '돌봄·생활', color: '#b29afa', icon: 'heart', unit: '건' },
 });
 export const WORKSPACES = Object.freeze({
@@ -23,4 +28,4 @@ export const CAMERAS = Object.freeze([
   { id: 'pungam', name: '풍암권역', center: [126.878, 35.126], zoom: 15.0, pitch: 58, bearing: 18 },
 ]);
 export const MONTHS = Array.from({ length: 12 }, (_, i) => `2026-${String(i + 1).padStart(2, '0')}`);
-export const DATA_KINDS = { demo: '합성 시연', provided: '사용자 자료·미검수', external: 'API 수집·미검수' };
+export const DATA_KINDS = { 'official-snapshot':'공식 공개본·위치 미검수', demo: '합성 시연', provided: '사용자 자료·미검수', external: 'API 수집·미검수' };

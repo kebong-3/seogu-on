@@ -1,0 +1,79 @@
+{
+  "passed": 18,
+  "checks": [
+    {
+      "name": "initial 325 actual source records",
+      "passed": true
+    },
+    {
+      "name": "18 administrative-dong options plus district",
+      "passed": true
+    },
+    {
+      "name": "five real public source layers",
+      "passed": true
+    },
+    {
+      "name": "selecting administrative dong filters fewer records",
+      "passed": true
+    },
+    {
+      "name": "map adapter receives same filtered count",
+      "passed": true
+    },
+    {
+      "name": "dong table 18 rows",
+      "passed": true
+    },
+    {
+      "name": "sum of all dong records",
+      "passed": true
+    },
+    {
+      "name": "5 layer management cards",
+      "passed": true
+    },
+    {
+      "name": "layer off preserves other four layers",
+      "passed": true
+    },
+    {
+      "name": "32 address-only records remain outside map",
+      "passed": true
+    },
+    {
+      "name": "32 explicit geocode actions",
+      "passed": true
+    },
+    {
+      "name": "CSV import adds not replaces source",
+      "passed": true
+    },
+    {
+      "name": "Imported administrative statistics shown with source",
+      "passed": true
+    },
+    {
+      "name": "Project time axis contains actual project months",
+      "passed": true
+    },
+    {
+      "name": "Project polygon/line source delivered to map adapter",
+      "passed": true
+    },
+    {
+      "name": "mobile administrative selector visible",
+      "passed": true
+    },
+    {
+      "name": "mobile no horizontal page overflow",
+      "passed": true
+    },
+    {
+      "name": "no unhandled JavaScript errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "scope": "Offline UI component integration. Map adapter and API transport replaced by declared test doubles. Actual bundled public JSON and application logic used. Does NOT verify external tile rendering or credentials."
+}

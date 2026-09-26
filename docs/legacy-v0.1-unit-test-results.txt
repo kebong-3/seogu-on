@@ -1,0 +1,338 @@
+
+> seo-on-digital-twin@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: Only exact approved HTTPS public data hosts are allowed
+ok 1 - Only exact approved HTTPS public data hosts are allowed
+  ---
+  duration_ms: 1.116289
+  type: 'test'
+  ...
+# Subtest: Domains are normalized to origins and malformed values rejected
+ok 2 - Domains are normalized to origins and malformed values rejected
+  ---
+  duration_ms: 0.175786
+  type: 'test'
+  ...
+# Subtest: odcloud response supported
+ok 3 - odcloud response supported
+  ---
+  duration_ms: 0.7903
+  type: 'test'
+  ...
+# Subtest: data.go.kr nested response supported
+ok 4 - data.go.kr nested response supported
+  ---
+  duration_ms: 0.122491
+  type: 'test'
+  ...
+# Subtest: Single row object supported
+ok 5 - Single row object supported
+  ---
+  duration_ms: 0.101535
+  type: 'test'
+  ...
+# Subtest: Unknown JSON schema gives an explicit error
+ok 6 - Unknown JSON schema gives an explicit error
+  ---
+  duration_ms: 0.386146
+  type: 'test'
+  ...
+# Subtest: Normalization checks coordinates and does not fabricate monthly data
+ok 7 - Normalization checks coordinates and does not fabricate monthly data
+  ---
+  duration_ms: 0.285249
+  type: 'test'
+  ...
+# Subtest: Blank coordinates do not become zero
+ok 8 - Blank coordinates do not become zero
+  ---
+  duration_ms: 0.115153
+  type: 'test'
+  ...
+# Subtest: Missing API configuration is explicit
+ok 9 - Missing API configuration is explicit
+  ---
+  duration_ms: 1.261975
+  type: 'test'
+  ...
+# Subtest: Redirects are explicitly rejected
+ok 10 - Redirects are explicitly rejected
+  ---
+  duration_ms: 20.779032
+  type: 'test'
+  ...
+# Subtest: Non-JSON upstream response rejected
+ok 11 - Non-JSON upstream response rejected
+  ---
+  duration_ms: 0.535891
+  type: 'test'
+  ...
+# Subtest: Oversize upstream response rejected
+ok 12 - Oversize upstream response rejected
+  ---
+  duration_ms: 1.537174
+  type: 'test'
+  ...
+# Subtest: Config never exposes secret values
+ok 13 - Config never exposes secret values
+  ---
+  duration_ms: 0.507326
+  type: 'test'
+  ...
+# Subtest: Methods other than GET rejected
+ok 14 - Methods other than GET rejected
+  ---
+  duration_ms: 0.091382
+  type: 'test'
+  ...
+# Subtest: Different browser origin rejected
+ok 15 - Different browser origin rejected
+  ---
+  duration_ms: 0.07844
+  type: 'test'
+  ...
+# Subtest: Unconfigured VWorld gives 503 not a fabricated result
+ok 16 - Unconfigured VWorld gives 503 not a fabricated result
+  ---
+  duration_ms: 0.337857
+  type: 'test'
+  ...
+# Subtest: Unconfigured public API gives 503
+ok 17 - Unconfigured public API gives 503
+  ---
+  duration_ms: 0.241198
+  type: 'test'
+  ...
+# Subtest: Same coordinate distance is zero
+ok 18 - Same coordinate distance is zero
+  ---
+  duration_ms: 1.312825
+  type: 'test'
+  ...
+# Subtest: Equatorial one degree is about 111.195 km
+ok 19 - Equatorial one degree is about 111.195 km
+  ---
+  duration_ms: 0.248414
+  type: 'test'
+  ...
+# Subtest: Coordinates must be numeric and geographic
+ok 20 - Coordinates must be numeric and geographic
+  ---
+  duration_ms: 0.26326
+  type: 'test'
+  ...
+# Subtest: Circle is closed and all vertices are 500m from center
+ok 21 - Circle is closed and all vertices are 500m from center
+  ---
+  duration_ms: 1.168114
+  type: 'test'
+  ...
+# Subtest: Invalid circle radius throws
+ok 22 - Invalid circle radius throws
+  ---
+  duration_ms: 0.135884
+  type: 'test'
+  ...
+# Subtest: Validity periods include both ends
+ok 23 - Validity periods include both ends
+  ---
+  duration_ms: 0.296012
+  type: 'test'
+  ...
+# Subtest: Invalid month is rejected
+ok 24 - Invalid month is rejected
+  ---
+  duration_ms: 0.089277
+  type: 'test'
+  ...
+# Subtest: Leap day validation
+ok 25 - Leap day validation
+  ---
+  duration_ms: 0.42801
+  type: 'test'
+  ...
+# Subtest: Demo is reproducible and every point explicitly synthetic
+ok 26 - Demo is reproducible and every point explicitly synthetic
+  ---
+  duration_ms: 1.119076
+  type: 'test'
+  ...
+# Subtest: Demo facilities have twelve months
+ok 27 - Demo facilities have twelve months
+  ---
+  duration_ms: 0.341184
+  type: 'test'
+  ...
+# Subtest: No filter returns all demo points
+ok 28 - No filter returns all demo points
+  ---
+  duration_ms: 0.34947
+  type: 'test'
+  ...
+# Subtest: Category filter is exact
+ok 29 - Category filter is exact
+  ---
+  duration_ms: 0.10657
+  type: 'test'
+  ...
+# Subtest: Empty category selection returns none
+ok 30 - Empty category selection returns none
+  ---
+  duration_ms: 0.064196
+  type: 'test'
+  ...
+# Subtest: Search is a literal substring, no code evaluation
+ok 31 - Search is a literal substring, no code evaluation
+  ---
+  duration_ms: 0.676609
+  type: 'test'
+  ...
+# Subtest: Radius includes its center and excludes distant points
+ok 32 - Radius includes its center and excludes distant points
+  ---
+  duration_ms: 0.216647
+  type: 'test'
+  ...
+# Subtest: Missing is not zero
+ok 33 - Missing is not zero
+  ---
+  duration_ms: 0.133449
+  type: 'test'
+  ...
+# Subtest: Real zero remains zero
+ok 34 - Real zero remains zero
+  ---
+  duration_ms: 0.252617
+  type: 'test'
+  ...
+# Subtest: Null count is reported
+ok 35 - Null count is reported
+  ---
+  duration_ms: 0.072351
+  type: 'test'
+  ...
+# Subtest: Zero or missing denominator is not fabricated as a percentage
+ok 36 - Zero or missing denominator is not fabricated as a percentage
+  ---
+  duration_ms: 0.065446
+  type: 'test'
+  ...
+# Subtest: Comparison only uses paired observations
+ok 37 - Comparison only uses paired observations
+  ---
+  duration_ms: 0.239081
+  type: 'test'
+  ...
+# Subtest: Mixed measurement units prevent aggregation
+ok 38 - Mixed measurement units prevent aggregation
+  ---
+  duration_ms: 0.138989
+  type: 'test'
+  ...
+# Subtest: Project proximity pairs describe only real geometric/date relationships
+ok 39 - Project proximity pairs describe only real geometric/date relationships
+  ---
+  duration_ms: 0.31015
+  type: 'test'
+  ...
+# Subtest: HTML text is escaped
+ok 40 - HTML text is escaped
+  ---
+  duration_ms: 0.126302
+  type: 'test'
+  ...
+# Subtest: CSV formula injection is escaped
+ok 41 - CSV formula injection is escaped
+  ---
+  duration_ms: 0.118718
+  type: 'test'
+  ...
+# Subtest: Valid import is never declared verified or real automatically
+ok 42 - Valid import is never declared verified or real automatically
+  ---
+  duration_ms: 2.153646
+  type: 'test'
+  ...
+# Subtest: Non GeoJSON is rejected
+ok 43 - Non GeoJSON is rejected
+  ---
+  duration_ms: 0.271155
+  type: 'test'
+  ...
+# Subtest: Excess number of rows rejected
+ok 44 - Excess number of rows rejected
+  ---
+  duration_ms: 0.191912
+  type: 'test'
+  ...
+# Subtest: Duplicate ids are not counted twice
+ok 45 - Duplicate ids are not counted twice
+  ---
+  duration_ms: 1.112578
+  type: 'test'
+  ...
+# Subtest: Wrong coordinate system is rejected
+ok 46 - Wrong coordinate system is rejected
+  ---
+  duration_ms: 0.241445
+  type: 'test'
+  ...
+# Subtest: Swapped lat/lon is rejected
+ok 47 - Swapped lat/lon is rejected
+  ---
+  duration_ms: 0.120801
+  type: 'test'
+  ...
+# Subtest: Missing source name is rejected
+ok 48 - Missing source name is rejected
+  ---
+  duration_ms: 0.308505
+  type: 'test'
+  ...
+# Subtest: Impossible source dates are rejected
+ok 49 - Impossible source dates are rejected
+  ---
+  duration_ms: 0.132129
+  type: 'test'
+  ...
+# Subtest: Reversed validity periods are rejected
+ok 50 - Reversed validity periods are rejected
+  ---
+  duration_ms: 0.464502
+  type: 'test'
+  ...
+# Subtest: Bad category rejected
+ok 51 - Bad category rejected
+  ---
+  duration_ms: 0.368519
+  type: 'test'
+  ...
+# Subtest: Bad monthly values are excluded but valid facility retained
+ok 52 - Bad monthly values are excluded but valid facility retained
+  ---
+  duration_ms: 0.771184
+  type: 'test'
+  ...
+# Subtest: map adapter starts against a MapLibre interface without obsolete supported()
+ok 53 - map adapter starts against a MapLibre interface without obsolete supported()
+  ---
+  duration_ms: 24.189723
+  type: 'test'
+  ...
+# Subtest: map adapter links filtered facilities and layer visibility to its sources
+ok 54 - map adapter links filtered facilities and layer visibility to its sources
+  ---
+  duration_ms: 1.902659
+  type: 'test'
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 177.238878

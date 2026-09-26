@@ -1,0 +1,2635 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "sourceName": "전국도시공원정보표준데이터",
+    "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+    "sourceDate": null,
+    "sourceDateRange": [
+      "2026-06-29",
+      "2026-08-06"
+    ],
+    "retrievedAt": "2026-09-26T19:02:12.623029+00:00",
+    "boundaryDate": "2026-07-01",
+    "coverage": "공공데이터포털 공개본 중 서구 행정동 경계 안 87개. 전국 제공행 18295행 순회 후 주소 검색·좌표 대조. 최신성·완전성·현장 위치 미검수.",
+    "selectedBeforeGeometry": 306,
+    "accepted": 87,
+    "excluded": {
+      "duplicate": 173,
+      "outsideDistrict": 46
+    },
+    "sourceSha256": "7cfb7621dcf41c21b6550d088ecf170639cd0bc9379401e75c0a2d75ed412122",
+    "transform": "지역 좌표 대조; 동일 관리번호 또는 같은 명칭·정규화 주소 중 최근 기준일 유지. 원 좌표는 수정하지 않음. 인명 열 수집하지 않음."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8598394,
+          35.15319791
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00043",
+        "name": "무지개",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1302-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.846567,
+          35.159801
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00042",
+        "name": "느티나무",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1192",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8839083,
+          35.13052374
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00041",
+        "name": "풍암",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 송풍로 13번길 27",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8848429,
+          35.15982261
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00040",
+        "name": "농성공단",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 417-8",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8573987,
+          35.13650107
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00039",
+        "name": "해님",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호운천길 10 (금호동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8610334,
+          35.13720954
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00038",
+        "name": "푸름",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 743-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8587973,
+          35.14344799
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00037",
+        "name": "소망",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1246-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8605182,
+          35.14120992
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00036",
+        "name": "사랑",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1258-3",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8573987,
+          35.13650107
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00035",
+        "name": "반달",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 741-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.860862,
+          35.14506561
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00034",
+        "name": "믿음",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1236-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8717175,
+          35.13748182
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00033",
+        "name": "우정",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 929-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8666378,
+          35.14717048
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00032",
+        "name": "새싹",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정로85번길 26 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.867287,
+          35.143864
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00031",
+        "name": "학생독립",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 903-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8723439,
+          35.14286812
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00030",
+        "name": "맛고을",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 914-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8631693,
+          35.14600926
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00029",
+        "name": "효광",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1213",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8764191,
+          35.14337133
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00028",
+        "name": "쌍학",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 월드컵4강로68번길 17 (화정동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8815859,
+          35.12401153
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00053",
+        "name": "당산",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1129",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8591944,
+          35.12383597
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00052",
+        "name": "달맞이",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 833",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8571496,
+          35.12925074
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00051",
+        "name": "금호",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 811",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.883968,
+          35.12780503
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00050",
+        "name": "금당",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1165",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8776872,
+          35.120501
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00049",
+        "name": "개나리",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1056",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8439587,
+          35.14655021
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00048",
+        "name": "해오리",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1174-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8439699,
+          35.14965487
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00047",
+        "name": "치평",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무민주로6번길 27 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8433994,
+          35.15714776
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00046",
+        "name": "장수",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1166-10",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8465895,
+          35.15329763
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00045",
+        "name": "운천",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1168-3",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.862207,
+          35.15587992
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00044",
+        "name": "오월",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1288-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8577838,
+          35.16086468
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00066",
+        "name": "햇살",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 계수로59번길 4-9 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.863672,
+          35.121169
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00065",
+        "name": "새누리",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 903",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8619757,
+          35.164624
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00064",
+        "name": "유덕",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 유촌동 873",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8584369,
+          35.165255
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00063",
+        "name": "극락",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 유촌동 857",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8577838,
+          35.16086468
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00062",
+        "name": "유촌",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 계수로59번길 4-9 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8644969,
+          35.157198
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00061",
+        "name": "서광",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1358",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8647779,
+          35.12289012
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00060",
+        "name": "상일",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암운리로7번길 5 (풍암동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요. 원자료의 도로명주소·지번주소 간 동 표기가 다를 수 있어 주소 검수가 필요합니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8609287,
+          35.13311149
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00059",
+        "name": "풍금",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 771-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.857329,
+          35.13463818
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00058",
+        "name": "금부",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 749",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.876195,
+          35.12350596
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00057",
+        "name": "희망",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1052",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8647779,
+          35.12281877
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00056",
+        "name": "운리",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암운리로 7번길 5 (풍암동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.868453,
+          35.12270918
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00055",
+        "name": "새롬",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1008",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8825173,
+          35.12080041
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00054",
+        "name": "살구",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암동 1062",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8662999,
+          35.1502524
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00086",
+        "name": "518",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 993-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.851704,
+          35.14084835
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00085",
+        "name": "마륵",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 마륵동 813",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8882777,
+          35.1561163
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00084",
+        "name": "농성동",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 704",
+        "phone": "062-360-7512",
+        "department": "농성주택조합",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8836504,
+          35.1468975
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00083",
+        "name": "U대회1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동1618",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.822745,
+          35.10729831
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00082",
+        "name": "서창동 1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 서창동 464-3",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8923048,
+          35.15338773
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00081",
+        "name": "농성1동 2",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 74-12",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8991313,
+          35.15424133
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00080",
+        "name": "유촌동",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 경열로121번길 17 (양동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8913076,
+          35.156464
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00079",
+        "name": "농성1동",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 30-10",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.837582,
+          35.166619
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00078",
+        "name": "덕흥동 2",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 덕흥동 454",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.837597,
+          35.166008
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00077",
+        "name": "덕흥동 1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 덕흥동 447-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8642121,
+          35.170924
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00076",
+        "name": "양1동 1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 유림로98번길 4 (동천동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8850615,
+          35.144733
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00075",
+        "name": "U대회",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 1621",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.891822,
+          35.153118
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00074",
+        "name": "경열",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 73-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8730533,
+          35.1695636
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00073",
+        "name": "강나루",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 729",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.869378,
+          35.1706037
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00072",
+        "name": "행자",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 646",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8642108,
+          35.17095087
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00071",
+        "name": "화추",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 609",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8616675,
+          35.16970318
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00070",
+        "name": "자미",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 539",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8586783,
+          35.17038594
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00069",
+        "name": "백구",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 503",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.841092,
+          35.144901
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00068",
+        "name": "원마륵",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1280-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.856268,
+          35.12390516
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00067",
+        "name": "화개",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 금호동 890",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8516022,
+          35.15654724
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00017",
+        "name": "상무",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 내방로 102 (치평동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8886003,
+          35.15564453
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00016",
+        "name": "천변",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무대로1171번길 15 (농성동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8884415,
+          35.15498216
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00015",
+        "name": "유적",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무대로 1165 (농성동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8573846,
+          35.1682265
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00014",
+        "name": "죽림",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 동천동 508",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8516163,
+          35.15654724
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00013",
+        "name": "평화",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 치평동 1204",
+        "phone": "062-613-4233",
+        "department": "전남광주통합특별시청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8886003,
+          35.15564453
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00012",
+        "name": "상록",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동311-1",
+        "phone": "062-613-4233",
+        "department": "전남광주통합특별시청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8590196,
+          35.16287824
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00011",
+        "name": "상무4지구근린1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 유촌동 869",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8636304,
+          35.16154016
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00010",
+        "name": "상무2지구근린4",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1339",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.861471,
+          35.161629
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00009",
+        "name": "상무2지구근린3",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 1337-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8791753,
+          35.12487292
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00008",
+        "name": "상무2지구근린2",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 풍암2로 26 (풍암동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8541858,
+          35.16205659
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00007",
+        "name": "상무2지구근린1",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 유촌동 840-2",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8422202,
+          35.15221868
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00006",
+        "name": "풍암",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무자유로 59 (치평동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8410957,
+          35.1533934
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00005",
+        "name": "신암",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무공원로 101 (치평동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.884702,
+          35.14088192
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00027",
+        "name": "주동",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 1081",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.874497,
+          35.140983
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00026",
+        "name": "화방",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 894",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8601455,
+          35.15154575
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00025",
+        "name": "효행",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무민주로6번길 17 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8764191,
+          35.14337133
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00024",
+        "name": "콩콩",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무대로1005번길 12-5 (내방동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8870553,
+          35.1482234
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00023",
+        "name": "염주",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정로276번길 5 (농성동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8769884,
+          35.14086813
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00022",
+        "name": "꿈마당",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 화정동 892",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8601455,
+          35.15154893
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00021",
+        "name": "쌍촌",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 쌍촌동 967",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8724926,
+          35.15314897
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00020",
+        "name": "내방",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 내방동 837",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.887055,
+          35.148223
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00019",
+        "name": "농성",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 농성동 669-3",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8484198,
+          35.11557813
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00018",
+        "name": "전평제",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 매월동 519-1",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8422202,
+          35.15221868
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00004",
+        "name": "마재",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무자유로 73 (치평동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8585843,
+          35.15574851
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00003",
+        "name": "시민",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 상무민주로 61 (쌍촌동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8575559,
+          35.15830536
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00002",
+        "name": "5·18 기념",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 내방로 152 (쌍촌동)",
+        "phone": "062-613-7905",
+        "department": "전남광주통합특별시청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8792537,
+          35.14159896
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00001",
+        "name": "염주",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-08-06",
+        "address": "전남광주통합특별시 서구 염화로134번길 18 (화정동)",
+        "phone": "062-360-7512",
+        "department": "전남광주통합특별시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.860145526,
+          35.1515457502
+        ]
+      },
+      "properties": {
+        "id": "parks:29140-00087",
+        "name": "쌍촌어린이공원",
+        "category": "park",
+        "layerId": "parks",
+        "sourceName": "전국도시공원정보표준데이터 / 전남광주통합특별시",
+        "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+        "sourceDate": "2026-06-29",
+        "address": "광주광역시 서구 쌍촌동 967",
+        "phone": "062-360-7697",
+        "department": "광주광역시 서구청",
+        "hours": "",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 도시공원 현황. 제공 주소·좌표와 현장 위치를 별도 대조하세요."
+      }
+    }
+  ]
+}

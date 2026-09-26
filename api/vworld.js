@@ -13,8 +13,8 @@ export default async function handler(req, res) {
     if (q.length < 2 || q.length > 100) { respond(res, 400, { ok: false, error: '검색어는 2~100자여야 합니다.' }); return; }
     Object.assign(params, { query: q, type: 'place', bbox: '126.70,34.98,127.05,35.35' });
   } else {
-    code = process.env.VWORLD_SIG_CODE || '29140';
-    if (!/^\d{5}$/.test(code)) { respond(res, 500, { ok: false, error: 'VWORLD_SIG_CODE는 5자리 시군구 코드여야 합니다.' }); return; }
+    code = process.env.VWORLD_SIG_CODE || '';
+    if (!/^\d{5}$/.test(code)) { respond(res, 500, { ok: false, error: '18개 행정동은 내장 경계를 사용하세요. 구 외곽 REST 조회에는 제공기관이 지원하는 현행 5자리 VWORLD_SIG_CODE를 명시해야 합니다.' }); return; }
     Object.assign(params, { data: 'LT_C_ADSIGG_INFO', attrfilter: `sig_cd:=:${code}`, geometry: 'true', attribute: 'true' });
   }
   for (const [name, value] of Object.entries(params)) url.searchParams.set(name, value);

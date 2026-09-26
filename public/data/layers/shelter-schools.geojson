@@ -1,0 +1,915 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8436036,
+          35.14911727
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003271",
+        "name": "치평초등학교",
+        "address": "서구 상무평화로 43 (치평동)",
+        "phone": "062)370-5805",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8662598,
+          35.14376463
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003263",
+        "name": "성진초등학교",
+        "address": "서구 학생독립로 16 (화정동)",
+        "phone": "062)602-5506",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8303713,
+          35.11304585
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003255",
+        "name": "송학초등학교",
+        "address": "서구 눌재로 408 (세하동)",
+        "phone": "062)602-4004",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8592478,
+          35.16934672
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003207",
+        "name": "빛고을초등학교",
+        "address": "서구 동천로 7 (동천동)",
+        "phone": "062)510-2770",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8445194,
+          35.15623874
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003270",
+        "name": "계수초등학교",
+        "address": "서구 상무시민로 51 (치평동)",
+        "phone": "062)380-2100",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8837427,
+          35.144705
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003261",
+        "name": "주월초등학교",
+        "address": "서구 화운로 36 (화정동)",
+        "phone": "062)602-3890",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8628255,
+          35.16508101
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003281",
+        "name": "유덕초등학교",
+        "address": "서구 상무버들로16번길 6-10 (유촌동)",
+        "phone": "062)380-6506",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8467489,
+          35.1527033
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003272",
+        "name": "운천초등학교",
+        "address": "서구 치평로 59 (치평동)",
+        "phone": "062)600-2770",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8645209,
+          35.15481896
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003279",
+        "name": "서광초등학교",
+        "address": "서구 상무오월로38번길 36 (쌍촌동)",
+        "phone": "062)370-1109",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.859228,
+          35.14277758
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003267",
+        "name": "금호초등학교",
+        "address": "서구 금부로95번길 26-11 (쌍촌동)",
+        "phone": "062)370-7102",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8770209,
+          35.15604003
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003275",
+        "name": "광주서초등학교",
+        "address": "서구 화운로194번길 6 (화정동)",
+        "phone": "062)360-4170",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8787885,
+          35.14107805
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003276",
+        "name": "염주초등학교",
+        "address": "서구 염화로134번길 28 (화정동)",
+        "phone": "062)380-1100",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8716253,
+          35.13785632
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003277",
+        "name": "화정남초등학교",
+        "address": "서구 염화로 37 (화정동)",
+        "phone": "062)602-2291",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.854239,
+          35.13279273
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003257",
+        "name": "만호초등학교",
+        "address": "서구 금화로 53 (금호동)",
+        "phone": "062)370-0298",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8629852,
+          35.1309354
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003268",
+        "name": "마재초등학교",
+        "address": "서구 마재로 27 (금호동)",
+        "phone": "062)670-5282",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8569888,
+          35.12519372
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003278",
+        "name": "화개초등학교",
+        "address": "서구 화개중앙로 48 (금호동)",
+        "phone": "062)670-5180",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8756762,
+          35.12378279
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003258",
+        "name": "풍암초등학교",
+        "address": "서구 풍암중앙로 8 (풍암동)",
+        "phone": "062)670-7305",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.865659,
+          35.12368494
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003259",
+        "name": "운리초등학교",
+        "address": "서구 풍암운리로23번길 5 (풍암동)",
+        "phone": "062)650-3870",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8809274,
+          35.12295195
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003274",
+        "name": "신암초등학교",
+        "address": "서구 풍암2로 56 (풍암동)",
+        "phone": "062)650-0677",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8437142,
+          35.15105399
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008931",
+        "name": "전남중학교",
+        "address": "서구 상무공원로 70 (치평동)",
+        "phone": "062)720-5152",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8579815,
+          35.14492058
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008933",
+        "name": "상무중학교",
+        "address": "서구 운천로 142 (쌍촌동)",
+        "phone": "062)380-6301",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8591015,
+          35.14468809
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008934",
+        "name": "치평중학교",
+        "address": "서구 화정로21번길 5 (쌍촌동)",
+        "phone": "062)380-2350",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8561139,
+          35.12571323
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008926",
+        "name": "광주중학교",
+        "address": "서구 화개중앙로 60 (금호동)",
+        "phone": "062)650-0705",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8675217,
+          35.16908898
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008899",
+        "name": "대자중학교",
+        "address": "서구 하남대로680번길 27 (동천동)",
+        "phone": "062)510-3890",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8731839,
+          35.14818775
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000012312",
+        "name": "광주여자고등학교",
+        "address": "서구 상무대로1014번길 43 (화정동)",
+        "phone": "062)231-7503",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8596319,
+          35.15479285
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000012313",
+        "name": "상무고등학교",
+        "address": "서구 상무민주로32번길 28 (쌍촌동)",
+        "phone": "062)600-1304",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8579563,
+          35.15914004
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003264",
+        "name": "유촌초등학교",
+        "address": "서구 내방로 153(쌍촌동)",
+        "phone": "062)370-8704",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8829765,
+          35.12699909
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003273",
+        "name": "금당초등학교",
+        "address": "서구 풍암중앙로 83(풍암동)",
+        "phone": "062)670-6206",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8612012,
+          35.13958449
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000008930",
+        "name": "금호중학교",
+        "address": "서구 금화로115번길 72(금호동)",
+        "phone": "062)370-0700",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8708963,
+          35.16945074
+        ]
+      },
+      "properties": {
+        "id": "shelter-school:B000003208",
+        "name": "광림초등학교",
+        "address": "서구 하남대로710번길 19(동천동)",
+        "phone": "062)510-3722",
+        "category": "shelter",
+        "categoryName": "지진옥외대피장소",
+        "sourceName": "서구청 지진옥외대피장소 목록 + 전국초중등학교위치표준데이터",
+        "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+        "sourceDate": null,
+        "reviewStatus": "source-matched-not-field-verified",
+        "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
+        "layerId": "shelter-schools",
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "positionSource": "학교명+도로명주소 일치 / 학교 대표좌표",
+        "note": "서구청 대피장소 목록과 학교명·도로명주소가 모두 일치하는 학교의 대표좌표입니다. 학교 위치자료 기준 2026-03-20. 대피장소 지정 기준일 미제공. 실제 운동장 경계·출입구·대피 가능 여부는 미검증이며 재난 시 공식 안내를 우선하세요."
+      }
+    }
+  ],
+  "metadata": {
+    "sourceName": "서구청 지진옥외대피장소 목록 + 학교 위치 표준데이터",
+    "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+    "coordinateSourceUrl": "https://www.data.go.kr/data/15021148/standard.do",
+    "coordinateSourceDate": "2026-03-20",
+    "sourceDate": null,
+    "retrievedAt": "2026-09-26T19:07:12.914282+00:00",
+    "coverage": "학교명과 도로명주소 모두 일치한 30개 학교 대표위치. 실제 대피 운동장 도형이 아니며 지정 기준일 미제공. 대피장소 전수·운영 중 여부를 보증하지 않음.",
+    "joinRule": "학교명 정확히 일치 + 광역단체명·괄호 법정동 표기·공백 제거 후 도로명주소 정확히 일치. 후보 1개만 채택. 원 좌표 변경 없음."
+  }
+}

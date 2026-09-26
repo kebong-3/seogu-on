@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "sources": [
+    {
+      "id": "parks",
+      "name": "도시공원",
+      "category": "park",
+      "sourceName": "전국도시공원정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15012890/standard.do",
+      "snapshot": "/data/layers/parks.geojson",
+      "sourceDate": null,
+      "enabled": true
+    },
+    {
+      "id": "parking",
+      "name": "공영·공개 주차장",
+      "category": "parking",
+      "sourceName": "전국주차장정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15012896/standard.do",
+      "snapshot": "/data/layers/parking.geojson",
+      "sourceDate": "2026-08-06",
+      "enabled": true
+    },
+    {
+      "id": "public-facilities",
+      "name": "공공시설 개방정보",
+      "category": "admin",
+      "sourceName": "전국공공시설개방정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+      "snapshot": "/data/layers/public-facilities.geojson",
+      "sourceDate": null,
+      "enabled": true
+    },
+    {
+      "id": "libraries",
+      "name": "도서관·작은도서관",
+      "category": "culture",
+      "sourceName": "전국도서관표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+      "snapshot": "/data/layers/libraries.geojson",
+      "sourceDate": null,
+      "enabled": true
+    },
+    {
+      "id": "shelter-schools",
+      "name": "지진대피 학교·대표위치",
+      "category": "shelter",
+      "sourceName": "서구청 지진옥외대피장소 목록 + 학교 위치 표준데이터",
+      "sourceUrl": "https://www.seogu.gwangju.kr/menu.es?mid=a10306040000",
+      "sourceDate": null,
+      "snapshot": "/data/layers/shelter-schools.geojson",
+      "enabled": true
+    }
+  ]
+}

@@ -41,6 +41,8 @@ export function filterFacilities(features, state) {
   return features.filter(f => {
     const p = f.properties;
     return state.categories.includes(p.category)
+      && (!state.dongId || p.dongId === state.dongId)
+      && (!state.realDistrictOnly || p.inDistrict === true)
       && (!q || `${p.name} ${p.address || ''}`.toLowerCase().includes(q))
       && monthOverlaps(p.validFrom, p.validTo, state.month)
       && (!state.radiusCenter || distanceMeters(state.radiusCenter, f.geometry.coordinates) <= state.radiusMeters);
@@ -69,7 +71,7 @@ export function validDate(s) {
 }
 export function geometryCenter(geometry) {
   if (geometry.type === 'Point') return geometry.coordinates;
-  const pts = geometry.type === 'LineString' ? geometry.coordinates : geometry.type === 'Polygon' ? geometry.coordinates[0] : [];
+  const pts = geometry.type === 'LineString' ? geometry.coordinates : geometry.type === 'Polygon' ? geometry.coordinates[0] : geometry.type==='MultiPolygon'?geometry.coordinates.flatMap(p=>p[0]):[];
   if (!pts.length) return null;
   return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
 }

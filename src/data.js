@@ -10,7 +10,7 @@ export function makeDemoData() {
   const rng = seededRandom(4199);
   const centers = [[126.846, 35.156], [126.861, 35.150], [126.884, 35.152], [126.878, 35.128], [126.866, 35.169], [126.852, 35.139]];
   const facilities = Array.from({ length: 48 }, (_, i) => {
-    const category = Object.keys(CATEGORIES)[i % 4], c = centers[Math.floor(i / 8)];
+    const category = ['park', 'recycle', 'shelter', 'care'][i % 4], c = centers[Math.floor(i / 8)];
     const monthly = Object.fromEntries(MONTHS.map((m, j) => [m, i % 13 === 0 && j % 4 === 0 ? null : Math.round(20 + rng() * 110 + Math.sin(j / 2 + i) * 12)]));
     return pointFeature([c[0] + (rng() - 0.5) * 0.014, c[1] + (rng() - 0.5) * 0.009], {
       id: `demo-${String(i + 1).padStart(3, '0')}`, name: `${CATEGORIES[category].name} 시연 ${String(i + 1).padStart(2, '0')}`,
@@ -38,9 +38,9 @@ export function validateImport(raw) {
     if (f?.geometry?.type !== 'Point' || !validCoordinate(f.geometry.coordinates)) { errors.push(`${prefix}: Point 형식의 유효한 [경도, 위도]가 필요합니다.`); return; }
     const [lon, lat] = f.geometry.coordinates;
     if (lon < 126.70 || lon > 127.05 || lat < 34.98 || lat > 35.35) { errors.push(`${prefix}: 광주 주변 범위를 벗어난 좌표입니다. EPSG:4326인지 확인하세요.`); return; }
-    if (!CATEGORIES[p.category]) { errors.push(`${prefix}: category는 park/recycle/shelter/care 중 하나여야 합니다.`); return; }
+    if (!CATEGORIES[p.category]) { errors.push(`${prefix}: 지원되는 시설 분류인지 확인하세요.`); return; }
     if (typeof p.name !== 'string' || !p.name.trim()) { errors.push(`${prefix}: 시설명이 없습니다.`); return; }
-    if (!p.sourceName || !validDate(p.sourceDate)) { errors.push(`${prefix}: sourceName과 YYYY-MM-DD 형식 sourceDate가 필요합니다.`); return; }
+    if (!p.sourceName || (p.sourceDate !== null && !validDate(p.sourceDate))) { errors.push(`${prefix}: sourceName과 sourceDate(YYYY-MM-DD, 미상은 null)가 필요합니다.`); return; }
     if ((p.validFrom && !validDate(p.validFrom)) || (p.validTo && !validDate(p.validTo)) || (p.validFrom && p.validTo && p.validFrom > p.validTo)) { errors.push(`${prefix}: 유효기간을 확인하세요.`); return; }
     const id = String(p.id ?? `import-${i + 1}`).slice(0, 120);
     if (ids.has(id)) { errors.push(`${prefix}: 중복 id ${id}`); return; }
@@ -53,6 +53,11 @@ export function validateImport(raw) {
     accepted.push(pointFeature([...f.geometry.coordinates].slice(0, 2), {
       id, name: p.name.trim().slice(0, 150), category: p.category, dataKind: 'provided', reviewStatus: 'unverified',
       sourceName: String(p.sourceName).slice(0, 200), sourceDate: p.sourceDate,
+      sourceUrl: /^https:\/\//.test(p.sourceUrl || '') ? String(p.sourceUrl).slice(0, 500) : '',
+      layerId: String(p.layerId || 'imported').slice(0, 60),
+      phone: String(p.phone || '').slice(0, 50), department: String(p.department || '').slice(0, 100),
+      hours: String(p.hours || '').slice(0, 250), capacity: typeof p.capacity === 'number' && p.capacity >= 0 ? p.capacity : null,
+      positionSource: String(p.positionSource || 'source-coordinates').slice(0, 50),
       address: String(p.address || '').slice(0, 250), note: String(p.note || '').slice(0, 500),
       monthly, metricName: String(p.metricName || '운영량').slice(0, 40), metricUnit: String(p.metricUnit || '건').slice(0, 20),
       validFrom: p.validFrom || null, validTo: p.validTo || null,

@@ -1,17 +1,4 @@
-import { readFile, writeFile } from 'node:fs/promises';
-const modules = ['config', 'icons', 'geo', 'data', 'preview-scene', 'map', 'ui', 'app'];
-let code = '';
-for (const name of modules) {
-  let source = await readFile(new URL(`../src/${name}.js`, import.meta.url), 'utf8');
-  source = source.replace(/^import .*?;\s*$/gm, '').replace(/^export /gm, '');
-  code += `\n// MODULE: ${name}\n${source}\n`;
-}
-let html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
-html = html.replace('<html lang="ko" data-theme="dark">', '<html lang="ko" data-theme="dark" data-offline-preview="true">')
-  .replace('<link rel="stylesheet" href="/src/styles.css">', `<style>${css}</style>`)
-  .replace('<link rel="icon" type="image/svg+xml" href="/favicon.svg">', '')
-  .replace('<script type="module" src="/src/app.js"></script>', `<script type="module">${code.replaceAll('</script', '<\\/script')}</script>`)
-  .replace('<title>SEO:ON 서구온 · 공간행정 워크스페이스</title>', '<title>SEO:ON 디자인 미리보기 · 가상 도시 / 실제 지도 아님</title>');
-await writeFile(new URL('../../seo-on-design-preview.html', import.meta.url), html);
-console.log('Created standalone offline DESIGN preview (synthetic city explicitly labelled).');
+import {writeFile,mkdir} from 'node:fs/promises';
+await mkdir(new URL('../preview/',import.meta.url),{recursive:true});
+await writeFile(new URL('../preview/design-preview.html',import.meta.url),`<!doctype html><html lang="ko"><meta charset="utf-8"><title>서구온 디자인 시연 안내</title><body style="font:18px/1.8 system-ui;max-width:700px;margin:70px auto;padding:24px"><h1>서구온 디자인 시연</h1><p>v0.2의 실제 자료와 18개 행정동은 웹서비스에서 확인합니다.</p><p><a href="https://seogu-on.vercel.app/?preview=1">배포된 가상 디자인 시연 열기</a></p><p>로컬에서는 <code>npm run dev</code> 후 <code>http://127.0.0.1:4173/?preview=1</code>을 여세요.</p><p>디자인 시연의 건물·시설·통계는 합성입니다. 실제 행정자료가 아닙니다.</p></body></html>`);
+console.log('Updated explicit design-preview launcher; full module app runs through the dev server.');
