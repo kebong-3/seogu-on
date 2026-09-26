@@ -1,0 +1,72 @@
+name: Inspect public runtime and source schemas
+on:
+  push:
+    branches: [feature/admin18-real-data-v0.2]
+    paths: [.github/workflows/inspect-public-runtime.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - name: Collect published source descriptions
+        run: |
+          mkdir -p evidence
+          python3 - <<'PY'
+          import urllib.request, pathlib, json, re, concurrent.futures
+          root=pathlib.Path('evidence')
+          urls={
+            'parks':'https://www.data.go.kr/data/15012890/standard.do',
+            'parking':'https://www.data.go.kr/data/15012896/standard.do',
+            'public-facilities':'https://www.data.go.kr/data/15013117/standard.do',
+            'fire-stations':'https://www.data.go.kr/data/15138232/fileData.do',
+            'seogu':'https://www.seogu.gwangju.kr/kor/',
+            'sgis':'https://sgis.mods.go.kr/developer/html/newOpenApi/api/dataApi/addressBoundary.html'
+          }
+          def load(item):
+            name,url=item
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'SeoOn-PublicData-Research/0.2'})
+              text=urllib.request.urlopen(req,timeout=30).read(5000000).decode('utf8','replace')
+              (root/(name+'.html')).write_text(text,encoding='utf8')
+              return {'name':name,'url':url,'bytes':len(text)}
+            except Exception as e:return {'name':name,'error':type(e).__name__}
+          result=list(concurrent.futures.ThreadPoolExecutor(max_workers=3).map(load,urls.items()))
+          (root/'sources.json').write_text(json.dumps(result,ensure_ascii=False),encoding='utf8')
+          PY
+      - name: Install browser test dependency
+        run: |
+          python3 -m pip install playwright==1.51.0
+          python3 -m playwright install --with-deps chromium
+      - name: Browser check of public production site
+        run: |
+          python3 - <<'PY'
+          from playwright.sync_api import sync_playwright
+          import json,pathlib
+          out=pathlib.Path('evidence')
+          with sync_playwright() as p:
+            browser=p.chromium.launch(headless=True,args=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'])
+            page=browser.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1)
+            page.add_init_script('''(() => {let value;Object.defineProperty(window,'maplibregl',{configurable:true,get(){return value},set(v){value=v;if(v?.Map)v.Map=new Proxy(v.Map,{construct(t,args){const m=Reflect.construct(t,args);window.__testMap=m;return m}})}})})()''')
+            errors=[]
+            page.on('pageerror',lambda e:errors.append(type(e).__name__))
+            try:
+              page.goto('https://seogu-on.vercel.app/',wait_until='domcontentloaded',timeout=60000)
+              page.wait_for_timeout(25000)
+              result=page.evaluate('''() => {const m=window.__testMap;const b=m?.isStyleLoaded()?m.querySourceFeatures('seo-buildings',{sourceLayer:'building'}):[];return {title:document.title,status:document.querySelector('#map-status')?.textContent,engineButtons:[...document.querySelectorAll('[data-engine]')].map(x=>({engine:x.dataset.engine,selected:x.classList.contains('active'),text:x.textContent})),pitch:m?.getPitch(),zoom:m?.getZoom(),buildingFeatureCount:b.length,buildingHeights:b.slice(0,20).map(f=>({height:f.properties.render_height,minHeight:f.properties.render_min_height,hide:f.properties.hide_3d})),extrusionLayer:m?.getLayer('seo-buildings')?{visibility:m.getLayoutProperty('seo-buildings','visibility'),height:m.getPaintProperty('seo-buildings','fill-extrusion-height')}:null}}''')
+              result['browserErrors']=errors
+              page.screenshot(path=str(out/'production-desktop.png'),full_page=True)
+              (out/'browser-result.json').write_text(json.dumps(result,ensure_ascii=False),encoding='utf8')
+              print(json.dumps(result,ensure_ascii=False))
+            except Exception as e:
+              (out/'browser-result.json').write_text(json.dumps({'error':type(e).__name__}),encoding='utf8')
+            browser.close()
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-runtime-inspection
+          path: evidence/
+          retention-days: 7
