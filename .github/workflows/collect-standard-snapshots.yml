@@ -1,0 +1,50 @@
+name: Collect standard public snapshots
+on:
+  push:
+    branches: [feature/admin18-real-data-v0.2]
+    paths: [.github/workflows/collect-standard-snapshots.yml]
+permissions: {contents: read}
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read the portal's public download interface
+        run: |
+          mkdir evidence
+          python3 - <<'PY'
+          import json,urllib.request,urllib.parse,pathlib,time,datetime,hashlib,math
+          root=pathlib.Path('evidence')
+          def get(url):
+            req=urllib.request.Request(url,headers={'User-Agent':'SeoOn-PublicData-Prototype/0.2','Referer':'https://www.data.go.kr/'})
+            with urllib.request.urlopen(req,timeout=45) as r:return r.read(30000000)
+          for name,pk in [('parks','15012890'),('parking','15012896'),('public-facilities','15013117'),('libraries','15013109')]:
+            result={'sourceUrl':f'https://www.data.go.kr/data/{pk}/standard.do','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'rows':[],'pages':0}
+            try:
+              header=json.loads(get(f'https://www.data.go.kr/download/columList.json?pk={pk}&ext=JSON'))
+              (root/(name+'-header.json')).write_text(json.dumps(header,ensure_ascii=False),encoding='utf8')
+              table=header['tableVO'];total=int(header['totalCount']);result['nationalTotal']=total
+              cols=table['colNmList']; params={'publicDataPk':pk,'colNmList':cols,'totalCount':total,'svcTableNm':table['svcTableNm'],'perPage':10000}
+              signatures=set()
+              for page in range(1,min(15,math.ceil(total/10000))+1):
+                params['page']=page
+                raw=get('https://www.data.go.kr/download/standard.json?'+urllib.parse.urlencode(params,doseq=True));data=json.loads(raw)
+                if not isinstance(data,list):raise RuntimeError('Unexpected public download schema')
+                sig=hashlib.sha256(raw).hexdigest()
+                if sig in signatures:raise RuntimeError('Repeated page')
+                signatures.add(sig);result['pages']+=1
+                for row in data:
+                  text=' '.join(str(v) for v in row.values() if v is not None)
+                  if '서구' in text and ('광주' in text or '전남광주' in text):result['rows'].append(row)
+                time.sleep(.4)
+              result['complete']=result['pages']*10000>=total
+              result['columns']=header['columList'];result['fileName']=header['fileName']
+            except Exception as e:result['error']=str(e)[:200];result['complete']=False
+            (root/(name+'.json')).write_text(json.dumps(result,ensure_ascii=False),encoding='utf8')
+            print(name,len(result['rows']),result.get('error'),result.get('nationalTotal'))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standard-public-snapshots
+          path: evidence/
+          retention-days: 7
