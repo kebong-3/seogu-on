@@ -1,0 +1,54 @@
+name: Prepare admin18 development evidence
+on:
+  push:
+    branches: [feature/admin18-real-data-v0.2]
+    paths: [.github/workflows/prepare-admin18.yml]
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Export baseline and public boundary evidence
+        shell: bash
+        run: |
+          mkdir -p evidence/baseline evidence/data
+          git archive HEAD | tar -x -C evidence/baseline
+          python3 - <<'PY'
+          import json, urllib.request, pathlib, hashlib, datetime
+          root=pathlib.Path('evidence/data')
+          url='https://raw.githubusercontent.com/vuski/admdongkor/master/ver20260701/HangJeongDong_ver20260701.geojson'
+          raw=urllib.request.urlopen(url,timeout=60).read(40000000)
+          expected='005426a185de69ddfde6792f4e2f9252743755fe'
+          actual=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+          if actual!=expected: raise RuntimeError('Upstream snapshot changed: do not silently use a different version')
+          data=json.loads(raw)
+          names=set('양동 양3동 농성1동 농성2동 광천동 유덕동 치평동 상무1동 상무2동 화정1동 화정2동 화정3동 화정4동 서창동 금호1동 금호2동 풍암동 동천동'.split())
+          fs=[f for f in data['features'] if '서구' in f['properties'].get('adm_nm','').split() and any(s in f['properties'].get('adm_nm','') for s in ['광주','전남광주'])]
+          found={f['properties']['adm_nm'].split()[-1].replace('제','') for f in fs}
+          if len(fs)!=18 or found!=names: raise RuntimeError('Expected 18 exact administrative-dong names, got '+str(found))
+          out={'type':'FeatureCollection','features':fs,'metadata':{'sourceName':'SGIS 행정동 경계 가공: vuski/admdongkor','sourceDate':'2026-07-01','sourceUrl':url,'sourceGitBlob':expected,'sha256':hashlib.sha256(raw).hexdigest(),'retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'reviewStatus':'community-derived; not authoritative cadastral boundary','count':len(fs)}}
+          (root/'seogu-admin18.geojson').write_text(json.dumps(out,ensure_ascii=False),encoding='utf8')
+          for name in ['LICENSE-DATA','README.md']:
+            b=urllib.request.urlopen('https://raw.githubusercontent.com/vuski/admdongkor/master/'+name,timeout=30).read(200000)
+            (root/('boundary-'+name)).write_bytes(b)
+          diagnostics={}
+          for name,url in [('productionConfig','https://seogu-on.vercel.app/api/config'),('productionHtml','https://seogu-on.vercel.app/')]:
+            try:
+              with urllib.request.urlopen(url,timeout=30) as r:
+                body=r.read(200000).decode('utf8','replace')
+                diagnostics[name]={'httpStatus':r.status,'content':json.loads(body) if name.endswith('Config') else body}
+            except Exception as e: diagnostics[name]={'error':type(e).__name__}
+          (root/'production-diagnostics.json').write_text(json.dumps(diagnostics,ensure_ascii=False),encoding='utf8')
+          print(json.dumps({'boundaryCount':len(fs),'dongNames':sorted(found),'codes':[f['properties'] for f in fs]},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: admin18-development-evidence
+          path: evidence/
+          retention-days: 7
+          include-hidden-files: false
