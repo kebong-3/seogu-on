@@ -1,0 +1,20 @@
+/* Display actual point/grid observations. No interpolation into a fictitious neighborhood field. */
+export function kmaGrid(lon,lat){const r=Math.PI/180,re=6371.00877/5,s1=30*r,s2=60*r,olon=126*r,olat=38*r;const sn=Math.log(Math.cos(s1)/Math.cos(s2))/Math.log(Math.tan(Math.PI/4+s2/2)/Math.tan(Math.PI/4+s1/2)),sf=Math.pow(Math.tan(Math.PI/4+s1/2),sn)*Math.cos(s1)/sn,ro=re*sf/Math.pow(Math.tan(Math.PI/4+olat/2),sn),ra=re*sf/Math.pow(Math.tan(Math.PI/4+lat*r/2),sn),theta=(lon*r-olon)*sn;return {nx:Math.floor(ra*Math.sin(theta)+43+.5),ny:Math.floor(ro-ra*Math.cos(theta)+136+.5)};}
+export function weatherFeature(point,b){if(!b?.grid||!b.base||!b.values||!/^\d{8}$/.test(b.base.base_date)||!/^\d{4}$/.test(b.base.base_time))throw Error('기상 관측의 격자·시각을 확인할 수 없습니다.');const v=b.values,t=Number.isFinite(v.T1H)?v.T1H:null;const when=`${b.base.base_date.slice(0,4)}-${b.base.base_date.slice(4,6)}-${b.base.base_date.slice(6,8)}T${b.base.base_time.slice(0,2)}:${b.base.base_time.slice(2)}:00+09:00`;
+ return {type:'Feature',geometry:{type:'Point',coordinates:point},properties:{id:`weather-${b.grid.nx}-${b.grid.ny}`,name:`기상청 격자 ${b.grid.nx}/${b.grid.ny}`,mapLabel:`${t===null?'기온 미관측':t+'℃'} · ${b.base.base_time.slice(0,2)}시 실황`,temperature:t,humidity:v.REH??null,windSpeed:v.WSD??null,windDirection:v.VEC??null,rainfall:v.RN1??null,observedAt:when,sourceName:b.sourceName,sourceUrl:b.sourceUrl,sourceDate:b.base.base_date.slice(0,4)+'-'+b.base.base_date.slice(4,6)+'-'+b.base.base_date.slice(6),collectedAt:b.fetchedAt,grid:`${b.grid.nx}/${b.grid.ny}`,note:'표시점은 조회를 선택한 구역의 대표위치입니다. 관측소가 아닙니다. 5km 격자값이며 동 전체·건물 실측이 아닙니다.'}};}
+export function airFeature(station,b){const p=station.properties,ok=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0,pm10=!b.pm10Flag&&ok(b.pm10)?b.pm10:null,pm25=!b.pm25Flag&&ok(b.pm25)?b.pm25:null;
+ return {...station,properties:{...p,id:'air-'+p.id,name:`${b.station||p.name} 대기 관측`,mapLabel:`${b.station||p.name} · PM2.5 ${pm25===null?'미관측':pm25} · ${String(b.observedAt||'시각 미확인').slice(11,16)||'시각 미확인'}`,pm10,pm25,pm10Flag:b.pm10Flag||null,pm25Flag:b.pm25Flag||null,observedAt:b.observedAt,sourceName:b.sourceName,sourceUrl:b.sourceUrl||'https://www.data.go.kr/data/15073861/openapi.do',note:'해당 측정소 관측값. 다른 거리·동·건물의 농도로 보간하지 않았습니다. 플래그가 있거나 결측이면 미관측 표시.'}};}
+export function forecastFeature(point,body,index){const row=body?.rows?.[index];if(!row||!/^\d{12}$/.test(row.time))throw Error('선택 시각 예보 없음');return {type:'Feature',geometry:{type:'Point',coordinates:point},properties:{id:'forecast-point',name:'선택 시각 기상청 예보',mapLabel:`${row.time.slice(8,10)}시 ${row.temperature===null?'기온 자료 없음':row.temperature+'℃'} · 예보`,temperature:row.temperature,windSpeed:row.windSpeed,rainProbability:row.precipitationProbability,forecastTime:row.time,issuedAt:body.base.base_date+' '+body.base.base_time,sourceName:body.sourceName,sourceUrl:body.sourceUrl,sourceDate:null,note:'예보입니다. 그늘 시뮬레이션 시각과 별도로 선택하며 실측으로 표시하지 않습니다.'}};}
+
+/** Retain previous observations without duplicating stale suffixes or changing observation time. */
+export function mergeObservations(previous,received,{requestedIds=null,failed=false,now=new Date()}={}) {
+ const fresh=new Map(received.map(f=>[String(f.properties.id),{...f,properties:{...f.properties,updateFailed:false,lastSuccessfulAt:now.toISOString()}}]));
+ const requested=requestedIds?new Set(requestedIds.map(String)):null;
+ const retained=[];
+ for(const f of previous){const id=String(f.properties.id);if(fresh.has(id))continue;
+  if(!failed||(requested&&!requested.has(id))){retained.push(f);continue;}
+  const p=f.properties,baseLabel=p.observationLabel||String(p.mapLabel||'').replace(/(?: · 이전값)+$/g,''),baseNote=p.observationNote||String(p.note||'').replace(/^(?:갱신하지 못한 이전 관측값입니다\. )+/,'');
+  retained.push({...f,properties:{...p,observationLabel:baseLabel,observationNote:baseNote,mapLabel:baseLabel+' · 이전값',note:'갱신하지 못한 이전 관측값입니다. '+baseNote,updateFailed:true,lastAttemptAt:now.toISOString()}});
+ }
+ return [...fresh.values(),...retained];
+}

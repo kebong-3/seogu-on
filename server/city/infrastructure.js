@@ -1,0 +1,23 @@
+/* Optional admin-configured adapters for public JSON APIs. No arbitrary browser proxy.
+   Source config and secrets live in Vercel environment variables, never in source files. */
+import {HttpError,json,endpoint,records,totalOf,n,text,scopeFor,safeFeatures,requireKey} from './common.js';
+import {INFRA_LAYERS} from '../../src/city/infrastructure.js';
+import {importOperational} from '../../src/city/operations.js';
+const ids=new Set(INFRA_LAYERS.map(l=>l.id)),hosts=new Set(['apis.data.go.kr','api.odcloud.kr','api.data.go.kr','www.safetydata.go.kr']);
+function field(row,path){if(!path)return undefined;const keys=path.split('.');if(keys.some(k=>['__proto__','prototype','constructor'].includes(k)))return undefined;return keys.reduce((o,k)=>o&&typeof o==='object'?o[k]:undefined,row);}
+export function sourceConfigs(env=process.env){let list;try{list=JSON.parse(env.INFRA_SOURCES_JSON||'[]');}catch{throw new HttpError(503,'INFRA_SOURCES_JSON JSON 형식을 확인하세요.');}if(!Array.isArray(list)||list.length>35)throw new HttpError(503,'인프라 연결 설정은 35개 이하 배열이어야 합니다.');const seen=new Set();
+ for(const c of list){if(!c||!ids.has(c.id)||seen.has(c.id))throw new HttpError(503,'인프라 종류 ID가 없거나 중복되었습니다.');seen.add(c.id);let u;try{u=new URL(c.url);}catch{throw new HttpError(503,'공공데이터 API 주소 형식을 확인하세요.');}if(u.protocol!=='https:'||!hosts.has(u.hostname)||u.username||u.password||u.port&&u.port!=='443'||u.hash)throw new HttpError(503,'허용된 공공데이터 HTTPS API만 연결할 수 있습니다.');
+ if(!c.sourceName||!c.fields?.id||!c.fields?.name||(!c.fields.geometry&&(!c.fields.longitude||!c.fields.latitude)))throw new HttpError(503,'인프라 출처·원본 고유번호·명칭·좌표/도형 매핑이 필요합니다.');
+ if(c.keyEnv&&!/^[A-Z][A-Z0-9_]{2,80}$/.test(c.keyEnv))throw new HttpError(503,'인증키 환경변수 이름 형식 오류');if(Object.keys(c.params||{}).some(k=>/key|token|secret|authorization/i.test(k))||[...u.searchParams.keys()].some(k=>/key|token|secret/i.test(k)))throw new HttpError(503,'인증키는 URL이나 params가 아니라 keyEnv로 지정하세요.');}
+ return list;}
+export function infrastructureFlags(env=process.env){try{return Object.fromEntries(sourceConfigs(env).map(c=>[c.id,!c.keyEnv||!!env[c.keyEnv]]));}catch{return {};}}
+export async function readInfrastructure(id,q,{env=process.env,fetcher=fetch,now=new Date()}={}){const c=sourceConfigs(env).find(c=>c.id===id);if(!c)throw new HttpError(503,'해당 인프라 공개 API 연결 설정이 필요합니다.');const scope=scopeFor(q.get('dong')),page=Number(q.get('page')||1);if(!Number.isInteger(page)||page<1||page>150)throw new HttpError(400,'페이지 범위 오류');const size=Math.min(500,Math.max(1,Number(c.pageSize)||100));const params={...(c.params||{}),[c.pageParam||'pageNo']:page,[c.sizeParam||'numOfRows']:size};
+ if(c.keyEnv){let key=requireKey(env[c.keyEnv],'인프라 API');try{key=decodeURIComponent(key);}catch{}params[c.keyParam||'serviceKey']=key;}
+ const body=await json(endpoint(c.url,params),{fetcher});const rows=body.type==='FeatureCollection'?body.features:c.itemsPath?field(body,c.itemsPath):records(body);if(!Array.isArray(rows)||rows.length>1500)throw new HttpError(502,'인프라 API 항목 배열 형식 또는 크기를 확인하세요.');const total=c.totalPath?n(field(body,c.totalPath)):totalOf(body);const complete=total!==null?page*size>=total:rows.length<size;
+ const fs=[];let invalid=0;for(const row of rows){const m=c.fields,idValue=field(row,m.id),name=field(row,m.name);if(idValue===undefined||idValue===null||!name){invalid++;continue;}let geometry=m.geometry?field(row,m.geometry):{type:'Point',coordinates:[n(field(row,m.longitude)),n(field(row,m.latitude))]};if(typeof geometry==='string')try{geometry=JSON.parse(geometry);}catch{invalid++;continue;}
+ const sourceDate=m.sourceDate?field(row,m.sourceDate):c.sourceDate||null,p={id:`${id}-${text(idValue,120)}`,name:text(name,200),sourceName:text(c.sourceName),sourceUrl:c.sourceUrl||null,sourceDate:/^\d{4}-\d\d-\d\d$/.test(sourceDate||'')?sourceDate:null,collectedAt:now.toISOString(),address:text(field(row,m.address)),note:'공개 API 수신자료. 현장 검수·현재 운영 확인을 의미하지 않습니다.'};
+ if(id==='infra-snow-routes'||id==='infra-snow-priority'){for(const k of ['status','observedAt','expiresAt'])p[k]=field(row,m[k]);}
+ fs.push({type:'Feature',geometry,properties:p});}
+ const normalized=safeFeatures(fs,scope);let features=normalized.features;
+ if(['infra-snow-routes','infra-snow-priority'].includes(id)&&features.length)features=importOperational({type:'FeatureCollection',features},id,scope,now).features;
+ return {ok:true,kind:id,geojson:{type:'FeatureCollection',features},page,totalScanned:rows.length,totalCount:total,complete,nextPage:complete?null:page+1,rejected:invalid+normalized.invalid,sourceName:c.sourceName,sourceDate:c.sourceDate||null,collectedAt:now.toISOString(),coverage:'설정한 원자료의 조회범위 · 인프라 전체 전수 아님',note:'마지막 페이지까지 수집했더라도 원자료에 미등록된 시설까지 포함된다는 뜻은 아닙니다.'};}

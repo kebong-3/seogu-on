@@ -1,3 +1,4 @@
+import {INFRA_LAYERS,OVERLAY_LAYERS} from './infrastructure.js';
 export const LAYERS=[
  {id:'parks',group:'생활인프라',title:'공원 위치',icon:'tree',color:'#74d79b',kind:'point',url:'/data/layers/parks.geojson',note:'공공데이터 위치 · 법적 공원 경계와 별개'},
  {id:'park-areas',group:'생활인프라',title:'공원 면',icon:'tree',color:'#74d79b',kind:'polygon',url:'/data/city/park-areas.geojson',note:'OSM 공원 도형 · 행정상 지정경계 아님'},
@@ -18,10 +19,11 @@ export const LAYERS=[
  {id:'air-stations',group:'환경',title:'대기 측정소',icon:'wind',color:'#b9d2a0',kind:'point',api:true,key:'air',note:'측정소 관측값 · 모든 건물의 농도 아님'},
  {id:'cadastral',group:'입지·계획',title:'지적도 참고층',icon:'parcel',color:'#e0cc9d',kind:'raster',key:'vworldRest',note:'법적 경계 확정·측량용 아님'}
 ];
+LAYERS.push(...INFRA_LAYERS,...OVERLAY_LAYERS);
 export const LAYER_BY_ID=Object.fromEntries(LAYERS.map(l=>[l.id,l]));
 export const PRESETS=[
  {id:'parks',label:'공원',icon:'tree',layers:['parks','park-areas']},
- {id:'parking',label:'주차',icon:'parking',layers:['parking']},
+ {id:'parking',label:'주차',icon:'parking',layers:['parking','infra-parking']},
  {id:'culture',label:'생활시설',icon:'book',layers:['libraries','public-facilities']},
  {id:'safety',label:'안전·복지',icon:'shield',layers:['shelter-schools']},
  {id:'traffic',label:'교통',icon:'road',layers:[]},

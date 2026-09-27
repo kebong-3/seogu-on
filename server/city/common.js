@@ -17,7 +17,7 @@ export function gate(req,res,limit=100){if(!['GET','HEAD'].includes(req.method||
  const ip=String(req.headers?.['x-forwarded-for']||'local').split(',')[0],now=Date.now(),id=`${limit}:${ip}`;let b=buckets.get(id);if(!b||now>b.end)b={count:0,end:now+60000};if(++b.count>limit){send(res,429,{ok:false,error:'잠시 후 다시 요청하세요.'});return false;}buckets.set(id,b);if(buckets.size>4000){for(const [k,v]of buckets)if(v.end<now)buckets.delete(k);while(buckets.size>4000)buckets.delete(buckets.keys().next().value);}return true;}
 export function send(res,status,body,cache=0){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control',cache?`public, max-age=${cache}`:'no-store');res.setHeader('X-Content-Type-Options','nosniff');res.end(JSON.stringify(body));}
 export function fail(res,e){send(res,e instanceof HttpError?e.status:502,{ok:false,error:e instanceof HttpError?e.message:'제공기관 응답을 확인하지 못했습니다. 이전 자료는 유지합니다.',code:e instanceof HttpError?e.code:'UPSTREAM_UNAVAILABLE'});}
-const ALLOWED=new Set(['api.vworld.kr','www.safemap.go.kr','data.floodmap.go.kr','www.safetydata.go.kr','apis.data.go.kr','openapi.its.go.kr','its.go.kr']);
+const ALLOWED=new Set(['api.vworld.kr','www.safemap.go.kr','data.floodmap.go.kr','www.safetydata.go.kr','apis.data.go.kr','api.odcloud.kr','api.data.go.kr','openapi.its.go.kr','its.go.kr']);
 export async function bytes(url,{fetcher=fetch,max=2*1024*1024,timeout=8500}={}){
  const u=new URL(url);if(u.protocol!=='https:'||!ALLOWED.has(u.hostname)||u.username||u.password)throw new HttpError(400,'허용되지 않은 외부 주소입니다.');
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);

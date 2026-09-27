@@ -1,0 +1,17 @@
+/* Independently rendered OSM snapshot. NOT VWorld, photogrammetry or a measured terrain. */
+export async function loadCleanModel(viewer,C,onProgress=()=>{}){
+ const fetchFC=async url=>{const r=await fetch(url);if(!r.ok)throw Error('도시모형 자료 수신 실패');const b=await r.json();if(b.type!=='FeatureCollection')throw Error('도시모형 GeoJSON 형식 오류');return b;};
+ const [buildings,network]=await Promise.all(['/data/city/model/buildings.geojson','/data/city/model/network.geojson'].map(fetchFC));
+ const polygon=(rings)=>new C.PolygonHierarchy(C.Cartesian3.fromDegreesArray(rings[0].flatMap(p=>p.slice(0,2))),rings.slice(1).map(r=>new C.PolygonHierarchy(C.Cartesian3.fromDegreesArray(r.flatMap(p=>p.slice(0,2))))));
+ const chunks=[],all=[];for(const f of buildings.features){const p=f.properties,polys=f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.coordinates;if(!Number.isFinite(p.height)||p.height<=0)continue;
+  for(const ring of polys)try{all.push(new C.GeometryInstance({id:{cleanBuilding:p},geometry:new C.PolygonGeometry({polygonHierarchy:polygon(ring),height:0,extrudedHeight:p.height,vertexFormat:C.PerInstanceColorAppearance.VERTEX_FORMAT}),attributes:{color:C.ColorGeometryInstanceAttribute.fromColor(C.Color.fromCssColorString(p.heightBasis==='display-only'?'#c9d0ce':'#f0f1e9'))}}));}catch{/* Invalid geometry is omitted and recorded by data preprocessing. */}}
+ for(let i=0;i<all.length;i+=350){const primitive=new C.Primitive({geometryInstances:all.slice(i,i+350),appearance:new C.PerInstanceColorAppearance({translucent:false,closed:true}),asynchronous:true,shadows:C.ShadowMode.ENABLED});viewer.scene.primitives.add(primitive);chunks.push(primitive);if(i%1400===0){onProgress(`건물 ${Math.min(i+350,all.length)} / ${all.length} 도형 준비`);await new Promise(r=>setTimeout(r,0));}}
+ const roadInstances=[],waterInstances=[];
+ for(const f of network.features){const p=f.properties||{},g=f.geometry;
+ if(g.type.includes('Polygon')){for(const r of(g.type==='Polygon'?[g.coordinates]:g.coordinates))try{waterInstances.push(new C.GeometryInstance({geometry:new C.PolygonGeometry({polygonHierarchy:polygon(r),height:0.12,vertexFormat:C.PerInstanceColorAppearance.VERTEX_FORMAT}),attributes:{color:C.ColorGeometryInstanceAttribute.fromColor(C.Color.fromCssColorString('#9dc5c9'))}}));}catch{}continue;}
+ const lines=g.type==='LineString'?[g.coordinates]:g.type==='MultiLineString'?g.coordinates:[];
+ for(const line of lines){if(line.length<2)continue;roadInstances.push(new C.GeometryInstance({geometry:new C.PolylineGeometry({positions:C.Cartesian3.fromDegreesArrayHeights(line.flatMap(p=>[p[0],p[1],.5])),width:/primary|trunk|motorway/.test(p.kind)?3:1.3,vertexFormat:C.PolylineColorAppearance.VERTEX_FORMAT}),attributes:{color:C.ColorGeometryInstanceAttribute.fromColor(C.Color.fromCssColorString(/stream|river|canal|water/.test(p.kind)?'#9dc5c9':'#f5f4e9'))}}));}}
+ if(roadInstances.length)viewer.scene.primitives.add(new C.Primitive({geometryInstances:roadInstances,appearance:new C.PolylineColorAppearance(),asynchronous:true}));
+ if(waterInstances.length)viewer.scene.primitives.add(new C.Primitive({geometryInstances:waterInstances,appearance:new C.PerInstanceColorAppearance({translucent:false,flat:true}),asynchronous:true}));
+ viewer.scene.requestRender?.();return {buildingCount:buildings.features.length,geometryCount:all.length,networkCount:network.features.length,metadata:buildings.metadata,note:'OSM 도형 기반 단순 입체화 · 지형 없음 · 높이 미상 건물은 표시 전용 6m · 그늘 계산에서 제외'};
+}
