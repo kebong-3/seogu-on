@@ -1,0 +1,59 @@
+name: Seo-gu v0.4 graphics check
+on:
+  push:
+    branches: [feature/city-infrastructure-v0.4]
+    paths: [.github/workflows/city-v04-graphics-check.yml]
+permissions: {contents: read}
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install playwright==1.55.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Check public deployment rendering and local preset only
+        run: |
+          mkdir -p evidence
+          python3 -u - <<'PY'
+          import json,pathlib,time
+          from playwright.sync_api import sync_playwright
+          out=pathlib.Path('evidence');result={'test':'Existing Production VWorld + injected v0.4 quality function; NOT full v0.4 app deployment','source':'https://seogu-on.vercel.app/','credentialsRecorded':False}
+          with sync_playwright() as p:
+            b=p.chromium.launch(headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
+            page=b.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1)
+            try:
+              page.goto('https://seogu-on.vercel.app/',wait_until='domcontentloaded',timeout=45000)
+              frame=None
+              for i in range(36):
+                page.wait_for_timeout(2000)
+                for f in page.frames:
+                  try:
+                    if f.evaluate('!!(window.ws3d?.viewer?.scene?.canvas)'):frame=f;break
+                  except:pass
+                if frame:break
+              result['viewerPresent']=bool(frame)
+              if frame:
+                frame.wait_for_function('window.ws3d?.viewer?.scene?.globe?.tilesLoaded',timeout=25000)
+                button=page.locator('[data-action="dong"][data-id="seogu-01"]')
+                if button.count():button.first.click();page.wait_for_timeout(18000)
+                capture='''()=>{const v=ws3d.viewer,c=v.scene.canvas;return {canvas:[c.width,c.height],css:[c.clientWidth,c.clientHeight],resolutionScale:v.resolutionScale,dpr:devicePixelRatio,primitives:v.scene.primitives.length,terrainTilesLoaded:v.scene.globe.tilesLoaded,pitch:v.camera.pitch,contextLost:c.getContext('webgl2')?.isContextLost?.()??null};}'''
+                result['before']=frame.evaluate(capture)
+                page.screenshot(path=str(out/'production-quality-before.png'))
+                script=pathlib.Path('src/city/quality.js').read_text().replace('export const ','const ').replace('export function ','function ')
+                result['quality']=frame.evaluate('(code)=>{return (new Function(code+";return applyQuality(ws3d.viewer,Cesium,\"high\");"))();}',script)
+                page.wait_for_timeout(18000);result['after']=frame.evaluate(capture)
+                page.screenshot(path=str(out/'production-quality-after.png'))
+              else:
+                result['state']='viewer-not-ready';page.screenshot(path=str(out/'production-viewer-unavailable.png'))
+            except Exception as e:
+              result['state']='not-fully-verified';result['errorType']=type(e).__name__
+              # Deliberately omit exception text, URLs, network logs, SDK HTML and authentication values.
+            finally:
+              b.close();(out/'graphics-test.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print(json.dumps(result,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: city-v04-graphics-check
+          path: evidence/
+          retention-days: 7
