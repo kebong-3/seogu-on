@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "sourceName": "OpenStreetMap contributors",
+    "sourceDate": "2026-09-26",
+    "sourceTimestamp": "2026-09-26T23:56:06Z",
+    "license": "ODbL-1.0",
+    "sourceUrl": "https://www.openstreetmap.org/copyright",
+    "query": "leisure=park in [35.07,126.77,35.22,126.94]",
+    "method": "Closed ways and assembled relation rings; holes retained; intersected with packaged Seo-gu administrative boundary",
+    "count": 94,
+    "upstreamElements": 773,
+    "excludedInvalid": 0,
+    "coverage": "partial: OSM mapped parks, not a complete official Seo-gu parks inventory",
+    "officialFacilityLink": "not automatically joined"
+  },
+  "excluded": []
+}

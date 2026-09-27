@@ -1,0 +1,1154 @@
+
+> seo-on-digital-twin@0.3.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: Only exact approved HTTPS public data hosts are allowed
+ok 1 - Only exact approved HTTPS public data hosts are allowed
+  ---
+  duration_ms: 0.905489
+  type: 'test'
+  ...
+# Subtest: Domains are normalized to origins and malformed values rejected
+ok 2 - Domains are normalized to origins and malformed values rejected
+  ---
+  duration_ms: 0.171866
+  type: 'test'
+  ...
+# Subtest: odcloud response supported
+ok 3 - odcloud response supported
+  ---
+  duration_ms: 0.633153
+  type: 'test'
+  ...
+# Subtest: data.go.kr nested response supported
+ok 4 - data.go.kr nested response supported
+  ---
+  duration_ms: 0.109994
+  type: 'test'
+  ...
+# Subtest: Single row object supported
+ok 5 - Single row object supported
+  ---
+  duration_ms: 0.131866
+  type: 'test'
+  ...
+# Subtest: Unknown JSON schema gives an explicit error
+ok 6 - Unknown JSON schema gives an explicit error
+  ---
+  duration_ms: 0.306907
+  type: 'test'
+  ...
+# Subtest: Normalization checks coordinates and does not fabricate monthly data
+ok 7 - Normalization checks coordinates and does not fabricate monthly data
+  ---
+  duration_ms: 0.237844
+  type: 'test'
+  ...
+# Subtest: Blank coordinates do not become zero
+ok 8 - Blank coordinates do not become zero
+  ---
+  duration_ms: 0.100269
+  type: 'test'
+  ...
+# Subtest: Missing API configuration is explicit
+ok 9 - Missing API configuration is explicit
+  ---
+  duration_ms: 0.329631
+  type: 'test'
+  ...
+# Subtest: Redirects are explicitly rejected
+ok 10 - Redirects are explicitly rejected
+  ---
+  duration_ms: 16.930656
+  type: 'test'
+  ...
+# Subtest: Non-JSON upstream response rejected
+ok 11 - Non-JSON upstream response rejected
+  ---
+  duration_ms: 0.471262
+  type: 'test'
+  ...
+# Subtest: Oversize upstream response rejected
+ok 12 - Oversize upstream response rejected
+  ---
+  duration_ms: 0.508467
+  type: 'test'
+  ...
+# Subtest: Config never exposes secret values
+ok 13 - Config never exposes secret values
+  ---
+  duration_ms: 0.388239
+  type: 'test'
+  ...
+# Subtest: Methods other than GET rejected
+ok 14 - Methods other than GET rejected
+  ---
+  duration_ms: 0.085637
+  type: 'test'
+  ...
+# Subtest: Different browser origin rejected
+ok 15 - Different browser origin rejected
+  ---
+  duration_ms: 0.091546
+  type: 'test'
+  ...
+# Subtest: Unconfigured VWorld gives 503 not a fabricated result
+ok 16 - Unconfigured VWorld gives 503 not a fabricated result
+  ---
+  duration_ms: 0.264574
+  type: 'test'
+  ...
+# Subtest: Unconfigured public API gives 503
+ok 17 - Unconfigured public API gives 503
+  ---
+  duration_ms: 0.233918
+  type: 'test'
+  ...
+# Subtest: 2D tilt stays queued before the map SDK is ready
+ok 18 - 2D tilt stays queued before the map SDK is ready
+  ---
+  duration_ms: 1.081421
+  type: 'test'
+  ...
+# Subtest: 3D tilt stays queued before the map SDK is ready
+ok 19 - 3D tilt stays queued before the map SDK is ready
+  ---
+  duration_ms: 0.146579
+  type: 'test'
+  ...
+# Subtest: district viewport follows the 3D state instead of forcing 2D
+ok 20 - district viewport follows the 3D state instead of forcing 2D
+  ---
+  duration_ms: 0.174931
+  type: 'test'
+  ...
+# Subtest: district viewport follows the 2D state
+ok 21 - district viewport follows the 2D state
+  ---
+  duration_ms: 0.142281
+  type: 'test'
+  ...
+# Subtest: provider: settings never expose credential values
+ok 22 - provider: settings never expose credential values
+  ---
+  duration_ms: 0.889735
+  type: 'test'
+  ...
+# Subtest: provider: unknown dong and unknown kind rejected
+ok 23 - provider: unknown dong and unknown kind rejected
+  ---
+  duration_ms: 0.889915
+  type: 'test'
+  ...
+# Subtest: provider: missing key is configuration failure, never zero records
+ok 24 - provider: missing key is configuration failure, never zero records
+  ---
+  duration_ms: 0.378944
+  type: 'test'
+  ...
+# Subtest: provider: heat points strictly inside Seo-gu and unknown values remain null
+ok 25 - provider: heat points strictly inside Seo-gu and unknown values remain null
+  ---
+  duration_ms: 22.154927
+  type: 'test'
+  ...
+# Subtest: provider: paginated national heat list labels partial coverage
+ok 26 - provider: paginated national heat list labels partial coverage
+  ---
+  duration_ms: 0.596779
+  type: 'test'
+  ...
+# Subtest: provider: API result error does not become empty success
+ok 27 - provider: API result error does not become empty success
+  ---
+  duration_ms: 0.130144
+  type: 'test'
+  ...
+# Subtest: provider: unrecognized response does not become empty list
+ok 28 - provider: unrecognized response does not become empty list
+  ---
+  duration_ms: 0.145177
+  type: 'test'
+  ...
+# Subtest: provider: flat emergency XML is parsed without external entities
+ok 29 - provider: flat emergency XML is parsed without external entities
+  ---
+  duration_ms: 1.035622
+  type: 'test'
+  ...
+# Subtest: provider: malformed XML rejected
+ok 30 - provider: malformed XML rejected
+  ---
+  duration_ms: 0.368389
+  type: 'test'
+  ...
+# Subtest: provider: emergency baseline is not labeled live availability
+ok 31 - provider: emergency baseline is not labeled live availability
+  ---
+  duration_ms: 2.015522
+  type: 'test'
+  ...
+# Subtest: provider: ITS geometry is filtered, live observations keep provider time
+ok 32 - provider: ITS geometry is filtered, live observations keep provider time
+  ---
+  duration_ms: 0.821433
+  type: 'test'
+  ...
+# Subtest: provider: CCTV keeps approved public URL but not private IP URLs
+ok 33 - provider: CCTV keeps approved public URL but not private IP URLs
+  ---
+  duration_ms: 0.712471
+  type: 'test'
+  ...
+# Subtest: provider: accident year/code are explicit and not inferred from new boundaries
+ok 34 - provider: accident year/code are explicit and not inferred from new boundaries
+  ---
+  duration_ms: 0.653003
+  type: 'test'
+  ...
+# Subtest: provider: actual measurement station coordinates, not district name guess
+ok 35 - provider: actual measurement station coordinates, not district name guess
+  ---
+  duration_ms: 1.201129
+  type: 'test'
+  ...
+# Subtest: provider: air missing/flagged observations never report normal or zero
+ok 36 - provider: air missing/flagged observations never report normal or zero
+  ---
+  duration_ms: 1.527495
+  type: 'test'
+  ...
+# Subtest: provider: unmatched air station rejected before observations
+ok 37 - provider: unmatched air station rejected before observations
+  ---
+  duration_ms: 0.562417
+  type: 'test'
+  ...
+# Subtest: provider: parcel search ignores out-of-district records
+ok 38 - provider: parcel search ignores out-of-district records
+  ---
+  duration_ms: 0.677549
+  type: 'test'
+  ...
+# Subtest: provider: reverse query cannot leave Seo-gu
+ok 39 - provider: reverse query cannot leave Seo-gu
+  ---
+  duration_ms: 0.340628
+  type: 'test'
+  ...
+# Subtest: security: upstream arbitrary hosts and cleartext URLs denied
+ok 40 - security: upstream arbitrary hosts and cleartext URLs denied
+  ---
+  duration_ms: 0.189252
+  type: 'test'
+  ...
+# Subtest: security: upstream redirect is not followed
+ok 41 - security: upstream redirect is not followed
+  ---
+  duration_ms: 0.214911
+  type: 'test'
+  ...
+# Subtest: security: upstream body limit enforced
+ok 42 - security: upstream body limit enforced
+  ---
+  duration_ms: 0.368929
+  type: 'test'
+  ...
+# Subtest: WMS: key appears only in server constructed URL, CRS explicit
+ok 43 - WMS: key appears only in server constructed URL, CRS explicit
+  ---
+  duration_ms: 0.424592
+  type: 'test'
+  ...
+# Subtest: WMS: outside requested district bounds produces no provider call
+ok 44 - WMS: outside requested district bounds produces no provider call
+  ---
+  duration_ms: 0.196492
+  type: 'test'
+  ...
+# Subtest: WMS: HTML/XML error with HTTP200 rejected as imagery
+ok 45 - WMS: HTML/XML error with HTTP200 rejected as imagery
+  ---
+  duration_ms: 0.451072
+  type: 'test'
+  ...
+# Subtest: WMS: invalid large or reversed bbox rejected
+ok 46 - WMS: invalid large or reversed bbox rejected
+  ---
+  duration_ms: 0.162471
+  type: 'test'
+  ...
+# Subtest: KMA: midnight uses Korean time, not browser/UTC wall-clock
+ok 47 - KMA: midnight uses Korean time, not browser/UTC wall-clock
+  ---
+  duration_ms: 0.126939
+  type: 'test'
+  ...
+# Subtest: KMA: null observation is not converted to 0
+ok 48 - KMA: null observation is not converted to 0
+  ---
+  duration_ms: 0.659252
+  type: 'test'
+  ...
+# Subtest: city: actual 18 geometries and 18 distinct colors
+ok 49 - city: actual 18 geometries and 18 distinct colors
+  ---
+  duration_ms: 0.970816
+  type: 'test'
+  ...
+# Subtest: city: district union contains all dong representative points
+ok 50 - city: district union contains all dong representative points
+  ---
+  duration_ms: 1.690909
+  type: 'test'
+  ...
+# Subtest: city: Seoul coordinates excluded
+ok 51 - city: Seoul coordinates excluded
+  ---
+  duration_ms: 0.126899
+  type: 'test'
+  ...
+# Subtest: city: polygon holes retained through intersection
+ok 52 - city: polygon holes retained through intersection
+  ---
+  duration_ms: 0.601075
+  type: 'test'
+  ...
+# Subtest: city: disjoint multipart islands preserved
+ok 53 - city: disjoint multipart islands preserved
+  ---
+  duration_ms: 0.377803
+  type: 'test'
+  ...
+# Subtest: city: line is cut at actual polygon edges
+ok 54 - city: line is cut at actual polygon edges
+  ---
+  duration_ms: 0.29602
+  type: 'test'
+  ...
+# Subtest: city: line crossing a hole has two independent parts
+ok 55 - city: line crossing a hole has two independent parts
+  ---
+  duration_ms: 0.247369
+  type: 'test'
+  ...
+# Subtest: city: wholly outside geometry excluded
+ok 56 - city: wholly outside geometry excluded
+  ---
+  duration_ms: 0.264814
+  type: 'test'
+  ...
+# Subtest: city: inverse mask excludes scope and includes surrounding ground
+ok 57 - city: inverse mask excludes scope and includes surrounding ground
+  ---
+  duration_ms: 0.465323
+  type: 'test'
+  ...
+# Subtest: city: multiline clipping has valid representative and bounds
+ok 58 - city: multiline clipping has valid representative and bounds
+  ---
+  duration_ms: 0.500446
+  type: 'test'
+  ...
+# Subtest: city: closed shape validator rejects wrong axes, open ring and null
+ok 59 - city: closed shape validator rejects wrong axes, open ring and null
+  ---
+  duration_ms: 0.277203
+  type: 'test'
+  ...
+# Subtest: city: stored park areas 94, genuinely sourced polygons, not generated buffers
+ok 60 - city: stored park areas 94, genuinely sourced polygons, not generated buffers
+  ---
+  duration_ms: 0.874993
+  type: 'test'
+  ...
+# Subtest: city: original public point layers retained at 325
+ok 61 - city: original public point layers retained at 325
+  ---
+  duration_ms: 3.338272
+  type: 'test'
+  ...
+# Subtest: city: administrative selection cannot add facilities outside selected geometry
+ok 62 - city: administrative selection cannot add facilities outside selected geometry
+  ---
+  duration_ms: 1.431012
+  type: 'test'
+  ...
+# Subtest: city: CSV formula injection neutralized
+ok 63 - city: CSV formula injection neutralized
+  ---
+  duration_ms: 0.184625
+  type: 'test'
+  ...
+# Subtest: city: mercator round-trip
+ok 64 - city: mercator round-trip
+  ---
+  duration_ms: 0.124425
+  type: 'test'
+  ...
+# Subtest: camera: facility frame closer than dong closer than district
+ok 65 - camera: facility frame closer than dong closer than district
+  ---
+  duration_ms: 0.286977
+  type: 'test'
+  ...
+# Subtest: camera: mobile narrow aspect backs up for framing
+ok 66 - camera: mobile narrow aspect backs up for framing
+  ---
+  duration_ms: 0.115693
+  type: 'test'
+  ...
+# Subtest: camera: 3D point altitude cannot corrupt longitude target
+ok 67 - camera: 3D point altitude cannot corrupt longitude target
+  ---
+  duration_ms: 0.522558
+  type: 'test'
+  ...
+# Subtest: camera: shortest heading rotation across north
+ok 68 - camera: shortest heading rotation across north
+  ---
+  duration_ms: 0.071387
+  type: 'test'
+  ...
+# Subtest: camera: distant transitions rise in the middle and end at exact target
+ok 69 - camera: distant transitions rise in the middle and end at exact target
+  ---
+  duration_ms: 0.15456
+  type: 'test'
+  ...
+# Subtest: camera: cancellation resolves old transition, last selection wins
+ok 70 - camera: cancellation resolves old transition, last selection wins
+  ---
+  duration_ms: 0.334599
+  type: 'test'
+  ...
+# Subtest: camera: reduced-motion jumps without animation
+ok 71 - camera: reduced-motion jumps without animation
+  ---
+  duration_ms: 0.118246
+  type: 'test'
+  ...
+# Subtest: analysis: null, blank and missing are not zero
+ok 72 - analysis: null, blank and missing are not zero
+  ---
+  duration_ms: 0.190063
+  type: 'test'
+  ...
+# Subtest: analysis: analytical planar slope is recovered
+ok 73 - analysis: analytical planar slope is recovered
+  ---
+  duration_ms: 0.398484
+  type: 'test'
+  ...
+# Subtest: analysis: missing DEM heights do not become flat terrain
+ok 74 - analysis: missing DEM heights do not become flat terrain
+  ---
+  duration_ms: 0.128502
+  type: 'test'
+  ...
+# Subtest: analysis: grid and profile endpoints preserve requested coordinates
+ok 75 - analysis: grid and profile endpoints preserve requested coordinates
+  ---
+  duration_ms: 0.197924
+  type: 'test'
+  ...
+# Subtest: analysis: GLB 2 embedded file accepted
+ok 76 - analysis: GLB 2 embedded file accepted
+  ---
+  duration_ms: 0.260008
+  type: 'test'
+  ...
+# Subtest: analysis: GLB external references rejected
+ok 77 - analysis: GLB external references rejected
+  ---
+  duration_ms: 0.49055
+  type: 'test'
+  ...
+# Subtest: analysis: GLB bad header and required extensions rejected
+ok 78 - analysis: GLB bad header and required extensions rejected
+  ---
+  duration_ms: 0.196223
+  type: 'test'
+  ...
+# Subtest: analysis: model results require provenance and uncertainty status
+ok 79 - analysis: model results require provenance and uncertainty status
+  ---
+  duration_ms: 0.131816
+  type: 'test'
+  ...
+# Subtest: forecast: KST midnight and 90 minute publication lag
+ok 80 - forecast: KST midnight and 90 minute publication lag
+  ---
+  duration_ms: 1.348588
+  type: 'test'
+  ...
+# Subtest: forecast: do not combine values from different valid times
+ok 81 - forecast: do not combine values from different valid times
+  ---
+  duration_ms: 10.017098
+  type: 'test'
+  ...
+# Subtest: forecast: outside district rejected before making API request
+ok 82 - forecast: outside district rejected before making API request
+  ---
+  duration_ms: 1.170143
+  type: 'test'
+  ...
+# Subtest: forecast: key and network failure do not generate weather
+ok 83 - forecast: key and network failure do not generate weather
+  ---
+  duration_ms: 0.336711
+  type: 'test'
+  ...
+# Subtest: Same coordinate distance is zero
+ok 84 - Same coordinate distance is zero
+  ---
+  duration_ms: 0.872619
+  type: 'test'
+  ...
+# Subtest: Equatorial one degree is about 111.195 km
+ok 85 - Equatorial one degree is about 111.195 km
+  ---
+  duration_ms: 0.144546
+  type: 'test'
+  ...
+# Subtest: Coordinates must be numeric and geographic
+ok 86 - Coordinates must be numeric and geographic
+  ---
+  duration_ms: 0.267228
+  type: 'test'
+  ...
+# Subtest: Circle is closed and all vertices are 500m from center
+ok 87 - Circle is closed and all vertices are 500m from center
+  ---
+  duration_ms: 0.767423
+  type: 'test'
+  ...
+# Subtest: Invalid circle radius throws
+ok 88 - Invalid circle radius throws
+  ---
+  duration_ms: 0.11388
+  type: 'test'
+  ...
+# Subtest: Validity periods include both ends
+ok 89 - Validity periods include both ends
+  ---
+  duration_ms: 0.240088
+  type: 'test'
+  ...
+# Subtest: Invalid month is rejected
+ok 90 - Invalid month is rejected
+  ---
+  duration_ms: 0.088872
+  type: 'test'
+  ...
+# Subtest: Leap day validation
+ok 91 - Leap day validation
+  ---
+  duration_ms: 0.412404
+  type: 'test'
+  ...
+# Subtest: Demo is reproducible and every point explicitly synthetic
+ok 92 - Demo is reproducible and every point explicitly synthetic
+  ---
+  duration_ms: 0.95993
+  type: 'test'
+  ...
+# Subtest: Demo facilities have twelve months
+ok 93 - Demo facilities have twelve months
+  ---
+  duration_ms: 0.305465
+  type: 'test'
+  ...
+# Subtest: No filter returns all demo points
+ok 94 - No filter returns all demo points
+  ---
+  duration_ms: 0.282481
+  type: 'test'
+  ...
+# Subtest: Category filter is exact
+ok 95 - Category filter is exact
+  ---
+  duration_ms: 0.10705
+  type: 'test'
+  ...
+# Subtest: Empty category selection returns none
+ok 96 - Empty category selection returns none
+  ---
+  duration_ms: 0.07398
+  type: 'test'
+  ...
+# Subtest: Search is a literal substring, no code evaluation
+ok 97 - Search is a literal substring, no code evaluation
+  ---
+  duration_ms: 0.581887
+  type: 'test'
+  ...
+# Subtest: Radius includes its center and excludes distant points
+ok 98 - Radius includes its center and excludes distant points
+  ---
+  duration_ms: 0.175721
+  type: 'test'
+  ...
+# Subtest: Missing is not zero
+ok 99 - Missing is not zero
+  ---
+  duration_ms: 0.128431
+  type: 'test'
+  ...
+# Subtest: Real zero remains zero
+ok 100 - Real zero remains zero
+  ---
+  duration_ms: 0.150164
+  type: 'test'
+  ...
+# Subtest: Null count is reported
+ok 101 - Null count is reported
+  ---
+  duration_ms: 0.118968
+  type: 'test'
+  ...
+# Subtest: Zero or missing denominator is not fabricated as a percentage
+ok 102 - Zero or missing denominator is not fabricated as a percentage
+  ---
+  duration_ms: 0.081631
+  type: 'test'
+  ...
+# Subtest: Comparison only uses paired observations
+ok 103 - Comparison only uses paired observations
+  ---
+  duration_ms: 0.165637
+  type: 'test'
+  ...
+# Subtest: Mixed measurement units prevent aggregation
+ok 104 - Mixed measurement units prevent aggregation
+  ---
+  duration_ms: 0.135992
+  type: 'test'
+  ...
+# Subtest: Project proximity pairs describe only real geometric/date relationships
+ok 105 - Project proximity pairs describe only real geometric/date relationships
+  ---
+  duration_ms: 0.287318
+  type: 'test'
+  ...
+# Subtest: HTML text is escaped
+ok 106 - HTML text is escaped
+  ---
+  duration_ms: 0.138256
+  type: 'test'
+  ...
+# Subtest: CSV formula injection is escaped
+ok 107 - CSV formula injection is escaped
+  ---
+  duration_ms: 0.127149
+  type: 'test'
+  ...
+# Subtest: Valid import is never declared verified or real automatically
+ok 108 - Valid import is never declared verified or real automatically
+  ---
+  duration_ms: 1.427967
+  type: 'test'
+  ...
+# Subtest: Non GeoJSON is rejected
+ok 109 - Non GeoJSON is rejected
+  ---
+  duration_ms: 0.20119
+  type: 'test'
+  ...
+# Subtest: Excess number of rows rejected
+ok 110 - Excess number of rows rejected
+  ---
+  duration_ms: 0.16799
+  type: 'test'
+  ...
+# Subtest: Duplicate ids are not counted twice
+ok 111 - Duplicate ids are not counted twice
+  ---
+  duration_ms: 0.18161
+  type: 'test'
+  ...
+# Subtest: Wrong coordinate system is rejected
+ok 112 - Wrong coordinate system is rejected
+  ---
+  duration_ms: 0.199838
+  type: 'test'
+  ...
+# Subtest: Swapped lat/lon is rejected
+ok 113 - Swapped lat/lon is rejected
+  ---
+  duration_ms: 0.1137
+  type: 'test'
+  ...
+# Subtest: Missing source name is rejected
+ok 114 - Missing source name is rejected
+  ---
+  duration_ms: 0.209021
+  type: 'test'
+  ...
+# Subtest: Impossible source dates are rejected
+ok 115 - Impossible source dates are rejected
+  ---
+  duration_ms: 0.117685
+  type: 'test'
+  ...
+# Subtest: Reversed validity periods are rejected
+ok 116 - Reversed validity periods are rejected
+  ---
+  duration_ms: 0.283162
+  type: 'test'
+  ...
+# Subtest: Bad category rejected
+ok 117 - Bad category rejected
+  ---
+  duration_ms: 0.345734
+  type: 'test'
+  ...
+# Subtest: Bad monthly values are excluded but valid facility retained
+ok 118 - Bad monthly values are excluded but valid facility retained
+  ---
+  duration_ms: 0.692031
+  type: 'test'
+  ...
+# Subtest: map adapter starts against a MapLibre interface without obsolete supported()
+ok 119 - map adapter starts against a MapLibre interface without obsolete supported()
+  ---
+  duration_ms: 18.118204
+  type: 'test'
+  ...
+# Subtest: map adapter links filtered facilities and layer visibility to its sources
+ok 120 - map adapter links filtered facilities and layer visibility to its sources
+  ---
+  duration_ms: 1.695725
+  type: 'test'
+  ...
+# Subtest: boundary has exactly all 18 administrative dong names
+ok 121 - boundary has exactly all 18 administrative dong names
+  ---
+  duration_ms: 1.44339
+  type: 'test'
+  ...
+# Subtest: 양동 label locates to its own polygon
+ok 122 - 양동 label locates to its own polygon
+  ---
+  duration_ms: 0.225305
+  type: 'test'
+  ...
+# Subtest: 양3동 label locates to its own polygon
+ok 123 - 양3동 label locates to its own polygon
+  ---
+  duration_ms: 0.117335
+  type: 'test'
+  ...
+# Subtest: 농성1동 label locates to its own polygon
+ok 124 - 농성1동 label locates to its own polygon
+  ---
+  duration_ms: 0.072678
+  type: 'test'
+  ...
+# Subtest: 농성2동 label locates to its own polygon
+ok 125 - 농성2동 label locates to its own polygon
+  ---
+  duration_ms: 0.082783
+  type: 'test'
+  ...
+# Subtest: 광천동 label locates to its own polygon
+ok 126 - 광천동 label locates to its own polygon
+  ---
+  duration_ms: 0.079018
+  type: 'test'
+  ...
+# Subtest: 유덕동 label locates to its own polygon
+ok 127 - 유덕동 label locates to its own polygon
+  ---
+  duration_ms: 0.104406
+  type: 'test'
+  ...
+# Subtest: 치평동 label locates to its own polygon
+ok 128 - 치평동 label locates to its own polygon
+  ---
+  duration_ms: 0.096554
+  type: 'test'
+  ...
+# Subtest: 상무1동 label locates to its own polygon
+ok 129 - 상무1동 label locates to its own polygon
+  ---
+  duration_ms: 0.272035
+  type: 'test'
+  ...
+# Subtest: 상무2동 label locates to its own polygon
+ok 130 - 상무2동 label locates to its own polygon
+  ---
+  duration_ms: 0.34192
+  type: 'test'
+  ...
+# Subtest: 화정1동 label locates to its own polygon
+ok 131 - 화정1동 label locates to its own polygon
+  ---
+  duration_ms: 0.230533
+  type: 'test'
+  ...
+# Subtest: 화정2동 label locates to its own polygon
+ok 132 - 화정2동 label locates to its own polygon
+  ---
+  duration_ms: 0.072128
+  type: 'test'
+  ...
+# Subtest: 화정3동 label locates to its own polygon
+ok 133 - 화정3동 label locates to its own polygon
+  ---
+  duration_ms: 0.058537
+  type: 'test'
+  ...
+# Subtest: 화정4동 label locates to its own polygon
+ok 134 - 화정4동 label locates to its own polygon
+  ---
+  duration_ms: 0.09432
+  type: 'test'
+  ...
+# Subtest: 서창동 label locates to its own polygon
+ok 135 - 서창동 label locates to its own polygon
+  ---
+  duration_ms: 0.072448
+  type: 'test'
+  ...
+# Subtest: 금호1동 label locates to its own polygon
+ok 136 - 금호1동 label locates to its own polygon
+  ---
+  duration_ms: 0.511772
+  type: 'test'
+  ...
+# Subtest: 금호2동 label locates to its own polygon
+ok 137 - 금호2동 label locates to its own polygon
+  ---
+  duration_ms: 0.071486
+  type: 'test'
+  ...
+# Subtest: 풍암동 label locates to its own polygon
+ok 138 - 풍암동 label locates to its own polygon
+  ---
+  duration_ms: 0.041112
+  type: 'test'
+  ...
+# Subtest: 동천동 label locates to its own polygon
+ok 139 - 동천동 label locates to its own polygon
+  ---
+  duration_ms: 0.051257
+  type: 'test'
+  ...
+# Subtest: reject partial boundary instead of pretending all dong
+ok 140 - reject partial boundary instead of pretending all dong
+  ---
+  duration_ms: 0.511622
+  type: 'test'
+  ...
+# Subtest: reject duplicate dong names
+ok 141 - reject duplicate dong names
+  ---
+  duration_ms: 0.430611
+  type: 'test'
+  ...
+# Subtest: reject legal-dong dataset
+ok 142 - reject legal-dong dataset
+  ---
+  duration_ms: 0.374979
+  type: 'test'
+  ...
+# Subtest: reject unclosed polygon
+ok 143 - reject unclosed polygon
+  ---
+  duration_ms: 0.4295
+  type: 'test'
+  ...
+# Subtest: reject projected coordinates declared as geographic
+ok 144 - reject projected coordinates declared as geographic
+  ---
+  duration_ms: 0.39591
+  type: 'test'
+  ...
+# Subtest: polygon point-in includes boundary but excludes hole interior
+ok 145 - polygon point-in includes boundary but excludes hole interior
+  ---
+  duration_ms: 0.131425
+  type: 'test'
+  ...
+# Subtest: shared boundary is not double counted or forced into nearest dong
+ok 146 - shared boundary is not double counted or forced into nearest dong
+  ---
+  duration_ms: 0.108471
+  type: 'test'
+  ...
+# Subtest: outside district stays outside
+ok 147 - outside district stays outside
+  ---
+  duration_ms: 0.063485
+  type: 'test'
+  ...
+# Subtest: same dong selection controls actual counts
+ok 148 - same dong selection controls actual counts
+  ---
+  duration_ms: 1.346104
+  type: 'test'
+  ...
+# Subtest: line crossing polygon intersects even when endpoints outside
+ok 149 - line crossing polygon intersects even when endpoints outside
+  ---
+  duration_ms: 0.287017
+  type: 'test'
+  ...
+# Subtest: disjoint shapes do not intersect
+ok 150 - disjoint shapes do not intersect
+  ---
+  duration_ms: 0.074431
+  type: 'test'
+  ...
+# Subtest: empty geometry does not crash queries
+ok 151 - empty geometry does not crash queries
+  ---
+  duration_ms: 0.066098
+  type: 'test'
+  ...
+# Subtest: RFC4180 CSV supports quoted commas newlines and BOM
+ok 152 - RFC4180 CSV supports quoted commas newlines and BOM
+  ---
+  duration_ms: 0.363822
+  type: 'test'
+  ...
+# Subtest: CSV rejects duplicate and prototype headers
+ok 153 - CSV rejects duplicate and prototype headers
+  ---
+  duration_ms: 0.131385
+  type: 'test'
+  ...
+# Subtest: CSV rejects unclosed quotes
+ok 154 - CSV rejects unclosed quotes
+  ---
+  duration_ms: 0.067621
+  type: 'test'
+  ...
+# Subtest: CSV rejects inconsistent columns
+ok 155 - CSV rejects inconsistent columns
+  ---
+  duration_ms: 0.142953
+  type: 'test'
+  ...
+# Subtest: blank coordinate is not interpreted as 0
+ok 156 - blank coordinate is not interpreted as 0
+  ---
+  duration_ms: 0.465403
+  type: 'test'
+  ...
+# Subtest: null source date is unknown, not fabricated collection date
+ok 157 - null source date is unknown, not fabricated collection date
+  ---
+  duration_ms: 0.216002
+  type: 'test'
+  ...
+# Subtest: dong stats distinguish zero from missing
+ok 158 - dong stats distinguish zero from missing
+  ---
+  duration_ms: 0.466736
+  type: 'test'
+  ...
+# Subtest: dong stats refuse legal-dong name and duplicates
+ok 159 - dong stats refuse legal-dong name and duplicates
+  ---
+  duration_ms: 0.148681
+  type: 'test'
+  ...
+# Subtest: project import excludes arbitrary fields and supports multi polygons
+ok 160 - project import excludes arbitrary fields and supports multi polygons
+  ---
+  duration_ms: 0.4498
+  type: 'test'
+  ...
+# Subtest: project inverted date range rejected
+ok 161 - project inverted date range rejected
+  ---
+  duration_ms: 0.264023
+  type: 'test'
+  ...
+# Subtest: API config hides key values
+ok 162 - API config hides key values
+  ---
+  duration_ms: 0.278144
+  type: 'test'
+  ...
+# Subtest: custom source requires explicit publicOnly flag
+ok 163 - custom source requires explicit publicOnly flag
+  ---
+  duration_ms: 0.128351
+  type: 'test'
+  ...
+# Subtest: malformed catalog configuration is rejected
+ok 164 - malformed catalog configuration is rejected
+  ---
+  duration_ms: 0.097846
+  type: 'test'
+  ...
+# Subtest: ODCloud matchCount has precedence over nationwide count
+ok 165 - ODCloud matchCount has precedence over nationwide count
+  ---
+  duration_ms: 0.145016
+  type: 'test'
+  ...
+# Subtest: JSON service error is not interpreted as empty success
+ok 166 - JSON service error is not interpreted as empty success
+  ---
+  duration_ms: 0.114301
+  type: 'test'
+  ...
+# Subtest: single standard item is normalized into array
+ok 167 - single standard item is normalized into array
+  ---
+  duration_ms: 0.072198
+  type: 'test'
+  ...
+# Subtest: unknown total is not guessed to be complete
+ok 168 - unknown total is not guessed to be complete
+  ---
+  duration_ms: 0.055723
+  type: 'test'
+  ...
+# Subtest: normalization is public-field allowlist only
+ok 169 - normalization is public-field allowlist only
+  ---
+  duration_ms: 0.502478
+  type: 'test'
+  ...
+# Subtest: blank coordinates explicitly rejected by normalization
+ok 170 - blank coordinates explicitly rejected by normalization
+  ---
+  duration_ms: 0.101381
+  type: 'test'
+  ...
+# Subtest: API key is encoded exactly once
+ok 171 - API key is encoded exactly once
+  ---
+  duration_ms: 0.323332
+  type: 'test'
+  ...
+# Subtest: SSRF host and embedded credentials are blocked
+ok 172 - SSRF host and embedded credentials are blocked
+  ---
+  duration_ms: 0.157665
+  type: 'test'
+  ...
+# Subtest: page bounds prevent arbitrary repeated requests
+ok 173 - page bounds prevent arbitrary repeated requests
+  ---
+  duration_ms: 0.13424
+  type: 'test'
+  ...
+# Subtest: API page cache coalesces and preserves last good response
+ok 174 - API page cache coalesces and preserves last good response
+  ---
+  duration_ms: 16.324198
+  type: 'test'
+  ...
+# Subtest: provider page mismatch is rejected
+ok 175 - provider page mismatch is rejected
+  ---
+  duration_ms: 0.485263
+  type: 'test'
+  ...
+# Subtest: source store network failure never clears previous features
+ok 176 - source store network failure never clears previous features
+  ---
+  duration_ms: 0.393286
+  type: 'test'
+  ...
+# Subtest: source store partial page never replaces completed snapshot
+ok 177 - source store partial page never replaces completed snapshot
+  ---
+  duration_ms: 0.701555
+  type: 'test'
+  ...
+# Subtest: source store complete multiple pages merges without deleting other layers
+ok 178 - source store complete multiple pages merges without deleting other layers
+  ---
+  duration_ms: 0.73823
+  type: 'test'
+  ...
+# Subtest: unexpected zero response retains existing nonempty snapshot
+ok 179 - unexpected zero response retains existing nonempty snapshot
+  ---
+  duration_ms: 0.554245
+  type: 'test'
+  ...
+# Subtest: imported source namespaces IDs to avoid marker collisions
+ok 180 - imported source namespaces IDs to avoid marker collisions
+  ---
+  duration_ms: 0.234119
+  type: 'test'
+  ...
+# Subtest: KMA conversion produces Gwangju grid by KMA Lambert conversion, locality guard rejects Seoul
+ok 181 - KMA conversion produces Gwangju grid by KMA Lambert conversion, locality guard rejects Seoul
+  ---
+  duration_ms: 0.189562
+  type: 'test'
+  ...
+# Subtest: KMA observation hour crosses Korean midnight correctly
+ok 182 - KMA observation hour crosses Korean midnight correctly
+  ---
+  duration_ms: 0.117565
+  type: 'test'
+  ...
+# Subtest: KMA never substitutes forecast or stale time as current observation
+ok 183 - KMA never substitutes forecast or stale time as current observation
+  ---
+  duration_ms: 0.517981
+  type: 'test'
+  ...
+# Subtest: published parks: unique IDs, real source dates, all coordinates in 18-dong boundary
+ok 184 - published parks: unique IDs, real source dates, all coordinates in 18-dong boundary
+  ---
+  duration_ms: 1.654595
+  type: 'test'
+  ...
+# Subtest: published parking: unique IDs, real source dates, all coordinates in 18-dong boundary
+ok 185 - published parking: unique IDs, real source dates, all coordinates in 18-dong boundary
+  ---
+  duration_ms: 1.193788
+  type: 'test'
+  ...
+# Subtest: published public-facilities: unique IDs, real source dates, all coordinates in 18-dong boundary
+ok 186 - published public-facilities: unique IDs, real source dates, all coordinates in 18-dong boundary
+  ---
+  duration_ms: 0.934091
+  type: 'test'
+  ...
+# Subtest: published libraries: unique IDs, real source dates, all coordinates in 18-dong boundary
+ok 187 - published libraries: unique IDs, real source dates, all coordinates in 18-dong boundary
+  ---
+  duration_ms: 1.135651
+  type: 'test'
+  ...
+# Subtest: geocoding is a server-key candidate request, never automatic registration
+ok 188 - geocoding is a server-key candidate request, never automatic registration
+  ---
+  duration_ms: 0.889024
+  type: 'test'
+  ...
+# Subtest: geocoding rejects missing credentials and coordinates outside region
+ok 189 - geocoding rejects missing credentials and coordinates outside region
+  ---
+  duration_ms: 0.895945
+  type: 'test'
+  ...
+# Subtest: school shelter joins preserve unknown designation date and use exact public coordinates
+ok 190 - school shelter joins preserve unknown designation date and use exact public coordinates
+  ---
+  duration_ms: 0.572293
+  type: 'test'
+  ...
+1..190
+# tests 190
+# suites 0
+# pass 190
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 334.270489

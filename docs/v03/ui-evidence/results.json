@@ -1,0 +1,237 @@
+{
+  "testMode": "OFFLINE UI / BoundaryView / transport fixtures; NOT authenticated VWorld, NOT live API, NOT GPU 3D",
+  "passed": 46,
+  "failed": 0,
+  "results": [
+    {
+      "name": "No automatic synthetic fallback when VWorld keys absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Boundary mode clearly NOT 3D",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "18 administrative dong buttons",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "18 distinct palette colors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Overview public park points 87",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Overview sourced park polygons 94",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No cylinder controls on new home",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Selected dong title",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dong filter point count 11",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dong clipped area count 16",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Selected dong has accessible pressed state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Rapid district changes end at latest choice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Camera animation settles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Home resets to overview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Parking preset contains parking only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Point/area not added as facility count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "List count equals visible parking count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Facility detail has source and date",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Isolate selected facility only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Restore other facilities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Search filters name without inventing new records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "CSV matches searched list not hidden rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Settings does not claim authentication success",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Provider building hard-clip not claimed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Missing shelter key asks setup not fabricates shelters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Missing API does not add fake count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All layers off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Six analysis paths are accessible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Local GeoJSON point added to actual filtered scene",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Local file not posted to any server",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Local import explicitly says browser memory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Empty import does not delete current data",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "OSM + SGIS attribution retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Focus mode hides sidebar without resetting data",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Panels restored",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop no document horizontal overflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No desktop JavaScript errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Mobile no horizontal overflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile region-open button visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile district panel opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile selected dong and data match desktop",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile panel closes after dong choice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile list fits viewport",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile list equals scope point+area records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile analysis tools accessible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No mobile JavaScript errors",
+      "passed": true,
+      "detail": []
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "collectedAt": "2026-09-26T23:57:59.369066+00:00",
+  "results": [
+    {
+      "file": "vendor/polygon-clipping.js",
+      "url": "https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.7/dist/polygon-clipping.umd.min.js",
+      "status": 200,
+      "bytes": 29106,
+      "sha256": "7f8619e84a86ce8dd400c9b50430e9c8cf8f26027b19eeb479f109f5c1a9d688"
+    },
+    {
+      "file": "vendor/polygon-clipping.LICENSE",
+      "url": "https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.7/LICENSE.md",
+      "status": 200,
+      "bytes": 1327,
+      "sha256": "864ae9e4ed75e1571a3bcf5dc9070264213445b32e7e2af5bf60eba46fb656d0"
+    },
+    {
+      "file": "vendor/hls.min.js",
+      "url": "https://cdn.jsdelivr.net/npm/hls.js@1.6.13/dist/hls.min.js",
+      "status": 200,
+      "bytes": 541012,
+      "sha256": "7c47cd97d7a6e7b98d9623dd8ed9a6d45af4be4085e0c2001cd7175c2b4cfb07"
+    },
+    {
+      "file": "vendor/hls.LICENSE",
+      "url": "https://cdn.jsdelivr.net/npm/hls.js@1.6.13/LICENSE",
+      "status": 200,
+      "bytes": 1338,
+      "sha256": "ca8773cf798c7ed997d4dd7c8e23c348699f8d5b7462636694cc14de6cda12db"
+    },
+    {
+      "file": "vendor/maplibre-gl.js",
+      "url": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.js",
+      "status": 200,
+      "bytes": 939308,
+      "sha256": "b5a34e6930ff937dbbb9eec8892cffb80ba473cce88ae5ca8c4654432f5f0ebc"
+    },
+    {
+      "file": "vendor/maplibre-gl.css",
+      "url": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.css",
+      "status": 200,
+      "bytes": 69422,
+      "sha256": "792ac997dcf6ae6f643eb4e2dee4630c85e7056526bd8fb85ffe83c67d6c41b4"
+    },
+    {
+      "file": "vendor/maplibre.LICENSE",
+      "url": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/LICENSE.txt",
+      "status": 200,
+      "bytes": 5984,
+      "sha256": "ee5fc05a0677eaf69601d2c7db0d9ecd6cc27c3abc1d0733bc9ed34707cf8ef2"
+    },
+    {
+      "file": "sources/its-cctv.html",
+      "url": "https://www.its.go.kr/opendata/opendataList?service=cctv",
+      "error": "URLError"
+    },
+    {
+      "file": "sources/its-events.html",
+      "url": "https://www.its.go.kr/opendata/opendataList?service=event",
+      "error": "URLError"
+    },
+    {
+      "file": "sources/vworld-reference.html",
+      "url": "https://www.vworld.kr/dev/v4dv_3dmap2_s001.do",
+      "error": "RemoteDisconnected"
+    },
+    {
+      "file": "sources/config.json",
+      "url": "https://seogu-on.vercel.app/api/config",
+      "status": 200,
+      "bytes": 182,
+      "sha256": "3fcd8b35c5c13c10cf79aadecfedab1afb8356ce1a3e80504fa99878a8e5af85"
+    },
+    {
+      "file": "sources/osm-parks.json",
+      "url": "https://overpass-api.de/api/interpreter",
+      "query": "[out:json][timeout:45];(way[\"leisure\"=\"park\"](35.07,126.77,35.22,126.94);relation[\"leisure\"=\"park\"](35.07,126.77,35.22,126.94););out geom;",
+      "elements": 773,
+      "sha256": "98420436541374559a66ddb0cea61c392bdbac9413434a8aa07b16167e8d33d9"
+    }
+  ]
+}
