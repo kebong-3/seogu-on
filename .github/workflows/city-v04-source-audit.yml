@@ -1,0 +1,76 @@
+name: Seo-gu v0.4 source audit
+on:
+  push:
+    branches: [feature/city-infrastructure-v0.4]
+    paths: [.github/workflows/city-v04-source-audit.yml]
+permissions: {contents: read}
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Collect bounded public sources without credentials
+        run: |
+          mkdir -p evidence
+          python3 - <<'PY'
+          import json,urllib.request,urllib.parse,pathlib,time,datetime,hashlib,math,concurrent.futures
+          root=pathlib.Path('evidence'); manifest=[]
+          def get(url,data=None,timeout=70):
+            req=urllib.request.Request(url,data=data,headers={'User-Agent':'SeoOn-PublicData-Prototype/0.4','Referer':'https://www.data.go.kr/'})
+            with urllib.request.urlopen(req,timeout=timeout) as r:return r.read(65000000)
+          def save(name,url,data=None,timeout=70):
+            r={'name':name,'sourceUrl':url,'retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+            try:
+              raw=get(url,data,timeout);(root/name).write_bytes(raw);r.update(bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),state='received')
+            except Exception as e:r.update(state='failed',error=str(e)[:220])
+            manifest.append(r)
+          bbox='35.089,126.798,35.181,126.912'
+          filters=['[amenity~"^(school|kindergarten|childcare|college|university|townhall|community_centre|social_facility|library|theatre|arts_centre|cinema|hospital|clinic|pharmacy|doctors|dentist|police|fire_station|post_office|toilets|drinking_water|bicycle_rental|charging_station|recycling|parking|bus_station)$"]','[leisure~"^(park|playground|sports_centre|stadium|pitch|swimming_pool|fitness_station|fitness_centre)$"]','[tourism~"^(museum|gallery)$"]','[office=government]','[highway~"^(bus_stop|grit_bin)$"]','[railway=station]','[man_made=snow_fence]']
+          query='[out:json][timeout:120];('+''.join('nwr'+f+'('+bbox+');' for f in filters)+');out meta geom;'
+          for base in ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']:
+            save('osm-infrastructure.json',base,urllib.parse.urlencode({'data':query}).encode(),150)
+            try:
+              data=json.loads((root/'osm-infrastructure.json').read_text());
+              if 'elements' in data and not data.get('remark'):break
+            except:pass
+          query='[out:json][timeout:150];way[building]('+bbox+');out meta geom;'
+          save('osm-buildings.json','https://overpass-api.de/api/interpreter',urllib.parse.urlencode({'data':query}).encode(),175)
+          for name,pk in [('schools','15021148'),('childcare','15013108'),('shade-shelters','15129447'),('welfare','15096296')]:
+            result={'sourceUrl':f'https://www.data.go.kr/data/{pk}/standard.do','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'rows':[],'pages':0}
+            try:
+              raw=get(f'https://www.data.go.kr/download/columList.json?pk={pk}&ext=JSON');header=json.loads(raw);(root/(name+'-header.json')).write_bytes(raw)
+              table=header['tableVO'];total=int(header['totalCount']);result['nationalTotal']=total
+              params={'publicDataPk':pk,'colNmList':table['colNmList'],'totalCount':total,'svcTableNm':table['svcTableNm'],'perPage':10000};signatures=set()
+              for page in range(1,min(10,math.ceil(total/10000))+1):
+                params['page']=page;raw=get('https://www.data.go.kr/download/standard.json?'+urllib.parse.urlencode(params,doseq=True));data=json.loads(raw)
+                if not isinstance(data,list):raise RuntimeError('Unexpected public download schema')
+                sig=hashlib.sha256(raw).hexdigest()
+                if sig in signatures:raise RuntimeError('Repeated page')
+                signatures.add(sig);result['pages']+=1
+                for row in data:
+                  text=' '.join(str(v) for v in row.values() if v is not None)
+                  if '서구' in text and '광주' in text:result['rows'].append(row)
+                time.sleep(.4)
+              result['complete']=result['pages']*10000>=total;result['columns']=header.get('columList');result['fileName']=header.get('fileName')
+            except Exception as e:result['error']=str(e)[:200];result['complete']=False
+            (root/(name+'.json')).write_text(json.dumps(result,ensure_ascii=False),encoding='utf8')
+          urls={
+           'shade-local.html':'https://www.data.go.kr/data/15140461/fileData.do',
+           'portal-snow.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 제설'),
+           'portal-childcare.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 어린이집'),
+           'portal-sports.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 체육시설'),
+           'portal-cold.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 한파쉼터'),
+           'portal-welfare.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 복지시설'),
+           'portal-theatre.html':'https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword='+urllib.parse.quote('광주 서구 공연장'),
+           'production-config.json':'https://seogu-on.vercel.app/api/city-config',
+           'vworld-layer-list.html':'https://map.vworld.kr/mapLayerTree.do'
+          }
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:list(pool.map(lambda item:save(*item),urls.items()))
+          (root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          print(json.dumps([{'file':p.name,'bytes':p.stat().st_size} for p in root.iterdir()],ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: city-v04-source-audit
+          path: evidence/
+          retention-days: 7
