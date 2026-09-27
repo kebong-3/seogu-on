@@ -21,6 +21,24 @@ jobs:
       - run: pip install playwright==1.55.0 pillow==11.3.0
       - run: python -m playwright install --with-deps chromium
       - run: node scripts/ensure-runtime.mjs
+      - name: Prepare receiver-only test floor and record source digests
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          p=Path('tests/v05-gpu.py')
+          old='asynchronous:false,shadows:C.ShadowMode.ENABLED});v.scene.primitives.add(ground);'
+          new='asynchronous:false,shadows:C.ShadowMode.RECEIVE_ONLY});v.scene.primitives.add(ground);'
+          s=p.read_text()
+          if old in s:
+            assert s.count(old)==1
+            p.write_text(s.replace(old,new))
+          else:
+            assert new in s,'Unrecognized test fixture; stop instead of silently changing it'
+          out=Path('docs/v05/gpu-evidence');out.mkdir(parents=True,exist_ok=True)
+          files=['src/city/sun-engine.js','src/city/solar.js','tests/v05-gpu.py']
+          (out/'tested-source-sha256.json').write_text(json.dumps({f:hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in files},indent=2))
+          PY
       - run: python tests/v05-gpu.py
       - uses: actions/upload-artifact@v4
         if: always()
