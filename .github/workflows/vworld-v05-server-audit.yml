@@ -1,0 +1,57 @@
+name: VWorld public server query check
+on:
+  push:
+    branches: [feature/vworld-disaster-sun-v0.5]
+    paths: [.github/workflows/vworld-v05-server-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check documented WFS services
+        run: |
+          python - <<'PY'
+          import json,urllib.request,urllib.parse,re,time,concurrent.futures
+          from pathlib import Path
+          from datetime import datetime,timezone
+          O=Path('v05-server');O.mkdir(exist_ok=True)
+          origin='https://seogu-on.vercel.app'
+          def get(u):
+            return urllib.request.urlopen(u,timeout=12).read()
+          key=None
+          try:
+            html=get(origin+'/api/city-scene').decode()
+            scripts=re.findall(r'<script[^>]+src=["\']([^"\']+)',html)
+            import html as H
+            for s in scripts:
+              u=urllib.parse.urlparse(H.unescape(s))
+              if u.hostname=='map.vworld.kr' and u.path=='/js/webglMapInit.js.do':key=urllib.parse.parse_qs(u.query).get('apiKey',[None])[0]
+          except Exception:pass
+          manifest={'collectedAt':datetime.now(timezone.utc).isoformat(),'credentialOrigin':'user-owned registered origin browser SDK configuration','credentialsStored':False,'requests':[]}
+          fields=set('name uname nm fac_nm fclty_nm fclty_nam buld_nm bldg_nm lib_nm muse_nm market_nm grade risk grd ucode dyear height buld_hg groundfloor grnd_flr adres addr road_nm source_date base_date stdr_dt upd_dt last_updt_dt data_tm base_ymd'.split())
+          themes=['lt_c_up201','lt_c_up401','lt_c_usfsffb','lt_c_asitsoildra','lt_c_wkmstrm','lt_c_upisuq156','lt_c_upisuq153','lt_c_kfdrssigugrade','lt_p_smalllibrary','lt_p_dgmuseumart','lt_p_tradsijang','lt_p_bycracks','lt_c_desch','lt_c_dmsch','lt_c_bldginfo']
+          def run(code):
+            if not key:return {'theme':code,'state':'no-sdk-key'}
+            q={'key':key,'domain':origin,'service':'WFS','request':'GetFeature','version':'2.0.0','typename':code,'output':'application/json','srsname':'EPSG:3857','bbox':'14112441,4176746,14134664,4197269','count':500,'startindex':0}
+            try:
+              raw=get('https://api.vworld.kr/req/wfs?'+urllib.parse.urlencode(q)); b=json.loads(raw)
+              fs=b.get('features')
+              if not isinstance(fs,list):return {'theme':code,'state':'api-error','errorCode':str(b.get('response',{}).get('error',{}).get('code','unknown'))[:60]}
+              clean=[{'type':'Feature','id':str(f.get('id',code+'-'+str(i))),'geometry':f.get('geometry'),'properties':{k:v for k,v in f.get('properties',{}).items() if k.lower() in fields and isinstance(v,(str,int,float,type(None)))}} for i,f in enumerate(fs)]
+              result={'state':'received','theme':code,'crs':b.get('crs'),'numberMatched':b.get('numberMatched',b.get('totalFeatures')),'features':clean,'timeStamp':b.get('timeStamp'),'collectedAt':manifest['collectedAt']}
+              (O/(code+'.json')).write_text(json.dumps(result,ensure_ascii=False))
+              return {'theme':code,'state':'received','features':len(fs),'numberMatched':result['numberMatched']}
+            except Exception as e:return {'theme':code,'state':'unavailable','errorType':type(e).__name__}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:manifest['requests']=list(ex.map(run,themes))
+          (O/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          for r in manifest['requests']:print(r['theme'],r['state'],r.get('features',''))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vworld-v05-server-evidence
+          path: v05-server/
+          retention-days: 7
