@@ -40,3 +40,16 @@ OpenFreeMap 공개 인스턴스에는 SLA가 없으며 상시 가용성을 보�
 SGIS 행정동 원자료를 가공한 vuski/admdongkor ver20260701의 서구18개 동을 사용합니다. 가공부분 CC BY4.0 / SGIS 원자료 공공누리 제1유형 출처표시를 유지합니다. 세부 전문은 docs/BOUNDARY_LICENSE.txt. 원본좌표를 변경하지 않았으며 프로젝트용 안정ID·대표점·화면 범위 등 속성만 추가했습니다. 합집합 도형은 파생물입니다.
 
 공원·주차장·공공시설·도서관의 공공데이터포털 제공조건과 출처를 각 public/data/layers 파일에 기록했습니다. 지진대피 학교는 서구청 공개 대피장소 표와 한국교육시설안전원 학교 위치 표준자료의 학교명·도로명주소를 대조한 대표위치입니다. 원본의 저작권·출처 조건을 앱 코드 MIT 라이선스로 바꾸지 않습니다.
+
+
+## v0.3 추가 구성
+
+- MapLibre GL JS5.6.1: src/vendor/maplibre-gl.js, maplibre-gl.css, maplibre.LICENSE
+- polygon-clipping0.15.7: src/vendor/polygon-clipping.js, polygon-clipping.LICENSE
+- hls.js1.6.13: src/vendor/hls.min.js, hls.LICENSE
+- 각 라이선스 원문은 동일 폴더에 동봉했습니다. 별도 글꼴 파일은 배포하지 않습니다.
+- © OpenStreetMap contributors. 공원 도형: https://www.openstreetmap.org/copyright / ODbL1.0 https://opendatacommons.org/licenses/odbl/1-0/ . 서구 경계 절단 가공본도 ODbL로 제공하며 public/data/city/park-areas.geojson에 출처와 개별OSM객체 링크가 있습니다. 공식 공원 지정 경계가 아닙니다.
+- 행정동 경계: 통계청 SGIS 공공누리1유형 원자료 가공(vuski/admdongkor), 가공물CC BY4.0. 원자료/가공자 출처 표시를 유지합니다.
+- VWorld3 SDK의 출처·로고를 숨기거나 모델을 대량 다운로드하지 않습니다. SDK는 제공기관에서 브라우저로 불러옵니다.
+- 첨부 활용예제의 원본HTML·샘플인증키는 공개 배포하지 않습니다. 아이디어·API구조를 참조하고 관련 코드를 새로 작성했습니다.
+- standalone Cesium1.121은 검증환경에서만 초기화를 시도했습니다. 이 배포에 중복 Cesium 라이브러리를 넣지 않았습니다.

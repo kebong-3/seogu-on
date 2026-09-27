@@ -1,18 +1,34 @@
 <!doctype html>
-<html lang="ko" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1722">
-  <meta name="description" content="펀온워크가 만드는 서구 공간행정 시제품. 지도·기간·근거를 함께 살펴보는 도시 데이터 워크스페이스.">
-  <title>SEO:ON 서구온 · 공간행정 워크스페이스</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="stylesheet" href="/src/styles.css">
-</head>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0e2533"><meta name="description" content="실제 서구 18개 행정동과 생활인프라를 탐색하는 공간행정 워크스페이스"><title>SEO:ON 서구온 · 도시 탐색 0.3</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/city/style.css"></head>
 <body>
-  <a class="skip-link" href="#insights">분석 패널로 바로가기</a>
-  <div id="app"></div>
-  <noscript>이 서비스는 JavaScript와 WebGL을 지원하는 최신 브라우저가 필요합니다.</noscript>
-  <script type="module" src="/src/app.js"></script>
-</body>
-</html>
+<a class="skip-link" href="#district-panel">지역 선택으로 이동</a>
+<div id="app">
+ <div id="map" aria-label="도시 지도"></div>
+ <div class="map-shade"></div>
+ <header class="topbar">
+  <button class="brand" data-action="overview" aria-label="서구 전체로 이동"><span class="brand-symbol">S<span>:</span></span><span><strong>SEO<span>:ON</span></strong><small>서구온 · 도시를 읽는 새로운 시선</small></span></button>
+  <nav class="breadcrumbs" aria-label="현재 위치"><button data-action="overview">서구 전체</button><span>›</span><button id="crumb-dong" data-action="dong-frame">18개 행정동</button><span id="crumb-facility"></span></nav>
+  <div class="top-actions"><span id="engine-state" class="status-badge">지도 준비</span><button class="icon-button" data-action="fullscreen" title="화면 크게 보기" aria-label="화면 크게 보기" id="fullscreen-button"></button><button class="icon-button" data-action="settings" title="연결 설정" aria-label="연결 설정" id="settings-button"></button></div>
+ </header>
+ <aside id="district-panel" class="district-panel glass" aria-label="행정동과 인프라 선택">
+  <div class="panel-title"><span class="eyebrow">EXPLORE SEO-GU</span><button class="text-button" data-action="panels">지도 집중</button></div>
+  <h1>오늘은 어느 동을<br>살펴볼까요?</h1><p class="muted intro">동을 누르면 카메라가 이동합니다.</p>
+  <button class="overview-card active" data-action="overview"><span id="overview-icon"></span><span><strong>서구 전체</strong><small>18개 행정동 한눈에</small></span><b>↗</b></button>
+  <div id="dong-grid" class="dong-grid"></div>
+  <div class="panel-rule"></div>
+  <div class="section-title"><h2>표시할 정보</h2><button class="text-button" data-action="clear-layers">모두 끄기</button></div>
+  <div id="layer-options" class="layer-options"></div><div class="detail-actions"><button class="secondary" data-action="list">자료 목록</button><button class="secondary" data-action="tools">분석 도구</button></div>
+  <p class="footnote">경계: SGIS 원자료 가공본(2026-07-01).<br>통계·도식용이며 지적측량 경계가 아닙니다.<br><button class="text-button" data-action="credits">전체 출처·이용조건</button></p>
+ </aside>
+ <section class="scene-caption"><span class="eyebrow" id="camera-level">CITY OVERVIEW</span><h2 id="scope-title">서구, 한눈에.</h2><div class="caption-chips"><span id="point-count">위치 0개</span><span id="area-count">면 도형 0개</span><span id="motion-state">탐색 준비</span></div></section>
+ <div id="start-card" class="start-card glass" hidden><span class="eyebrow">REAL CITY, REAL DATA</span><h2>실제 도시를 불러옵니다.</h2><p id="start-message"></p><div class="start-actions"><button class="primary" data-action="engine" data-engine="vworld">브이월드 3D 다시 연결</button><button class="secondary" data-action="engine" data-engine="libre">OSM 경량 입체지도</button><button class="secondary" data-action="engine" data-engine="boundary">경계도 보기 · 3D 아님</button></div><small>다른 모드로 자동 대체하지 않습니다.</small></div>
+ <div class="camera-controls glass" aria-label="카메라 조작"><button data-action="zoom-in" aria-label="확대">+</button><button data-action="zoom-out" aria-label="축소">−</button><span></span><button data-action="oblique" title="도시 조감도">3D</button><button data-action="top" title="수직으로 보기">2D</button><button data-action="rotate" title="45도 회전" aria-label="45도 회전">↻</button><button data-action="orbit" title="주변 둘러보기 / 중지" aria-label="주변 둘러보기">◎</button><span></span><button data-action="overview" title="서구 전체" aria-label="서구 전체">⌂</button></div>
+ <button id="show-panels" class="show-panels glass" data-action="panels" hidden>☰ 지역·정보 열기</button>
+ <aside id="detail-panel" class="detail-panel glass" aria-label="선택한 정보" hidden><header class="detail-head"><div><span class="eyebrow" id="detail-eyebrow">CITY INSIGHT</span><h2 id="detail-title">지역 정보</h2></div><button data-action="close-detail" aria-label="상세정보 닫기">×</button></header><div id="detail-body"></div></aside>
+ <section class="bottom-dock glass" aria-label="분야별 도시 탐색"><div class="dock-label"><span class="eyebrow">CITY LAYERS</span><strong>무엇을 볼까요?</strong></div><div id="presets" class="preset-buttons"></div><div class="dock-actions"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button></div></section>
+ <div class="map-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">공원 면 © OpenStreetMap contributors · ODbL</a><button data-action="credits">경계 SGIS / vuski · 출처</button></div><footer class="bottom-status"><span id="map-disclosure">실제 브이월드 지형·건물 / 행정자료는 별도 출처</span><span>FUNONWORK LAB <b>· v0.3</b></span></footer>
+ <div id="toast" role="status" aria-live="polite" hidden></div>
+ <input id="import-file" type="file" accept=".geojson,.json,.csv" hidden><input id="glb-file" type="file" accept=".glb" hidden>
+</div><script type="module" src="/src/city/app.js"></script>
+</body></html>

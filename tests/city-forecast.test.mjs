@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {forecastBase,forecastRows,readForecast} from '../server/city/forecast.js';
+import {readProvider} from '../server/city/providers.js';
+test('forecast: KST midnight and 90 minute publication lag',()=>{assert.deepEqual(forecastBase(new Date('2026-09-26T15:30:00Z')),{base_date:'20260926',base_time:'2300'});assert.deepEqual(forecastBase(new Date('2026-09-27T01:00:00Z')),{base_date:'20260927',base_time:'0800'});});
+test('forecast: do not combine values from different valid times',()=>{const base={base_date:'20260927',base_time:'0800'},item=(t,c,v)=>({...base,baseDate:base.base_date,baseTime:base.base_time,fcstDate:'20260927',fcstTime:t,category:c,fcstValue:v});const r=forecastRows([item('1000','TMP','18'),item('1100','TMP',''),item('1100','WSD','2.5'),item('1000','POP','0')],base,new Date('2026-09-27T01:00:00Z'));assert.equal(r[0].temperature,18);assert.equal(r[0].windSpeed,null);assert.equal(r[0].precipitationProbability,0);assert.equal(r[1].temperature,null);assert.equal(r[1].windSpeed,2.5);});
+test('forecast: outside district rejected before making API request',async()=>{let calls=0;await assert.rejects(readProvider('forecast',new URLSearchParams({lon:'127',lat:'37.5'}),{env:{},fetcher:async()=>calls++}));assert.equal(calls,0);});
+test('forecast: key and network failure do not generate weather',async()=>{await assert.rejects(readForecast(126.85,35.15,{env:{}}));});

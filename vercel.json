@@ -6,12 +6,43 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "functions": {
-    "api/*.js": {
+    "api/city-config.js": {
+      "maxDuration": 30,
+      "includeFiles": "public/data/admin-dongs.geojson"
+    },
+    "api/city-data.js": {
+      "maxDuration": 30,
+      "includeFiles": "public/data/admin-dongs.geojson"
+    },
+    "api/city-scene.js": {
+      "maxDuration": 30,
+      "includeFiles": "public/data/admin-dongs.geojson"
+    },
+    "api/city-wms.js": {
+      "maxDuration": 30,
+      "includeFiles": "public/data/admin-dongs.geojson"
+    },
+    "api/config.js": {
       "maxDuration": 15
     },
     "api/geocode.js": {
       "maxDuration": 15,
       "includeFiles": "public/data/address-records.json"
+    },
+    "api/layers.js": {
+      "maxDuration": 15
+    },
+    "api/public-data.js": {
+      "maxDuration": 15
+    },
+    "api/vworld-scene.js": {
+      "maxDuration": 15
+    },
+    "api/vworld.js": {
+      "maxDuration": 15
+    },
+    "api/weather.js": {
+      "maxDuration": 15
     }
   },
   "headers": [
