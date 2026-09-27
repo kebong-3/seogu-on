@@ -11,13 +11,13 @@ const server = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost'); const path = decodeURIComponent(url.pathname);
     if (path.startsWith('/api/')) {
       const name = path.slice(5);
-      if (!['config', 'vworld', 'vworld-scene', 'public-data', 'layers', 'weather', 'geocode'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
+      if (!['config', 'vworld', 'vworld-scene', 'public-data', 'layers', 'weather', 'geocode', 'city-config', 'city-scene', 'city-data', 'city-wms'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
       const mod = await import(pathToFileURL(resolve(root, 'api', `${name}.js`)).href);
       await mod.default(req, res); return;
     }
     let filePath;
     if (path === '/') filePath = resolve(base, 'index.html');
-    else if (/^\/(src|data)\//.test(path) || path === '/favicon.svg' || path === '/index.html') {
+    else if (/^\/(src|data)\//.test(path) || path === '/favicon.svg' || path === '/index.html' || path === '/classic.html') {
       const isPublic = path.startsWith('/data/') || path === '/favicon.svg';
       filePath = resolve(base, process.argv.includes('--dist') || !isPublic ? `.${path}` : `public${path}`);
     } else { res.writeHead(404); res.end('Not found'); return; }

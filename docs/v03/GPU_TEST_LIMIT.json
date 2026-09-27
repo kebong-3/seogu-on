@@ -1,0 +1,6 @@
+{
+  "engine": "standalone Cesium1.121 attempted with offline test transport",
+  "result": "not_verified",
+  "error": "The browser supports WebGL, but initialization failed.",
+  "meaning": "No claim of successful GPU3D rendering, VWorld authentication, building coverage or terrain sampling."
+}

@@ -1,0 +1,7 @@
+let hls=null,activeVideo=null;
+export function stopMedia(){if(hls){hls.destroy();hls=null;}if(activeVideo){activeVideo.pause();activeVideo.removeAttribute('src');activeVideo.load();activeVideo=null;}}
+function loadHls(){return new Promise((resolve,reject)=>{if(window.Hls)return resolve();const s=document.createElement('script');s.src='/src/vendor/hls.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});}
+export async function playPublicCctv(video,url,onError){stopMedia();const u=new URL(url);if(u.protocol!=='https:'||u.username||u.password)throw Error('제공기관의 영상 주소가 HTTPS가 아니어서 이 화면에서 재생하지 않습니다.');activeVideo=video;video.controls=true;video.muted=true;video.playsInline=true;video.onerror=()=>onError('영상 링크 만료·제공기관 접근조건·형식을 확인하세요.');
+ if(video.canPlayType('application/vnd.apple.mpegurl')||/\.(mp4|webm)(\?|$)/i.test(url)){video.src=url;await video.play().catch(()=>{});return;}
+ await loadHls();if(activeVideo!==video)return;if(!window.Hls.isSupported())throw Error('이 브라우저에서 HLS 재생을 지원하지 않습니다.');
+ hls=new Hls({enableWorker:false,maxBufferLength:15,backBufferLength:0,xhrSetup(xhr,requestUrl){const target=new URL(requestUrl,url);if(target.protocol!=='https:')throw Error('비암호화 영상 조각 차단');}});hls.on(Hls.Events.ERROR,(_,data)=>{if(data.fatal)onError('영상 수신 실패. 실제 공개영상 제공 여부를 확인하세요.');});hls.loadSource(url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));}

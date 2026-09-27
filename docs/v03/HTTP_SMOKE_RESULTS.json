@@ -1,0 +1,139 @@
+{
+  "scope": "local Node HTTP server + built dist; no real upstream keys or Vercel bundle",
+  "passed": 17,
+  "failed": 0,
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 5855
+    },
+    {
+      "path": "/classic.html",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 855
+    },
+    {
+      "path": "/src/city/scene.js",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 20512
+    },
+    {
+      "path": "/src/city/app.js",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 52129
+    },
+    {
+      "path": "/src/vendor/hls.min.js",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 541012
+    },
+    {
+      "path": "/data/admin-dongs.geojson",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "application/geo+json; charset=utf-8",
+      "bytes": 43416
+    },
+    {
+      "path": "/data/city/park-areas.geojson",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "application/geo+json; charset=utf-8",
+      "bytes": 83274
+    },
+    {
+      "path": "/api/city-config",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 443
+    },
+    {
+      "path": "/api/city-data?kind=heat",
+      "status": 503,
+      "expected": 503,
+      "passed": true,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 111
+    },
+    {
+      "path": "/api/city-data?kind=not-a-service",
+      "status": 400,
+      "expected": 400,
+      "passed": true,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 76
+    },
+    {
+      "path": "/api/city-scene",
+      "status": 503,
+      "expected": 503,
+      "passed": true,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 105
+    },
+    {
+      "path": "/api/city-data?kind=forecast&lon=127&lat=37.5",
+      "status": 400,
+      "expected": 400,
+      "passed": true,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 93
+    },
+    {
+      "path": "/server/city/providers.js",
+      "status": 404,
+      "expected": 404,
+      "passed": true,
+      "contentType": null,
+      "bytes": 9
+    },
+    {
+      "path": "/.env.local",
+      "status": 404,
+      "expected": 404,
+      "passed": true,
+      "contentType": null,
+      "bytes": 9
+    },
+    {
+      "path": "/tests/city-api.test.mjs",
+      "status": 404,
+      "expected": 404,
+      "passed": true,
+      "contentType": null,
+      "bytes": 9
+    },
+    {
+      "path": "POST /api/city-data",
+      "status": 405,
+      "expected": 405,
+      "passed": true
+    },
+    {
+      "path": "GET /api/city-config cross-origin",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    }
+  ]
+}

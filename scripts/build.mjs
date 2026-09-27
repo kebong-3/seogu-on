@@ -6,6 +6,7 @@ const out = resolve(root, 'dist');
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(resolve(root, 'index.html'), resolve(out, 'index.html'));
+await cp(resolve(root, 'classic.html'), resolve(out, 'classic.html'));
 await cp(resolve(root, 'src'), resolve(out, 'src'), { recursive: true });
 await cp(resolve(root, 'public'), out, { recursive: true });
 // Never copy .env, server source, test fixtures or development files to the public bundle.

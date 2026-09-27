@@ -1,0 +1,15 @@
+import {requireKey,origin,endpoint,bytes,HttpError,scopeFor} from './common.js';
+import {boundsOf,mercator,boundsOverlap} from '../../src/city/geometry.js';
+export const TRANSPARENT=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==','base64');
+const SAFE={'national-flood':'IF_0089_WMS','local-flood':'IF_0100_WMS','flood-trace':'IF_0092_WMS'};
+export function wmsRequest(q,env=process.env){const layer=q.get('layer');if(![...Object.keys(SAFE),'city-flood','flow','cadastral'].includes(layer))throw new HttpError(400,'허용되지 않은 지도층');const bbox=(q.get('bbox')||'').split(',').map(Number),size=Number(q.get('size')||256),z=Number(q.get('z')||14);if(bbox.length!==4||!bbox.every(Number.isFinite)||bbox[0]>=bbox[2]||bbox[1]>=bbox[3]||![64,128,256,512].includes(size)||!Number.isInteger(z)||z<5||z>20)throw new HttpError(400,'지도 타일 범위 오류');
+ if(bbox.some(v=>Math.abs(v)>21000000)||bbox[2]-bbox[0]>1500000||bbox[3]-bbox[1]>1500000)throw new HttpError(400,'과도한 지도 범위');const b=boundsOf(scopeFor(q.get('dong'))),mb=[...mercator([b[0],b[1]]),...mercator([b[2],b[3]])];if(!boundsOverlap(bbox,mb))return null;
+ let url;
+ if(SAFE[layer])url=endpoint(`https://www.safemap.go.kr/openapi2/${SAFE[layer]}`,{serviceKey:requireKey(env.SAFEMAP_SERVICE_KEY,'생활안전지도'),srs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
+ else if(layer==='city-flood')url=endpoint('https://data.floodmap.go.kr/api/wms-service/adm-cty-wms',{ServiceKey:requireKey(env.FLOODMAP_SERVICE_KEY,'홍수위험지도'),Freq:'30',Format:'image/png',Bbox:bbox.join(','),srs:'EPSG:3857',width:size,height:size,transparent:'TRUE'});
+ else if(layer==='flow'){
+  if(env.ITS_FLOW_ENABLED!=='true')throw new HttpError(503,'ITS WMS 이용조건·제공범위를 확인한 뒤 ITS_FLOW_ENABLED=true를 설정하세요.','NOT_CONFIGURED');
+  const level=Math.max(5,Math.min(18,z));url=endpoint('https://its.go.kr:9443/geoserver/ntic/wms',{service:'WMS',request:'GetMap',version:'1.1.1',layers:`ntic:N_LEVEL_${level}`,styles:'ntic:REALTIME',srs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
+ }else if(layer==='cadastral')url=endpoint('https://api.vworld.kr/req/wms',{key:requireKey(env.VWORLD_API_KEY,'브이월드 REST'),domain:origin(env),service:'WMS',request:'GetMap',version:'1.1.1',layers:'lp_pa_cbnd_bubun,lp_pa_cbnd_bonbun',styles:'lp_pa_cbnd_bubun_line,lp_pa_cbnd_bonbun_line',srs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
+ else throw new HttpError(400,'허용되지 않은 지도층');return {url,size};}
+export async function readWms(q,{env=process.env,fetcher=fetch}={}){const r=wmsRequest(q,env);if(!r)return {data:TRANSPARENT,outside:true};const out=await bytes(r.url,{fetcher,max:1048576});if(out.data.length<24||out.data.readUInt32BE(0)!==0x89504e47||out.data.readUInt32BE(4)!==0x0d0a1a0a)throw new HttpError(502,'WMS가 PNG 지도가 아닌 오류 문서를 반환했습니다.','WMS_ERROR');const w=out.data.readUInt32BE(16),h=out.data.readUInt32BE(20);if(w>1024||h>1024||w<1||h<1)throw new HttpError(502,'지도 응답 크기 오류');return {data:out.data,outside:false};}

@@ -22,7 +22,7 @@ export async function readWeather(lon,lat,{fetcher=fetch,now=new Date(),env=proc
   for(const [k,v] of Object.entries({...grid,...base,serviceKey:decoded,pageNo:1,numOfRows:100,dataType:'JSON'}))url.searchParams.set(k,String(v));
   const raw=await fetchJsonLimited(url,9500,fetcher);if(raw.response?.header?.resultCode!=='00')throw Error('UPSTREAM_FAILED');
   const items=raw.response?.body?.items?.item;if(!Array.isArray(items)||!items.length)throw Error('NO_OBSERVATIONS');
-  const accepted=['T1H','RN1','REH','WSD','VEC','PTY'];const values={};for(const r of items){if(r.baseDate!==base.base_date||r.baseTime!==base.base_time)throw Error('OBSERVATION_TIME_MISMATCH');if(accepted.includes(r.category)&&r.obsrValue!==''&&Number.isFinite(Number(r.obsrValue)))values[r.category]=Number(r.obsrValue);}
+  const accepted=['T1H','RN1','REH','WSD','VEC','PTY'];const values={};for(const r of items){if(r.baseDate!==base.base_date||r.baseTime!==base.base_time)throw Error('OBSERVATION_TIME_MISMATCH');if(accepted.includes(r.category)&&r.obsrValue!==null&&r.obsrValue!==undefined&&String(r.obsrValue).trim()!==''&&Number.isFinite(Number(r.obsrValue))&&Number(r.obsrValue)>-100&&Number(r.obsrValue)<1000)values[r.category]=Number(r.obsrValue);}
   if(!Object.keys(values).length)throw Error('NO_OBSERVATIONS');
   const result={ok:true,grid,base,values,sourceName:'기상청 초단기실황',sourceUrl:'https://www.data.go.kr/data/15084084/openapi.do',fetchedAt:now.toISOString(),note:'5km 격자 실황. 선택한 동 전체의 실측값이나 재난 예측이 아닙니다.'};
   if(cache.size>40)cache.clear();cache.set(id,result);return result;
