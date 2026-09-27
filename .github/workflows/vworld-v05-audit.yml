@@ -1,0 +1,26 @@
+name: VWorld v0.5 source audit
+on:
+  push:
+    branches: [feature/vworld-disaster-sun-v0.5]
+    paths: [.github/workflows/vworld-v05-audit.yml, scripts/audit-vworld-v05.py]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.55.0 beautifulsoup4==4.13.5
+      - run: python -m playwright install --with-deps chromium
+      - run: python scripts/audit-vworld-v05.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vworld-v05-source-evidence
+          path: v05-evidence/
+          retention-days: 7
