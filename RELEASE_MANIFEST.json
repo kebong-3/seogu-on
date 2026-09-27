@@ -1,30 +1,22 @@
 {
-  "version": "0.3.0",
-  "builtOn": "2026-09-27",
-  "sourceBaseline": "seogu-on-v0.2.zip attached to this conversation",
-  "deployment": "NOT DEPLOYED",
-  "tests": {
-    "unit": 190,
-    "offlineUI": 46,
-    "localHTTP": 17,
-    "authenticatedVWorld": "not_verified",
-    "liveUpstreams": "not_verified"
-  },
+  "version": "0.4.1",
+  "packagedAt": "2026-09-27",
+  "scope": "Source, included public data and local SDK archive. dist and generated public/vendor/cesium excluded. Not a deployment or proof of live authentication.",
   "files": [
     {
       "path": ".env.example",
-      "bytes": 671,
-      "sha256": "863eb5c3f1c7a89bf443172f7c2fb3c1f0867ecff84b76c92b46dbb62be0e05b"
+      "bytes": 791,
+      "sha256": "da9b9981cdc372a001b8aa4c8bda82f238fb4b627e391e4dd1d518f94983fa12"
     },
     {
       "path": ".github/workflows/city-v03-tests.yml",
-      "bytes": 822,
-      "sha256": "97522af555bf638618a3529cbd7f7afd97585311151f4b5acfd708931dc1cd8d"
+      "bytes": 857,
+      "sha256": "b98cb80ab89b027ee961be5fbeb0018a27aec60ddba80fd4020399db41e7a29b"
     },
     {
       "path": ".gitignore",
-      "bytes": 75,
-      "sha256": "a50a11c94e7ac00dd1dd8d4d64d18bb5b8260fc0a45c49a57aeded50ccc2a213"
+      "bytes": 165,
+      "sha256": "32809a24d28dc3ee04bf75b4cca0e6c9a48cad3ec31a6df458d8c4baed7dc305"
     },
     {
       "path": "LICENSE",
@@ -33,28 +25,28 @@
     },
     {
       "path": "README.md",
-      "bytes": 5515,
-      "sha256": "ea9aacb86780ffb21339b370fb607ed848c2e66cb1cd5e7f52a246737aa2831f"
+      "bytes": 4705,
+      "sha256": "fa738ea59757605fbb2de9845c5fe0be177330bce700d71633bcaf5a385388a6"
     },
     {
       "path": "SECURITY.md",
-      "bytes": 5223,
-      "sha256": "4eb3cbeeabb9d4bb64d88674b680167693cde0102f2d03640f52ef9300071f27"
+      "bytes": 6142,
+      "sha256": "c8b126b56a5d07326902514f9bcd41e382aabec8ff68dde4448f15259b815cf7"
     },
     {
       "path": "START_HERE.md",
-      "bytes": 4240,
-      "sha256": "e47c119ede3f507ae994abfdc879270a14f6dfe0dd2e0f8daff6bb14c01e18d8"
+      "bytes": 1973,
+      "sha256": "d2fae81f75df5208e0699744c946a7416e633c5350716809fcac9be15f98b516"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 5109,
-      "sha256": "57f4de5b6813a9ff63a44bb3b491e539451698693ce81bc3cc58bbaaaccc3ae4"
+      "bytes": 7370,
+      "sha256": "53bc70e21642b3bb175f3bff69399ee1fd22aedc74f92c5dc13d877d6f72aed4"
     },
     {
       "path": "api/city-config.js",
       "bytes": 433,
-      "sha256": "1fd2ecd668f8ad27685bf5d381b0b50b790bfa7869037f0aec76c7702cc8c57c"
+      "sha256": "95a918f8580d49a1e990b2ae7e341c9bd62e092925b523ca24fdcb40144c3933"
     },
     {
       "path": "api/city-data.js",
@@ -312,19 +304,219 @@
       "sha256": "7cb2ff2471592400b53dccb1359e01ccec9a752d0c3ed7cd558e11101c878b8d"
     },
     {
+      "path": "docs/v04/API_SETUP.md",
+      "bytes": 8492,
+      "sha256": "586f0926d0f10d1e31d32ce3345e4f862d696601c988d4e958259961c1f4c379"
+    },
+    {
+      "path": "docs/v04/DATA_AUDIT.json",
+      "bytes": 4723,
+      "sha256": "c088743b602c3b0bf29f52d77c97e9c71d373ab993afe2667880913b09e5dda6"
+    },
+    {
+      "path": "docs/v04/DATA_CATALOG.md",
+      "bytes": 5402,
+      "sha256": "79bea892294866fb149ae2b6bd8b56f868b6583f735ab8df46dfbdc191bda25a"
+    },
+    {
+      "path": "docs/v04/DEPLOY.md",
+      "bytes": 5946,
+      "sha256": "d3d748c04dae92031ab4ccec48b2f953ec64e9e9c18327292c3307f740afcf7e"
+    },
+    {
+      "path": "docs/v04/DEPLOYMENT_CHECK.json",
+      "bytes": 2831,
+      "sha256": "be04aeba2916af962d334bd2651bf1bc6813681fc760b02884a0b481fcd58582"
+    },
+    {
+      "path": "docs/v04/GRAPHICS_AND_SHADE.md",
+      "bytes": 4635,
+      "sha256": "f32b3022667054751f255d63cf5485fd3cafc60e6c7bdd06e9256330ddec104d"
+    },
+    {
+      "path": "docs/v04/HANDOFF.md",
+      "bytes": 1729,
+      "sha256": "ca20381a236c42adbc1eeb896dc8ab460913a845c5b7a2ee597dd54247214378"
+    },
+    {
+      "path": "docs/v04/README_v03_ARCHIVE.md",
+      "bytes": 5515,
+      "sha256": "ea9aacb86780ffb21339b370fb607ed848c2e66cb1cd5e7f52a246737aa2831f"
+    },
+    {
+      "path": "docs/v04/RESEARCH_NOTES.md",
+      "bytes": 3211,
+      "sha256": "d58b95e8512a8e809d9228b5b327191541ed3ceeea52f8292e1dafd9e963112e"
+    },
+    {
+      "path": "docs/v04/REVIEW_4_ROLES.md",
+      "bytes": 2350,
+      "sha256": "d4c08f131eafaefd4d80f12798619e9c4ae12285ca6b9924aa8ef6ab53cb73d2"
+    },
+    {
+      "path": "docs/v04/SECURITY_SCAN.json",
+      "bytes": 278,
+      "sha256": "8f5736966c608d6626dfbe0384fef3a119c391e6a81a2cc8a61879a144e3425b"
+    },
+    {
+      "path": "docs/v04/TEST_REPORT.md",
+      "bytes": 4063,
+      "sha256": "c33fd23d56732716e499899a725c6c71c0875b027e072790c1c7d257faba488d"
+    },
+    {
+      "path": "docs/v04/build-results.txt",
+      "bytes": 213,
+      "sha256": "2096c312e927b792f60c7423fa25187372c91d51d9a6e943ed062bc26fa227ed"
+    },
+    {
+      "path": "docs/v04/syntax-results.txt",
+      "bytes": 98,
+      "sha256": "5ce7d9c2789921291b5fdfe0d0adb0ed7cf8345bf1167f63dc1f1016a7b02a17"
+    },
+    {
+      "path": "docs/v04/ui-evidence/mobile-infra-NOT-3D.png",
+      "bytes": 86819,
+      "sha256": "cdf2c01ad5e8dc901dfc46a7412eb798b6a8e944c1ee0a7192c0fadd2906b7a7"
+    },
+    {
+      "path": "docs/v04/ui-evidence/results.json",
+      "bytes": 6168,
+      "sha256": "3f03a2aef96a178e93c4b2a07bee4f1265b44b92e83e9eba843a971df96da845"
+    },
+    {
+      "path": "docs/v04/ui-evidence/school-boundary-NOT-3D.png",
+      "bytes": 262373,
+      "sha256": "c171136ea9a1a2e097aa1679171918867f998b95099123d98e16dbc273efe988"
+    },
+    {
+      "path": "docs/v04/ui-evidence/shade-boundary-NOT-3D.png",
+      "bytes": 232431,
+      "sha256": "ee2d2d39f02928506ebd00133588bb8c050b8e859de09e4d3cd762c53ad8d010"
+    },
+    {
+      "path": "docs/v04/unit-test-results.txt",
+      "bytes": 40354,
+      "sha256": "2de62c97ecad8b497280877c8f1ddb2502bc82c2ea4ed409cf99d4c1d5b2b2de"
+    },
+    {
+      "path": "docs/v041/API_SETUP.md",
+      "bytes": 4249,
+      "sha256": "c85180ca0b245bd8a7e05088f14ac562ae8e6fec2a7d147b0f3b7f49d4b07a51"
+    },
+    {
+      "path": "docs/v041/CLEAN_PACKAGE_CHECK.json",
+      "bytes": 565,
+      "sha256": "71dc7ceb4bf5f65452a7113874d963fd381f9fb496f18f24498cd07ce1140933"
+    },
+    {
+      "path": "docs/v041/DATA_STATUS.md",
+      "bytes": 3361,
+      "sha256": "ffdaa572440b0e6151ce217c78024b44171e098d91101133dee5cecbc874888d"
+    },
+    {
+      "path": "docs/v041/DEPLOY.md",
+      "bytes": 3868,
+      "sha256": "a67be6361407e69c18c0dcfcc0ce92b46588d8ea0e058e37ee8b0f6ec381b19d"
+    },
+    {
+      "path": "docs/v041/DEPLOYMENT_CHECK.json",
+      "bytes": 3036,
+      "sha256": "6f3e0ca7a0725b74dda33dc722e15a8de9796cbc76dc1f3278a5bafd16854d2b"
+    },
+    {
+      "path": "docs/v041/FINAL_REVIEW.md",
+      "bytes": 5562,
+      "sha256": "3fa9d7d1c49ae7c32b717102bfd0374e0aa47cd4ff069ebd79e4dd887afb00de"
+    },
+    {
+      "path": "docs/v041/LIVE_CHECK.md",
+      "bytes": 1978,
+      "sha256": "efd82921099839fe47c1fafa3cacdf1ec21f8c7e6aeb3dee93d8a586c84ca3a1"
+    },
+    {
+      "path": "docs/v041/RELEASE_AUDIT.json",
+      "bytes": 1197,
+      "sha256": "72f1fbb0fffead806b85330f7755ef9afc64da285d5e7049e199b42b987a3dc0"
+    },
+    {
+      "path": "docs/v041/RESEARCH.md",
+      "bytes": 1805,
+      "sha256": "c9a096835a21408b1e6a1d7a5e1395028055ddde6b3746d91147ca72a3f21bb7"
+    },
+    {
+      "path": "docs/v041/SECURITY_SCAN.json",
+      "bytes": 378,
+      "sha256": "a1df77ab62ac202f39e4a7d194f2a4a56e31bb7b21899b7af8a91afa58f869d7"
+    },
+    {
+      "path": "docs/v041/TEST_REPORT.md",
+      "bytes": 3989,
+      "sha256": "69317726ff24d52a1d16b4e351001ef6ab90209af753f610f538d652d222958b"
+    },
+    {
+      "path": "docs/v041/WEBGL_PROBE.json",
+      "bytes": 270,
+      "sha256": "bccffca186f81c0003117c0e850290ddfaff575aa50f1842e683f63f94a55185"
+    },
+    {
+      "path": "docs/v041/clean-package-verify-output.txt",
+      "bytes": 48526,
+      "sha256": "9af8ca991ca3863adf9da510ea606fcce890eba0768d7cdbcae54286737e0ba4"
+    },
+    {
+      "path": "docs/v041/final-ui/record-workflow-NOT-3D.png",
+      "bytes": 272149,
+      "sha256": "e7ff82b7c66fc1c8c6df5901677225c3a19aea847ee81dc91c28c64a993280be"
+    },
+    {
+      "path": "docs/v041/final-ui/results.json",
+      "bytes": 2757,
+      "sha256": "13e35f19f90227aebf59e42b057c00f5ea64788d630c50ea23aef22da10ec289"
+    },
+    {
+      "path": "docs/v041/final-ui/school-and-source-NOT-3D.png",
+      "bytes": 273539,
+      "sha256": "3be363fd0e0e179265122a7a76e481cc60ae30f7322bcafeb795ffa04855a228"
+    },
+    {
+      "path": "docs/v041/regression-ui/mobile-infra-NOT-3D.png",
+      "bytes": 87210,
+      "sha256": "ec2244217eec8501c3c760971cbcdcb68507811bd47011ff6c6460776c48d6fc"
+    },
+    {
+      "path": "docs/v041/regression-ui/results.json",
+      "bytes": 6168,
+      "sha256": "3f03a2aef96a178e93c4b2a07bee4f1265b44b92e83e9eba843a971df96da845"
+    },
+    {
+      "path": "docs/v041/regression-ui/school-boundary-NOT-3D.png",
+      "bytes": 262245,
+      "sha256": "30f704340d12318431bb0c00b446770723c6cb15f95802272abf5a9e2e95d415"
+    },
+    {
+      "path": "docs/v041/regression-ui/shade-boundary-NOT-3D.png",
+      "bytes": 233353,
+      "sha256": "0430320d3bb06245fae1e80af0f811e6eae1701a84cc03dd14aca14b56ec9f27"
+    },
+    {
+      "path": "docs/v041/verify-output.txt",
+      "bytes": 48533,
+      "sha256": "3a530601121dc81540b1f7fdb05f28d657ae470b6d6fe945d7ceeef299455d3e"
+    },
+    {
       "path": "index.html",
-      "bytes": 5855,
-      "sha256": "83764570ea609b4b1ef12c4bdf59697435002e464726d24b5ce794a672096871"
+      "bytes": 6250,
+      "sha256": "3ff7383615d5920a142485603db96fb7a1584850a7cd06e4f5c4972821e66167"
     },
     {
       "path": "package-lock.json",
       "bytes": 276,
-      "sha256": "0ac31161b5756aa92a5a26213168a06efabcfde070d83b9c99c649527444d0f8"
+      "sha256": "a4bed8c66fd9b47e09bd85d173d0565e4c3558cce24d0de5a8ba3d0a52690257"
     },
     {
       "path": "package.json",
-      "bytes": 694,
-      "sha256": "9f5dd22cbac05930a990fab0cdbc6b53ccf0e3699c91ad42616ef6d3460c303b"
+      "bytes": 958,
+      "sha256": "3dedd76e5ba985ec5bc339621b7518264bf411f4c2bde452624561538d891041"
     },
     {
       "path": "preview/design-preview.html",
@@ -338,8 +530,8 @@
     },
     {
       "path": "public/data/address-records.json",
-      "bytes": 17171,
-      "sha256": "3c59655a9b9766d51578a38279086a386e1e8c2800383cdd4d14a0ea31f74d71"
+      "bytes": 18056,
+      "sha256": "48f12a14c400cce09f3475b1df9f3f9dba38884329f6108dfab8d4f5c76ef724"
     },
     {
       "path": "public/data/admin-dongs.geojson",
@@ -347,9 +539,189 @@
       "sha256": "4ff3ee55884bc7c0a1c7f50a4287d2b4992e960d32975caa36ba8e58a7aad239"
     },
     {
+      "path": "public/data/city/civic-index.json",
+      "bytes": 9239,
+      "sha256": "7e29cb57508a6208b12fea449331f365e487ba6307d741af713321c7db052dd3"
+    },
+    {
+      "path": "public/data/city/coverage.json",
+      "bytes": 2565,
+      "sha256": "188e77ebd89b617dae9cc995a47f1a0ab4fd878eb1b839a8c55675eb23ba5e60"
+    },
+    {
+      "path": "public/data/city/infra/bus.geojson",
+      "bytes": 341152,
+      "sha256": "4f7ce89ac25d140f3a0bb7e8885bb5a8062618f908de12b64f31b01a5dc18efe"
+    },
+    {
+      "path": "public/data/city/infra/childcare-official.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/childcare.geojson",
+      "bytes": 14948,
+      "sha256": "593f226ac72849b4ded46d5b004a2fcb3453b6956f672b05dcd22969e50e21a9"
+    },
+    {
+      "path": "public/data/city/infra/civic.geojson",
+      "bytes": 16305,
+      "sha256": "cc48c3d83cfbf3672d466391e2b9db95d28b13c6727cb12773e1493b8a438b06"
+    },
+    {
+      "path": "public/data/city/infra/cold.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/community.geojson",
+      "bytes": 1339,
+      "sha256": "2ec016dc04b3f7b2e9e27da94e939f2b071f18bd6e1cf4435801c5060d2e90a7"
+    },
+    {
+      "path": "public/data/city/infra/culture.geojson",
+      "bytes": 10848,
+      "sha256": "eeee10673749716b2e4247ae2e687088e86719e8ce5ecd977674cee1be6a735f"
+    },
+    {
+      "path": "public/data/city/infra/ev.geojson",
+      "bytes": 3607,
+      "sha256": "2e9a50ea59fc75ffa8237d9992e1a9be276e8171c08d8532ceb4116b953f6c9d"
+    },
+    {
+      "path": "public/data/city/infra/fire.geojson",
+      "bytes": 4819,
+      "sha256": "6d6337cc1771fb85de27595c687988542d2c9cf9773b97633bd37f3e1355ba22"
+    },
+    {
+      "path": "public/data/city/infra/government.geojson",
+      "bytes": 18414,
+      "sha256": "28c03c3261cc49cfed1638e96bfb8bdc706833c91512791203f70d91393b2c45"
+    },
+    {
+      "path": "public/data/city/infra/grit.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/kindergarten.geojson",
+      "bytes": 21474,
+      "sha256": "d43135980bb5f53505bad2916190b2e518e5ee20769b166db77383e415bdcc2e"
+    },
+    {
+      "path": "public/data/city/infra/library.geojson",
+      "bytes": 5362,
+      "sha256": "4fd9e60a57e1ea2906286e422f3cbb21097b98360794db8a2e2e4a1dc9e9d8eb"
+    },
+    {
+      "path": "public/data/city/infra/medical.geojson",
+      "bytes": 106897,
+      "sha256": "3f2ae8b608ee4b10cf9129b85c6b9277f38fb36c613fad5eb71411b8d338906f"
+    },
+    {
+      "path": "public/data/city/infra/museum.geojson",
+      "bytes": 3380,
+      "sha256": "2a0bf9b214fe1e79ad31aeb96a736c4862ab8730cd6a6184ea808219e7861857"
+    },
+    {
+      "path": "public/data/city/infra/parking.geojson",
+      "bytes": 290275,
+      "sha256": "7d6f5a418ce0c4a7d83f90adb9bb6a1a443813387f6898abffeaee52b64a3564"
+    },
+    {
+      "path": "public/data/city/infra/pharmacy.geojson",
+      "bytes": 365,
+      "sha256": "7d444dbf1ab7cd64e3f783b9ceba444b2ed83a746e2b5b15695ae7bc4ff1305f"
+    },
+    {
+      "path": "public/data/city/infra/playground.geojson",
+      "bytes": 123559,
+      "sha256": "eef153132d15e9e350de2d55480a053a00657a623e16295e61b801ab5fe3415c"
+    },
+    {
+      "path": "public/data/city/infra/police.geojson",
+      "bytes": 9451,
+      "sha256": "210d700ede46222d04cda6c5614eb80ee11f9ef0bf8b499117f32dab9ab982cc"
+    },
+    {
+      "path": "public/data/city/infra/post.geojson",
+      "bytes": 10950,
+      "sha256": "32e5b583e4baf7e5c4acab841da55b8e07383a81da1d95e355ca14c314b9a63a"
+    },
+    {
+      "path": "public/data/city/infra/rail.geojson",
+      "bytes": 7718,
+      "sha256": "aae0b96b6aef869122875aa0341f9daa7421e3979ffb53000e06739c60e21324"
+    },
+    {
+      "path": "public/data/city/infra/recycle.geojson",
+      "bytes": 365,
+      "sha256": "7d444dbf1ab7cd64e3f783b9ceba444b2ed83a746e2b5b15695ae7bc4ff1305f"
+    },
+    {
+      "path": "public/data/city/infra/school.geojson",
+      "bytes": 88460,
+      "sha256": "e5dd550814945fd64b6a8e4ba1785609cfa83c18f2eae0eec135830f26ca3247"
+    },
+    {
+      "path": "public/data/city/infra/shade-structures.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/snow-priority.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/snow-routes.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/sports.geojson",
+      "bytes": 121002,
+      "sha256": "618b4a28a58e4503fbc75817cca4d83b5ab8e5b82d7957c33ab3caca8136c818"
+    },
+    {
+      "path": "public/data/city/infra/toilet.geojson",
+      "bytes": 16951,
+      "sha256": "4b2da7c00b1b8f439725a890a59dac132db43d4e352a3b4b3fddcfc56ed0f29b"
+    },
+    {
+      "path": "public/data/city/infra/university.geojson",
+      "bytes": 365,
+      "sha256": "7d444dbf1ab7cd64e3f783b9ceba444b2ed83a746e2b5b15695ae7bc4ff1305f"
+    },
+    {
+      "path": "public/data/city/infra/welfare-official.geojson",
+      "bytes": 180,
+      "sha256": "4373fae99577932e6058608bd7aee025ac38a93de9fde697c0811d5c5fba2811"
+    },
+    {
+      "path": "public/data/city/infra/welfare.geojson",
+      "bytes": 1330,
+      "sha256": "ca0cd40d953d924a28b94b3e1c6482f26c770231eda1a8a01280f660e38c844f"
+    },
+    {
+      "path": "public/data/city/model/buildings.geojson",
+      "bytes": 2921011,
+      "sha256": "b997b67dfc758b35957a18b81d5d30b4c5094528e07e7ce80eef549b4fb21fd7"
+    },
+    {
+      "path": "public/data/city/model/network.geojson",
+      "bytes": 901053,
+      "sha256": "2491d734b1d069b5e6b406eda0176584f4badc17330950cac64dd32737d0fa0c"
+    },
+    {
       "path": "public/data/city/park-areas.geojson",
       "bytes": 83274,
       "sha256": "bdb97b6d52be4e3274978aed3d2692bda3bc6521f6cf53caaf1d348f74b4e056"
+    },
+    {
+      "path": "public/data/city/templates/operations-template.geojson",
+      "bytes": 249,
+      "sha256": "20855a39d34df9674f213b0bfa39fc46e8655ae051d0b079abd324f625c607a8"
     },
     {
       "path": "public/data/district.geojson",
@@ -417,9 +789,19 @@
       "sha256": "316e7db199da2e7fb5b7bd7002f1c87c447c456491b06a8173d93ffe351cb537"
     },
     {
+      "path": "public/model.html",
+      "bytes": 929,
+      "sha256": "0f6973950df4c533faae47f8c0ed14e64789bbc7d620ebe436764d637380b25e"
+    },
+    {
+      "path": "scripts/audit-release.mjs",
+      "bytes": 2441,
+      "sha256": "8b7c7ca5fb8a7a9a292308ce7e3329293b0c539bed6161a323d4662f739f86fd"
+    },
+    {
       "path": "scripts/build.mjs",
-      "bytes": 888,
-      "sha256": "9b9ddfdfdcc4a9cc8e1dccd8826f745a564f5b74cec06ce9472b97f892a2cdd8"
+      "bytes": 1821,
+      "sha256": "4b11bd0848011365d00e6ffe0ed506da9a4d65b7c97b3c414fcc54cc77530819"
     },
     {
       "path": "scripts/check.mjs",
@@ -428,13 +810,23 @@
     },
     {
       "path": "scripts/dev.mjs",
-      "bytes": 2482,
-      "sha256": "d9df01d1713595ddcb426206c1a7feaaac1ddee24d8d6a6ad513fe4f0a69f2c7"
+      "bytes": 2696,
+      "sha256": "fd6aede7ea9f79dc3b995a9bfa5f27ce149770f1a178e5a13ae4b71de254085f"
+    },
+    {
+      "path": "scripts/ensure-runtime.mjs",
+      "bytes": 2408,
+      "sha256": "82495a6b82654b21170a71cc599d5182c938facc451b966419215e4eead17cb6"
     },
     {
       "path": "scripts/make-preview.mjs",
       "bytes": 939,
       "sha256": "18ee8ab2ebcb8884ac23ecc980b4f078a18d9b9e0573853f490e3bfe8326bfb2"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "bytes": 4918,
+      "sha256": "f9845f34852fdc3f09a0ac014e8a6d97676f7b7e219c9636275f836980ea5072"
     },
     {
       "path": "server/catalog.js",
@@ -443,8 +835,8 @@
     },
     {
       "path": "server/city/common.js",
-      "bytes": 7631,
-      "sha256": "7ad6f7114ce52a647dc41acb107d4b7a0d5ae92fc200a5c717412cd7c726196c"
+      "bytes": 7665,
+      "sha256": "3324a0b3921e9209bc984005f8ad11644b4fe4c4c106c8b4eb4dfea8b097e22b"
     },
     {
       "path": "server/city/forecast.js",
@@ -452,9 +844,14 @@
       "sha256": "9d86628bf0e53b22e6fe660ef0c53de3eff274de3c013641f356c576f89dd879"
     },
     {
+      "path": "server/city/infrastructure.js",
+      "bytes": 5251,
+      "sha256": "11fff54f186fbd58267d2e069da5327156bb388b8cd78dfa73cd6345a5b59b82"
+    },
+    {
       "path": "server/city/providers.js",
-      "bytes": 13378,
-      "sha256": "da50edb716df4e2b7fdb18b0dc4510259c4f93d912e6def8e4146548afe08434"
+      "bytes": 13562,
+      "sha256": "e15110e7a8a8fc6af87261318fa79334b400b49327ee26eb79ebdf271d42f582"
     },
     {
       "path": "server/city/wms.js",
@@ -508,8 +905,8 @@
     },
     {
       "path": "src/city/app.js",
-      "bytes": 52129,
-      "sha256": "b1bda1cb4645980d6b584c22394bd67b657d1f21bc4942547acc0dc84f32757a"
+      "bytes": 55383,
+      "sha256": "f9a433bac097ef8e71230647ab299311a900f6b8931ac6c672a09d6dbc82f685"
     },
     {
       "path": "src/city/camera.js",
@@ -518,8 +915,23 @@
     },
     {
       "path": "src/city/catalog.js",
-      "bytes": 5910,
-      "sha256": "7d8e5be92a04691798ed061e81b0aaad4ca9e09acdfd22c75b7e59ec5839d209"
+      "bytes": 6039,
+      "sha256": "1942cca6f40d76c5e45ccc258b2d14b0516fff53c1b36905869f45378a47bd01"
+    },
+    {
+      "path": "src/city/clean-model.js",
+      "bytes": 3600,
+      "sha256": "75dd642f45d942aef52ecdb3423021b22c0fa57a50f3782dc892f95988bbc2ef"
+    },
+    {
+      "path": "src/city/enhancements.js",
+      "bytes": 25559,
+      "sha256": "1e4c414ad15417f17f8e7d0f43bf69c630e835725b25802aec2cac520a68bcac"
+    },
+    {
+      "path": "src/city/finish-tools.js",
+      "bytes": 22576,
+      "sha256": "5589967a5de692049539c5e097728e2913736039aad8f0d213eb04e8c014c45b"
     },
     {
       "path": "src/city/geometry.js",
@@ -527,9 +939,39 @@
       "sha256": "25a5edd783dbc172c7e62e60523ef0d7684cb747b44b1977c389065160d2bdb3"
     },
     {
+      "path": "src/city/graphics.js",
+      "bytes": 3211,
+      "sha256": "8bfb2096e74dfb496d8d852857162509195b0df194b710825793b25bbb0211a7"
+    },
+    {
+      "path": "src/city/infrastructure.js",
+      "bytes": 4198,
+      "sha256": "e74c3f1fbef3cfbb40e7efeef17ffa5c63782f32a07b93a379d9ace08479799b"
+    },
+    {
+      "path": "src/city/layer-sync.js",
+      "bytes": 2326,
+      "sha256": "c927dd2081fa32f2b89fc015803223ce594e6fabb1653a6cf2f2130a9791d922"
+    },
+    {
+      "path": "src/city/local-records.js",
+      "bytes": 1955,
+      "sha256": "365d1d0882cf65be2acc4548e307267a8b4b8dcd4278537395a0a9199914d2bb"
+    },
+    {
       "path": "src/city/media.js",
       "bytes": 1632,
       "sha256": "f4061a363779f1c8928a93bfc96209df86a93d5bff6346d9fb6da2241f2badc8"
+    },
+    {
+      "path": "src/city/observations.js",
+      "bytes": 4489,
+      "sha256": "8a09bae8b9017ded81e86698d82af8c1fce3c3b7f1d6dae40efc9114ebc81516"
+    },
+    {
+      "path": "src/city/operations.js",
+      "bytes": 4675,
+      "sha256": "207018e99c869eee90b1bd10e3c5a6fb313c7941f120db4d9db9c9d7de2fc5a0"
     },
     {
       "path": "src/city/raster.js",
@@ -538,18 +980,23 @@
     },
     {
       "path": "src/city/scene.js",
-      "bytes": 20512,
-      "sha256": "98d40b2bb9a1a80c7725045dd44308ff13508475855870abafdb6711ec1b6c5e"
+      "bytes": 24596,
+      "sha256": "614bdffcf4f1b7cc72dc82651793c25b3e92986192d8ba2b37a1c30dd60b6a7b"
+    },
+    {
+      "path": "src/city/solar.js",
+      "bytes": 4772,
+      "sha256": "f124d0201309d3c39d884fc604314a0873d7deb2f8b6010c4bcbbc1698d43f65"
     },
     {
       "path": "src/city/style.css",
-      "bytes": 15693,
-      "sha256": "6c55f21385be239ec58d2fc5afa21ca155123435f5755eda67781ac9b7bdd460"
+      "bytes": 19245,
+      "sha256": "a6750a1a24af255b65df9f55a00b35056852c594480e2b9a7e4c03a840a1acf6"
     },
     {
       "path": "src/city/viewer.js",
-      "bytes": 12070,
-      "sha256": "1da6a4417f069f9f2e7995b034983e96138f695782c9dd773072e2e3fd9b80d6"
+      "bytes": 14384,
+      "sha256": "54b3758a215edc485fd79f1f09ce715d120210dffbe1bee0fb685687511931ae"
     },
     {
       "path": "src/config.js",
@@ -677,14 +1124,39 @@
       "sha256": "adf77b433380f1c0a93e1eba7690feaa8ee02b6e5464bb13fd25525206c5c63b"
     },
     {
+      "path": "tests/city-final-ui.py",
+      "bytes": 7985,
+      "sha256": "cae66752be6625e8bf11b977c1cb1ec078db289d2df1741884301ad86514aba8"
+    },
+    {
+      "path": "tests/city-final.test.mjs",
+      "bytes": 10421,
+      "sha256": "097fc3d43e40f21827e8a15fbee3af4bb1790115088a55df7ed0f261b5acc5f1"
+    },
+    {
       "path": "tests/city-forecast.test.mjs",
       "bytes": 1462,
       "sha256": "ea11af990ee7f0012e01e5f9d64177fe98db7715e22a2911eb0850ef000b06ed"
     },
     {
+      "path": "tests/city-regression-ui.py",
+      "bytes": 13011,
+      "sha256": "e74f38f737776eca4bb2b1e296d57b2e04e3224227f370ca41e100d879a74410"
+    },
+    {
       "path": "tests/city-ui.py",
       "bytes": 12694,
       "sha256": "98e9b675ce8cfc1029e761b1c52308d10d84c91dbbf54531640a5bacc43b542a"
+    },
+    {
+      "path": "tests/city-v04-ui.py",
+      "bytes": 12766,
+      "sha256": "40476d6f6f533e64034299a77427ef2f0dfad78a6ad02623be06588d1e23a311"
+    },
+    {
+      "path": "tests/city-v04.test.mjs",
+      "bytes": 10935,
+      "sha256": "acaded01531a7abcc6275ca43c07c16c46bc86db7beaca554b8cd971505824c6"
     },
     {
       "path": "tests/component-browser.py",
@@ -702,6 +1174,11 @@
       "sha256": "d16c609a7cf30fe4c38396d19a30f867a120299ce404dac78dbcc9c0c4cf54c3"
     },
     {
+      "path": "tests/live-v04.py",
+      "bytes": 2577,
+      "sha256": "7dce1b3978d7ffc384058ff0ca2112edf362a78c009535dd2c442c57597ff399"
+    },
+    {
       "path": "tests/map-adapter.test.mjs",
       "bytes": 2902,
       "sha256": "7d25e5837df9bcbbca3cd6866c7b5ff456a78544ab95e3de902ec84e239faa7d"
@@ -710,6 +1187,16 @@
       "path": "tests/v02.test.mjs",
       "bytes": 14697,
       "sha256": "b4f0d352cfb34892292f6da9705c7a7856d82660a8666c473ee733140797a25a"
+    },
+    {
+      "path": "vendor/cesium-1.121.0.tar.gz",
+      "bytes": 5324387,
+      "sha256": "3d50c517499b59b89434496e3df0f7b195e66bce4a3eda14a3b1513a7544bb44"
+    },
+    {
+      "path": "vendor/cesium-manifest.json",
+      "bytes": 219,
+      "sha256": "49523eed3f78e0fe068ebeef79a462b1b9a67dc601066bed40a564088ff14b7e"
     },
     {
       "path": "vercel.json",

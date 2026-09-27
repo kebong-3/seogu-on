@@ -6,7 +6,7 @@
 
 ## MapLibre GL JS
 
-실제 기본 지도에서 MapLibre GL JS **5.6.1**을 CDN으로 로딩합니다. 이 버전은 재현 가능한 시작점을 위한 고정값이며 최신 버전이라고 주장하지 않습니다. 라이브러리 자체 파일은 저장소나 ZIP에 포함하지 않았습니다. MapLibre GL JS의 BSD 3-Clause 라이선스와 배포물 고지사항을 준수해야 합니다.
+실제 기본 지도에서 MapLibre GL JS **5.6.1**을 CDN으로 로딩합니다. 이 버전은 재현 가능한 시작점을 위한 고정값이며 최신 버전이라고 주장하지 않습니다. v0.1에서는 CDN이었으며 v0.3부터 고정 버전 파일을 src/vendor에 포함했습니다. MapLibre GL JS의 BSD 3-Clause 라이선스와 배포물 고지사항을 준수해야 합니다.
 
 공식 저장소/라이선스: https://github.com/maplibre/maplibre-gl-js
 공식 예제: https://maplibre.org/maplibre-gl-js/docs/examples/display-buildings-in-3d/
@@ -52,4 +52,19 @@ SGIS 행정동 원자료를 가공한 vuski/admdongkor ver20260701의 서구18�
 - 행정동 경계: 통계청 SGIS 공공누리1유형 원자료 가공(vuski/admdongkor), 가공물CC BY4.0. 원자료/가공자 출처 표시를 유지합니다.
 - VWorld3 SDK의 출처·로고를 숨기거나 모델을 대량 다운로드하지 않습니다. SDK는 제공기관에서 브라우저로 불러옵니다.
 - 첨부 활용예제의 원본HTML·샘플인증키는 공개 배포하지 않습니다. 아이디어·API구조를 참조하고 관련 코드를 새로 작성했습니다.
-- standalone Cesium1.121은 검증환경에서만 초기화를 시도했습니다. 이 배포에 중복 Cesium 라이브러리를 넣지 않았습니다.
+- v0.3에서는 standalone Cesium1.121을 검증환경에서만 사용했습니다. v0.4는 아래 별도 도시모형 엔진을 추가했습니다.
+
+
+## v0.4 추가 구성
+
+독립 도시모형 전용 CesiumJS **1.121.0**의 UMD 파일/Assets/Workers/Widgets/ThirdParty를 `public/vendor/cesium/`에 포함합니다. Apache2 및 각 의존성의 고지 전문은 같은 폴더 `LICENSE.md`에 있습니다. 브이월드 SDK iframe과 독립 모형 iframe을 분리하여 전역 Cesium을 중복 주입하지 않습니다. 기본 외부 imagery/terrain/geocoder 서비스를 비활성화하여 라이브러리 기본 외부 서비스 키를 앱의 데이터 연결키로 사용하지 않습니다. 별도 글꼴 파일은 포함하지 않습니다.
+
+OSM 인프라·건물·도로/수계 파생자료는 ODbL로 제공합니다. 각 객체ID·출처와 미상높이/층수추정/태그값을 보존합니다. 절단·중복 정리·일부 태그만 추출·층수×3m/표시6m 속성 추가를 수행했습니다. 원본 OSM 건물은 VWorld에서 추출한 것이 아닙니다. 재배포·파생DB 공개 시 ODbL 조건을 유지합니다. https://www.openstreetmap.org/copyright
+
+기존 공원면94개와 별개로 인프라 구역도형을 추가했습니다. 같은 기관의 대표위치와 부지/건물은 중복일 수 있어 기관수로 단순 합산하지 않습니다. 공공 학교 대표위치는 전국초중등학교위치표준자료2026-03-20 공개본을 사용하며 해당 출처/제공조건을 유지합니다.
+
+API응답의 원본수치·단위·시각·점검플래그를 보존합니다. 특히 에어코리아 등 서비스의 개별 이용조건은 포털 안내와 운영승인 조건을 별도로 확인합니다. 코드MIT가 API데이터의 추가 변형권한을 부여하지 않습니다.
+
+## 0.4.1 로컬 SDK 배포 변경
+
+기존 Cesium1.121.0 실행자료를 `vendor/cesium-1.121.0.tar.gz`로 묶었습니다. 해당 원본의 Apache-2.0 LICENSE.md 및 ThirdParty.json을 보존하고 별도 글꼴파일은 포함하지 않았습니다. 파일 해시는 `vendor/cesium-manifest.json`에 있으며 빌드가 이를 검사한 뒤 `public/vendor/cesium`에 복원합니다. 이는 SDK 배포 포장 변경이지 브이월드 지도타일을 추출·재배포하는 것이 아닙니다. 기존 OSM/SGIS/공공자료의 별도 출처조건은 계속 적용됩니다.
