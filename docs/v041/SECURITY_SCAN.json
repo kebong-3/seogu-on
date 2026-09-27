@@ -1,0 +1,9 @@
+{
+  "scope": "Exact comparison with literal authentication values from attached reference HTML, including decoded variants; no values logged. Package and SDK entries inspected. Not comprehensive security certification.",
+  "referenceFilesRead": 7,
+  "literalVariantsChecked": 7,
+  "matchedReleaseFiles": [],
+  "fontFiles": [],
+  "sdkRegularFiles": 375,
+  "privateEnvFiles": []
+}

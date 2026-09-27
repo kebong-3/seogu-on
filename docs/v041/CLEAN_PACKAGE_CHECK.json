@@ -1,0 +1,14 @@
+{
+  "scope": "ZIP extracted into empty local directory; generated SDK and dist initially absent. npm run verify used bundled local SDK archive, no additional packages required. NOT Vercel deployment or real 3D.",
+  "version": "0.4.1",
+  "command": "npm run verify",
+  "exitCode": 0,
+  "codeSha256": "5dfe4e8fecbba813f4fa9df7a7b0b1355ebfe318bad3c4ba56497c36b1f49343",
+  "sameCodeAsTestedSource": true,
+  "sdkRestoredByBuild": true,
+  "passedUnitTests": 278,
+  "passedBuildAuditChecks": 12,
+  "passedLocalHttpChecks": 28,
+  "seconds": 20.74,
+  "inputFileCount": 239
+}

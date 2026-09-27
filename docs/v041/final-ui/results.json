@@ -1,0 +1,116 @@
+{
+  "scope": "Real application and BoundaryView; network and storage explicitly mocked; NOT WebGL/live authentication",
+  "results": [
+    {
+      "name": "Source model switch is visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Boundary mode refuses to claim detailed source success",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Actual renderer type, not configured flag, is reported",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "18 separately named civic records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Civic record opens provenance panel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Public address queue includes relocation warning",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Address records remain nonspatial until checked",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Empty geometry cannot be registered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Real Canvas clicks collect route points",
+      "passed": true,
+      "detail": "2개 지점 · 약 909m 선 · 지도에서 선택 중 · 아직 저장되지 않았습니다."
+    },
+    {
+      "name": "Undo removes only last vertex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Registered geometry moves to record collection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No default times silently claim work complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Line count is visible for operational route",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Explicit save uses versioned payload",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Restore succeeds with state validation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Export is actual GeoJSON not UI state only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Missing timestamps remain unknown",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stored records require confirmation before delete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Explicit delete clears storage only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "After editing, solo school removes route layer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "School source unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop application has no JS exceptions",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "pageErrors": []
+}

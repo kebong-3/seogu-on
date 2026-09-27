@@ -1,0 +1,301 @@
+{
+  "mode": "Boundary renderer + fixture transport, NOT live API/GPU",
+  "results": [
+    {
+      "name": "Boundary clearly NOT 3D",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All18 dong controls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Baseline parks retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Infrastructure categories searchable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Category name filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "School dataset52point52polygons",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Solo selection hides park layers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Point versus area disclosure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dong selection retained with infrastructure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dong schools subset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Overview restores selected school layer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Sports only locations14areas110",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "School hidden after sports",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Multi-select combines explicit categories",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Library83locations4areas",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Second solo click turns category off",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category childcare",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category civic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category culture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category kindergarten",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category medical",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category bus",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bundled category parking",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Parking point+areas not a facility census",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Facility has provenance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Facility isolate one item",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Facility restore counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Search finds existing data",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "CSV matches filtered list",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Unconnected cold shelter not invented",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Unconnected layer state not0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Civic18 incomplete explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "5779building geometry provenance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Historical childcare excluded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Clean and reality separated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "NonWebGL quality is honestly unsupported",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Label toggle changes only rendering",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Actual approximate shade geometry computed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Height missing excluded note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Flat assumption explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Night is explicit no fake sun/shade",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Weather points on map from fixture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Zero temperature kept",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Observation time retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Grid not weather station disclosure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Forecast slots two",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Forecast becomes separate visible layer",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Air layer enabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Air flag shown rather than normal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Air observation not invented district average",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No fictional snow routes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Official grit metadata dated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Operation stale legend",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Operational import visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Expired completion shown stale",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop no page JS errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Mobile catalog no horizontal overflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile all categories navigable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile no JS errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "pageErrors": []
+}
