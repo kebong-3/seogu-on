@@ -1,0 +1,278 @@
+{
+  "checkedAt": "2026-09-27",
+  "basis": "포함 OSM 자료와 18개 행정동 명칭 대조",
+  "matchedDongCount": 18,
+  "fieldVerified": false,
+  "rows": [
+    {
+      "dongId": "seogu-01",
+      "dongName": "양동",
+      "matches": [
+        {
+          "id": "osm-node-7880197582",
+          "name": "양동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 천변좌로222번길 3-2",
+          "sourceUrl": "https://www.openstreetmap.org/node/7880197582"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-02",
+      "dongName": "양3동",
+      "matches": [
+        {
+          "id": "osm-node-368902620",
+          "name": "양3동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 상무대로1223번길 16",
+          "sourceUrl": "https://www.openstreetmap.org/node/368902620"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-03",
+      "dongName": "농성1동",
+      "matches": [
+        {
+          "id": "osm-node-7880197581",
+          "name": "농성1동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 상무대로1189번길 23",
+          "sourceUrl": "https://www.openstreetmap.org/node/7880197581"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-04",
+      "dongName": "농성2동",
+      "matches": [
+        {
+          "id": "osm-node-368901134",
+          "name": "농성2동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 화정로 314",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901134"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-05",
+      "dongName": "광천동",
+      "matches": [
+        {
+          "id": "osm-way-628952569",
+          "name": "광천동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 광천2길 9",
+          "sourceUrl": "https://www.openstreetmap.org/way/628952569"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-06",
+      "dongName": "유덕동",
+      "matches": [
+        {
+          "id": "osm-way-725074842",
+          "name": "유덕동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "유덕로 24",
+          "sourceUrl": "https://www.openstreetmap.org/way/725074842"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-07",
+      "dongName": "치평동",
+      "matches": [
+        {
+          "id": "osm-way-408473138",
+          "name": "치평동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "상무공원로 62",
+          "sourceUrl": "https://www.openstreetmap.org/way/408473138"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-08",
+      "dongName": "상무1동",
+      "matches": [
+        {
+          "id": "osm-node-368901130",
+          "name": "상무1동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "월드컵4강로197번길 20",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901130"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-09",
+      "dongName": "상무2동",
+      "matches": [
+        {
+          "id": "osm-node-368901118",
+          "name": "상무2동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "화정로85번길 17",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901118"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-10",
+      "dongName": "화정1동",
+      "matches": [
+        {
+          "id": "osm-node-368901154",
+          "name": "화정1동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 내방로338번길 11",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901154"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-11",
+      "dongName": "화정2동",
+      "matches": [
+        {
+          "id": "osm-node-4792773407",
+          "name": "화정2동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 화운로 94",
+          "sourceUrl": "https://www.openstreetmap.org/node/4792773407"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-12",
+      "dongName": "화정3동",
+      "matches": [
+        {
+          "id": "osm-node-368901127",
+          "name": "화정3동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 월드컵4강로68번길 21",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901127"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-13",
+      "dongName": "화정4동",
+      "matches": [
+        {
+          "id": "osm-node-368901075",
+          "name": "화정4동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 염화로83번길 3",
+          "sourceUrl": "https://www.openstreetmap.org/node/368901075"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-14",
+      "dongName": "서창동",
+      "matches": [
+        {
+          "id": "osm-node-7880197580",
+          "name": "서창동 행정복지센터",
+          "geometryType": "Point",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "광주광역시 눌재로 412",
+          "sourceUrl": "https://www.openstreetmap.org/node/7880197580"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-15",
+      "dongName": "금호1동",
+      "matches": [
+        {
+          "id": "osm-way-1136423861",
+          "name": "금호1동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "운천로31번길 17",
+          "sourceUrl": "https://www.openstreetmap.org/way/1136423861"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-16",
+      "dongName": "금호2동",
+      "matches": [
+        {
+          "id": "osm-way-1148725536",
+          "name": "금호2동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "풍금로 135",
+          "sourceUrl": "https://www.openstreetmap.org/way/1148725536"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-17",
+      "dongName": "풍암동",
+      "matches": [
+        {
+          "id": "osm-way-1162005042",
+          "name": "풍암동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "",
+          "sourceUrl": "https://www.openstreetmap.org/way/1162005042"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    },
+    {
+      "dongId": "seogu-18",
+      "dongName": "동천동",
+      "matches": [
+        {
+          "id": "osm-way-714789756",
+          "name": "동천동 행정복지센터",
+          "geometryType": "Polygon",
+          "sourceName": "OpenStreetMap contributors",
+          "address": "유림로98번길 8",
+          "sourceUrl": "https://www.openstreetmap.org/way/714789756"
+        }
+      ],
+      "review": "명칭 대응만 확인 · 현장 위치·이전 여부 미검수"
+    }
+  ]
+}

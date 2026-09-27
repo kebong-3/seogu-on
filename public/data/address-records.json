@@ -415,11 +415,27 @@
       "sourceDate": null,
       "reviewStatus": "needs-coordinate",
       "retrievedAt": "2026-09-26T19:03:04.495411+00:00"
+    },
+    {
+      "id": "address-63",
+      "name": "광주광역시서구장애인복지관 (임시이전 안내)",
+      "address": "서구 상무대로 1032",
+      "phone": "062-710-3020",
+      "category": "care",
+      "categoryName": "복지기관",
+      "layerId": "infra-welfare",
+      "sourceName": "서구장애인복지관 공식 홈페이지 / 찾아오시는 길·임시이전 안내",
+      "sourceUrl": "https://www.bjsk.kr/page/intro/location",
+      "sourceDate": null,
+      "reviewStatus": "needs-coordinate",
+      "retrievedAt": "2026-09-27",
+      "note": "기관의 임시이전 안내를 확인했습니다. 이전 시행일은 원문에서 확인하지 못했으며 좌표·출입구는 별도 확인해야 합니다."
     }
   ],
   "metadata": {
     "sourceDate": null,
     "retrievedAt": "2026-09-26T19:03:04.495411+00:00",
-    "note": "학교명·도로명주소 일치로 위치 연결한 학교는 별도 레이어로 분리. 남은 시설은 좌표 미확보·지도 집계 제외. 인명·거주시설·공동생활가정 제외."
+    "note": "학교명·도로명주소 일치로 위치 연결한 학교는 별도 레이어로 분리. 남은 시설은 좌표 미확보·지도 집계 제외. 인명·거주시설·공동생활가정 제외.",
+    "finalReviewNote": "추가 1건: 공식 기관 임시이전 주소 확인. 자동 지오코딩 또는 위치 등록하지 않음."
   }
 }

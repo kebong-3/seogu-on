@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","metadata":{"note":"빈 양식입니다. id,name,sourceName,sourceDate,status,observedAt,expiresAt 속성과 실제 검수 좌표를 입력합니다. 예시 좌표를 실제 자료로 넣지 않습니다."},"features":[]}
