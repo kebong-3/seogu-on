@@ -1,0 +1,61 @@
+name: Seo-gu v0.4 geometry tiles
+on:
+  push:
+    branches: [feature/city-infrastructure-v0.4]
+    paths: [.github/workflows/city-v04-geometry.yml]
+permissions: {contents: read}
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Retrieve only public geometries and public metadata
+        run: |
+          mkdir -p evidence
+          python3 -u - <<'PY'
+          import urllib.request,urllib.parse,json,pathlib,datetime,hashlib,concurrent.futures,time,math
+          root=pathlib.Path('evidence');manifest=[]
+          def get(url,data=None,timeout=50):
+            req=urllib.request.Request(url,data=data,headers={'User-Agent':'SeoOn-Prototype/0.4','Referer':'https://www.data.go.kr/'})
+            with urllib.request.urlopen(req,timeout=timeout) as r:return r.read(60000000)
+          def osm(item):
+            name,q=item;r={'name':name,'query':q,'retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+            for base in ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']:
+              try:
+                data=get(base,urllib.parse.urlencode({'data':q}).encode(),65);j=json.loads(data)
+                if 'elements' not in j or j.get('remark'):raise RuntimeError(j.get('remark','No elements'))
+                (root/name).write_bytes(data);r.update(sourceUrl=base,state='received',count=len(j['elements']),bytes=len(data),sha256=hashlib.sha256(data).hexdigest());break
+              except Exception as e:r.update(state='failed',error=str(e)[:180])
+            manifest.append(r);print(name,r.get('state'),r.get('count'),flush=True);time.sleep(.5)
+          jobs=[]
+          xs=[126.798,126.836,126.874,126.912];ys=[35.089,35.120,35.151,35.182]
+          for i in range(3):
+            for j in range(3):
+              bbox=f'{ys[j]},{xs[i]},{ys[j+1]},{xs[i+1]}'
+              jobs.append((f'buildings-{i}-{j}.json',f'[out:json][timeout:45];way[building]({bbox});out meta geom;'))
+          bbox='35.089,126.798,35.182,126.912'
+          jobs.append(('base-network.json','[out:json][timeout:45];(way[highway~"^(primary|secondary|tertiary|residential|unclassified|living_street|footway|pedestrian)$"]('+bbox+');way[waterway~"^(river|stream)$"]('+bbox+');way[natural=water]('+bbox+'););out geom;'))
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(osm,jobs))
+          for name,pk in [('grit-bins','15114125'),('shade-structures','15129447')]:
+            result={'sourceUrl':f'https://www.data.go.kr/data/{pk}/standard.do','retrievedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'rows':[],'pages':0}
+            try:
+              header=json.loads(get(f'https://www.data.go.kr/download/columList.json?pk={pk}&ext=JSON',timeout=20));table=header['tableVO'];total=int(header['totalCount']);result['nationalTotal']=total
+              params={'publicDataPk':pk,'colNmList':table['colNmList'],'totalCount':total,'svcTableNm':table['svcTableNm'],'perPage':10000};seen=set()
+              for page in range(1,min(8,math.ceil(total/10000))+1):
+                params['page']=page;raw=get('https://www.data.go.kr/download/standard.json?'+urllib.parse.urlencode(params,doseq=True),timeout=20);data=json.loads(raw)
+                if not isinstance(data,list):raise ValueError('schema')
+                h=hashlib.sha256(raw).hexdigest()
+                if h in seen:raise ValueError('repeated page')
+                seen.add(h);result['pages']+=1
+                result['rows'] += [row for row in data if '서구' in str(row) and '광주' in str(row)]
+                time.sleep(.5)
+              result['columns']=header.get('columList');result['complete']=result['pages']*10000>=total
+            except Exception as e:result['error']=str(e)[:180];result['complete']=False
+            (root/(name+'.json')).write_text(json.dumps(result,ensure_ascii=False))
+          (root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: city-v04-geometry
+          path: evidence/
+          retention-days: 7
