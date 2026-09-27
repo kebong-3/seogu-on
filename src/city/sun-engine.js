@@ -1,4 +1,5 @@
-/** Native visual shadows. Public Cesium properties only; no provider mesh extraction.
+/** Native renderer sunlight. Uses documented Viewer/ShadowMap/SunLight interfaces;
+ * never pickFromRay (marked private upstream) or provider private tileset members.
  * Visual shadows do not certify sunshine duration or disaster safety.
  */
 import {parseKst} from './solar.js';
@@ -28,16 +29,16 @@ export function createSunController(viewer,C,{emit=()=>{},getPose=()=>({range:16
  let active=false,target=null,inputTime=null,sequence=0,restore=null,lastSend=0;
  const casters=new Map(),scene=viewer.scene;
  const request=()=>scene.requestRender?.();
- function publicCasters(collection,depth=0){if(depth===0)for(const p of casters.keys())try{if(p.isDestroyed?.())casters.delete(p);}catch{casters.delete(p);}if(!collection||depth>3||typeof collection.get!=='function')return;for(let i=0;i<Math.min(collection.length||0,10000);i++){let p;try{p=collection.get(i);}catch{continue;}if(!p)continue;if('shadows' in p){try{if(!casters.has(p))casters.set(p,p.shadows);p.shadows=C.ShadowMode.ENABLED;}catch{}}if(typeof p.get==='function'&&Number.isFinite(p.length))publicCasters(p,depth+1);}}
+ function publicCasters(collection,depth=0){if(depth===0)for(const p of casters.keys())try{if(p.isDestroyed?.())casters.delete(p);}catch{casters.delete(p);}if(!collection||depth>3||typeof collection.get!=='function')return;for(let i=0;i<Math.min(collection.length||0,10000);i++){let p;try{p=collection.get(i);}catch{continue;}if(!p)continue;if('shadows' in p){try{if(p.shadows!==C.ShadowMode.RECEIVE_ONLY&&p.shadows!==C.ShadowMode.CAST_ONLY){if(!casters.has(p))casters.set(p,p.shadows);p.shadows=C.ShadowMode.ENABLED;}}catch{}}if(typeof p.get==='function'&&Number.isFinite(p.length))publicCasters(p,depth+1);}}
  function status(extra={}){const sm=viewer.shadowMap||scene.shadowMap;let angles=null;try{if(target)angles=sunAngles(C,target,getPose().center);}catch{}return {enabled:active,time:inputTime,appliedTime:target?C.JulianDate.toIso8601(viewer.clock.currentTime):null,source:'loaded 3D geometry · native renderer',method:angles?.method||'Cesium SunLight',angles,shadowMapEnabled:sm?.enabled===true,maximumDistance:sm?.maximumDistance??null,castingObjects:casters.size,renderingOnly:true,note:'시각적 일영입니다. 미수신 건물·나무·지형과 해상도 오차가 있으며 정밀 일조권·채광량·실제 구름은 계산하지 않습니다.',...extra};}
  function apply(message){sequence++;const seq=sequence;const date=parseKst(message.time);inputTime=message.time;target=C.JulianDate.fromDate(date);const on=message.shadows!==false;
- if(on&&!restore)restore={light:scene.light,shadows:viewer.shadows,terrainShadows:viewer.terrainShadows,globeLighting:scene.globe?.enableLighting,currentTime:C.JulianDate.clone(viewer.clock.currentTime),animate:viewer.clock.shouldAnimate,multiplier:viewer.clock.multiplier,maximumDistance:viewer.shadowMap?.maximumDistance};
- if(!on){active=false;if(restore){scene.light=restore.light;viewer.shadows=restore.shadows;viewer.terrainShadows=restore.terrainShadows;if(scene.globe)scene.globe.enableLighting=restore.globeLighting;viewer.clock.shouldAnimate=restore.animate;viewer.clock.multiplier=restore.multiplier;if(viewer.shadowMap&&restore.maximumDistance!==undefined)viewer.shadowMap.maximumDistance=restore.maximumDistance;for(const[p,s]of casters)try{if(!p.isDestroyed?.())p.shadows=s;}catch{}casters.clear();restore=null;}request();emit('sun-state',status({phase:'off'}));return status();}
+ if(on&&!restore)restore={light:scene.light,shadows:viewer.shadows,terrainShadows:viewer.terrainShadows,globeLighting:scene.globe?.enableLighting,currentTime:C.JulianDate.clone(viewer.clock.currentTime),animate:viewer.clock.shouldAnimate,multiplier:viewer.clock.multiplier,shadowSettings:viewer.shadowMap?Object.fromEntries(['enabled','maximumDistance','softShadows','darkness','normalOffset'].map(k=>[k,viewer.shadowMap[k]])):null};
+ if(!on){active=false;if(restore){scene.light=restore.light;viewer.shadows=restore.shadows;viewer.terrainShadows=restore.terrainShadows;if(scene.globe)scene.globe.enableLighting=restore.globeLighting;viewer.clock.currentTime=C.JulianDate.clone(restore.currentTime);viewer.clock.shouldAnimate=restore.animate;viewer.clock.multiplier=restore.multiplier;if(viewer.shadowMap&&restore.shadowSettings)for(const[k,v]of Object.entries(restore.shadowSettings))if(v!==undefined)viewer.shadowMap[k]=v;for(const[p,s]of casters)try{if(!p.isDestroyed?.())p.shadows=s;}catch{}casters.clear();restore=null;}request();emit('sun-state',status({phase:'off'}));return status();}
  if(!C.SunLight||!viewer.shadowMap){emit('sun-state',status({phase:'unsupported',error:'SDK의 SunLight 또는 ShadowMap을 확인할 수 없습니다.'}));return status();}
  active=true;viewer.clock.shouldAnimate=false;viewer.clock.multiplier=0;viewer.clock.currentTime=C.JulianDate.clone(target);scene.light=new C.SunLight({intensity:2});viewer.shadows=true;
  if('terrainShadows' in viewer)viewer.terrainShadows=C.ShadowMode.ENABLED;
  if(scene.globe)scene.globe.enableLighting=true;
- const sm=viewer.shadowMap;sm.enabled=true;sm.maximumDistance=shadowDistance(getPose().range);sm.softShadows=true;sm.darkness=.3;
+ const sm=viewer.shadowMap;sm.enabled=true;sm.maximumDistance=shadowDistance(getPose().range);sm.softShadows=true;sm.darkness=.3;if('normalOffset' in sm)sm.normalOffset=true;
  publicCasters(scene.primitives);request();emit('sun-state',status({phase:'applied'}));
  const remove=scene.postRender?.addEventListener(()=>{remove?.();if(seq===sequence&&active)emit('sun-state',status({phase:'rendered'}));});
  return status();
