@@ -1,0 +1,62 @@
+name: VWorld HTTP transport diagnosis
+on:
+  push:
+    branches: [feature/vworld-disaster-sun-v0.5]
+    paths: [.github/workflows/v05-native-transport.yml]
+permissions:
+  contents: read
+jobs:
+  diagnosis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.55.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Inspect native renderer without exporting keys
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          from playwright.sync_api import sync_playwright
+          out=Path('v05-native-transport');out.mkdir(exist_ok=True)
+          report={'transport':'HTTP2 disabled after explicit ERR_HTTP2_SERVER_REFUSED_STREAM','credentialsStored':False,'responses':[],'requests':[]}
+          with sync_playwright() as p:
+            b=p.chromium.launch(headless=True,args=['--disable-http2','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox'])
+            page=b.new_page(viewport={'width':1280,'height':850})
+            page.on('response',lambda r:report['responses'].append({'host':r.url.split('/')[2],'status':r.status}) if 'vworld.kr' in r.url else None)
+            page.route('**/src/city/sun-engine.js',lambda r:r.fulfill(path='src/city/sun-engine.js',content_type='application/javascript'))
+            try:
+              page.goto('https://seogu-on.vercel.app/api/city-scene',wait_until='domcontentloaded',timeout=35000)
+              for code in ['lt_c_up201','lt_p_smalllibrary']:
+                result=page.evaluate('''async code=>{
+                  const sdk=Array.from(document.scripts).find(x=>x.src.includes('webglMapInit.js.do'));if(!sdk)return {state:'no-sdk'};const key=new URL(sdk.src).searchParams.get('apiKey');if(!key)return {state:'no-key'};
+                  const u=new URL('https://api.vworld.kr/req/wfs');const ps={service:'WFS',request:'GetFeature',version:'2.0.0',typename:code,output:'application/json',srsname:'EPSG:3857',bbox:'14112441,4176746,14134664,4197269',count:'500',startindex:'0',key,domain:location.origin};for(const[k,v]of Object.entries(ps))u.searchParams.set(k,v);
+                  try{const r=await fetch(u,{signal:AbortSignal.timeout(8500)});const text=await r.text();let j;try{j=JSON.parse(text)}catch{return {state:'non-json',http:r.status}};
+                    if(!Array.isArray(j.features))return {state:'api-error',http:r.status,code:String(j.response?.error?.code||'unknown').slice(0,50)};
+                    const allowed=['name','uname','lib_nm','libr_nm','grade','dyear','source_date','base_date'];return {state:'received',http:r.status,crs:j.crs||null,numberMatched:j.numberMatched??j.totalFeatures??null,features:j.features.map((f,i)=>({type:'Feature',id:String(f.id||code+'-'+i),geometry:f.geometry,properties:Object.fromEntries(Object.entries(f.properties||{}).filter(([k,v])=>allowed.includes(k.toLowerCase())&&['string','number'].includes(typeof v)))}))};
+                  }catch{return {state:'request-failed'}}
+                }''',code)
+                report['requests'].append({'code':code,'state':result['state'],'http':result.get('http'),'count':len(result.get('features',[]))})
+                if result.get('features'):(out/(code+'.json')).write_text(json.dumps(result,ensure_ascii=False))
+              try:
+                page.wait_for_function('!!window.ws3d?.viewer?.scene',timeout=12000)
+                for name,at in [('winter','2026-12-22T12:00'),('summer','2026-06-21T12:00')]:
+                  s=page.evaluate('''async at=>{const C=Cesium,v=ws3d.viewer;const {createSunController}=await import('/src/city/sun-engine.js');window.__controller ||=createSunController(v,C,{getPose:()=>({center:[126.86,35.145],range:1600}),emit:(t,s)=>window.__sunReport=s});window.__controller.apply({time:at,shadows:true});v.camera.lookAt(C.Cartesian3.fromDegrees(126.86,35.145,20),new C.HeadingPitchRange(0,-.8,1600));v.camera.lookAtTransform(C.Matrix4.IDENTITY);return {version:C.VERSION};}''',at)
+                  page.wait_for_timeout(4000);page.screenshot(path=str(out/('VWORLD-'+name+'.png')))
+                  report[name]={'viewer':s,'sun':page.evaluate('()=>window.__sunReport')}
+                report['nativeInitialized']=True
+              except Exception as e:report['nativeInitialized']=False;report['nativeFailureType']=type(e).__name__
+            except Exception as e:report['failureType']=type(e).__name__
+            b.close()
+          (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v05-native-http-transport
+          path: v05-native-transport/
+          retention-days: 7
