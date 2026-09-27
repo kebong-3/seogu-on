@@ -7,11 +7,11 @@ from playwright.sync_api import sync_playwright
 from PIL import Image,ImageChops,ImageStat
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v05/gpu-evidence';OUT.mkdir(parents=True,exist_ok=True)
 results={'mode':'Real WebGL with clearly synthetic box fixture; VWorld live separately identified','checks':[],'native':{}}
-HTML='''<!doctype html><html><head><style>html,body,#vmap{margin:0;width:100%;height:100%;overflow:hidden}.tag{position:absolute;z-index:4;top:8px;left:8px;color:white;background:#234;padding:8px;font:13px sans-serif}</style><script>window.CESIUM_BASE_URL='/vendor/cesium/'</script><script src='/vendor/cesium/Cesium.js'></script></head><body><div id='vmap'></div><div class='tag'>GPU TEST FIXTURE — SYNTHETIC BOXES, NOT REAL SEO-GU BUILDINGS</div></body></html>'''
+HTML='''<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/vendor/cesium/Widgets/widgets.css"><style>html,body,#vmap{margin:0;width:100%;height:100%;overflow:hidden}.tag{position:absolute;z-index:4;top:8px;left:8px;color:white;background:#234;padding:8px;font:13px sans-serif}</style><script>window.CESIUM_BASE_URL='/vendor/cesium/'</script><script src='/vendor/cesium/Cesium.js'></script></head><body><div id='vmap'></div><div class='tag'>GPU TEST FIXTURE — SYNTHETIC BOXES, NOT REAL SEO-GU BUILDINGS</div></body></html>'''
 SETUP='''async()=>{
 const C=window.Cesium,{createSunController}=await import('/src/city/sun-engine.js');
 const v=new C.Viewer('vmap',{baseLayer:false,terrainProvider:new C.EllipsoidTerrainProvider(),animation:false,timeline:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,fullscreenButton:false,infoBox:false,selectionIndicator:false,skyBox:false,skyAtmosphere:false,scene3DOnly:true,requestRenderMode:true,shadows:false,contextOptions:{webgl:{antialias:true}}});
-v.scene.globe.baseColor=C.Color.fromCssColorString('#bbc8bd');
+v.scene.globe.baseColor=C.Color.fromCssColorString('#bbc8bd');v.scene.globe.show=false;
 let boxCount=0;
 for(const [lon,lat,height] of [[126.86,35.145,60],[126.8607,35.1452,85],[126.8595,35.1456,40]]){
 const p=v.scene.primitives.add(new C.Primitive({geometryInstances:new C.GeometryInstance({geometry:C.BoxGeometry.fromDimensions({dimensions:new C.Cartesian3(30,25,height),vertexFormat:C.PerInstanceColorAppearance.VERTEX_FORMAT}),modelMatrix:C.Transforms.eastNorthUpToFixedFrame(C.Cartesian3.fromDegrees(lon,lat,height/2)),attributes:{color:C.ColorGeometryInstanceAttribute.fromColor(C.Color.fromCssColorString('#edf2eb'))}}),appearance:new C.PerInstanceColorAppearance({closed:true,translucent:false}),asynchronous:false,shadows:C.ShadowMode.ENABLED}));boxCount++;}
@@ -32,7 +32,7 @@ try:
   p.route('**/gpu-fixture',lambda route:route.fulfill(status=200,body=HTML,content_type='text/html'))
   p.goto('http://127.0.0.1:4173/gpu-fixture',wait_until='networkidle')
   try:
-   init=p.evaluate(SETUP);check('Actual Cesium WebGL initialized',True,init);p.wait_for_timeout(2500)
+   init=p.evaluate(SETUP);check('Actual Cesium WebGL initialized',True,init);p.wait_for_timeout(2500);check('Canvas fills test viewport',p.evaluate('()=>window.__gpuViewer.scene.canvas.width>=900&&window.__gpuViewer.scene.canvas.height>=650'))
    for name,at in [('winter-morning','2026-12-22T09:00'),('winter-noon','2026-12-22T12:00'),('winter-afternoon','2026-12-22T15:00'),('summer-noon','2026-06-21T12:00')]:
     p.evaluate('(at)=>window.__sun.apply({time:at,shadows:true})',at);p.wait_for_timeout(1400);p.screenshot(path=str(OUT/('GPU-FIXTURE-'+name+'.png')));s=p.evaluate('()=>window.__sunState');results.setdefault('sunStates',{})[name]=s;check('Clock/shadow render '+name,s.get('enabled') and s.get('shadowMapEnabled') and s.get('phase')=='rendered',{'time':s.get('time'),'phase':s.get('phase'),'angles':s.get('angles')})
    diff=image_diff(OUT/'GPU-FIXTURE-winter-morning.png',OUT/'GPU-FIXTURE-winter-afternoon.png');check('Real rendered image changes by time',diff['changedPixels']>300,diff)
