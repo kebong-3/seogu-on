@@ -1,7 +1,7 @@
 {
-  "version": "0.4.1",
-  "packagedAt": "2026-09-27",
-  "scope": "Source, included public data and local SDK archive. dist and generated public/vendor/cesium excluded. Not a deployment or proof of live authentication.",
+  "version": "0.5.0",
+  "packagedAt": "2026-09-28T00:34:52.658274+00:00",
+  "scope": "Full source and retained public datasets; 66 API definitions are not received data. No dist, generated runtime, credentials or fonts. Not a production deployment.",
   "files": [
     {
       "path": ".env.example",
@@ -10,13 +10,13 @@
     },
     {
       "path": ".github/workflows/city-v03-tests.yml",
-      "bytes": 857,
-      "sha256": "b98cb80ab89b027ee961be5fbeb0018a27aec60ddba80fd4020399db41e7a29b"
+      "bytes": 876,
+      "sha256": "9d8d987132d550747eda82c7a50955be49996bd0564c7c72870481249fa9b5ad"
     },
     {
       "path": ".gitignore",
-      "bytes": 165,
-      "sha256": "32809a24d28dc3ee04bf75b4cca0e6c9a48cad3ec31a6df458d8c4baed7dc305"
+      "bytes": 254,
+      "sha256": "bef286a134d22f9d6fca043baea8073a6d4e980d219533323c68017a03bf1575"
     },
     {
       "path": "LICENSE",
@@ -25,8 +25,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4705,
-      "sha256": "fa738ea59757605fbb2de9845c5fe0be177330bce700d71633bcaf5a385388a6"
+      "bytes": 3683,
+      "sha256": "1556e8e43cdf2765133b3fa9721107fa6998b2c757cce990a51dbd0f24a38c4a"
     },
     {
       "path": "SECURITY.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "START_HERE.md",
-      "bytes": 1973,
-      "sha256": "d2fae81f75df5208e0699744c946a7416e633c5350716809fcac9be15f98b516"
+      "bytes": 1525,
+      "sha256": "7f1d7a77290eea197ca53be926c7d694f205c9b4d06f0296ed6dfe2df229c36e"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -46,7 +46,7 @@
     {
       "path": "api/city-config.js",
       "bytes": 433,
-      "sha256": "95a918f8580d49a1e990b2ae7e341c9bd62e092925b523ca24fdcb40144c3933"
+      "sha256": "9b503ecf84ec91cdd3f3271805c2632727a677d2865a74743c308aba88370cf5"
     },
     {
       "path": "api/city-data.js",
@@ -434,6 +434,11 @@
       "sha256": "efd82921099839fe47c1fafa3cacdf1ec21f8c7e6aeb3dee93d8a586c84ca3a1"
     },
     {
+      "path": "docs/v041/README_DELIVERED.md",
+      "bytes": 4705,
+      "sha256": "fa738ea59757605fbb2de9845c5fe0be177330bce700d71633bcaf5a385388a6"
+    },
+    {
       "path": "docs/v041/RELEASE_AUDIT.json",
       "bytes": 1197,
       "sha256": "72f1fbb0fffead806b85330f7755ef9afc64da285d5e7049e199b42b987a3dc0"
@@ -480,8 +485,8 @@
     },
     {
       "path": "docs/v041/regression-ui/mobile-infra-NOT-3D.png",
-      "bytes": 87210,
-      "sha256": "ec2244217eec8501c3c760971cbcdcb68507811bd47011ff6c6460776c48d6fc"
+      "bytes": 87659,
+      "sha256": "cc9559722da959bdcf129576e51d1501cad9ecf0d3a6f1bba9371ae1c1f3cb4f"
     },
     {
       "path": "docs/v041/regression-ui/results.json",
@@ -490,13 +495,13 @@
     },
     {
       "path": "docs/v041/regression-ui/school-boundary-NOT-3D.png",
-      "bytes": 262245,
-      "sha256": "30f704340d12318431bb0c00b446770723c6cb15f95802272abf5a9e2e95d415"
+      "bytes": 265206,
+      "sha256": "eb842c49ef8902b5c8a5fe29373979aee1472dc231ea0189843330d24424c2de"
     },
     {
       "path": "docs/v041/regression-ui/shade-boundary-NOT-3D.png",
-      "bytes": 233353,
-      "sha256": "0430320d3bb06245fae1e80af0f811e6eae1701a84cc03dd14aca14b56ec9f27"
+      "bytes": 235806,
+      "sha256": "c7643caeef443addf3ed3e68379a39ef5cca6fee023c7c2807c2dda38a9d9862"
     },
     {
       "path": "docs/v041/verify-output.txt",
@@ -504,19 +509,199 @@
       "sha256": "3a530601121dc81540b1f7fdb05f28d657ae470b6d6fe945d7ceeef299455d3e"
     },
     {
+      "path": "docs/v05/API_SETUP.md",
+      "bytes": 4122,
+      "sha256": "5b7dcf80a03b33a57b93550f22677345d7e328a4ff2c1413d946425318647ed4"
+    },
+    {
+      "path": "docs/v05/CLEAN_PACKAGE_CHECK.json",
+      "bytes": 734,
+      "sha256": "349fe0596828d6fefb8c34cc8c1243647da66ac0208021ff5ff4e293cb0b52a2"
+    },
+    {
+      "path": "docs/v05/DATA_STATUS.md",
+      "bytes": 11575,
+      "sha256": "430f96d8d82576f97592def3eaf1c7bfb150e076cc43bd146c4a5d1cc139148b"
+    },
+    {
+      "path": "docs/v05/DEPLOY.md",
+      "bytes": 4368,
+      "sha256": "d92116d47bd7626e5acc349c7b65b1009a51eab6a1c10bf1f798212f85d77563"
+    },
+    {
+      "path": "docs/v05/DEPLOYMENT_CHECK.json",
+      "bytes": 3600,
+      "sha256": "c3e384f05b4fc6f98cd218b57bbd869e5e753904bd787dbd76633a4bb0466e0f"
+    },
+    {
+      "path": "docs/v05/FINAL_REPORT.md",
+      "bytes": 3282,
+      "sha256": "a8ac1ffc73c7de2d6d40d70c2ba2a226b895984cde4e86039c26e00d71d91f06"
+    },
+    {
+      "path": "docs/v05/README.md",
+      "bytes": 3647,
+      "sha256": "0a60948607f9bfb8c3db5d47327a6f27270658a8f9b08f36aafd4d707d7fc4fc"
+    },
+    {
+      "path": "docs/v05/RELEASE_AUDIT.json",
+      "bytes": 1197,
+      "sha256": "bc2ceea9ed1c06c1e9a699360d48dd70c27f7e7b49f29d03d9376939aa21fdf2"
+    },
+    {
+      "path": "docs/v05/REVIEW_4_ROLES.md",
+      "bytes": 1960,
+      "sha256": "b1c159408ead76f267830aac6565710c7dda93337b8a74f98f7306b1cd66bc23"
+    },
+    {
+      "path": "docs/v05/SECURITY_SCAN.json",
+      "bytes": 339,
+      "sha256": "a03d71821c7d2348568be5002bc682605cb16cfa24e52dd7c172d60a7bea1ac7"
+    },
+    {
+      "path": "docs/v05/SOURCES.md",
+      "bytes": 4130,
+      "sha256": "77848fe3c1fd1db8a4167f4a06f57837f995dac66443ffd6a74aa4b0473dd7bb"
+    },
+    {
+      "path": "docs/v05/TEST_REPORT.md",
+      "bytes": 4471,
+      "sha256": "c5ce94fd6cf3f0deb14b05893082a9bb0acb45594bf24b78c8a1246670d66e60"
+    },
+    {
+      "path": "docs/v05/THEME_CATALOG.json",
+      "bytes": 36964,
+      "sha256": "0dcc9f06fb4f4eca7490ccbbcfc1993d04760008e5ff24689dc4c5a6a2cef2f0"
+    },
+    {
+      "path": "docs/v05/WEBGL_PROBE.json",
+      "bytes": 732,
+      "sha256": "5c528830933c3d05c033b10480218a4245f848934ce0db4072f4379b868daeab"
+    },
+    {
+      "path": "docs/v05/build.txt",
+      "bytes": 213,
+      "sha256": "7e90f16b2fbca7eb086512555bd66cf371e7b8ecf872b36a9d12a4117e3e6af2"
+    },
+    {
+      "path": "docs/v05/clean-package-verify.txt",
+      "bytes": 57078,
+      "sha256": "178c62a81bee30d7a3696dc7d1d7831a73ca236704def72f57208357eccbbdcb"
+    },
+    {
+      "path": "docs/v05/collector-help.txt",
+      "bytes": 218,
+      "sha256": "ce2b4277a6d5b6e3c25e8f03041562a39a26dcfbd1f1135f4adb943faff8ba5e"
+    },
+    {
+      "path": "docs/v05/final-v05-ui.log",
+      "bytes": 1533,
+      "sha256": "0ce99f2325519fa89a3ff4f081ad5d233e18932b05288540b65573d8f5f2d2a4"
+    },
+    {
+      "path": "docs/v05/final-verify.txt",
+      "bytes": 57076,
+      "sha256": "79bad9f452deb1ddcfb4a69ff8892bfcb902420244fcdc66f654d29ce96c9cea"
+    },
+    {
+      "path": "docs/v05/records-ui/record-workflow-NOT-3D.png",
+      "bytes": 274734,
+      "sha256": "47fe49813c56571ed789f26b2647f645c00ebc047fb6c6ca2ee5503d1b6cd7cf"
+    },
+    {
+      "path": "docs/v05/records-ui/results.json",
+      "bytes": 2757,
+      "sha256": "13e35f19f90227aebf59e42b057c00f5ea64788d630c50ea23aef22da10ec289"
+    },
+    {
+      "path": "docs/v05/records-ui/school-and-source-NOT-3D.png",
+      "bytes": 276140,
+      "sha256": "fc9ea4428e7da85d35fe72db42f57a809e54f880e6d1c67d56827e409f331ec6"
+    },
+    {
+      "path": "docs/v05/records-ui.log",
+      "bytes": 1012,
+      "sha256": "e25b3ffa85ff0951afd9fdca9369a3661f0a8ecf314618f3e98fdcc4b03b34ed"
+    },
+    {
+      "path": "docs/v05/regression-ui/mobile-infra-NOT-3D.png",
+      "bytes": 87659,
+      "sha256": "cc9559722da959bdcf129576e51d1501cad9ecf0d3a6f1bba9371ae1c1f3cb4f"
+    },
+    {
+      "path": "docs/v05/regression-ui/results.json",
+      "bytes": 6168,
+      "sha256": "3f03a2aef96a178e93c4b2a07bee4f1265b44b92e83e9eba843a971df96da845"
+    },
+    {
+      "path": "docs/v05/regression-ui/school-boundary-NOT-3D.png",
+      "bytes": 265206,
+      "sha256": "eb842c49ef8902b5c8a5fe29373979aee1472dc231ea0189843330d24424c2de"
+    },
+    {
+      "path": "docs/v05/regression-ui/shade-boundary-NOT-3D.png",
+      "bytes": 235806,
+      "sha256": "c7643caeef443addf3ed3e68379a39ef5cca6fee023c7c2807c2dda38a9d9862"
+    },
+    {
+      "path": "docs/v05/regression-ui.log",
+      "bytes": 2555,
+      "sha256": "de82aa683cf332521c925954d26ae4ffeb8a4a45cb662fcc54996211d08f7fef"
+    },
+    {
+      "path": "docs/v05/release-audit.txt",
+      "bytes": 88,
+      "sha256": "e8ea95941e4888aeb4681b1b22cd7a89033600e20f2b205c7cd08f831353a894"
+    },
+    {
+      "path": "docs/v05/ui-evidence/mobile-controls-NOT-3D.png",
+      "bytes": 87962,
+      "sha256": "02c27b590189f5ed62db376edbd21ea0051eb9d0d67c6a430dd10b07b35cc23c"
+    },
+    {
+      "path": "docs/v05/ui-evidence/resilience-NOT-3D.png",
+      "bytes": 284638,
+      "sha256": "758145a43c7ae3e969e051304b13be8e035c8b7ba49a55743104e12026b0174a"
+    },
+    {
+      "path": "docs/v05/ui-evidence/results.json",
+      "bytes": 3964,
+      "sha256": "de9f3cf5f1fcc1a24370aa247ed1144af96fa2f41db06f13ec9994cb7630899b"
+    },
+    {
+      "path": "docs/v05/ui-evidence/solar-controls-NOT-3D.png",
+      "bytes": 276957,
+      "sha256": "706eae18408db5c49e9767c3b0b5e36064f73c4d6e0b8ba7f60e13d0efaf0881"
+    },
+    {
+      "path": "docs/v05/ui-evidence/themes-FIXTURE-NOT-3D.png",
+      "bytes": 270551,
+      "sha256": "ce8a80a5080d913178eae188daf6e526cc8d034e9684688b7eb336e1dd85a9b1"
+    },
+    {
+      "path": "docs/v05/unit-tests.txt",
+      "bytes": 56557,
+      "sha256": "7b316a8f5857d716d264ae1d7a3cf661e16da063fdb7963d7f709ec4ab6289b3"
+    },
+    {
+      "path": "docs/v05/v05-ui.log",
+      "bytes": 1533,
+      "sha256": "0ce99f2325519fa89a3ff4f081ad5d233e18932b05288540b65573d8f5f2d2a4"
+    },
+    {
       "path": "index.html",
-      "bytes": 6250,
-      "sha256": "3ff7383615d5920a142485603db96fb7a1584850a7cd06e4f5c4972821e66167"
+      "bytes": 6474,
+      "sha256": "e27fb39da45352a46949dd74d16f7c1842c8c39b72b7dcd3bf8783fe9070c968"
     },
     {
       "path": "package-lock.json",
       "bytes": 276,
-      "sha256": "a4bed8c66fd9b47e09bd85d173d0565e4c3558cce24d0de5a8ba3d0a52690257"
+      "sha256": "2a12a8acdb647726c69b57372d564711985b18b862e67808925f509ee6c652a0"
     },
     {
       "path": "package.json",
-      "bytes": 958,
-      "sha256": "3dedd76e5ba985ec5bc339621b7518264bf411f4c2bde452624561538d891041"
+      "bytes": 1093,
+      "sha256": "3f37851fe01461d41064178883b4713f4e7ccf1358d13419774b6cd49107f66c"
     },
     {
       "path": "preview/design-preview.html",
@@ -795,18 +980,23 @@
     },
     {
       "path": "scripts/audit-release.mjs",
-      "bytes": 2441,
-      "sha256": "8b7c7ca5fb8a7a9a292308ce7e3329293b0c539bed6161a323d4662f739f86fd"
+      "bytes": 2439,
+      "sha256": "72232c65e53c67001a23a7e670eef06d89ef436a254c0c530bd0f4903a689f7b"
     },
     {
       "path": "scripts/build.mjs",
-      "bytes": 1821,
-      "sha256": "4b11bd0848011365d00e6ffe0ed506da9a4d65b7c97b3c414fcc54cc77530819"
+      "bytes": 1877,
+      "sha256": "a0480c7b7233f01610cd2f8136aeddde81c25c874aa435b2f30154b5cbcb1b7d"
     },
     {
       "path": "scripts/check.mjs",
       "bytes": 621,
       "sha256": "1f53db54512e5745b982ffb4eb04922e408a9474543eb9b78ef83beef8e58bb3"
+    },
+    {
+      "path": "scripts/collect-vworld.mjs",
+      "bytes": 3785,
+      "sha256": "23a1280f863471c7c571256c1269e645dc1c5edd0e6f59ee009817b8de561471"
     },
     {
       "path": "scripts/dev.mjs",
@@ -825,8 +1015,8 @@
     },
     {
       "path": "scripts/verify-release.mjs",
-      "bytes": 4918,
-      "sha256": "f9845f34852fdc3f09a0ac014e8a6d97676f7b7e219c9636275f836980ea5072"
+      "bytes": 5190,
+      "sha256": "5c3bac887137dbda8d851c346c78ae8494b1a4d4ec95b8b039ff0f4a3c170a2e"
     },
     {
       "path": "server/catalog.js",
@@ -850,13 +1040,18 @@
     },
     {
       "path": "server/city/providers.js",
-      "bytes": 13562,
-      "sha256": "e15110e7a8a8fc6af87261318fa79334b400b49327ee26eb79ebdf271d42f582"
+      "bytes": 13676,
+      "sha256": "5ebcf6d441ffc84620a9ba593ae48fa5e90bab8c2ddf83686511820e6aa74ecf"
+    },
+    {
+      "path": "server/city/vworld-themes.js",
+      "bytes": 6289,
+      "sha256": "eb548a37491012a2a7a4d4b429d2b59c0f514678aaee8ef9ce1bf0ecdad67b0e"
     },
     {
       "path": "server/city/wms.js",
-      "bytes": 3299,
-      "sha256": "dd8cd5291846935673ea26db251097f2c06cd0178dcb58d80662acdb1babe009"
+      "bytes": 3752,
+      "sha256": "59b05e2cfe450a75763ac234c02f2eed777a5c70127eda1f6038a4c1e8a73cfc"
     },
     {
       "path": "server/geocode-service.js",
@@ -905,8 +1100,8 @@
     },
     {
       "path": "src/city/app.js",
-      "bytes": 55383,
-      "sha256": "f9a433bac097ef8e71230647ab299311a900f6b8931ac6c672a09d6dbc82f685"
+      "bytes": 55606,
+      "sha256": "5124ed5c877ef3a49eaf3d4a378fd56e66268c9f3b4c4a9cebd5f2fb298ff26e"
     },
     {
       "path": "src/city/camera.js",
@@ -915,8 +1110,8 @@
     },
     {
       "path": "src/city/catalog.js",
-      "bytes": 6039,
-      "sha256": "1942cca6f40d76c5e45ccc258b2d14b0516fff53c1b36905869f45378a47bd01"
+      "bytes": 6099,
+      "sha256": "df9e1381d7996aac55070425d0077cdf7939cec9d0d2657c32284eef273b22de"
     },
     {
       "path": "src/city/clean-model.js",
@@ -925,8 +1120,8 @@
     },
     {
       "path": "src/city/enhancements.js",
-      "bytes": 25559,
-      "sha256": "1e4c414ad15417f17f8e7d0f43bf69c630e835725b25802aec2cac520a68bcac"
+      "bytes": 25828,
+      "sha256": "de71fab93ec462e1e10054065eb2c70e5fd424d48e78b4ef161cd699fead1d6d"
     },
     {
       "path": "src/city/finish-tools.js",
@@ -979,9 +1174,14 @@
       "sha256": "1164ac0f10ca49f5a6b7146815baf5bd3b4c0f08b9bb12f06da44e4ea9822850"
     },
     {
+      "path": "src/city/resilience-tools.js",
+      "bytes": 24047,
+      "sha256": "4e26f268a38e63469bd23bb802da39ebc9234aaba9070e7848774e7ac5d422cb"
+    },
+    {
       "path": "src/city/scene.js",
-      "bytes": 24596,
-      "sha256": "614bdffcf4f1b7cc72dc82651793c25b3e92986192d8ba2b37a1c30dd60b6a7b"
+      "bytes": 24467,
+      "sha256": "1d64ce2f1a83e4302c95d009f1d728b05965b66f0c7afd83d87d4b4bfc7a8014"
     },
     {
       "path": "src/city/solar.js",
@@ -990,13 +1190,23 @@
     },
     {
       "path": "src/city/style.css",
-      "bytes": 19245,
-      "sha256": "a6750a1a24af255b65df9f55a00b35056852c594480e2b9a7e4c03a840a1acf6"
+      "bytes": 20835,
+      "sha256": "ff16d35e7b7d4da0f4e88a7f9383818913a819532f6343e184bfbe5368513a19"
+    },
+    {
+      "path": "src/city/sun-engine.js",
+      "bytes": 6993,
+      "sha256": "ed8f405bd5e17f1edab6d153065a0058e35f2d3d8b34f161d3f9d087708151b1"
     },
     {
       "path": "src/city/viewer.js",
       "bytes": 14384,
       "sha256": "54b3758a215edc485fd79f1f09ce715d120210dffbe1bee0fb685687511931ae"
+    },
+    {
+      "path": "src/city/vworld-catalog.js",
+      "bytes": 35305,
+      "sha256": "7511c05e77e82149266d4eb2f5cfbcf89fbdd9c31a8031cd1c3d48522018a5c2"
     },
     {
       "path": "src/config.js",
@@ -1125,8 +1335,8 @@
     },
     {
       "path": "tests/city-final-ui.py",
-      "bytes": 7985,
-      "sha256": "cae66752be6625e8bf11b977c1cb1ec078db289d2df1741884301ad86514aba8"
+      "bytes": 7986,
+      "sha256": "67d27feccfb43e47ae8ea62c51c16f2a31f2ff9a5347aa2a20d14a382372af6b"
     },
     {
       "path": "tests/city-final.test.mjs",
@@ -1140,8 +1350,8 @@
     },
     {
       "path": "tests/city-regression-ui.py",
-      "bytes": 13011,
-      "sha256": "e74f38f737776eca4bb2b1e296d57b2e04e3224227f370ca41e100d879a74410"
+      "bytes": 13010,
+      "sha256": "ee878369cc667e4d9dffffb2b2784ed62d9fb7a724609cb747dfc0989e0b5aad"
     },
     {
       "path": "tests/city-ui.py",
@@ -1187,6 +1397,16 @@
       "path": "tests/v02.test.mjs",
       "bytes": 14697,
       "sha256": "b4f0d352cfb34892292f6da9705c7a7856d82660a8666c473ee733140797a25a"
+    },
+    {
+      "path": "tests/v05-ui.py",
+      "bytes": 10449,
+      "sha256": "59df1a94d4a3ae293efdaa614765ef973ca66bdc563071fe1bf313a4b719f5f6"
+    },
+    {
+      "path": "tests/v05.test.mjs",
+      "bytes": 12464,
+      "sha256": "1ddd9747a9f29577e354015120f854801826729fda5f1c17095819b6ed1ee150"
     },
     {
       "path": "vendor/cesium-1.121.0.tar.gz",

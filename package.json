@@ -1,6 +1,6 @@
 {
   "name": "seo-on-digital-twin",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "펀온워크 · 서구 공간행정 웹 시제품",
@@ -20,7 +20,9 @@
     "test:city-ui:v03": "python3 tests/city-ui.py",
     "test:deployment": "node scripts/verify-release.mjs",
     "test:final-ui": "python3 tests/city-final-ui.py",
-    "verify": "npm run check && npm test && npm run build && node scripts/audit-release.mjs"
+    "verify": "npm run check && npm test && npm run build && node scripts/audit-release.mjs",
+    "collect:vworld": "node --env-file-if-exists=.env.local scripts/collect-vworld.mjs",
+    "test:v05-ui": "python3 tests/v05-ui.py"
   },
   "license": "MIT"
 }
