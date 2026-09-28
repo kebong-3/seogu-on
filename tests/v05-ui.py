@@ -5,11 +5,11 @@ from pathlib import Path
 import json,re,os,shutil,io,csv,traceback
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'docs/v05/ui-evidence';OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'docs/v06/ui-evidence';OUT.mkdir(parents=True,exist_ok=True)
 SOURCES={'/'+p.relative_to(ROOT).as_posix():p.read_text() for p in (ROOT/'src').rglob('*.js')}
 FIXTURES={'/data/'+p.relative_to(ROOT/'public/data').as_posix():json.loads(p.read_text()) for p in (ROOT/'public/data').rglob('*') if p.is_file() and p.suffix in ['.json','.geojson']}
 FIXTURES['/api/city-config']={'version':'0.4.1','configured':{'vworld3d':False,'vworldRest':True,'weather':False,'air':False}}
-HTML=(ROOT/'index.html').read_text();HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+(ROOT/'src/city/style.css').read_text()+'</style></head>')
+HTML=(ROOT/'index.html').read_text();HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+((ROOT/'src/city/style.css').read_text()+'\n'+(ROOT/'src/city/appearance.css').read_text())+'</style></head>')
 LOADER=r'''async ({sources,fixtures})=>{
 window.__fixtureStorage=new Map();Object.defineProperty(window,'localStorage',{value:{getItem:k=>window.__fixtureStorage.get(k)||null,setItem:(k,v)=>window.__fixtureStorage.set(k,v),removeItem:k=>window.__fixtureStorage.delete(k)}});
 window.__testRequests=[];window.__testWfsMode='ok';

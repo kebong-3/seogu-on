@@ -19,8 +19,8 @@ const server = createServer(async (req, res) => {
     }
     let filePath;
     if (path === '/') filePath = resolve(base, 'index.html');
-    else if (/^\/(src|data|vendor)\//.test(path) || path === '/favicon.svg' || path === '/index.html' || path === '/classic.html' || path === '/model.html') {
-      const isPublic = path.startsWith('/vendor/') || path === '/model.html' || path.startsWith('/data/') || path === '/favicon.svg';
+    else if (/^\/(src|data|vendor|brand)\//.test(path) || path === '/favicon.svg' || path === '/index.html' || path === '/classic.html' || path === '/model.html') {
+      const isPublic = path.startsWith('/brand/') || path.startsWith('/vendor/') || path === '/model.html' || path.startsWith('/data/') || path === '/favicon.svg';
       filePath = resolve(base, process.argv.includes('--dist') || !isPublic ? `.${path}` : `public${path}`);
     } else { res.writeHead(404); res.end('Not found'); return; }
     const rel = relative(base, filePath);

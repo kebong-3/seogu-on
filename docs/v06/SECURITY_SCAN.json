@@ -1,0 +1,10 @@
+{
+  "scope": "Exact user-issued and sample-credential matching; file-extension and environment-file scan; compressed SDK members included",
+  "issuedKeysCompared": 9,
+  "sampleCredentialCandidatesCompared": 7,
+  "sourceFilesScanned": 352,
+  "matchingPaths": [],
+  "fontFiles": [],
+  "secretEnvironmentFiles": [],
+  "limitations": "Exact-match scan, not a comprehensive security certification; no credential values included in this record."
+}

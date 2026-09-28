@@ -19,8 +19,8 @@ async function walk(path){const files=[];for(const e of await readdir(path,{with
 const paths=await walk('dist');
 check('No secrets files or font files in web package',!paths.some(p=>/\.(?:ttf|otf|woff2?|eot)$|\/(?:\.env[^/]*|\.git\/|tests\/)/i.test(p)));
 const digest=createHash('sha256');for(const p of paths.sort()){digest.update(p);digest.update(await readFile(p));}
-await mkdir('docs/v05',{recursive:true});
-await writeFile('docs/v05/RELEASE_AUDIT.json',JSON.stringify({scope:'local built files',version:pkg.version,webBundleSha256:digest.digest('hex'),results},null,2));
+await mkdir('docs/v06',{recursive:true});
+await writeFile('docs/v06/RELEASE_AUDIT.json',JSON.stringify({scope:'local built files',version:pkg.version,webBundleSha256:digest.digest('hex'),results},null,2));
 console.log(JSON.stringify({checks:results.length,passed:results.filter(r=>r.passed).length},null,2));
 const http=spawnSync(process.execPath,['scripts/verify-release.mjs'],{stdio:'inherit'});
 if(results.some(r=>!r.passed)||http.status!==0)process.exitCode=1;

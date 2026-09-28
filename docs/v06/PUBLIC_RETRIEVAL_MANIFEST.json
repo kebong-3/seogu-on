@@ -1,0 +1,26 @@
+[
+  {
+    "name": "shade",
+    "url": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000003577717&fileDetailSn=1&insertDataPrcus=N",
+    "status": "received",
+    "sha256": "1c6fde61f030a3876677ba045cd8b11951fe9514849217bf75a6a14bdecf4285",
+    "bytes": 8483,
+    "contentType": "application/octet-stream; charset=UTF-8"
+  },
+  {
+    "name": "cooling",
+    "url": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000003579411&fileDetailSn=1&insertDataPrcus=N",
+    "status": "received",
+    "sha256": "29365733571489807f1d0c275bbf810a5537f1c550c5698ae999e60ad55e9842",
+    "bytes": 419,
+    "contentType": "application/octet-stream; charset=UTF-8"
+  },
+  {
+    "name": "flood",
+    "url": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000003554596&fileDetailSn=1&insertDataPrcus=N",
+    "status": "received",
+    "sha256": "d5eed1a24560c51a1fec75e9117bf3e5adfc83471d8699cccfaf476987ab2d76",
+    "bytes": 33478,
+    "contentType": "application/octet-stream; charset=UTF-8"
+  }
+]

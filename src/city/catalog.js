@@ -1,3 +1,4 @@
+import {SAFETY_LAYERS} from './safety-catalog.js';
 import {VW_LAYERS} from './vworld-catalog.js';
 import {INFRA_LAYERS,OVERLAY_LAYERS} from './infrastructure.js';
 export const LAYERS=[
@@ -20,7 +21,11 @@ export const LAYERS=[
  {id:'air-stations',group:'환경',title:'대기 측정소',icon:'wind',color:'#b9d2a0',kind:'point',api:true,key:'air',note:'측정소 관측값 · 모든 건물의 농도 아님'},
  {id:'cadastral',group:'입지·계획',title:'지적도 참고층',icon:'parcel',color:'#e0cc9d',kind:'raster',key:'vworldRest',note:'법적 경계 확정·측량용 아님'}
 ];
-LAYERS.push(...INFRA_LAYERS,...OVERLAY_LAYERS,...VW_LAYERS);
+LAYERS.push(...INFRA_LAYERS,...OVERLAY_LAYERS,...VW_LAYERS,...SAFETY_LAYERS,
+ {id:'local-shade',title:'서구 그늘막 공개본',group:'서구 공식자료',icon:'sun',color:'#de9a27',kind:'point',url:'/data/city/local-shade.geojson',note:'2026-01-06 기준 · 현재 운영 별도'},
+ {id:'local-cooling',title:'서구 쿨링포그 공개본',group:'서구 공식자료',icon:'water',color:'#209ab7',kind:'point',url:'/data/city/local-cooling.geojson',note:'2026-01-06 기준 · 현재 가동 별도'},
+ {id:'local-flood-history',title:'과거 침수피해 기록',group:'서구 공식자료',icon:'water',color:'#7769ba',kind:'point',url:'/data/city/local-flood-history.geojson',note:'발생연도별 과거 기록 · 현재 위험 예측 아님'}
+);
 export const LAYER_BY_ID=Object.fromEntries(LAYERS.map(l=>[l.id,l]));
 export const PRESETS=[
  {id:'parks',label:'공원',icon:'tree',layers:['parks','park-areas']},

@@ -1,0 +1,175 @@
+[
+  {
+    "sourceName": "서구청 서구 그늘막",
+    "sourceUrl": "https://www.data.go.kr/data/15140461/fileData.do",
+    "sourceDate": "2026-01-06",
+    "collectedAt": "2026-09-28T15:22:13Z",
+    "sourceRows": 201,
+    "accepted": 199,
+    "rejected": 2,
+    "state": "published",
+    "scope": "18개 행정동 합집합 안 위치만",
+    "geometryMeaning": "공개 대표위치이며 실제 시설 경계가 아님",
+    "originalSha256": "1c6fde61f030a3876677ba045cd8b11951fe9514849217bf75a6a14bdecf4285",
+    "originalFile": "shade.csv",
+    "byDong": {
+      "양동": 3,
+      "양3동": 1,
+      "농성1동": 12,
+      "광천동": 3,
+      "농성2동": 9,
+      "유덕동": 2,
+      "상무1동": 16,
+      "치평동": 55,
+      "서창동": 3,
+      "상무2동": 10,
+      "화정1동": 10,
+      "화정2동": 15,
+      "화정3동": 2,
+      "화정4동": 11,
+      "금호2동": 13,
+      "금호1동": 6,
+      "풍암동": 18,
+      "동천동": 10
+    },
+    "excluded": [
+      {
+        "sourceRow": 15,
+        "sourceId": "15",
+        "reason": "서구 경계 밖",
+        "longitude": "126",
+        "latitude": "35"
+      },
+      {
+        "sourceRow": 134,
+        "sourceId": "134",
+        "reason": "서구 경계 밖",
+        "longitude": "126.885934",
+        "latitude": "35.141163"
+      }
+    ],
+    "coincidentGroups": [
+      [
+        "local-shade-74",
+        "local-shade-75"
+      ]
+    ]
+  },
+  {
+    "sourceName": "서구청 서구 쿨링포그",
+    "sourceUrl": "https://www.data.go.kr/data/15140653/fileData.do",
+    "sourceDate": "2026-01-06",
+    "collectedAt": "2026-09-28T15:22:13Z",
+    "sourceRows": 7,
+    "accepted": 7,
+    "rejected": 0,
+    "state": "published",
+    "scope": "18개 행정동 합집합 안 위치만",
+    "geometryMeaning": "공개 대표위치이며 실제 시설 경계가 아님",
+    "originalSha256": "29365733571489807f1d0c275bbf810a5537f1c550c5698ae999e60ad55e9842",
+    "originalFile": "cooling.csv",
+    "byDong": {
+      "화정1동": 1,
+      "광천동": 2,
+      "치평동": 2,
+      "상무1동": 1,
+      "풍암동": 1
+    },
+    "excluded": [],
+    "coincidentGroups": []
+  },
+  {
+    "sourceName": "서구청 서구 과거 침수피해 기록",
+    "sourceUrl": "https://www.data.go.kr/data/15124509/fileData.do",
+    "sourceDate": "2025-11-24",
+    "collectedAt": "2026-09-28T15:22:13Z",
+    "sourceRows": 468,
+    "accepted": 468,
+    "rejected": 0,
+    "state": "published",
+    "scope": "18개 행정동 합집합 안 위치만",
+    "geometryMeaning": "공개 대표위치이며 실제 시설 경계가 아님",
+    "originalSha256": "d5eed1a24560c51a1fec75e9117bf3e5adfc83471d8699cccfaf476987ab2d76",
+    "originalFile": "flood.csv",
+    "byDong": {
+      "서창동": 170,
+      "양동": 10,
+      "동천동": 5,
+      "상무1동": 7,
+      "농성1동": 7,
+      "화정2동": 44,
+      "치평동": 16,
+      "농성2동": 82,
+      "화정1동": 11,
+      "금호2동": 6,
+      "광천동": 12,
+      "유덕동": 81,
+      "풍암동": 4,
+      "양3동": 2,
+      "금호1동": 5,
+      "상무2동": 5,
+      "화정3동": 1
+    },
+    "excluded": [],
+    "coincidentGroups": [
+      [
+        "local-flood-history-6",
+        "local-flood-history-9"
+      ],
+      [
+        "local-flood-history-34",
+        "local-flood-history-365"
+      ],
+      [
+        "local-flood-history-39",
+        "local-flood-history-187"
+      ],
+      [
+        "local-flood-history-43",
+        "local-flood-history-375"
+      ],
+      [
+        "local-flood-history-58",
+        "local-flood-history-419"
+      ],
+      [
+        "local-flood-history-62",
+        "local-flood-history-83"
+      ],
+      [
+        "local-flood-history-68",
+        "local-flood-history-87"
+      ],
+      [
+        "local-flood-history-71",
+        "local-flood-history-82",
+        "local-flood-history-376"
+      ],
+      [
+        "local-flood-history-107",
+        "local-flood-history-369"
+      ],
+      [
+        "local-flood-history-131",
+        "local-flood-history-442"
+      ],
+      [
+        "local-flood-history-144",
+        "local-flood-history-438"
+      ],
+      [
+        "local-flood-history-362",
+        "local-flood-history-498"
+      ],
+      [
+        "local-flood-history-423",
+        "local-flood-history-457"
+      ],
+      [
+        "local-flood-history-439",
+        "local-flood-history-502"
+      ]
+    ],
+    "sourceDateBasis": "공공데이터포털 파일 제목: 서구_침수피해현황_20251124"
+  }
+]

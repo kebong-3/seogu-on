@@ -1,0 +1,11 @@
+{
+  "version": "0.6.0",
+  "testedAt": "2026-09-28T16:15:36.513486+00:00",
+  "mode": "ZIP source extracted into an empty directory; runtime rebuilt from local verified archive; npm run verify",
+  "exitCode": 0,
+  "unitPass": 374,
+  "releaseChecks": 12,
+  "httpChecks": 45,
+  "sourceAndRuntimeChangedAfterCheck": false,
+  "postCheckChanges": "This evidence JSON and package manifests only. Final source assets also compared byte-for-byte."
+}

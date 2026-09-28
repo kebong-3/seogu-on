@@ -27,6 +27,7 @@ export const INFRA_CATEGORIES=[
  {id:'evacuation',title:'지진대피 학교',group:'안전',icon:'shield',layers:['shelter-schools']},
  {id:'emergency',title:'응급의료기관',group:'건강·복지',icon:'cross',layers:['emergency'],api:true}
 ];
+INFRA_CATEGORIES.push({id:'official-shade',title:'공식 그늘막·쿨링포그',group:'기후·안전',icon:'sun',layers:['local-shade','local-cooling']},{id:'flood-history',title:'과거 침수피해 기록',group:'기후·안전',icon:'water',layers:['local-flood-history']});
 export const OVERLAY_LAYERS=[
  {id:'shade-result',title:'시간별 그늘 근사',group:'분석·관측',kind:'polygon',color:'#756f96',icon:'sun',analysis:true},
  {id:'weather-observed',title:'기상청 격자 실황',group:'분석·관측',kind:'point',color:'#efca7c',icon:'sun',analysis:true},

@@ -1,5 +1,5 @@
 import {createSunController} from './sun-engine.js';
-import {applyQuality,displayOptions,setBuildingStyle} from './graphics.js';
+import {applyQuality,displayOptions,setBuildingStyle,applyBaseBrightness} from './graphics.js';
 import {parseKst} from './solar.js';
 import {loadCleanModel} from './clean-model.js';
 import {fc,multi,inside,representative,distance,maskGeometry,boundsOf} from './geometry.js';
@@ -110,6 +110,7 @@ async function handle(m){switch(m.type){
  case'model-edit':if(model&&modelLocation){model.modelMatrix=modelMatrix(modelLocation,clamp(Number(m.heading)||0,0,360),clamp(Number(m.height)||0,-30,250));model.scale=clamp(Number(m.scale)||1,.1,20);requestRender();}break;
  case'restore-buildings':for(const[f,value]of hiddenFeatures)try{f.show=value;}catch{}hiddenFeatures.clear();selectionMode=null;requestRender();tell('tool-result',{kind:'restore-buildings',note:'기록한 건물 객체 표시를 복구했습니다.'});break;
  case'sun':sunController?.apply(m);break;
+ case'appearance':tell('appearance-result',applyBaseBrightness(viewer,m.options,new Set(imagery.values())));break;
  case'building-style':buildingStyleResult=clean?{applied:false,note:'밝은 도시모형은 브이월드 건물 원본과 별개입니다.'}:setBuildingStyle(map,m.mode);tell('building-style-result',buildingStyleResult);requestRender();break;
  case'diagnostics':{const cv=viewer.scene.canvas;tell('diagnostics',{engine:clean?'clean':'vworld',webgl:!cv.isContextLost?.(),rendered:renderFrames>0&&!renderFailed,renderFrames,renderFailed,css:[cv.clientWidth,cv.clientHeight],buffer:[cv.width,cv.height],resolutionScale:viewer.resolutionScale,buildingStyle:buildingStyleResult,model:cleanStats?{buildingCount:cleanStats.buildingCount,note:cleanStats.note}:null,visibleSources:[...sources].filter(([,ds])=>ds.show).map(([id,ds])=>({id,entities:ds.entities.values.length})),note:'렌더 루프·표시 객체 확인입니다. 건물의 정확성·외부 API 인증·실측 검증을 뜻하지 않습니다.'});break;}
  case'quality':quality=m.mode||'balanced';tell('quality-result',applyQuality(viewer,quality,devicePixelRatio||1));break;
@@ -124,4 +125,4 @@ if(clean){try{C=window.Cesium;window.seoCleanViewer=new C.Viewer('vmap',{animati
  (window.seoCleanViewer.creditDisplay||window.seoCleanViewer.cesiumWidget?.creditDisplay)?.addStaticCredit(new C.Credit('© OpenStreetMap contributors · ODbL · 도형 일부 수록 / 지형 없음',true));
  init().catch(e=>tell('error',{message:e.message}));
  }catch(e){setNotice('도시모형 WebGL 초기화 실패');tell('error',{message:'도시모형의 WebGL 초기화 실패: '+e.message});}
-}else{try{if(!window.vw?.Map)throw Error('VWorld SDK를 받지 못했습니다. 키·등록 도메인·외부 접속을 확인하세요.');window.vw.ws3dInitCallBack=()=>init().catch(e=>tell('error',{message:e.message}));map=new window.vw.Map();map.setOption({mapId:'vmap',initPosition:new window.vw.CameraPosition(new window.vw.CoordZ(126.855,35.14,15500),new window.vw.Direction(320,-50,0)),logo:true,navigation:false});map.start();let tries=0;const timer=setInterval(()=>{if(ready){clearInterval(timer);return;}init().catch(()=>{});if(++tries>120){clearInterval(timer);tell('error',{message:'브이월드 초기화 30초 대기 초과. 키·도메인·서비스 승인을 확인하세요.'});}},250);}catch(e){setNotice(e.message);tell('error',{message:e.message});}}
+}else{try{if(!window.vw?.Map)throw Error('VWorld SDK를 받지 못했습니다. 키·등록 도메인·외부 접속을 확인하세요.');window.vw.ws3dInitCallBack=()=>init().catch(e=>tell('error',{message:e.message}));map=new window.vw.Map();map.setOption({mapId:'vmap',initPosition:new window.vw.CameraPosition(new window.vw.CoordZ(126.855,35.14,15500),new window.vw.Direction(320,-50,0)),logo:false,navigation:false});map.start();let tries=0;const timer=setInterval(()=>{if(ready){clearInterval(timer);return;}init().catch(()=>{});if(++tries>120){clearInterval(timer);tell('error',{message:'브이월드 초기화 30초 대기 초과. 키·도메인·서비스 승인을 확인하세요.'});}},250);}catch(e){setNotice(e.message);tell('error',{message:e.message});}}

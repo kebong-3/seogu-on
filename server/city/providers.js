@@ -1,12 +1,14 @@
+import {readSafetyData,safetyStatus} from './safetydata.js';
 import {readTheme} from './vworld-themes.js';
 import {infrastructureFlags,readInfrastructure} from './infrastructure.js';
 import {readForecast} from './forecast.js';
 import {HttpError,requireKey,origin,json,endpoint,records,totalOf,cleanPoint,text,n,safeFeatures,district,scopeFor} from './common.js';
 import {inside,fc,boundsOf,clipFeature} from '../../src/city/geometry.js';
 const STANDARD='https://apis.data.go.kr';
-export function flags(env=process.env){return {...infrastructureFlags(env),vworld3d:!!(env.VWORLD_BROWSER_KEY&&env.VWORLD_DOMAIN),vworldRest:!!(env.VWORLD_API_KEY&&env.VWORLD_DOMAIN),safety:!!env.SAFETYDATA_SERVICE_KEY,emergency:!!(env.EMERGENCY_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),its:!!env.ITS_API_KEY,taas:!!(env.TAAS_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),air:!!(env.AIRKOREA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),weather:!!(env.KMA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),safemap:!!env.SAFEMAP_SERVICE_KEY,floodmap:!!env.FLOODMAP_SERVICE_KEY,flow:env.ITS_FLOW_ENABLED==='true'};}
+export function flags(env=process.env){return {...Object.fromEntries(safetyStatus(env).map(s=>[s.id,s.configured])),...infrastructureFlags(env),vworld3d:!!(env.VWORLD_BROWSER_KEY&&env.VWORLD_DOMAIN),vworldRest:!!(env.VWORLD_API_KEY&&env.VWORLD_DOMAIN),safety:!!env.SAFETYDATA_SERVICE_KEY,emergency:!!(env.EMERGENCY_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),its:!!env.ITS_API_KEY,taas:!!(env.TAAS_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),air:!!(env.AIRKOREA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),weather:!!(env.KMA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY),safemap:!!env.SAFEMAP_SERVICE_KEY,floodmap:!!env.FLOODMAP_SERVICE_KEY,flow:env.ITS_FLOW_ENABLED==='true'};}
 function featureMeta(source,extra={}){return {sourceName:source,sourceDate:null,collectedAt:new Date().toISOString(),...extra};}
 export async function readProvider(kind,q,{env=process.env,fetcher=fetch}={}){
+ if(kind?.startsWith('sd-'))return readSafetyData(kind,q,{env,fetcher});
  if(kind?.startsWith('vw-'))return readTheme(kind,q,{env,fetcher});
  if(kind?.startsWith('infra-'))return readInfrastructure(kind,q,{env,fetcher});
  const scope=scopeFor(q.get('dong')),bounds=boundsOf(scope),page=Math.max(1,Number(q.get('page')||1));if(!Number.isInteger(page)||page>150)throw new HttpError(400,'페이지 범위 오류');const opts={fetcher};const limit=500;let body,items,features=[],total=null,complete=true,note='',sourceName='',sourceDate=null;

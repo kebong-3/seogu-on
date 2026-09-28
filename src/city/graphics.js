@@ -23,3 +23,11 @@ export function setBuildingStyle(map,requested='detailed') {
  try{if(old&&old!==layer&&typeof old.hide==='function')old.hide();}catch{retainedOther=true;}
  return {requested:mode,applied:true,sourceId:id,retainedOther,note:'공급자 건물 레이어 표시 요청을 적용했습니다. 실제 타일 수신·원본 상세도는 별도 확인해야 합니다.'};
 }
+
+/** Apply brightness only to base imagery, never thematic imagery or classified pixel values. */
+export function applyBaseBrightness(viewer,options={},excluded=new Set()){
+ const brightness=Math.max(.7,Math.min(1.5,Number.isFinite(+options.brightness)?+options.brightness:1.12));let applied=0;
+ const layers=viewer?.imageryLayers;
+ if(layers?.get)for(let i=0;i<layers.length;i++){const layer=layers.get(i);if(!excluded.has(layer)&&'brightness' in layer){layer.brightness=brightness;applied++;}}
+ viewer?.scene?.requestRender?.();return {brightness,applied,note:applied?`기본 영상 ${applied}개 층에 밝기 ${Math.round(brightness*100)}% 적용 · 주제도 색은 유지`:'변경 가능한 기본 영상이 없습니다. UI 테마만 적용했습니다.'};
+}

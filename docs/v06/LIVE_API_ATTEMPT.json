@@ -1,0 +1,7 @@
+{
+  "service": "DSSP-IF-10804",
+  "callsAttempted": 1,
+  "secretsRecorded": false,
+  "result": "network-unavailable",
+  "note": "The execution environment could not establish the official upstream connection. Key validity and registered-IP acceptance were not tested."
+}

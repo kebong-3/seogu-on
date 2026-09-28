@@ -4,11 +4,11 @@ Does not verify WebGL rendering, VWorld authentication, or external API approval
 from pathlib import Path
 import json,re,os,traceback,csv,io,shutil
 from playwright.sync_api import sync_playwright
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v05/regression-ui';OUT.mkdir(parents=True,exist_ok=True)
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v06/regression-ui';OUT.mkdir(parents=True,exist_ok=True)
 SOURCES={'/'+p.relative_to(ROOT).as_posix():p.read_text() for p in (ROOT/'src').rglob('*.js')}
 FIXTURES={'/data/'+p.relative_to(ROOT/'public/data').as_posix():json.loads(p.read_text()) for p in (ROOT/'public/data').rglob('*') if p.is_file() and p.suffix in ['.json','.geojson']}
 FIXTURES['/api/city-config']={'version':'0.4.0','configured':{'weather':True,'air':True},'accidentYear':'2024'}
-HTML=(ROOT/'index.html').read_text();HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+(ROOT/'src/city/style.css').read_text()+'</style></head>')
+HTML=(ROOT/'index.html').read_text();HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+((ROOT/'src/city/style.css').read_text()+'\n'+(ROOT/'src/city/appearance.css').read_text())+'</style></head>')
 LOADER=r'''async ({sources,fixtures})=>{
 window.__testRequests=[];window.__fixtureMode=true;
 window.fetch=async u=>{const url=new URL(String(u),'https://test.invalid'),k=url.pathname;window.__testRequests.push(k+url.search);let b=fixtures[k];
@@ -24,7 +24,11 @@ def ck(n,ok,detail=None):
  print('CHECK',n,ok,flush=True)
  results.append({'name':n,'passed':bool(ok),'detail':detail})
  if not ok:raise AssertionError(n+' '+str(detail or ''))
-def click(p,s):p.locator(s).first.click();p.wait_for_timeout(100)
+def click(p,s):
+ # v0.6 moved graphics into appearance and 2D climate into the native-sun panel.
+ if s=='[data-action=graphics]' and not p.locator(s).count():click(p,'[data-action=appearance]')
+ if s=='[data-action=climate]' and not p.locator(s).count():click(p,'[data-action=native-sun]')
+ p.locator(s).first.click();p.wait_for_timeout(100)
 def count(p,t):return int(re.search(r'\d+',p.locator('#'+t+'-count').inner_text()).group())
 def infra(p,id):click(p,'[data-action=infra]');click(p,f'[data-action=infra-select][data-id="{id}"]')
 def boot(p):

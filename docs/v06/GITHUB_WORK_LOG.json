@@ -1,0 +1,14 @@
+{
+  "branch": "feature/blue-safety-v0.6",
+  "purpose": "Public source evidence retrieval only",
+  "workflowRuns": [
+    36442085382,
+    36442830352,
+    36443741411
+  ],
+  "containsAppRelease": false,
+  "mainChanged": false,
+  "vercelEnvWritten": false,
+  "vercelDeployed": false,
+  "credentialsUsedInWorkflows": false
+}
