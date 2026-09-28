@@ -1,3 +1,4 @@
+import {createSunController} from './sun-engine.js';
 import {applyQuality,displayOptions,setBuildingStyle} from './graphics.js';
 import {parseKst} from './solar.js';
 import {loadCleanModel} from './clean-model.js';
@@ -9,6 +10,7 @@ import {terrainGrid,slopeSummary,profilePoints,parseGlb} from './analysis.js';
 const tell=(type,data={})=>parent.postMessage({seoguCity:true,type,...data},location.origin);
 const notice=document.getElementById('notice');
 const clean=window.SEO_ENGINE==='clean';
+let sunController=null;
 let buildingStyleResult=null,renderFrames=0,renderFailed=false;
 let quality='balanced',visual=displayOptions(),lastBoundary,cleanStats=null;
 let viewer,map,C,director,ready=false,queued=[],admin,scope,dong='all',currentPose,selectionMode=null,profileStart=null;
@@ -26,6 +28,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  boundarySource=new C.CustomDataSource('seo-city-dongs');maskSource=new C.CustomDataSource('seo-city-focus');analysisSource=new C.CustomDataSource('seo-city-analysis');modelSource=new C.CustomDataSource('seo-city-model-label');
  for(const s of [boundarySource,maskSource,analysisSource,modelSource])await viewer.dataSources.add(s);
  currentPose={center:[126.86,35.145],range:16000,heading:320,pitch:-48,level:'overview'};
+ sunController=createSunController(viewer,C,{emit:tell,getPose:readPose});
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
  for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>director.stop(),{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
@@ -36,7 +39,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  // Never disable provider attribution or guess internal tileset names.
  setNotice(clean?'공개 도형 도시모형 · 지형 없음 · 미상 높이 6m 표시는 그늘 계산에서 제외':'브이월드 3D · 건물·지형 제공범위 및 최신성은 제공기관 자료에 따름');
  try{tell('quality-result',applyQuality(viewer,quality,devicePixelRatio||1));}catch{}
- if(clean){loadCleanModel(viewer,C,setNotice).then(result=>{cleanStats=result;tell('model-ready',result);setNotice(result.note);}).catch(e=>tell('error',{message:e.message}));}
+ if(clean){loadCleanModel(viewer,C,setNotice).then(result=>{cleanStats=result;sunController?.refresh();tell('model-ready',result);setNotice(result.note);}).catch(e=>tell('error',{message:e.message}));}
  tell('ready',{capabilities:{terrain:!clean&&!!(C.sampleTerrain||C.sampleTerrainMostDetailed),glb:!!(C.Model?.fromGltfAsync||C.Model?.fromGltf),raster:!!C.UrlTemplateImageryProvider,tileSelection:!!C.Cesium3DTileFeature},engine:clean?'clean':'vworld'});
  for(const m of queued)await handle(m);queued=[];return true;
 }
@@ -106,7 +109,7 @@ async function handle(m){switch(m.type){
  case'model-remove':await removeModel();break;
  case'model-edit':if(model&&modelLocation){model.modelMatrix=modelMatrix(modelLocation,clamp(Number(m.heading)||0,0,360),clamp(Number(m.height)||0,-30,250));model.scale=clamp(Number(m.scale)||1,.1,20);requestRender();}break;
  case'restore-buildings':for(const[f,value]of hiddenFeatures)try{f.show=value;}catch{}hiddenFeatures.clear();selectionMode=null;requestRender();tell('tool-result',{kind:'restore-buildings',note:'기록한 건물 객체 표시를 복구했습니다.'});break;
- case'sun':{viewer.clock.currentTime=C.JulianDate.fromDate(parseKst(m.time));viewer.clock.shouldAnimate=false;viewer.shadows=!!m.shadows;if(viewer.scene.globe)viewer.scene.globe.enableLighting=!!m.shadows;requestRender();if(!m.silent)tell('tool-result',{kind:'sun',note:'렌더러 그림자는 시각적 참고입니다. 정밀 일조권 분석이 아닙니다.'});break;}
+ case'sun':sunController?.apply(m);break;
  case'building-style':buildingStyleResult=clean?{applied:false,note:'밝은 도시모형은 브이월드 건물 원본과 별개입니다.'}:setBuildingStyle(map,m.mode);tell('building-style-result',buildingStyleResult);requestRender();break;
  case'diagnostics':{const cv=viewer.scene.canvas;tell('diagnostics',{engine:clean?'clean':'vworld',webgl:!cv.isContextLost?.(),rendered:renderFrames>0&&!renderFailed,renderFrames,renderFailed,css:[cv.clientWidth,cv.clientHeight],buffer:[cv.width,cv.height],resolutionScale:viewer.resolutionScale,buildingStyle:buildingStyleResult,model:cleanStats?{buildingCount:cleanStats.buildingCount,note:cleanStats.note}:null,visibleSources:[...sources].filter(([,ds])=>ds.show).map(([id,ds])=>({id,entities:ds.entities.values.length})),note:'렌더 루프·표시 객체 확인입니다. 건물의 정확성·외부 API 인증·실측 검증을 뜻하지 않습니다.'});break;}
  case'quality':quality=m.mode||'balanced';tell('quality-result',applyQuality(viewer,quality,devicePixelRatio||1));break;
@@ -114,7 +117,7 @@ async function handle(m){switch(m.type){
  case'resize':viewer.resize?.();try{applyQuality(viewer,quality,devicePixelRatio||1);}catch{}requestRender();break;
  }}
 window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==parent||!event.data?.seoguCity)return;const m=event.data;if(!ready){queued.push(m);if(queued.length>100)queued.shift();return;}Promise.resolve(handle(m)).catch(e=>tell('error',{message:e.message||'3D 처리 실패'}));});
-window.addEventListener('beforeunload',()=>{director?.stop();if(modelUrl)URL.revokeObjectURL(modelUrl);});
+window.addEventListener('beforeunload',()=>{sunController?.destroy();director?.stop();if(modelUrl)URL.revokeObjectURL(modelUrl);});
 
 if(clean){try{C=window.Cesium;window.seoCleanViewer=new C.Viewer('vmap',{animation:false,timeline:false,baseLayer:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,fullscreenButton:false,infoBox:false,selectionIndicator:false,skyBox:false,skyAtmosphere:false,terrainProvider:new C.EllipsoidTerrainProvider(),shadows:false,contextOptions:{webgl:{alpha:false,antialias:true}},scene3DOnly:true,requestRenderMode:true,maximumRenderTimeChange:Infinity});
  const sc=window.seoCleanViewer.scene;sc.backgroundColor=C.Color.fromCssColorString('#c5d2ca');sc.globe.baseColor=C.Color.fromCssColorString('#c5d2ca');sc.globe.enableLighting=false;

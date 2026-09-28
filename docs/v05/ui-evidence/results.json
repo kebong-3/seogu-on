@@ -1,0 +1,175 @@
+{
+  "scope": "actual application + boundary renderer; WFS responses are explicit fixtures, not actual hazards; no GPU verification",
+  "results": [
+    {
+      "name": "Boundary renderer is explicitly not 3D",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "66 documented topic cards",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No receipt claimed from catalogue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Theme search filters exact title",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Disaster group contains seven mapped topics",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "WFS solo hides park layers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "WFS actual returned polygon rendered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Source query uses district scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Explicit additive selection retains both sources",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Export is two received geometries not 66 metadata records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Upstream failure keeps last good geometry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Failure visible independently of old geometry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Sudden empty response preserves last good geometry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Unexpected zero identified as failed replacement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Refresh sends selected administrative dong",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dong-only snapshot not mislabelled whole district",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Cancellation leaves no permanent loading state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dedicated native sunlight panel exists",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Winter representative day retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Time slider synchronizes input and visible KST clock",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "2D engine refuses fake native-shadow success",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Season switch preserves time",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Illumination and duration not falsely certified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Six disaster context presets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Winter preset exposes missing operational sources",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No fictional snow route inserted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Disaster warning states limits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original infrastructure solo still works",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop no JavaScript exceptions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Mobile no horizontal document overflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile can search topic list",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile topic search returns matches",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile native time input available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile no exceptions",
+      "passed": true,
+      "detail": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-28",
+  "scope": "six supplied HTML credential values versus source, docs, tests and pinned runtime archive; not comprehensive security certification",
+  "sampleCredentialValuesChecked": 6,
+  "matchingFileCount": 0,
+  "fontFileCount": 0,
+  "runtimeArchiveFilesInspected": 375,
+  "secretValuesPrintedOrRecorded": false
+}

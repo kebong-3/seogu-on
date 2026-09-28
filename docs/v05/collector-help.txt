@@ -1,0 +1,2 @@
+node --env-file-if-exists=.env.local scripts/collect-vworld.mjs --dong=all --group=재난·방재
+Optional --theme=vw-c_up201. Explicit all themes: --all. Saves data-staging/vworld/. Credentials must not be committed.

@@ -32,10 +32,15 @@ try{
  await route('/data/city/coverage.json',200,b=>JSON.parse(b).version==='0.4.0');
  await route('/data/city/infra/school.geojson',200,b=>JSON.parse(b).features.length===104);
  await route('/data/city/model/buildings.geojson',200,b=>JSON.parse(b).features.length===5779);
- await route('/data/release.json',200,b=>JSON.parse(b).version==='0.4.1');
+ await route('/data/release.json',200,b=>JSON.parse(b).version==='0.5.0');
  await route('/data/city/civic-index.json',200,b=>JSON.parse(b).matchedDongCount===18);
- await route('/api/city-config',200,b=>JSON.parse(b).version==='0.4.1'&&!b.includes('VWORLD_BROWSER_KEY='));
+ await route('/api/city-config',200,b=>JSON.parse(b).version==='0.5.0'&&!b.includes('VWORLD_BROWSER_KEY='));
  await route('/api/city-data?kind=heat',503);
+ await route('/api/city-data?kind=vw-c_up201&dong=all&page=1',503);
+ await route('/api/city-data?kind=vw-unknown&dong=all',400);
+ await route('/src/city/sun-engine.js',200);
+ await route('/src/city/resilience-tools.js',200);
+ await route('/src/city/vworld-catalog.js',200);
  await route('/api/city-data?kind=infra-cold',503);
  await route('/api/city-scene',503);
  await route('/api/weather?lon=126.85&lat=35.15',503);
@@ -46,5 +51,5 @@ try{
  const r=await fetch(url+'/api/city-config',{method:'POST'});check('Read-only API rejects POST',r.status===405,`HTTP ${r.status}`);
 }finally{child.kill('SIGTERM');}
 const result={mode:'Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel',checks:checks.length,passed:checks.filter(c=>c.passed).length,results:checks};
-await mkdir(resolve(root,'docs/v041'),{recursive:true});await writeFile(resolve(root,'docs/v041/DEPLOYMENT_CHECK.json'),JSON.stringify(result,null,2));
+await mkdir(resolve(root,'docs/v05'),{recursive:true});await writeFile(resolve(root,'docs/v05/DEPLOYMENT_CHECK.json'),JSON.stringify(result,null,2));
 console.log(JSON.stringify({checks:result.checks,passed:result.passed,failures:checks.filter(c=>!c.passed)},null,2));if(result.passed!==result.checks)process.exitCode=1;

@@ -4,7 +4,7 @@ Does not verify WebGL rendering, VWorld authentication, or external API approval
 from pathlib import Path
 import json,re,os,traceback,csv,io,shutil
 from playwright.sync_api import sync_playwright
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v041/regression-ui';OUT.mkdir(parents=True,exist_ok=True)
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v05/regression-ui';OUT.mkdir(parents=True,exist_ok=True)
 SOURCES={'/'+p.relative_to(ROOT).as_posix():p.read_text() for p in (ROOT/'src').rglob('*.js')}
 FIXTURES={'/data/'+p.relative_to(ROOT/'public/data').as_posix():json.loads(p.read_text()) for p in (ROOT/'public/data').rglob('*') if p.is_file() and p.suffix in ['.json','.geojson']}
 FIXTURES['/api/city-config']={'version':'0.4.0','configured':{'weather':True,'air':True},'accidentYear':'2024'}

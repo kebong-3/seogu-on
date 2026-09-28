@@ -1,11 +1,13 @@
+import {VW_BY_ID} from '../../src/city/vworld-catalog.js';
 import {requireKey,origin,endpoint,bytes,HttpError,scopeFor} from './common.js';
 import {boundsOf,mercator,boundsOverlap} from '../../src/city/geometry.js';
 export const TRANSPARENT=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==','base64');
 const SAFE={'national-flood':'IF_0089_WMS','local-flood':'IF_0100_WMS','flood-trace':'IF_0092_WMS'};
-export function wmsRequest(q,env=process.env){const layer=q.get('layer');if(![...Object.keys(SAFE),'city-flood','flow','cadastral'].includes(layer))throw new HttpError(400,'허용되지 않은 지도층');const bbox=(q.get('bbox')||'').split(',').map(Number),size=Number(q.get('size')||256),z=Number(q.get('z')||14);if(bbox.length!==4||!bbox.every(Number.isFinite)||bbox[0]>=bbox[2]||bbox[1]>=bbox[3]||![64,128,256,512].includes(size)||!Number.isInteger(z)||z<5||z>20)throw new HttpError(400,'지도 타일 범위 오류');
+export function wmsRequest(q,env=process.env){const layer=q.get('layer'),theme=layer?.startsWith('vwm-')?VW_BY_ID['vw-'+layer.slice(4)]:null;if(!theme&&![...Object.keys(SAFE),'city-flood','flow','cadastral'].includes(layer))throw new HttpError(400,'허용되지 않은 지도층');const bbox=(q.get('bbox')||'').split(',').map(Number),size=Number(q.get('size')||256),z=Number(q.get('z')||14);if(bbox.length!==4||!bbox.every(Number.isFinite)||bbox[0]>=bbox[2]||bbox[1]>=bbox[3]||![64,128,256,512].includes(size)||!Number.isInteger(z)||z<5||z>20)throw new HttpError(400,'지도 타일 범위 오류');
  if(bbox.some(v=>Math.abs(v)>21000000)||bbox[2]-bbox[0]>1500000||bbox[3]-bbox[1]>1500000)throw new HttpError(400,'과도한 지도 범위');const b=boundsOf(scopeFor(q.get('dong'))),mb=[...mercator([b[0],b[1]]),...mercator([b[2],b[3]])];if(!boundsOverlap(bbox,mb))return null;
  let url;
- if(SAFE[layer])url=endpoint(`https://www.safemap.go.kr/openapi2/${SAFE[layer]}`,{serviceKey:requireKey(env.SAFEMAP_SERVICE_KEY,'생활안전지도'),srs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
+ if(theme)url=endpoint('https://api.vworld.kr/req/wms',{key:requireKey(env.VWORLD_API_KEY,'브이월드 REST'),domain:origin(env),service:'WMS',request:'GetMap',version:'1.3.0',layers:theme.wms,styles:theme.style,crs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
+ else if(SAFE[layer])url=endpoint(`https://www.safemap.go.kr/openapi2/${SAFE[layer]}`,{serviceKey:requireKey(env.SAFEMAP_SERVICE_KEY,'생활안전지도'),srs:'EPSG:3857',bbox:bbox.join(','),format:'image/png',width:size,height:size,transparent:'TRUE'});
  else if(layer==='city-flood')url=endpoint('https://data.floodmap.go.kr/api/wms-service/adm-cty-wms',{ServiceKey:requireKey(env.FLOODMAP_SERVICE_KEY,'홍수위험지도'),Freq:'30',Format:'image/png',Bbox:bbox.join(','),srs:'EPSG:3857',width:size,height:size,transparent:'TRUE'});
  else if(layer==='flow'){
   if(env.ITS_FLOW_ENABLED!=='true')throw new HttpError(503,'ITS WMS 이용조건·제공범위를 확인한 뒤 ITS_FLOW_ENABLED=true를 설정하세요.','NOT_CONFIGURED');

@@ -1,0 +1,6 @@
+
+> seo-on-digital-twin@0.5.0 build
+> node scripts/build.mjs
+
+SEO:ON static build complete: dist/ (zero build dependencies).
+Vercel handles root api/*.js separately. Map rendering requires external map/CDN access.

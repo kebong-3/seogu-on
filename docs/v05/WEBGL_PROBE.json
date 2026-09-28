@@ -1,0 +1,37 @@
+{
+  "scope": "local runtime; real user VWorld domain not tested",
+  "results": [
+    {
+      "flags": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader-webgl",
+        "--enable-unsafe-swiftshader"
+      ],
+      "webgl": false,
+      "renderer": null,
+      "version": null,
+      "warnings": []
+    },
+    {
+      "flags": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader",
+        "--disable-gpu-sandbox"
+      ],
+      "webgl": false,
+      "renderer": null,
+      "version": null,
+      "warnings": []
+    },
+    {
+      "flags": [
+        "--use-gl=egl"
+      ],
+      "webgl": false,
+      "renderer": null,
+      "version": null,
+      "warnings": []
+    }
+  ]
+}

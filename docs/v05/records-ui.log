@@ -1,0 +1,22 @@
+Source model switch is visible True
+Boundary mode refuses to claim detailed source success True
+Actual renderer type, not configured flag, is reported True
+18 separately named civic records True
+Civic record opens provenance panel True
+Public address queue includes relocation warning True
+Address records remain nonspatial until checked True
+Empty geometry cannot be registered True
+Real Canvas clicks collect route points True
+Undo removes only last vertex True
+Registered geometry moves to record collection True
+No default times silently claim work complete True
+Line count is visible for operational route True
+Explicit save uses versioned payload True
+Restore succeeds with state validation True
+Export is actual GeoJSON not UI state only True
+Missing timestamps remain unknown True
+Stored records require confirmation before delete True
+Explicit delete clears storage only True
+After editing, solo school removes route layer True
+School source unchanged True
+Desktop application has no JS exceptions True

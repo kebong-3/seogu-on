@@ -1,0 +1,172 @@
+{
+  "mode": "Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel",
+  "checks": 33,
+  "passed": 33,
+  "results": [
+    {
+      "name": "All public JSON/GeoJSON parse",
+      "passed": true,
+      "detail": "80 files; invalid=0"
+    },
+    {
+      "name": "No font files bundled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No private/test/server source in dist",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Relative module imports resolve",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Cesium license included",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "/",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/classic.html",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/model.html",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/app.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/vendor/cesium/Cesium.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/vendor/cesium/Widgets/widgets.css",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/vendor/cesium/Workers/chunk-22JY5A6S.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/admin-dongs.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/city/coverage.json",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/city/infra/school.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/city/model/buildings.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/release.json",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/city/civic-index.json",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/city-config",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/city-data?kind=heat",
+      "passed": true,
+      "detail": "HTTP 503"
+    },
+    {
+      "name": "/api/city-data?kind=vw-c_up201&dong=all&page=1",
+      "passed": true,
+      "detail": "HTTP 503"
+    },
+    {
+      "name": "/api/city-data?kind=vw-unknown&dong=all",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "/src/city/sun-engine.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/resilience-tools.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/vworld-catalog.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/city-data?kind=infra-cold",
+      "passed": true,
+      "detail": "HTTP 503"
+    },
+    {
+      "name": "/api/city-scene",
+      "passed": true,
+      "detail": "HTTP 503"
+    },
+    {
+      "name": "/api/weather?lon=126.85&lat=35.15",
+      "passed": true,
+      "detail": "HTTP 503"
+    },
+    {
+      "name": "/server/city/providers.js",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "name": "/.env.example",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "name": "/tests/city-v04.test.mjs",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "name": "/docs/v04/TEST_REPORT.md",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "name": "Read-only API rejects POST",
+      "passed": true,
+      "detail": "HTTP 405"
+    }
+  ]
+}

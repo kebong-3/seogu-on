@@ -1,0 +1,35 @@
+Boundary renderer is explicitly not 3D True
+66 documented topic cards True
+No receipt claimed from catalogue True
+Theme search filters exact title True
+Disaster group contains seven mapped topics True
+WFS solo hides park layers True
+WFS actual returned polygon rendered True
+Source query uses district scope True
+Explicit additive selection retains both sources True
+Export is two received geometries not 66 metadata records True
+Upstream failure keeps last good geometry True
+Failure visible independently of old geometry True
+Sudden empty response preserves last good geometry True
+Unexpected zero identified as failed replacement True
+Refresh sends selected administrative dong True
+Dong-only snapshot not mislabelled whole district True
+Cancellation leaves no permanent loading state True
+Dedicated native sunlight panel exists True
+Winter representative day retained True
+Time slider synchronizes input and visible KST clock True
+2D engine refuses fake native-shadow success True
+Season switch preserves time True
+Illumination and duration not falsely certified True
+Six disaster context presets True
+Winter preset exposes missing operational sources True
+No fictional snow route inserted True
+Disaster warning states limits True
+Original infrastructure solo still works True
+Desktop no JavaScript exceptions True
+Mobile no horizontal document overflow True
+Mobile can search topic list True
+Mobile topic search returns matches True
+Mobile native time input available True
+Mobile no exceptions True
+{"checks": 34, "passed": 34}

@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-28",
+  "version": "0.5.0",
+  "scope": "ZIP extracted into a new empty folder; npm run verify; no real API keys or WebGL",
+  "syntax": "passed",
+  "unitTests": {
+    "passed": 327,
+    "failed": 0,
+    "skipped": 0
+  },
+  "releaseAudit": {
+    "passed": 12,
+    "total": 12
+  },
+  "localHttp": {
+    "passed": 33,
+    "total": 33
+  },
+  "sourceAndDataFilesCompared": 136,
+  "sourceAndDataDigestMismatches": 0,
+  "sourceBundleSha256": "5f128d2ae5df7702f7bf05bc28c6416da7f6ad2648b6651ffc9ec3bc35d8bb0e",
+  "notes": [
+    "Documentation/test logs added to final zip after validation; runtime source and data unchanged.",
+    "No Vercel deployment, live VWorld image validation or new authenticated WFS receipt."
+  ]
+}

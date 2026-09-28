@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+evidence/
+__pycache__/
+*.pyc
+
+# Generated from the pinned local vendor archive during dev/build.
+public/vendor/cesium/
+
+# Explicit public API retrieval remains in review until manually approved
+data-staging/
