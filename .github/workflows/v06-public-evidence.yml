@@ -1,0 +1,82 @@
+name: Seo-on official BI and schema evidence
+on:
+  push:
+    branches: [feature/blue-safety-v0.6]
+    paths: [.github/workflows/v06-public-evidence.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Read bounded public sources only
+        run: |
+          python - <<'PY'
+          import json,hashlib,time,re
+          from pathlib import Path
+          from urllib.parse import urljoin,urlparse
+          import requests
+          from bs4 import BeautifulSoup
+          out=Path('v06-public');(out/'bi').mkdir(parents=True,exist_ok=True)
+          s=requests.Session();s.headers['User-Agent']='Seo-on-public-source-verification/0.6'
+          names=['양동','양3동','농성1동','농성2동','광천동','유덕동','치평동','상무1동','상무2동','화정1동','화정2동','화정3동','화정4동','서창동','금호1동','금호2동','풍암동','동천동']
+          brands=[]
+          for i,name in enumerate(names,1):
+            u=f'https://www.seogu.gwangju.kr/menu.es?mid=c7{i:02d}01000000'
+            row={'id':f'seogu-{i:02d}','name':name,'sourceUrl':u,'asset':None}
+            try:
+              r=s.get(u,timeout=18);r.raise_for_status();r.encoding=r.apparent_encoding
+              soup=BeautifulSoup(r.text,'html.parser')
+              candidates=[im for im in soup.find_all('img') if name in im.get('alt','') and '로고' in im.get('alt','')]
+              row['candidateCount']=len(candidates)
+              text=soup.get_text(' ',strip=True);pos=text.find('에 오신 것을 환영합니다')
+              row['biContext']=text[max(0,pos-90):pos+650] if pos>=0 else ''
+              row['imageCandidates']=[{'alt':im.get('alt'),'url':urljoin(u,im.get('src',''))} for im in candidates]
+              if len(candidates)==1:
+                iu=row['imageCandidates'][0]['url']
+                if urlparse(iu).hostname!='www.seogu.gwangju.kr':raise ValueError('Unexpected image host')
+                ir=s.get(iu,timeout=18);ir.raise_for_status();ct=ir.headers.get('content-type','').split(';')[0]
+                ext={'image/png':'.png','image/jpeg':'.jpg','image/gif':'.gif','image/svg+xml':'.svg','image/webp':'.webp'}.get(ct)
+                if not ext or len(ir.content)>3000000:raise ValueError('Unsupported image')
+                fn=f'bi/{row["id"]}{ext}';(out/fn).write_bytes(ir.content)
+                row.update(asset=fn,imageSource=iu,sha256=hashlib.sha256(ir.content).hexdigest(),contentType=ct)
+              row['status']='received' if row['asset'] else 'asset-not-uniquely-identified'
+            except Exception as e:row['status']=type(e).__name__
+            brands.append(row);print(name,row['status']);time.sleep(.25)
+          (out/'neighborhood-brands.json').write_text(json.dumps(brands,ensure_ascii=False,indent=2))
+          schemas=[]
+          for sid in [966,1338,108,52,227,1326,184]:
+            u=f'https://www.safetydata.go.kr/disaster-data/view?dataSn={sid}'
+            row={'sourceUrl':u,'dataSn':sid}
+            try:
+              r=s.get(u,timeout=18);r.raise_for_status();r.encoding=r.apparent_encoding;soup=BeautifulSoup(r.text,'html.parser')
+              row['text']=soup.get_text(' ',strip=True)
+              row['tables']=[[[c.get_text(' ',strip=True) for c in tr.find_all(['td','th'])] for tr in t.find_all('tr')] for t in soup.find_all('table')]
+              row['status']='received'
+            except Exception as e:row['status']=type(e).__name__
+            schemas.append(row);print('schema',sid,row['status'])
+          (out/'safetydata-schemas.json').write_text(json.dumps(schemas,ensure_ascii=False,indent=2))
+          for pid in ['15140461','15140653','15124509']:
+            row={'sourceUrl':f'https://www.data.go.kr/data/{pid}/fileData.do'}
+            try:
+              r=s.get(row['sourceUrl'],timeout=18);r.raise_for_status();r.encoding=r.apparent_encoding;soup=BeautifulSoup(r.text,'html.parser')
+              row['text']=soup.get_text(' ',strip=True)
+              row['links']=[{'text':a.get_text(' ',strip=True),'href':a.get('href'),'onclick':a.get('onclick')} for a in soup.find_all('a') if any(t in str(a).lower() for t in ['down','csv','json','zip'])]
+              row['fileIdHints']=re.findall(r'.{0,100}(?:atchFileId|fileDetailSn|fileDataSn|fileDownload|downloadFile).{0,140}',r.text)
+              row['status']='received'
+            except Exception as e:row['status']=type(e).__name__
+            (out/f'data-{pid}.json').write_text(json.dumps(row,ensure_ascii=False,indent=2))
+          (out/'README.txt').write_text('Official public-page and original BI asset retrieval. No API keys or account cookies were supplied. Not a live API authentication test. Publication and attribution conditions must be preserved. No generated logos.\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seogu-v06-public-bi-schemas
+          path: v06-public/
+          retention-days: 7
