@@ -1,0 +1,58 @@
+name: Seo-on remaining public references
+on:
+  push:
+    branches: [feature/blue-safety-v0.6]
+    paths: [.github/workflows/v06-remaining-reference.yml]
+permissions:
+  contents: read
+jobs:
+  public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.55.0 requests beautifulsoup4
+      - run: python -m playwright install --with-deps chromium
+      - name: Public search and reference extraction
+        run: |
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          from pathlib import Path
+          import json,re,requests
+          from bs4 import BeautifulSoup
+          out=Path('v06-remaining');out.mkdir(exist_ok=True)
+          with sync_playwright() as p:
+            browser=p.chromium.launch(headless=True);page=browser.new_page()
+            page.goto('https://www.safetydata.go.kr/disaster-data/list2',wait_until='networkidle',timeout=35000)
+            meta={'inputs':page.locator('input').evaluate_all('(es)=>es.map(e=>({id:e.id,name:e.name,type:e.type,placeholder:e.placeholder,value:e.type==="hidden"?e.value:""}))'),'buttons':page.locator('button').evaluate_all('(es)=>es.map(e=>({id:e.id,text:e.innerText,onclick:e.getAttribute("onclick")}))')}
+            (out/'controls.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2))
+            (out/'public-list-inline.js.txt').write_text('\n'.join(page.locator('script:not([src])').all_text_contents()))
+            for name in ['AWS10','도로위험상황']:
+              try:
+                page.goto('https://www.safetydata.go.kr/disaster-data/list2',wait_until='networkidle',timeout=35000)
+                inputs=page.locator('input[type=text]:visible')
+                if inputs.count()==0:inputs=page.locator('input[type=search]:visible')
+                inputs.last.fill(name);inputs.last.press('Enter');page.wait_for_timeout(3500)
+                links=page.locator('a[href*="dataSn="]').evaluate_all('(es)=>es.map(e=>({text:e.innerText,url:e.href}))')
+                (out/(name+'-search.json')).write_text(json.dumps({'url':page.url,'text':page.inner_text('body'),'links':links},ensure_ascii=False,indent=2))
+                unique=list(dict.fromkeys(x['url'] for x in links if ('AWS' in x['text'] if name=='AWS10' else '도로위험' in x['text'])))[:2]
+                for i,u in enumerate(unique):
+                  page.goto(u,wait_until='networkidle',timeout=35000);page.wait_for_timeout(1000)
+                  row={'sourceUrl':u,'text':page.inner_text('body'),'tables':page.locator('table').evaluate_all('(ts)=>ts.map(t=>Array.from(t.rows).map(r=>Array.from(r.cells).map(c=>c.innerText)))')}
+                  (out/(name+'-detail-'+str(i)+'.json')).write_text(json.dumps(row,ensure_ascii=False,indent=2))
+              except Exception as e:(out/(name+'-error.txt')).write_text(type(e).__name__)
+            browser.close()
+          try:
+            r=requests.get('https://www.vworld.kr/dev/v4dv_opnws3dmap2guide_s001.do',timeout=20);r.encoding=r.apparent_encoding;s=BeautifulSoup(r.text,'html.parser')
+            row={'sourceUrl':r.url,'links':[{'text':a.get_text(' ',strip=True),'href':a.get('href')} for a in s.find_all('a') if any(x in a.get_text() for x in ['약관','저작권','이용정책'])],'logoContext':re.findall('.{0,100}(?:logo|저작권|로고).{0,150}',s.get_text(' ',strip=True))}
+            (out/'vworld-reference.json').write_text(json.dumps(row,ensure_ascii=False,indent=2))
+          except:pass
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seogu-v06-remaining-reference
+          path: v06-remaining/
+          retention-days: 7
