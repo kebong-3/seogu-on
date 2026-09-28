@@ -1,0 +1,78 @@
+name: Seo-on public CSV and API tables
+on:
+  push:
+    branches: [feature/blue-safety-v0.6]
+    paths: [.github/workflows/v06-public-tables.yml]
+permissions:
+  contents: read
+jobs:
+  read-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4 playwright==1.55.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Retrieve public data and schemas without account credentials
+        run: |
+          python - <<'PY'
+          import json,hashlib,time
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import requests
+          from bs4 import BeautifulSoup
+          from playwright.sync_api import sync_playwright
+          out=Path('v06-tables');out.mkdir(exist_ok=True)
+          files=[('shade','FILE_000000003577717'),('cooling','FILE_000000003579411'),('flood','FILE_000000003554596')]
+          manifest=[]
+          for name,fid in files:
+            u='https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId='+fid+'&fileDetailSn=1&insertDataPrcus=N'
+            row={'name':name,'url':u}
+            try:
+              r=requests.get(u,timeout=25);r.raise_for_status()
+              if len(r.content)>8000000 or b'<html' in r.content[:1000].lower():raise ValueError('Not a bounded data file')
+              (out/(name+'.csv')).write_bytes(r.content)
+              row.update(status='received',sha256=hashlib.sha256(r.content).hexdigest(),bytes=len(r.content),contentType=r.headers.get('content-type'))
+            except Exception as e:row['status']=type(e).__name__
+            manifest.append(row)
+          with sync_playwright() as p:
+            browser=p.chromium.launch(headless=True)
+            page=browser.new_page()
+            for sid in [966,1338,108,52,227,1326,184]:
+              row={'dataSn':sid,'url':f'https://www.safetydata.go.kr/disaster-data/view?dataSn={sid}'}
+              responses=[]
+              def record(r):
+                try:
+                  if urlparse(r.url).hostname=='www.safetydata.go.kr' and 'json' in r.headers.get('content-type',''):
+                    text=r.text()
+                    if len(text)<500000 and 'serviceKey' not in r.url:responses.append({'url':r.url,'json':json.loads(text)})
+                except:pass
+              page.on('response',record)
+              try:
+                page.goto(row['url'],wait_until='networkidle',timeout=35000)
+                page.wait_for_timeout(1500)
+                row['text']=page.inner_text('body')
+                row['tables']=page.locator('table').evaluate_all('(ts)=>ts.map(t=>Array.from(t.rows).map(r=>Array.from(r.cells).map(c=>c.innerText)))')
+                row['scripts']=page.locator('script[src]').evaluate_all('(ss)=>ss.map(s=>s.src)')
+                row['requests']=responses
+                row['status']='received'
+              except Exception as e:row['status']=type(e).__name__
+              page.remove_listener('response',record)
+              (out/(str(sid)+'.json')).write_text(json.dumps(row,ensure_ascii=False,indent=2))
+            # Public listing controls and links, for locating remaining named services.
+            try:
+              page.goto('https://www.safetydata.go.kr/disaster-data/list',wait_until='networkidle',timeout=30000)
+              row={'url':page.url,'forms':page.locator('form').evaluate_all('(fs)=>fs.map(f=>({action:f.action,method:f.method,controls:Array.from(f.elements).map(e=>({name:e.name,id:e.id,type:e.type,value:e.type==="hidden"?e.value:""}))}))'),'links':page.locator('a[href]').evaluate_all('(as)=>as.map(a=>({text:a.innerText,href:a.href})).filter(a=>a.href.includes("disaster-data"))')}
+              (out/'listing.json').write_text(json.dumps(row,ensure_ascii=False,indent=2))
+            except:pass
+            browser.close()
+          (out/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seogu-v06-public-csv-tables
+          path: v06-tables/
+          retention-days: 7
