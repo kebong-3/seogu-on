@@ -1059,8 +1059,8 @@
     },
     {
       "path": "docs/v070/RELEASE.md",
-      "bytes": 1864,
-      "sha256": "fe14bef6b864445c95b75ce5ecbd88a8fda06c805dd36ab020d39fab6c7d91b5"
+      "bytes": 2244,
+      "sha256": "08af6d36828c1db98b81191223246fe3249d0be80337f34f6861851449b7467d"
     },
     {
       "path": "index.html",
@@ -1614,8 +1614,8 @@
     },
     {
       "path": "src/city/app.js",
-      "bytes": 58419,
-      "sha256": "242eda62f689c4a15e1cfe3eeead7005aae57252ee7790a7637565b923f2e9fa"
+      "bytes": 58515,
+      "sha256": "9b266c5fd0ceae5cd685e30d79b701c3ee003c05caefd0cff493a568f82ff7d0"
     },
     {
       "path": "src/city/appearance.css",
@@ -1664,8 +1664,8 @@
     },
     {
       "path": "src/city/identity.css",
-      "bytes": 23018,
-      "sha256": "2eb3f47827a33368e19b243b0a0bdc5ab087d4ed8f9bdcb24e0701620af08daa"
+      "bytes": 23247,
+      "sha256": "3a2ce1cb2959a22c3f07fc66ac51e58376e55a23774abc459236e5d299909104"
     },
     {
       "path": "src/city/infrastructure.js",

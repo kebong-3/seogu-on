@@ -191,3 +191,9 @@
  .scene-caption .selected-bi img{max-width:108px}
 }
 
+
+.start-card{background:var(--panel-fill);color:var(--text)}
+.start-card h2{color:var(--text)}
+.start-card p{color:var(--text);font-size:14px;line-height:1.6}
+.start-card small{color:var(--muted);font-size:13px;line-height:1.5}
+
