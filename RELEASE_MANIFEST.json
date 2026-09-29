@@ -1059,8 +1059,8 @@
     },
     {
       "path": "docs/v070/RELEASE.md",
-      "bytes": 1728,
-      "sha256": "a5e1ab2b9c2c18204d18948badb21302b3d784ce23a6567d753d645fcf4bbfed"
+      "bytes": 1864,
+      "sha256": "fe14bef6b864445c95b75ce5ecbd88a8fda06c805dd36ab020d39fab6c7d91b5"
     },
     {
       "path": "index.html",
@@ -1664,8 +1664,8 @@
     },
     {
       "path": "src/city/identity.css",
-      "bytes": 22323,
-      "sha256": "03a69ae3f19ae1b960348fc59f8932900cfce06141e7b0b73f808a34f76137b9"
+      "bytes": 23018,
+      "sha256": "2eb3f47827a33368e19b243b0a0bdc5ab087d4ed8f9bdcb24e0701620af08daa"
     },
     {
       "path": "src/city/infrastructure.js",
@@ -1724,8 +1724,8 @@
     },
     {
       "path": "src/city/scene.js",
-      "bytes": 24603,
-      "sha256": "269517b326aeed2c7334907782c70665a959a75afcc5d0675b51eafc9abd0162"
+      "bytes": 24614,
+      "sha256": "985d0ccbd64a13537122cdb4114e754ed7e31915361ee5ca235cefdaf952e65e"
     },
     {
       "path": "src/city/solar.js",
@@ -1744,8 +1744,8 @@
     },
     {
       "path": "src/city/viewer.js",
-      "bytes": 14700,
-      "sha256": "23b1107f469c0b68855f4c13096f38a2cae7c4cdf3a5ffd7113bd704f3ca7ea5"
+      "bytes": 15379,
+      "sha256": "37a8974ad2c80788502b826a3a38d1dda5bac4624ca4c12b0bea2f93a0d9c0c2"
     },
     {
       "path": "src/city/vworld-catalog.js",
