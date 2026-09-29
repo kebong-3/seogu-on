@@ -1,6 +1,6 @@
 {
-  "version": "0.6.1",
-  "scope": "Source and recorded tests; excludes self, UPDATE_MANIFEST, generated dist/runtime. Local UI update, not deployed.",
+  "version": "0.7.0",
+  "scope": "Source and recorded tests; excludes self, UPDATE_MANIFEST, generated dist/runtime. Deployment state is verified separately.",
   "files": [
     {
       "path": ".env.example",
@@ -24,8 +24,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2472,
-      "sha256": "5a19792b13baff051cf937cf8158f24d7ba024f31f9b643658f3300d994df80c"
+      "bytes": 1914,
+      "sha256": "3b97deae58335fad14b38b2309db04f9d779ef913efdf88b686596657b28935c"
     },
     {
       "path": "SECURITY.md",
@@ -34,8 +34,8 @@
     },
     {
       "path": "START_HERE.md",
-      "bytes": 1874,
-      "sha256": "80a0f817b6cee265adaef084e59d3b251d1cdfe75da6e34f98993f7dc6409560"
+      "bytes": 917,
+      "sha256": "08b46a77683348fec3d060c9c829d8b6ba462552b24773226dec83944047fa05"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -45,7 +45,7 @@
     {
       "path": "api/city-config.js",
       "bytes": 521,
-      "sha256": "fb541422df7f11896a991ef41c4b06398ba806c8b955b7147558a210b8331455"
+      "sha256": "3bc50173b9046a2f1968f282a4def0a888adeaea8b387c70d07afa679e43faf9"
     },
     {
       "path": "api/city-data.js",
@@ -603,6 +603,11 @@
       "sha256": "79bad9f452deb1ddcfb4a69ff8892bfcb902420244fcdc66f654d29ce96c9cea"
     },
     {
+      "path": "docs/v05/records-ui.log",
+      "bytes": 1012,
+      "sha256": "e25b3ffa85ff0951afd9fdca9369a3661f0a8ecf314618f3e98fdcc4b03b34ed"
+    },
+    {
       "path": "docs/v05/records-ui/record-workflow-NOT-3D.png",
       "bytes": 274734,
       "sha256": "47fe49813c56571ed789f26b2647f645c00ebc047fb6c6ca2ee5503d1b6cd7cf"
@@ -618,9 +623,9 @@
       "sha256": "fc9ea4428e7da85d35fe72db42f57a809e54f880e6d1c67d56827e409f331ec6"
     },
     {
-      "path": "docs/v05/records-ui.log",
-      "bytes": 1012,
-      "sha256": "e25b3ffa85ff0951afd9fdca9369a3661f0a8ecf314618f3e98fdcc4b03b34ed"
+      "path": "docs/v05/regression-ui.log",
+      "bytes": 2555,
+      "sha256": "de82aa683cf332521c925954d26ae4ffeb8a4a45cb662fcc54996211d08f7fef"
     },
     {
       "path": "docs/v05/regression-ui/mobile-infra-NOT-3D.png",
@@ -641,11 +646,6 @@
       "path": "docs/v05/regression-ui/shade-boundary-NOT-3D.png",
       "bytes": 235806,
       "sha256": "c7643caeef443addf3ed3e68379a39ef5cca6fee023c7c2807c2dda38a9d9862"
-    },
-    {
-      "path": "docs/v05/regression-ui.log",
-      "bytes": 2555,
-      "sha256": "de82aa683cf332521c925954d26ae4ffeb8a4a45cb662fcc54996211d08f7fef"
     },
     {
       "path": "docs/v05/release-audit.txt",
@@ -818,6 +818,26 @@
       "sha256": "c3692a08bb965698cf76c0b018fa98fe9e293243fb0985720f34e3149cb818ff"
     },
     {
+      "path": "docs/v06/ui-evidence/mobile-controls-NOT-3D.png",
+      "bytes": 66149,
+      "sha256": "7d27d93d18a3f1a89155128af4c98becddc92e28ba7b836d77906bb92844baf1"
+    },
+    {
+      "path": "docs/v06/ui-evidence/resilience-NOT-3D.png",
+      "bytes": 236281,
+      "sha256": "b679094e6cd22319e75947d2a9c1dc2d1dfaec49cb7ba27237def3f531ce728d"
+    },
+    {
+      "path": "docs/v06/ui-evidence/results.json",
+      "bytes": 3964,
+      "sha256": "de9f3cf5f1fcc1a24370aa247ed1144af96fa2f41db06f13ec9994cb7630899b"
+    },
+    {
+      "path": "docs/v06/ui-evidence/solar-controls-NOT-3D.png",
+      "bytes": 231061,
+      "sha256": "425ed08ad5862689f14e406cde4d090591b7e0104975fc3a54eb3bf57ecec793"
+    },
+    {
       "path": "docs/v06/ui/appearance-NOT-3D.png",
       "bytes": 199725,
       "sha256": "49d287bee86d6ee218f6cb49c447a71ee0216aac143dd512c2b8a28aff1db954"
@@ -841,26 +861,6 @@
       "path": "docs/v06/ui/results.json",
       "bytes": 5406,
       "sha256": "3a9f034d5b3c4a718c74402ce063a360a2530d44d5c98d03afe86ad3793eadc7"
-    },
-    {
-      "path": "docs/v06/ui-evidence/mobile-controls-NOT-3D.png",
-      "bytes": 66149,
-      "sha256": "7d27d93d18a3f1a89155128af4c98becddc92e28ba7b836d77906bb92844baf1"
-    },
-    {
-      "path": "docs/v06/ui-evidence/resilience-NOT-3D.png",
-      "bytes": 236281,
-      "sha256": "b679094e6cd22319e75947d2a9c1dc2d1dfaec49cb7ba27237def3f531ce728d"
-    },
-    {
-      "path": "docs/v06/ui-evidence/results.json",
-      "bytes": 3964,
-      "sha256": "de9f3cf5f1fcc1a24370aa247ed1144af96fa2f41db06f13ec9994cb7630899b"
-    },
-    {
-      "path": "docs/v06/ui-evidence/solar-controls-NOT-3D.png",
-      "bytes": 231061,
-      "sha256": "425ed08ad5862689f14e406cde4d090591b7e0104975fc3a54eb3bf57ecec793"
     },
     {
       "path": "docs/v061/CLEAN_PACKAGE_CHECK.json",
@@ -963,6 +963,11 @@
       "sha256": "8d72120caa53daece564189888616ee898308f82c2df79e24087a45c6f4fe495"
     },
     {
+      "path": "docs/v061/ui-run.txt",
+      "bytes": 4692,
+      "sha256": "3e0528dbdfa7b80bd9a98719074147b681fd53a1e4328bd60f701327509a6dc8"
+    },
+    {
       "path": "docs/v061/ui/appearance-2D.png",
       "bytes": 535992,
       "sha256": "5fbc52e69d3db1233ddbdf7e48ded784226fb970a50aacf50194ef132a7c1ef6"
@@ -1013,11 +1018,6 @@
       "sha256": "6a62a04d7573856d7544a88b0b659b14d0a9bffe14a53c4e8a6bc13690fe7808"
     },
     {
-      "path": "docs/v061/ui-run.txt",
-      "bytes": 4692,
-      "sha256": "3e0528dbdfa7b80bd9a98719074147b681fd53a1e4328bd60f701327509a6dc8"
-    },
-    {
       "path": "docs/v061/unit.txt",
       "bytes": 64956,
       "sha256": "861bf02ad2b4292b12ddef6dd91656e9661a2959774c1b6b5488121697b80934"
@@ -1058,24 +1058,34 @@
       "sha256": "1c6c117a2337b21a10402c86c1e0c1ba2a7b25e493f5b65f8d4a9b54800068ae"
     },
     {
+      "path": "docs/v070/RELEASE.md",
+      "bytes": 1728,
+      "sha256": "a5e1ab2b9c2c18204d18948badb21302b3d784ce23a6567d753d645fcf4bbfed"
+    },
+    {
       "path": "index.html",
-      "bytes": 8856,
-      "sha256": "ed9a94f56cc427558a8b5160724e0e42b48aecb392142088684fd754953055bf"
+      "bytes": 9834,
+      "sha256": "6a63a564b0eeb9af8386b77d2006e178e9a60f0eb7775b2a51c435fbc4233658"
     },
     {
       "path": "package-lock.json",
       "bytes": 276,
-      "sha256": "42496912f0f2327b14a4051e7ae084fa8ecd6394dd30544f3a022005876f8258"
+      "sha256": "559196d2bcf9f6ae18ba5eafe98a7fd064cb7e9f0ebad3e7082265e376b5cc7f"
     },
     {
       "path": "package.json",
       "bytes": 1237,
-      "sha256": "d942865b0f9dd5c1c5f2cb71a6a1d7d49e832ccf530386c589c23531dc9aed6f"
+      "sha256": "e71f55a819a48b9bb2e50db2bf4cb9d9991e6774e4162cd909de6183f270a5a5"
     },
     {
       "path": "preview/design-preview.html",
       "bytes": 637,
       "sha256": "a2c501418b1b46f99b83033c39cdcd2401d9212ea54d5a180dfd6c7ea351dcbf"
+    },
+    {
+      "path": "public/brand/dongs.json",
+      "bytes": 8829,
+      "sha256": "17182cbb3f49b8d92da5551fd5eaf0f58916a62305d5df156449c8a8ce0c8a4e"
     },
     {
       "path": "public/brand/dongs/seogu-01.png",
@@ -1166,11 +1176,6 @@
       "path": "public/brand/dongs/seogu-18.png",
       "bytes": 16054,
       "sha256": "b0c33d07668a4ea1511ec2a9ad528dbbf7881b8e2f2a8d1b660f21c78bee7f88"
-    },
-    {
-      "path": "public/brand/dongs.json",
-      "bytes": 8829,
-      "sha256": "17182cbb3f49b8d92da5551fd5eaf0f58916a62305d5df156449c8a8ce0c8a4e"
     },
     {
       "path": "public/brand/seogu-ci.png",
@@ -1609,8 +1614,8 @@
     },
     {
       "path": "src/city/app.js",
-      "bytes": 57226,
-      "sha256": "bfb098179352883e6086df8b117390cf28dfd80d9d908941c6c08d3a673d335e"
+      "bytes": 58419,
+      "sha256": "242eda62f689c4a15e1cfe3eeead7005aae57252ee7790a7637565b923f2e9fa"
     },
     {
       "path": "src/city/appearance.css",
@@ -1659,8 +1664,8 @@
     },
     {
       "path": "src/city/identity.css",
-      "bytes": 17207,
-      "sha256": "a5d96dbf6d3ad7ba1299ad2630d99af116fd764dc4383ae80d1d9d273679cc72"
+      "bytes": 22323,
+      "sha256": "03a69ae3f19ae1b960348fc59f8932900cfce06141e7b0b73f808a34f76137b9"
     },
     {
       "path": "src/city/infrastructure.js",
@@ -1671,6 +1676,11 @@
       "path": "src/city/layer-sync.js",
       "bytes": 2339,
       "sha256": "67075248722de8a8eeb7ed5735fa54a47c4a1e1d8037c1a2883b6aa6110b9870"
+    },
+    {
+      "path": "src/city/live-status.js",
+      "bytes": 3096,
+      "sha256": "c426b33389a67863f3b351128cc0a767ef0942bf859e5783481f0442f9de4b02"
     },
     {
       "path": "src/city/local-records.js",
@@ -1964,8 +1974,8 @@
     },
     {
       "path": "tests/v061.test.mjs",
-      "bytes": 3039,
-      "sha256": "000b46b226eaf2104fc16cbfae40a02a35a5eabbfd5bcea6af78f5b68551c66f"
+      "bytes": 3049,
+      "sha256": "a12166b903de299e12ea0e32d3bf3e124c443c8e000dae1a50b3cc12fcdebd64"
     },
     {
       "path": "tools/safety-key-import.html",
