@@ -1,0 +1,50 @@
+BOOT set_content
+BOOT evaluate
+BOOT wait
+default light-blue theme True
+18 administrative district buttons True
+sidebar background is bright True
+sidebar has independent scrolling without clipping True
+bottom-most dong reachable by scrolling True
+chosen district original BI displayed True
+original BI image loaded True
+independent layer tab opens True
+last layer checkbox remains inside viewport True
+switching tabs resets scroll top True
+three theme choices True
+dark theme selectable True
+sky theme selectable True
+brightness setting updated True
+appearance saved in explicit test storage True
+all18 original BI cards True
+all18 BI images loaded True
+BI click moves to matched dong True
+six planning question cards True
+actual shade source present True
+source roadmap has60links True
+9 independent disaster adapters True
+explicit API fixture records reflected True
+only selected API layer enabled True
+upstream32 failure is visible True
+previous normal fixture point not erased True
+bounded collection stops at4pages True
+partial is staging not normal loaded True
+key/IP constraints clearly stated True
+5minute replay is visible True
+timeinput step300 True
+slider step5 True
+unsupported2D does not claim3Dsuccess True
+sun controller module available True
+leftmenu vertical bounds 1280x720 True
+no horizontal page overflow 1280x720 True
+lastdong scrollable 1280x720 True
+leftmenu vertical bounds 1024x640 True
+no horizontal page overflow 1024x640 True
+lastdong scrollable 1024x640 True
+leftmenu vertical bounds 390x844 True
+no horizontal page overflow 390x844 True
+lastdong scrollable 390x844 True
+leftmenu vertical bounds 844x390 True
+no horizontal page overflow 844x390 True
+lastdong scrollable 844x390 True
+no application JavaScript exceptions True

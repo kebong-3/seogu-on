@@ -1,0 +1,120 @@
+Korean document title True
+Korean brand name True
+brand tagline present True
+original vector emblem loaded True
+no visible English district heading True
+old attribution ribbon removed True
+short map source control exists True
+OpenStreetMap credit still legible True
+metrics not in visible region caption True
+internal renderer metrics hidden True
+city overview caption compact True
+18 administrative neighborhoods retained True
+name and original BI linked seogu-01 True
+original BI image loads seogu-01 True
+name and original BI linked seogu-02 True
+original BI image loads seogu-02 True
+name and original BI linked seogu-03 True
+original BI image loads seogu-03 True
+name and original BI linked seogu-04 True
+original BI image loads seogu-04 True
+name and original BI linked seogu-05 True
+original BI image loads seogu-05 True
+name and original BI linked seogu-06 True
+original BI image loads seogu-06 True
+name and original BI linked seogu-07 True
+original BI image loads seogu-07 True
+name and original BI linked seogu-08 True
+original BI image loads seogu-08 True
+name and original BI linked seogu-09 True
+original BI image loads seogu-09 True
+name and original BI linked seogu-10 True
+original BI image loads seogu-10 True
+name and original BI linked seogu-11 True
+original BI image loads seogu-11 True
+name and original BI linked seogu-12 True
+original BI image loads seogu-12 True
+name and original BI linked seogu-13 True
+original BI image loads seogu-13 True
+name and original BI linked seogu-14 True
+original BI image loads seogu-14 True
+name and original BI linked seogu-15 True
+original BI image loads seogu-15 True
+name and original BI linked seogu-16 True
+original BI image loads seogu-16 True
+name and original BI linked seogu-17 True
+original BI image loads seogu-17 True
+name and original BI linked seogu-18 True
+original BI image loads seogu-18 True
+district caption width at most320 True
+3 themes retained True
+raised finish default True
+flat finish option True
+flat removes panel shadow True
+depth restores panel shadow True
+night theme retained True
+sky theme retained True
+brightness value preserved True
+BI visibility preference disables caption image True
+BI preference restores caption image True
+preferences saved to explicit test storage True
+credit popover opens True
+provider and boundary attribution preserved True
+credit popover inside viewport True
+Esc closes attribution panel True
+complete source information opens True
+Korean logo returns to overview True
+layer tab remains functional True
+existing5min control preserved True
+sidebar vertical fit 1920x1080 True
+last neighborhood reachable 1920x1080 True
+brand tagline visible 1920x1080 True
+header emblem and actions do not overlap 1920x1080 True
+footer source control reachable 1920x1080 True
+no horizontal overflow 1920x1080 True
+sidebar vertical fit 1440x900 True
+last neighborhood reachable 1440x900 True
+brand tagline visible 1440x900 True
+header emblem and actions do not overlap 1440x900 True
+footer source control reachable 1440x900 True
+no horizontal overflow 1440x900 True
+sidebar vertical fit 1280x720 True
+last neighborhood reachable 1280x720 True
+brand tagline visible 1280x720 True
+header emblem and actions do not overlap 1280x720 True
+footer source control reachable 1280x720 True
+no horizontal overflow 1280x720 True
+sidebar vertical fit 1024x640 True
+last neighborhood reachable 1024x640 True
+brand tagline visible 1024x640 True
+header emblem and actions do not overlap 1024x640 True
+footer source control reachable 1024x640 True
+no horizontal overflow 1024x640 True
+sidebar vertical fit 844x390 True
+last neighborhood reachable 844x390 True
+brand tagline visible 844x390 True
+header emblem and actions do not overlap 844x390 True
+footer source control reachable 844x390 True
+no horizontal overflow 844x390 True
+sidebar vertical fit 390x844 True
+last neighborhood reachable 390x844 True
+brand tagline visible 390x844 True
+header emblem and actions do not overlap 390x844 True
+footer source control reachable 390x844 True
+no horizontal overflow 390x844 True
+compact caption on mobile 390 True
+sidebar vertical fit 360x740 True
+last neighborhood reachable 360x740 True
+brand tagline visible 360x740 True
+header emblem and actions do not overlap 360x740 True
+footer source control reachable 360x740 True
+no horizontal overflow 360x740 True
+compact caption on mobile 360 True
+sidebar vertical fit 320x640 True
+last neighborhood reachable 320x640 True
+brand tagline visible 320x640 True
+header emblem and actions do not overlap 320x640 True
+footer source control reachable 320x640 True
+no horizontal overflow 320x640 True
+compact caption on mobile 320 True
+no unhandled JavaScript errors True

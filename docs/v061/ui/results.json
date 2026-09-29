@@ -1,0 +1,656 @@
+{
+  "mode": "Actual app/modules/CSS/BI/local data rendered in 2D BoundaryView; explicit network and storage fixtures; no WebGL or live API claim",
+  "results": [
+    {
+      "name": "Korean document title",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Korean brand name",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original vector emblem loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no visible English district heading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old attribution ribbon removed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "short map source control exists",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "OpenStreetMap credit still legible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metrics not in visible region caption",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "internal renderer metrics hidden",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "city overview caption compact",
+      "passed": true,
+      "detail": {
+        "x": 340,
+        "y": 88,
+        "width": 244.890625,
+        "height": 58
+      }
+    },
+    {
+      "name": "18 administrative neighborhoods retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-01",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-01",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-02",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-02",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-03",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-03",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-04",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-04",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-05",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-05",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-06",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-06",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-07",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-07",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-08",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-08",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-09",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-09",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-11",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-11",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-12",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-12",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-13",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-13",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-14",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-14",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-15",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-16",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-16",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-17",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-17",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "name and original BI linked seogu-18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loads seogu-18",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "district caption width at most320",
+      "passed": true,
+      "detail": {
+        "x": 340,
+        "y": 88,
+        "width": 183.5625,
+        "height": 58
+      }
+    },
+    {
+      "name": "3 themes retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "raised finish default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "flat finish option",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "flat removes panel shadow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "depth restores panel shadow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "night theme retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sky theme retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brightness value preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BI visibility preference disables caption image",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BI preference restores caption image",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preferences saved to explicit test storage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "credit popover opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provider and boundary attribution preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "credit popover inside viewport",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Esc closes attribution panel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete source information opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Korean logo returns to overview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "layer tab remains functional",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "existing5min control preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 1920x1080",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 320,
+        "height": 934
+      }
+    },
+    {
+      "name": "last neighborhood reachable 1920x1080",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 1920x1080",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 1920x1080",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 1920x1080",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 1920x1080",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 1440x900",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 300,
+        "height": 754
+      }
+    },
+    {
+      "name": "last neighborhood reachable 1440x900",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 1440x900",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 1440x900",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 1440x900",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 1440x900",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 1280x720",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 300,
+        "height": 574
+      }
+    },
+    {
+      "name": "last neighborhood reachable 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 1024x640",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 300,
+        "height": 494
+      }
+    },
+    {
+      "name": "last neighborhood reachable 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 844x390",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 81,
+        "width": 300,
+        "height": 249
+      }
+    },
+    {
+      "name": "last neighborhood reachable 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 390x844",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 82,
+        "width": 366,
+        "height": 687
+      }
+    },
+    {
+      "name": "last neighborhood reachable 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "compact caption on mobile 390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 360x740",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 82,
+        "width": 336,
+        "height": 583
+      }
+    },
+    {
+      "name": "last neighborhood reachable 360x740",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 360x740",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 360x740",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 360x740",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 360x740",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "compact caption on mobile 360",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar vertical fit 320x640",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 82,
+        "width": 296,
+        "height": 483
+      }
+    },
+    {
+      "name": "last neighborhood reachable 320x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brand tagline visible 320x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "header emblem and actions do not overlap 320x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "footer source control reachable 320x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no horizontal overflow 320x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "compact caption on mobile 320",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no unhandled JavaScript errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

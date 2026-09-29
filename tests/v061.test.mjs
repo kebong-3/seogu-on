@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {normalizeAppearance} from '../src/city/experience.js';
+const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const html=read('index.html'),css=read('src/city/identity.css');
+test('v061 Korean brand and accessible overview action',()=>{assert.match(html,/class="brand-name" aria-label="서구:온"/);assert.match(html,/서구의 오늘을 한눈에/);assert.doesNotMatch(html,/SEO:ON|CITY OVERVIEW|DISTRICT VIEW|CITY LAYERS/);});
+test('v061 short district caption owns the official BI element',()=>{const caption=html.match(/<section class="scene-caption"[\s\S]*?<\/section>/)[0];assert.match(caption,/id="selected-bi"/);assert.match(caption,/id="scope-title"/);assert.doesNotMatch(caption,/point-count|camera-level|motion-state|caption-chips/);});
+test('v061 map metrics are non-visual diagnostic elements only',()=>{assert.match(html,/<div id="render-diagnostics" hidden aria-hidden="true">/);for(const id of ['point-count','area-count','line-count','motion-state'])assert.equal(html.split('id="'+id+'"').length-1,1);});
+test('v061 long custom ribbon removed but accessible sources retained',()=>{assert.doesNotMatch(html,/class="map-attribution"|배경지도: 국토교통부·브이월드/);assert.match(html,/<details id="map-credits"/);assert.match(html,/© OpenStreetMap/);assert.match(html,/국토교통부·브이월드/);assert.match(html,/CC BY 4.0/);});
+test('v061 no CSS hides provider-owned attribution containers',()=>{assert.doesNotMatch(css,/cesium-(?:viewer-bottom|credit)|maplibregl-ctrl-attrib/);});
+test('v061 old preferences migrate without changing brightness or theme',()=>{const p=normalizeAppearance({theme:'night',brightness:1.25,brands:false});assert.equal(p.theme,'night');assert.equal(p.brightness,1.25);assert.equal(p.brands,false);assert.equal(p.finish,'depth');});
+test('v061 finish preference is allowlisted',()=>{assert.equal(normalizeAppearance({finish:'flat'}).finish,'flat');assert.equal(normalizeAppearance({finish:'anything'}).finish,'depth');});
+test('v061 shipped brand SVG is vector-only with no external URLs or fonts',()=>{for(const p of ['public/brand/seogu-on-symbol.svg','public/brand/seogu-on-wordmark.svg']){const s=read(p);assert.match(s,/<svg/);assert.doesNotMatch(s,/<script|@font-face|<image|<foreignObject/);}});
+test('v061 all18 BI images retain the exact original hashes',()=>{const b=JSON.parse(read('public/brand/dongs.json'));assert.equal(b.items.length,18);for(const x of b.items){const bytes=fs.readFileSync(new URL('../public'+x.asset,import.meta.url));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),x.sha256);}});
+test('v061 frontend/backend build versions agree',()=>{const p=JSON.parse(read('package.json'));assert.equal(p.version,'0.6.1');assert.match(read('api/city-config.js'),/version:'0\.6\.1'/);assert.match(html,/v0\.6\.1/);assert.match(read('src/city/app.js'),/'0\.6\.0','0\.6\.1'/);});

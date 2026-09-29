@@ -1,0 +1,261 @@
+{
+  "mode": "Offline real UI and included source data; explicit network and storage fixtures; no live WebGL",
+  "results": [
+    {
+      "name": "default light-blue theme",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "18 administrative district buttons",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sidebar background is bright",
+      "passed": true,
+      "detail": "rgba(239,246,255,.97)"
+    },
+    {
+      "name": "sidebar has independent scrolling without clipping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bottom-most dong reachable by scrolling",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chosen district original BI displayed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original BI image loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent layer tab opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "last layer checkbox remains inside viewport",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "switching tabs resets scroll top",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "three theme choices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dark theme selectable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sky theme selectable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "brightness setting updated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance saved in explicit test storage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all18 original BI cards",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all18 BI images loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BI click moves to matched dong",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "six planning question cards",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual shade source present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source roadmap has60links",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "9 independent disaster adapters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "explicit API fixture records reflected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "only selected API layer enabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "upstream32 failure is visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "previous normal fixture point not erased",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bounded collection stops at4pages",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "partial is staging not normal loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "key/IP constraints clearly stated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "5minute replay is visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "timeinput step300",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "slider step5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unsupported2D does not claim3Dsuccess",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sun controller module available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "leftmenu vertical bounds 1280x720",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 300,
+        "height": 574
+      }
+    },
+    {
+      "name": "no horizontal page overflow 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lastdong scrollable 1280x720",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "leftmenu vertical bounds 1024x640",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 86,
+        "width": 300,
+        "height": 494
+      }
+    },
+    {
+      "name": "no horizontal page overflow 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lastdong scrollable 1024x640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "leftmenu vertical bounds 390x844",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 82,
+        "width": 366,
+        "height": 687
+      }
+    },
+    {
+      "name": "no horizontal page overflow 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lastdong scrollable 390x844",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "leftmenu vertical bounds 844x390",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": 81,
+        "width": 300,
+        "height": 249
+      }
+    },
+    {
+      "name": "no horizontal page overflow 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lastdong scrollable 844x390",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no application JavaScript exceptions",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

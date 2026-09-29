@@ -1,0 +1,16 @@
+actual playback controller sends09:0009:0509:10 True
+pause stops interval messages True
+simulation playback makes zero external API requests True
+waits for renderer acknowledgement before advancing True
+stale renderer acknowledgement is ignored True
+valid acknowledgement permits next5minute step True
+leaving simulation panel stops playback True
+playback stops at day boundary rather than looping True
+off requests original lighting restoration True
+helper recognizes9dummy issuance records True
+helper erases pasted issuance text True
+all9key inputs usepassword masking True
+oneJSON preserves9provider identifiers True
+local helper makes zero network requests True
+CSP forbids transmitting toexternal endpoints True
+clear removes9keyvalues andresult True

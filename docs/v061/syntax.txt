@@ -1,0 +1,5 @@
+
+> seo-on-digital-twin@0.6.1 check
+> node scripts/check.mjs
+
+All JavaScript syntax checks passed.

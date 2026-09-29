@@ -45,6 +45,9 @@ try{
  await route('/data/city/local-flood-history.geojson',200,b=>JSON.parse(b).features.length===468);
  await route('/data/city/source-roadmap.json',200,b=>JSON.parse(b).items.length===60);
  await route('/src/city/appearance.css',200);
+ await route('/src/city/identity.css',200);
+ await route('/brand/seogu-on-symbol.svg',200,b=>b.includes('<svg'));
+ await route('/brand/seogu-on-wordmark.svg',200,b=>b.includes('서구:온'));
  await route('/src/city/safety-hub.js',200);
  await route('/api/city-data?kind=sd-cold&dong=all&page=1',503);
  await route('/api/city-data?kind=sd-beds&dong=all&page=1',503);
@@ -65,5 +68,5 @@ try{
  const r=await fetch(url+'/api/city-config',{method:'POST'});check('Read-only API rejects POST',r.status===405,`HTTP ${r.status}`);
 }finally{child.kill('SIGTERM');}
 const result={mode:'Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel',checks:checks.length,passed:checks.filter(c=>c.passed).length,results:checks};
-await mkdir(resolve(root,'docs/v06'),{recursive:true});await writeFile(resolve(root,'docs/v06/DEPLOYMENT_CHECK.json'),JSON.stringify(result,null,2));
+await mkdir(resolve(root,'docs/v061'),{recursive:true});await writeFile(resolve(root,'docs/v061/DEPLOYMENT_CHECK.json'),JSON.stringify(result,null,2));
 console.log(JSON.stringify({checks:result.checks,passed:result.passed,failures:checks.filter(c=>!c.passed)},null,2));if(result.passed!==result.checks)process.exitCode=1;

@@ -1,0 +1,71 @@
+{
+  "scope": "Actual isolated UI controllers, dummy keys and explicit renderer acknowledgements; NOT native rendering or live authentication",
+  "checks": 16,
+  "passed": 16,
+  "results": [
+    {
+      "name": "actual playback controller sends09:0009:0509:10",
+      "passed": true
+    },
+    {
+      "name": "pause stops interval messages",
+      "passed": true
+    },
+    {
+      "name": "simulation playback makes zero external API requests",
+      "passed": true
+    },
+    {
+      "name": "waits for renderer acknowledgement before advancing",
+      "passed": true
+    },
+    {
+      "name": "stale renderer acknowledgement is ignored",
+      "passed": true
+    },
+    {
+      "name": "valid acknowledgement permits next5minute step",
+      "passed": true
+    },
+    {
+      "name": "leaving simulation panel stops playback",
+      "passed": true
+    },
+    {
+      "name": "playback stops at day boundary rather than looping",
+      "passed": true
+    },
+    {
+      "name": "off requests original lighting restoration",
+      "passed": true
+    },
+    {
+      "name": "helper recognizes9dummy issuance records",
+      "passed": true
+    },
+    {
+      "name": "helper erases pasted issuance text",
+      "passed": true
+    },
+    {
+      "name": "all9key inputs usepassword masking",
+      "passed": true
+    },
+    {
+      "name": "oneJSON preserves9provider identifiers",
+      "passed": true
+    },
+    {
+      "name": "local helper makes zero network requests",
+      "passed": true
+    },
+    {
+      "name": "CSP forbids transmitting toexternal endpoints",
+      "passed": true
+    },
+    {
+      "name": "clear removes9keyvalues andresult",
+      "passed": true
+    }
+  ]
+}

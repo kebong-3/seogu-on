@@ -4,7 +4,7 @@ Explicit mocked renderer acknowledgements, dummy key strings. NOT WebGL/authenti
 from pathlib import Path
 import json,shutil
 from playwright.sync_api import sync_playwright
-R=Path(__file__).resolve().parents[1];OUT=R/'docs/v06';OUT.mkdir(exist_ok=True)
+R=Path(__file__).resolve().parents[1];OUT=R/'docs/v061';OUT.mkdir(exist_ok=True)
 sources={'/'+p.relative_to(R).as_posix():p.read_text() for p in (R/'src').rglob('*.js')}
 results=[]
 def ck(name,value):

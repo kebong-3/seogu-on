@@ -1,0 +1,100 @@
+{
+  "baseVersion": "0.6.0",
+  "version": "0.6.1",
+  "method": "Original v0.6 full ZIP extracted to empty directory, candidate update overlaid, npm run verify executed. Final changes after this run are documentation and manifests only.",
+  "baselineZipSha256": "c4c4d1d802eec8a2a32e0fb45a1800f87d2f48842f1282561b3de20ec37dcc1e",
+  "candidateFileCount": 60,
+  "unitTests": {
+    "total": 384,
+    "passed": 384
+  },
+  "bundleChecks": {
+    "total": 12,
+    "passed": 12
+  },
+  "httpChecks": {
+    "total": 48,
+    "passed": 48
+  },
+  "buildPassed": true,
+  "actualDeployment": false,
+  "liveWebGL": false,
+  "sourceFilesVerified": [
+    {
+      "path": "api/city-config.js",
+      "sha256": "fb541422df7f11896a991ef41c4b06398ba806c8b955b7147558a210b8331455"
+    },
+    {
+      "path": "index.html",
+      "sha256": "ed9a94f56cc427558a8b5160724e0e42b48aecb392142088684fd754953055bf"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "42496912f0f2327b14a4051e7ae084fa8ecd6394dd30544f3a022005876f8258"
+    },
+    {
+      "path": "package.json",
+      "sha256": "d942865b0f9dd5c1c5f2cb71a6a1d7d49e832ccf530386c589c23531dc9aed6f"
+    },
+    {
+      "path": "public/brand/seogu-on-symbol.svg",
+      "sha256": "3a79719305aaeddab4661b84b1b7367d6b29f38b2b8954a64da075e99b354e67"
+    },
+    {
+      "path": "public/brand/seogu-on-wordmark.svg",
+      "sha256": "beb595073a8d8d75aa75bde2b86c19a136d0b2c4f5ebf7f402762ca852532854"
+    },
+    {
+      "path": "public/favicon.svg",
+      "sha256": "3a79719305aaeddab4661b84b1b7367d6b29f38b2b8954a64da075e99b354e67"
+    },
+    {
+      "path": "scripts/audit-release.mjs",
+      "sha256": "d1edb260d2fe7c2bacd6e751b2b541027ad12e678c2da3ecb8ce58bbd7cf9a55"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "sha256": "7f5743290a01224a7209d037c9fbce9a1791d94a99be95e09b3a6ce311de8ba4"
+    },
+    {
+      "path": "src/city/app.js",
+      "sha256": "bfb098179352883e6086df8b117390cf28dfd80d9d908941c6c08d3a673d335e"
+    },
+    {
+      "path": "src/city/experience.js",
+      "sha256": "73263d8aa66db18e54d8e3a6d41c797d30134341a8bdfc200771aa225380a4e3"
+    },
+    {
+      "path": "src/city/identity.css",
+      "sha256": "a5d96dbf6d3ad7ba1299ad2630d99af116fd764dc4383ae80d1d9d273679cc72"
+    },
+    {
+      "path": "tests/city-final-ui.py",
+      "sha256": "dfe9503d66a58d3050503281ee7f2cbfb725ed65672f6248a67022584e2b81f4"
+    },
+    {
+      "path": "tests/city-regression-ui.py",
+      "sha256": "cea80fa31fe03ca1d43754c9d68b8a71add36e361406a4bd978f04d50da04b81"
+    },
+    {
+      "path": "tests/v06-flow.py",
+      "sha256": "902069126bdd5bb232a0083f7d86c3dea26c641c318844c71786ff25b1dd186f"
+    },
+    {
+      "path": "tests/v06-ui.py",
+      "sha256": "07c76bcd4a51efbc6512fbf57d0c06f2f425171613f35fa8c502d8e88cd6a6da"
+    },
+    {
+      "path": "tests/v06.test.mjs",
+      "sha256": "5090314c631130824e422f5f5fe2cbc8d113dd0af5fb9cd03a8e49a6d3b42b38"
+    },
+    {
+      "path": "tests/v061-ui.py",
+      "sha256": "6021a7fc4aba2518cab0f79dec83218619377b7ca2cf5a5f130294bfee387304"
+    },
+    {
+      "path": "tests/v061.test.mjs",
+      "sha256": "000b46b226eaf2104fc16cbfae40a02a35a5eabbfd5bcea6af78f5b68551c66f"
+    }
+  ]
+}

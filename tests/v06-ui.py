@@ -4,7 +4,7 @@ No provider WebGL or live API claim. Network navigation is prohibited in this sa
 from pathlib import Path
 import json,re,base64,shutil,traceback
 from playwright.sync_api import sync_playwright
-R=Path(__file__).resolve().parents[1];OUT=R/'docs/v06/ui';OUT.mkdir(parents=True,exist_ok=True)
+R=Path(__file__).resolve().parents[1];OUT=R/'docs/v061/v06-regression-ui';OUT.mkdir(parents=True,exist_ok=True)
 sources={'/'+p.relative_to(R).as_posix():p.read_text() for p in (R/'src').rglob('*.js')}
 fixtures={'/data/'+p.relative_to(R/'public/data').as_posix():json.loads(p.read_text()) for p in (R/'public/data').rglob('*') if p.suffix in ['.json','.geojson']}
 brands=json.loads((R/'public/brand/dongs.json').read_text())
@@ -12,8 +12,9 @@ def image(path):return 'data:image/png;base64,'+base64.b64encode((R/'public'/pat
 for b in brands['items']:b['asset']=image(b['asset'])
 fixtures['/brand/dongs.json']=brands
 fixtures['/api/city-config']={'version':'0.6.0','configured':{'vworld3d':False,'vworldRest':False,'sd-cold':True,'sd-heat':True,'sd-road':True}}
-html=(R/'index.html').read_text();html=re.sub(r'<link[^>]*>','',html);html=re.sub(r'<script[^>]*></script>','',html);html=html.replace('</head>','<style>'+('\n'.join((R/f'src/city/{n}').read_text() for n in ['style.css','appearance.css']))+'</style></head>')
+html=(R/'index.html').read_text();html=re.sub(r'<link[^>]*>','',html);html=re.sub(r'<script[^>]*></script>','',html);html=html.replace('</head>','<style>'+('\n'.join((R/f'src/city/{n}').read_text() for n in ['style.css','appearance.css','identity.css']))+'</style></head>')
 for n in ['seogu-slogan.png','seogu-ci.png']:html=html.replace('/brand/'+n,image('/brand/'+n))
+html=html.replace('/brand/seogu-on-symbol.svg','data:image/svg+xml;base64,'+base64.b64encode((R/'public/brand/seogu-on-symbol.svg').read_bytes()).decode())
 # Runtime-generated welcome image also remains a local byte-identical image in the offline test.
 sources['/src/city/experience.js']=sources['/src/city/experience.js'].replace('/brand/seogu-slogan.png',image('/brand/seogu-slogan.png'))
 loader=r'''async ({sources,fixtures})=>{
@@ -43,12 +44,12 @@ with sync_playwright() as pw:
   boot(p)
   ck('default light-blue theme',p.locator('html').get_attribute('data-ui-theme')=='day')
   ck('18 administrative district buttons',p.locator('.dong-button').count()==18)
-  bg=p.locator('.district-panel').evaluate('(e)=>getComputedStyle(e).backgroundColor');ck('sidebar background is bright',all(int(x)>=220 for x in re.findall(r'\d+',bg)[:3]),bg)
+  bg=p.locator('html').evaluate('(e)=>getComputedStyle(e).getPropertyValue("--panel")');ck('sidebar background is bright',all(int(x)>=220 for x in re.findall(r'\d+',bg)[:3]),bg)
   p.screenshot(path=str(OUT/'day-NOT-3D.png'))
   scroll=p.locator('#sidebar-scroll');ck('sidebar has independent scrolling without clipping',scroll.evaluate('(e)=>getComputedStyle(e).overflowY==="auto"'))
   p.locator('.dong-button[data-id="seogu-18"]').scroll_into_view_if_needed();click(p,'.dong-button[data-id="seogu-18"]')
   ck('bottom-most dong reachable by scrolling','동천동' in p.locator('#crumb-dong').inner_text())
-  ck('chosen district original BI displayed','동천동' in p.locator('#selected-bi').inner_text())
+  ck('chosen district original BI displayed','동천동' in p.locator('#selected-bi img').get_attribute('alt'))
   ck('original BI image loaded',p.locator('#selected-bi img').evaluate('(e)=>e.complete&&e.naturalWidth>0'))
   click(p,'#tab-layers');ck('independent layer tab opens',not p.locator('#sidebar-layers').is_hidden())
   p.locator('#layer-options').locator('input').last.scroll_into_view_if_needed();ck('last layer checkbox remains inside viewport',p.locator('#layer-options input').last.bounding_box() is not None)
@@ -70,7 +71,7 @@ with sync_playwright() as pw:
   click(p,'[data-action=close-detail]');click(p,'[data-action=safety-hub]');ck('9 independent disaster adapters',p.locator('.safety-card').count()==9)
   click(p,'[data-action=sd-fetch][data-id=sd-cold]');ck('explicit API fixture records reflected','1도형 반영' in p.locator('#card-sd-cold').inner_text())
   click(p,'[data-action=sd-solo][data-id=sd-cold]');ck('only selected API layer enabled',p.evaluate("Array.from(document.querySelectorAll('#layer-options input:checked')).map(x=>x.dataset.layer)")==['sd-cold'])
-  p.evaluate("window.__apiMode='error'");click(p,'[data-action=sd-fetch][data-id=sd-cold]');ck('upstream32 failure is visible','IP 오류 32' in p.locator('#card-sd-cold').inner_text());ck('previous normal fixture point not erased','위치 1개' in p.locator('.scene-caption').inner_text())
+  p.evaluate("window.__apiMode='error'");click(p,'[data-action=sd-fetch][data-id=sd-cold]');ck('upstream32 failure is visible','IP 오류 32' in p.locator('#card-sd-cold').inner_text());ck('previous normal fixture point not erased','위치 1개' in p.locator('#point-count').inner_text())
   p.evaluate("window.__apiMode='many'");start=p.evaluate('window.__requests.length');click(p,'[data-action=sd-fetch][data-id=sd-road]');p.wait_for_timeout(1000);ck('bounded collection stops at4pages',p.evaluate('window.__requests.slice('+str(start)+').filter(u=>u.includes("kind=sd-road")).length')==4);ck('partial is staging not normal loaded','검수 대기' in p.locator('#card-sd-road').inner_text())
   click(p,'[data-action=sd-settings]');ck('key/IP constraints clearly stated','SAFETYDATA_KEYS_JSON' in p.locator('#detail-body').inner_text() and '32' in p.locator('#detail-body').inner_text())
   click(p,'[data-action=close-detail]');click(p,'[data-action=native-sun]');ck('5minute replay is visible','5분 단위 재생' in p.locator('#detail-body').inner_text());ck('timeinput step300',p.locator('#native-sun-time').get_attribute('step')=='300');ck('slider step5',p.locator('#native-sun-slider').get_attribute('step')=='5')

@@ -1,0 +1,67 @@
+BROWSER READY
+SETTING CONTENT
+LOADING MODULES
+MODULES READY
+CHECK Boundary clearly NOT 3D True
+CHECK All18 dong controls True
+CHECK Baseline parks retained True
+CHECK Infrastructure categories searchable True
+CHECK Category name filter True
+CHECK School dataset52point52polygons True
+CHECK Solo selection hides park layers True
+CHECK Point versus area disclosure True
+CHECK Dong selection retained with infrastructure True
+CHECK Dong schools subset True
+CHECK Overview restores selected school layer True
+CHECK Sports only locations14areas110 True
+CHECK School hidden after sports True
+CHECK Multi-select combines explicit categories True
+CHECK Library83locations4areas True
+CHECK Second solo click turns category off True
+CHECK Bundled category childcare True
+CHECK Bundled category civic True
+CHECK Bundled category culture True
+CHECK Bundled category kindergarten True
+CHECK Bundled category medical True
+CHECK Bundled category bus True
+CHECK Bundled category parking True
+CHECK Parking point+areas not a facility census True
+CHECK Facility has provenance True
+CHECK Facility isolate one item True
+CHECK Facility restore counts True
+CHECK Search finds existing data True
+CHECK CSV matches filtered list True
+CHECK Unconnected cold shelter not invented True
+CHECK Unconnected layer state not0 True
+CHECK Civic18 incomplete explicit True
+CHECK 5779building geometry provenance True
+CHECK Historical childcare excluded True
+CHECK Clean and reality separated True
+CHECK NonWebGL quality is honestly unsupported True
+CHECK Label toggle changes only rendering True
+CHECK Actual approximate shade geometry computed True
+CHECK Height missing excluded note True
+CHECK Flat assumption explicit True
+CHECK Night is explicit no fake sun/shade True
+CHECK Weather points on map from fixture True
+CHECK Zero temperature kept True
+CHECK Observation time retained True
+CHECK Grid not weather station disclosure True
+CHECK Forecast slots two True
+CHECK Forecast becomes separate visible layer True
+CHECK Air layer enabled True
+CHECK Air flag shown rather than normal True
+CHECK Air observation not invented district average True
+CHECK No fictional snow routes True
+CHECK Official grit metadata dated True
+CHECK Operation stale legend True
+CHECK Operational import visible True
+CHECK Expired completion shown stale True
+CHECK Desktop no page JS errors True
+SETTING CONTENT
+LOADING MODULES
+MODULES READY
+CHECK Mobile catalog no horizontal overflow True
+CHECK Mobile all categories navigable True
+CHECK Mobile no JS errors True
+{"checks": 59, "passed": 59, "failures": []}

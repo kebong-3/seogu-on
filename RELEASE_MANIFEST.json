@@ -1,7 +1,6 @@
 {
-  "version": "0.6.0",
-  "packagedAt": "2026-09-28T16:15:07.843553+00:00",
-  "scope": "Source and evidence. New BI18 + local records674. SafetyData9 definitions are not authenticated live data. Excludes this manifest, generated dist/runtime and update-manifest.",
+  "version": "0.6.1",
+  "scope": "Source and recorded tests; excludes self, UPDATE_MANIFEST, generated dist/runtime. Local UI update, not deployed.",
   "files": [
     {
       "path": ".env.example",
@@ -25,8 +24,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2534,
-      "sha256": "8b5edba874020b3113b5eb3c230cd0a4c2d4562f4de7c7cedf99b09b97728f62"
+      "bytes": 2472,
+      "sha256": "5a19792b13baff051cf937cf8158f24d7ba024f31f9b643658f3300d994df80c"
     },
     {
       "path": "SECURITY.md",
@@ -35,18 +34,18 @@
     },
     {
       "path": "START_HERE.md",
-      "bytes": 4687,
-      "sha256": "27b69eabbcaccc3c2145aeb53a2094b6cbf4595f921260a1a8e4a93257a6c7f6"
+      "bytes": 1874,
+      "sha256": "80a0f817b6cee265adaef084e59d3b251d1cdfe75da6e34f98993f7dc6409560"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 9426,
-      "sha256": "1b060298439a00b5e0526b0a7bb73fdab3222927cccdedcc9c6c8dc21d5b17f0"
+      "bytes": 10006,
+      "sha256": "5f1f1be1fc7472de4ec8905d614b3f5d06c6564b321f4adaa50b5e075d1f4ab9"
     },
     {
       "path": "api/city-config.js",
       "bytes": 521,
-      "sha256": "8cd13872beb249bc84588dd9ab907311ebbd5fbec3b7a153872072748f16c058"
+      "sha256": "fb541422df7f11896a991ef41c4b06398ba806c8b955b7147558a210b8331455"
     },
     {
       "path": "api/city-data.js",
@@ -864,19 +863,214 @@
       "sha256": "425ed08ad5862689f14e406cde4d090591b7e0104975fc3a54eb3bf57ecec793"
     },
     {
+      "path": "docs/v061/CLEAN_PACKAGE_CHECK.json",
+      "bytes": 3186,
+      "sha256": "e0cf4319058f7791dfc17b95035684c104ca43bb2c720b56a7028fe23f30fb8b"
+    },
+    {
+      "path": "docs/v061/DEPLOY.md",
+      "bytes": 2522,
+      "sha256": "a0281e701ac40cce26d49cd6f522d286a5f4c1740281eb7a200c351ddc20b822"
+    },
+    {
+      "path": "docs/v061/DEPLOYMENT_CHECK.json",
+      "bytes": 5229,
+      "sha256": "d10b8b22b93132769ec7dada03336f73a8368d7da0911b13921f172e11bf11bd"
+    },
+    {
+      "path": "docs/v061/DESIGN.md",
+      "bytes": 3461,
+      "sha256": "69e3c64bc1e799f4880fcda80cf3660be88f5f3041dbaba1cd9a33d5eadda209"
+    },
+    {
+      "path": "docs/v061/FLOW_TEST_RESULTS.json",
+      "bytes": 1687,
+      "sha256": "51627c732af657f21409a183fc06a77951de337205323791ebaf89b3ce43ee1f"
+    },
+    {
+      "path": "docs/v061/PACKAGE_SCAN.json",
+      "bytes": 256,
+      "sha256": "10fce49ee570a26f646c8cddaa65cdc2f4c221ce02935bd9c5c7456c76d92604"
+    },
+    {
+      "path": "docs/v061/RELEASE_AUDIT.json",
+      "bytes": 1197,
+      "sha256": "d845173cf7f1ee918fffe2e003cc4b060c72cae08ba7fd3dff2b6dafefc9be37"
+    },
+    {
+      "path": "docs/v061/TEST_REPORT.md",
+      "bytes": 2955,
+      "sha256": "7e4ce6adb7788412903f91ea276acbd28e55a8e9c96479654c4e980e41442639"
+    },
+    {
+      "path": "docs/v061/clean-verify.txt",
+      "bytes": 67285,
+      "sha256": "7246c2665fdb8ad7591760be7bd66862150712bc8cae31359883256d4311687d"
+    },
+    {
+      "path": "docs/v061/flow-run.txt",
+      "bytes": 757,
+      "sha256": "01faf98109a4524b7bfa647d0ebc8677a9fddf1a89fc9a5b4ea6fed89b473e4a"
+    },
+    {
+      "path": "docs/v061/record-run.txt",
+      "bytes": 1012,
+      "sha256": "e25b3ffa85ff0951afd9fdca9369a3661f0a8ecf314618f3e98fdcc4b03b34ed"
+    },
+    {
+      "path": "docs/v061/records-ui/record-workflow-NOT-3D.png",
+      "bytes": 539733,
+      "sha256": "0ca68130973cdce8fae9ff3570711e053296af861ac1c8e05ac1afc70ea38b43"
+    },
+    {
+      "path": "docs/v061/records-ui/results.json",
+      "bytes": 2757,
+      "sha256": "13e35f19f90227aebf59e42b057c00f5ea64788d630c50ea23aef22da10ec289"
+    },
+    {
+      "path": "docs/v061/records-ui/school-and-source-NOT-3D.png",
+      "bytes": 502257,
+      "sha256": "18f0fd6086f4f16a074b0454e2af6793d493b29f9b8a8234f78bb71e6c73aed3"
+    },
+    {
+      "path": "docs/v061/regression-run.txt",
+      "bytes": 2555,
+      "sha256": "de82aa683cf332521c925954d26ae4ffeb8a4a45cb662fcc54996211d08f7fef"
+    },
+    {
+      "path": "docs/v061/regression-ui/mobile-infra-NOT-3D.png",
+      "bytes": 201205,
+      "sha256": "4d03046d16f48df74cd8b66c85ef2c914b505ea0e562ecfb1f14ae8c5b58be54"
+    },
+    {
+      "path": "docs/v061/regression-ui/results.json",
+      "bytes": 6168,
+      "sha256": "3f03a2aef96a178e93c4b2a07bee4f1265b44b92e83e9eba843a971df96da845"
+    },
+    {
+      "path": "docs/v061/regression-ui/school-boundary-NOT-3D.png",
+      "bytes": 500208,
+      "sha256": "42b4663751600700519d33f53e51311297e21724f0cadc54e04b61f5e13ad00b"
+    },
+    {
+      "path": "docs/v061/regression-ui/shade-boundary-NOT-3D.png",
+      "bytes": 486465,
+      "sha256": "6ea9445e6af8be4bf8fd0d97811bcc9d9e3afaadb2c8b66a8ee8e500b33efd18"
+    },
+    {
+      "path": "docs/v061/syntax.txt",
+      "bytes": 98,
+      "sha256": "8d72120caa53daece564189888616ee898308f82c2df79e24087a45c6f4fe495"
+    },
+    {
+      "path": "docs/v061/ui/appearance-2D.png",
+      "bytes": 535992,
+      "sha256": "5fbc52e69d3db1233ddbdf7e48ded784226fb970a50aacf50194ef132a7c1ef6"
+    },
+    {
+      "path": "docs/v061/ui/brand-detail.png",
+      "bytes": 12114,
+      "sha256": "3612f9e6a4f78fa88f02999f1af909fdf4db4d2f4f60704811dd3b7be8dc6695"
+    },
+    {
+      "path": "docs/v061/ui/district-2D.png",
+      "bytes": 397209,
+      "sha256": "1bbde01f9bbc3969734abf7fc111d0e3ba5fc2a8034704c3c149b47d2260b57a"
+    },
+    {
+      "path": "docs/v061/ui/district-detail.png",
+      "bytes": 10682,
+      "sha256": "1a338c4cbd8af721d5667e03fb29790a5f095c142e0d1bc67f7e2deb19c241d4"
+    },
+    {
+      "path": "docs/v061/ui/laptop-2D.png",
+      "bytes": 335515,
+      "sha256": "fa53f4ccf9bacd361abd9012d368f66680deb8c4f85822bf5a573d4ce1a64ff2"
+    },
+    {
+      "path": "docs/v061/ui/mobile-2D.png",
+      "bytes": 124465,
+      "sha256": "81f6a08df074c2f81cdd049be21279e52ed63379303861727c741c336f242f4e"
+    },
+    {
+      "path": "docs/v061/ui/night-2D.png",
+      "bytes": 515063,
+      "sha256": "7e480cf4ed0d467523e93a5d186257527bbf57d6dabc8b9ae2b6164716a1ab56"
+    },
+    {
+      "path": "docs/v061/ui/overview-2D.png",
+      "bytes": 405808,
+      "sha256": "110d813d7ca7a131dbd29284c617855e34c2e9bc1d620a42469c56cfdf69501c"
+    },
+    {
+      "path": "docs/v061/ui/results.json",
+      "bytes": 13874,
+      "sha256": "035ce4f7c390336231eed8671a2677ce21d128327238b4d8a633e8c2776b1455"
+    },
+    {
+      "path": "docs/v061/ui/sources-2D.png",
+      "bytes": 408890,
+      "sha256": "6a62a04d7573856d7544a88b0b659b14d0a9bffe14a53c4e8a6bc13690fe7808"
+    },
+    {
+      "path": "docs/v061/ui-run.txt",
+      "bytes": 4692,
+      "sha256": "3e0528dbdfa7b80bd9a98719074147b681fd53a1e4328bd60f701327509a6dc8"
+    },
+    {
+      "path": "docs/v061/unit.txt",
+      "bytes": 64956,
+      "sha256": "861bf02ad2b4292b12ddef6dd91656e9661a2959774c1b6b5488121697b80934"
+    },
+    {
+      "path": "docs/v061/v06-regression-run.txt",
+      "bytes": 1753,
+      "sha256": "bf84e0b9e25f6c4092d1d004134f50e4599c84ee7db8f2fb86191917e5c18900"
+    },
+    {
+      "path": "docs/v061/v06-regression-ui/appearance-NOT-3D.png",
+      "bytes": 538426,
+      "sha256": "84b5f0622bc7e8b9ad178527ca962f064bbce9cf968208222758320a43d0f63e"
+    },
+    {
+      "path": "docs/v061/v06-regression-ui/day-NOT-3D.png",
+      "bytes": 406075,
+      "sha256": "75e1eec444a7b54f8b97b3a5a9dae3986f61f5f79c82cae8e49f477200eddaa2"
+    },
+    {
+      "path": "docs/v061/v06-regression-ui/local-heat-NOT-3D.png",
+      "bytes": 500071,
+      "sha256": "38c29f88bc84c822bdac11208f49217b0beec8fc60991d07ee763b9a6dc77308"
+    },
+    {
+      "path": "docs/v061/v06-regression-ui/mobile-NOT-3D.png",
+      "bytes": 206997,
+      "sha256": "5724d4fefd175022074c67c0272ae810a149ed87dd685db1a49aeb2d498f4d40"
+    },
+    {
+      "path": "docs/v061/v06-regression-ui/results.json",
+      "bytes": 5402,
+      "sha256": "bd360737cc901cf4e3658cda6aca60fce97c3e68189f915e994dcdb71fd18bf6"
+    },
+    {
+      "path": "docs/v061/verify.txt",
+      "bytes": 67286,
+      "sha256": "1c6c117a2337b21a10402c86c1e0c1ba2a7b25e493f5b65f8d4a9b54800068ae"
+    },
+    {
       "path": "index.html",
-      "bytes": 8011,
-      "sha256": "95a425baacec74cf1e77fd5fe24875ffce84a1bc702200f07dfda5a2904018b6"
+      "bytes": 8856,
+      "sha256": "ed9a94f56cc427558a8b5160724e0e42b48aecb392142088684fd754953055bf"
     },
     {
       "path": "package-lock.json",
       "bytes": 276,
-      "sha256": "1a0e714ede29a893b831fdb9557526b0b0ff18ff6d9b39208c843b1dccae7933"
+      "sha256": "42496912f0f2327b14a4051e7ae084fa8ecd6394dd30544f3a022005876f8258"
     },
     {
       "path": "package.json",
-      "bytes": 1189,
-      "sha256": "d132f4b0eed77c8601f84aab38047c7ad905d6e5d7976d86cbaa7839535b9f7c"
+      "bytes": 1237,
+      "sha256": "d942865b0f9dd5c1c5f2cb71a6a1d7d49e832ccf530386c589c23531dc9aed6f"
     },
     {
       "path": "preview/design-preview.html",
@@ -982,6 +1176,16 @@
       "path": "public/brand/seogu-ci.png",
       "bytes": 12557,
       "sha256": "18962a6574ea1f6d58451b493e0b376dbc8d35a3eaf88c805c21f03434dad530"
+    },
+    {
+      "path": "public/brand/seogu-on-symbol.svg",
+      "bytes": 1575,
+      "sha256": "3a79719305aaeddab4661b84b1b7367d6b29f38b2b8954a64da075e99b354e67"
+    },
+    {
+      "path": "public/brand/seogu-on-wordmark.svg",
+      "bytes": 7793,
+      "sha256": "beb595073a8d8d75aa75bde2b86c19a136d0b2c4f5ebf7f402762ca852532854"
     },
     {
       "path": "public/brand/seogu-slogan.png",
@@ -1270,8 +1474,8 @@
     },
     {
       "path": "public/favicon.svg",
-      "bytes": 284,
-      "sha256": "316e7db199da2e7fb5b7bd7002f1c87c447c456491b06a8173d93ffe351cb537"
+      "bytes": 1575,
+      "sha256": "3a79719305aaeddab4661b84b1b7367d6b29f38b2b8954a64da075e99b354e67"
     },
     {
       "path": "public/model.html",
@@ -1280,8 +1484,8 @@
     },
     {
       "path": "scripts/audit-release.mjs",
-      "bytes": 2439,
-      "sha256": "190dfa23828271d03378115bb51cbbb38b27b0e8736a1e71e77b1ca90e1c588e"
+      "bytes": 2441,
+      "sha256": "d1edb260d2fe7c2bacd6e751b2b541027ad12e678c2da3ecb8ce58bbd7cf9a55"
     },
     {
       "path": "scripts/build.mjs",
@@ -1315,8 +1519,8 @@
     },
     {
       "path": "scripts/verify-release.mjs",
-      "bytes": 6303,
-      "sha256": "055d00505b39e8e3ef60042daa156b4ea31fc157c8edc3b7b1baa81c7c4d3cf2"
+      "bytes": 6497,
+      "sha256": "7f5743290a01224a7209d037c9fbce9a1791d94a99be95e09b3a6ce311de8ba4"
     },
     {
       "path": "server/catalog.js",
@@ -1405,8 +1609,8 @@
     },
     {
       "path": "src/city/app.js",
-      "bytes": 56935,
-      "sha256": "22c04f3d5e8c19045604c5cd0e21cde374d47f26c32d4b4164747f80def3c0dd"
+      "bytes": 57226,
+      "sha256": "bfb098179352883e6086df8b117390cf28dfd80d9d908941c6c08d3a673d335e"
     },
     {
       "path": "src/city/appearance.css",
@@ -1435,8 +1639,8 @@
     },
     {
       "path": "src/city/experience.js",
-      "bytes": 10681,
-      "sha256": "0c3f471177265042ceb577f490f9dca1fd8773d1a246479f4fa1cac14feae55f"
+      "bytes": 11649,
+      "sha256": "73263d8aa66db18e54d8e3a6d41c797d30134341a8bdfc200771aa225380a4e3"
     },
     {
       "path": "src/city/finish-tools.js",
@@ -1452,6 +1656,11 @@
       "path": "src/city/graphics.js",
       "bytes": 3977,
       "sha256": "6e1c48aad73040c1e0f291d7d492e0b3464d219573bb123f8177320e27304c28"
+    },
+    {
+      "path": "src/city/identity.css",
+      "bytes": 17207,
+      "sha256": "a5d96dbf6d3ad7ba1299ad2630d99af116fd764dc4383ae80d1d9d273679cc72"
     },
     {
       "path": "src/city/infrastructure.js",
@@ -1660,8 +1869,8 @@
     },
     {
       "path": "tests/city-final-ui.py",
-      "bytes": 8074,
-      "sha256": "31b516b408e1a0603ae699c065bd647a84453898a458c0c18b7e7533ff036770"
+      "bytes": 8123,
+      "sha256": "dfe9503d66a58d3050503281ee7f2cbfb725ed65672f6248a67022584e2b81f4"
     },
     {
       "path": "tests/city-final.test.mjs",
@@ -1675,8 +1884,8 @@
     },
     {
       "path": "tests/city-regression-ui.py",
-      "bytes": 13338,
-      "sha256": "572fe1b215743babfc42745177f5530e0000fa1072ca20cfa995536be579b0b6"
+      "bytes": 13387,
+      "sha256": "cea80fa31fe03ca1d43754c9d68b8a71add36e361406a4bd978f04d50da04b81"
     },
     {
       "path": "tests/city-ui.py",
@@ -1735,18 +1944,28 @@
     },
     {
       "path": "tests/v06-flow.py",
-      "bytes": 6378,
-      "sha256": "a188ae333d8e51aae176957bd5c01c44a958c612a83898f3c6dbe27ff183da31"
+      "bytes": 6379,
+      "sha256": "902069126bdd5bb232a0083f7d86c3dea26c641c318844c71786ff25b1dd186f"
     },
     {
       "path": "tests/v06-ui.py",
-      "bytes": 11137,
-      "sha256": "5e8d309559bfc66b9f1d6a38f7fe2d37fc90668cacfa0aa372e41f530281579c"
+      "bytes": 11335,
+      "sha256": "07c76bcd4a51efbc6512fbf57d0c06f2f425171613f35fa8c502d8e88cd6a6da"
     },
     {
       "path": "tests/v06.test.mjs",
-      "bytes": 10586,
-      "sha256": "4f4f5b6540a8ebd849e352ce6f619aca19b7c7578962a05cdfe7f291e5a919d1"
+      "bytes": 10618,
+      "sha256": "5090314c631130824e422f5f5fe2cbc8d113dd0af5fb9cd03a8e49a6d3b42b38"
+    },
+    {
+      "path": "tests/v061-ui.py",
+      "bytes": 11507,
+      "sha256": "6021a7fc4aba2518cab0f79dec83218619377b7ca2cf5a5f130294bfee387304"
+    },
+    {
+      "path": "tests/v061.test.mjs",
+      "bytes": 3039,
+      "sha256": "000b46b226eaf2104fc16cbfae40a02a35a5eabbfd5bcea6af78f5b68551c66f"
     },
     {
       "path": "tools/safety-key-import.html",
