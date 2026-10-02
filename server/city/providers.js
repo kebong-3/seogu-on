@@ -13,6 +13,16 @@ export async function readProvider(kind,q,{env=process.env,fetcher=fetch}={}){
  if(kind?.startsWith('infra-'))return readInfrastructure(kind,q,{env,fetcher});
  const scope=scopeFor(q.get('dong')),bounds=boundsOf(scope),page=Math.max(1,Number(q.get('page')||1));if(!Number.isInteger(page)||page>150)throw new HttpError(400,'페이지 범위 오류');const opts={fetcher};const limit=500;let body,items,features=[],total=null,complete=true,note='',sourceName='',sourceDate=null;
  const portal=()=>requireKey(env.DATA_GO_KR_SERVICE_KEY,'공공데이터');
+ const airRequest=async(path,params)=>{
+  const keys=[...new Set([env.AIRKOREA_SERVICE_KEY,env.DATA_GO_KR_SERVICE_KEY].filter(Boolean))];
+  if(!keys.length)throw new HttpError(503,'에어코리아 인증키가 설정되지 않았습니다.','NOT_CONFIGURED');
+  let last;
+  for(const [index,key] of keys.entries())try{
+   const result=await json(endpoint(`${STANDARD}/B552584/${path}`,{...params,serviceKey:key}),opts);
+   records(result);return result;
+  }catch(e){last=e;console.warn('[air] key candidate',index===0?'primary':'fallback',String(e.code||e.message||'UNKNOWN').replace(/[^A-Z0-9_-]/gi,'').slice(0,64));}
+  throw last;
+ };
  if(kind==='forecast'){const lon=n(q.get('lon')),lat=n(q.get('lat'));if(!inside([lon,lat],scope))throw new HttpError(400,'서구의 선택 구역 안에서 지점을 선택하세요.');return readForecast(lon,lat,{env,fetcher});}else if(kind==='heat'){
   sourceName='재난안전데이터공유플랫폼 무더위쉼터';
   const params={serviceKey:requireKey(env.SAFETYDATA_SERVICE_KEY,'재난안전데이터'),pageNo:page,numOfRows:limit,returnType:'json'};
@@ -41,12 +51,12 @@ export async function readProvider(kind,q,{env=process.env,fetcher=fetch}={}){
   features=safeFeatures(features,scope).features;note=`${year}년 자료. 코드 ${sido}/${gugun}는 해당 연도 제공기관 코드입니다.`;
  }else if(kind==='air-stations'){
   sourceName='한국환경공단 에어코리아 측정소정보';
-  body=await json(endpoint(`${STANDARD}/B552584/MsrstnInfoInqireSvc/getMsrstnList`,{serviceKey:requireKey(env.AIRKOREA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY,'에어코리아'),returnType:'json',numOfRows:100,pageNo:1,addr:env.AIRKOREA_REGION_QUERY||'광주'}),opts);items=records(body);total=totalOf(body);complete=total===null?items.length<100:total<=100;
+  body=await airRequest('MsrstnInfoInqireSvc/getMsrstnList',{returnType:'json',numOfRows:100,pageNo:1,addr:env.AIRKOREA_REGION_QUERY||'광주'});items=records(body);total=totalOf(body);complete=total===null?items.length<100:total<=100;
   features=items.map((a,i)=>cleanPoint(`air-${a.stationName||i}`,a.stationName,a.dmY,a.dmX,{...featureMeta(sourceName),category:'air',stationName:text(a.stationName),address:text(a.addr),note:'dmX=위도, dmY=경도 · 명시된 측정소의 관측자료만 표시'},scope)).filter(Boolean);
  }else if(kind==='air'){
   const station=text(q.get('station'),80);if(!station)throw new HttpError(400,'측정소를 선택하세요.');
   const check=await readProvider('air-stations',new URLSearchParams(),{env,fetcher});if(!check.geojson.features.some(f=>f.properties.stationName===station))throw new HttpError(400,'서구 경계 내 실제 조회된 측정소만 선택할 수 있습니다.');
-  body=await json(endpoint(`${STANDARD}/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty`,{serviceKey:requireKey(env.AIRKOREA_SERVICE_KEY||env.DATA_GO_KR_SERVICE_KEY,'에어코리아'),returnType:'json',numOfRows:24,pageNo:1,stationName:station,dataTerm:'DAILY',ver:'1.3'}),opts);items=records(body).sort((a,b)=>String(b.dataTime).localeCompare(String(a.dataTime)));const a=items[0];if(!a)throw new HttpError(404,'관측자료가 없습니다.','NO_DATA');const value=k=>a[`${k}Flag`]?null:(n(a[`${k}Value`])>=0?n(a[`${k}Value`]):null);
+  body=await airRequest('ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty',{returnType:'json',numOfRows:24,pageNo:1,stationName:station,dataTerm:'DAILY',ver:'1.3'});items=records(body).sort((a,b)=>String(b.dataTime).localeCompare(String(a.dataTime)));const a=items[0];if(!a)throw new HttpError(404,'관측자료가 없습니다.','NO_DATA');const value=k=>a[`${k}Flag`]?null:(n(a[`${k}Value`])>=0?n(a[`${k}Value`]):null);
   return {ok:true,kind,station,observedAt:a.dataTime,pm10:value('pm10'),pm25:value('pm25'),pm10Flag:a.pm10Flag||null,pm25Flag:a.pm25Flag||null,sourceName:'한국환경공단 에어코리아',note:'선택한 측정소 자료입니다. 다른 위치/동 전체의 농도로 대체할 수 없습니다.',collectedAt:new Date().toISOString()};
  }else if(kind==='reverse'){
   const lon=n(q.get('lon')),lat=n(q.get('lat'));if(!inside([lon,lat],scope))throw new HttpError(400,'서구의 선택 구역 안에서 지점을 선택하세요.');
