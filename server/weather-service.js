@@ -20,7 +20,7 @@ export async function readWeather(lon,lat,{fetcher=fetch,now=new Date(),env=proc
   if(cache.has(id))return cache.get(id);
   const url=new URL('https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst');let decoded=key;try{decoded=decodeURIComponent(key);}catch{}
   for(const [k,v] of Object.entries({...grid,...base,serviceKey:decoded,pageNo:1,numOfRows:100,dataType:'JSON'}))url.searchParams.set(k,String(v));
-  const raw=await fetchJsonLimited(url,9500,fetcher);if(raw.response?.header?.resultCode!=='00')throw Error('UPSTREAM_FAILED');
+  const raw=await fetchJsonLimited(url,9500,fetcher);if(raw.response?.header?.resultCode!=='00')throw Error('KMA_RESULT_'+String(raw.response?.header?.resultCode||'MISSING').replace(/[^A-Z0-9_-]/gi,'').slice(0,24));
   const items=raw.response?.body?.items?.item;if(!Array.isArray(items)||!items.length)throw Error('NO_OBSERVATIONS');
   const accepted=['T1H','RN1','REH','WSD','VEC','PTY'];const values={};for(const r of items){if(r.baseDate!==base.base_date||r.baseTime!==base.base_time)throw Error('OBSERVATION_TIME_MISMATCH');if(accepted.includes(r.category)&&r.obsrValue!==null&&r.obsrValue!==undefined&&String(r.obsrValue).trim()!==''&&Number.isFinite(Number(r.obsrValue))&&Number(r.obsrValue)>-100&&Number(r.obsrValue)<1000)values[r.category]=Number(r.obsrValue);}
   if(!Object.keys(values).length)throw Error('NO_OBSERVATIONS');
