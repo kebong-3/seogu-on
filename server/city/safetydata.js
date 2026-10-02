@@ -21,7 +21,8 @@ function parsedEnv(value,label){if(!value)return {};try{const a=JSON.parse(value
 export function getSafetyKey(source,env=process.env){
  const bag=parsedEnv(env.SAFETYDATA_KEYS_JSON,'통합 서비스키');
  // Both provider identifier and friendly local id are accepted; never accept client key parameters.
- const value=env[source.keyEnv]||bag[source.code]||bag[source.id]||(source.id==='sd-heat'?env.SAFETYDATA_SERVICE_KEY:null)||'';
+ const manual=env[source.keyEnv];
+ const value=(manual&&manual!=='INPUT_REQUIRED'?manual:null)||bag[source.code]||bag[source.id]||(source.id==='sd-heat'?env.SAFETYDATA_SERVICE_KEY:null)||'';
  if(value==='')return '';
  if(typeof value!=='string'||!value.trim()||value.length>2048||/[\r\n\u0000]/.test(value))throw new HttpError(503,'서비스키 값의 형식을 확인하세요. 키는 문자열 한 개여야 합니다.','CONFIG_INVALID');
  return value.trim();
