@@ -293,7 +293,7 @@ export const SAFETY_SOURCES=[
     "id": "sd-beds",
     "code": "DSSP-IF-00242",
     "title": "의료기관 병상 원자료",
-    "sourceName": "국립중앙의료원 / 재난안전데이터공유플랫폼",
+    "sourceName": "보건복지부 / 재난안전데이터공유플랫폼",
     "sourceUrl": "https://www.safetydata.go.kr/disaster-data/view?dataSn=227",
     "requestMode": "national",
     "kind": "observation",
