@@ -17,5 +17,5 @@ export default async function handler(req,res){
    const maxAge=safety?(['sd-aws','sd-road','sd-beds'].includes(kind)?30*60000:24*3600000):24*3600000;
    if(old&&Date.now()-old.at<maxAge&&(safety||['heat','emergency','accidents','air-stations'].includes(kind))){send(res,200,{...old.body,stale:true,cacheState:'last-good',warning:'갱신 실패 · 이전 수신시각의 자료입니다. 현재 상태로 해석하지 마세요.'});return;}throw e;
   }finally{inflight.delete(id);}
- }catch(e){fail(res,e);}
+ }catch(e){if(['air-stations','air','forecast'].includes(kind))console.warn('[city-data] upstream status',kind,e.code||'UNKNOWN');fail(res,e);}
 }
