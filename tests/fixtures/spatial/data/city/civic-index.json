@@ -1,0 +1,17 @@
+{
+ "checkedAt": "2026-01-02",
+ "rows": [
+  {
+   "dongId": "seogu-01",
+   "dongName": "가람동",
+   "matches": [
+    {
+     "id": "c1",
+     "name": "가람동 행정복지센터",
+     "address": "가람로 10"
+    }
+   ],
+   "review": "명칭 대응만 확인"
+  }
+ ]
+}

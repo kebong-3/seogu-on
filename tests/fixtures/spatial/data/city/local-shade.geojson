@@ -1,0 +1,43 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "sourceName": "시험 그늘막",
+  "sourceDate": "2026-01-06",
+  "sourceUrl": "https://example.invalid/shade",
+  "sourceRows": 3,
+  "accepted": 2,
+  "state": "published"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.852,
+     35.1325
+    ]
+   },
+   "properties": {
+    "id": "s1",
+    "name": "그늘막 1",
+    "facilityType": "그늘막(고정형)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.8655,
+     35.135
+    ]
+   },
+   "properties": {
+    "id": "s2",
+    "name": "그늘막 2",
+    "facilityType": "그늘막(스마트형)"
+   }
+  }
+ ]
+}

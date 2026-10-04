@@ -1,0 +1,16 @@
+{
+ "infrastructure": {
+  "bus": {
+   "title": "버스정류장"
+  },
+  "school": {
+   "title": "학교"
+  },
+  "pharmacy": {
+   "title": "약국"
+  }
+ },
+ "notConnected": [
+  "cold"
+ ]
+}

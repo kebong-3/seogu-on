@@ -1120,5 +1120,3158 @@
     "rows": 252,
     "sourceDate": "2019-09-16",
     "reason": "2019년 9월 종료 운영자료. 현행 무더위쉼터로 오인할 수 있어 기본 지도에 싣지 않음."
+  },
+  "audit": {
+    "generatedBy": "scripts/data/audit-quality.mjs",
+    "boundary": "public/data/admin-dongs.geojson (기준일 2026-07-01) 18개 행정동 합집합",
+    "meaning": "자동 점검 결과입니다. 찾아낸 항목을 고치거나 지우지 않았고, 현장 확인을 뜻하지 않습니다. 면 도형이 경계에 걸치는 것(partlyOutsideDistrict)은 오류가 아닐 수 있습니다.",
+    "totals": {
+      "files": 54,
+      "features": 2452,
+      "coincidentPointGroups": 48,
+      "duplicateIds": 0,
+      "sameNameWithin30m": 108,
+      "outsideDistrict": 0,
+      "partlyOutsideDistrict": 0,
+      "suspiciousCoordinates": 0,
+      "missingNames": 39,
+      "missingSourceName": 0,
+      "pointsWithoutDong": 0
+    },
+    "files": {
+      "public/data/city/infra/bus.geojson": {
+        "state": "has-data",
+        "features": 433,
+        "points": 433,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 433,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 107,
+          "examples": [
+            {
+              "name": "광주종합버스터미널",
+              "ids": [
+                "osm-node-2488055693",
+                "osm-node-13234902868"
+              ],
+              "meters": 9
+            },
+            {
+              "name": "광주종합버스터미널",
+              "ids": [
+                "osm-node-6224731094",
+                "osm-node-13234864094"
+              ],
+              "meters": 10
+            },
+            {
+              "name": "월드컵경기장",
+              "ids": [
+                "osm-node-3191155123",
+                "osm-node-3191155124"
+              ],
+              "meters": 28
+            },
+            {
+              "name": "신세계백화점이마트",
+              "ids": [
+                "osm-node-4814534768",
+                "osm-node-13238487739"
+              ],
+              "meters": 9
+            },
+            {
+              "name": "신세계백화점",
+              "ids": [
+                "osm-node-4814534769",
+                "osm-node-13236705767"
+              ],
+              "meters": 14
+            },
+            {
+              "name": "신세계백화점(북)",
+              "ids": [
+                "osm-node-4814534770",
+                "osm-node-13236705766"
+              ],
+              "meters": 10
+            },
+            {
+              "name": "농성SK뷰",
+              "ids": [
+                "osm-node-4815414481",
+                "osm-node-7262937896"
+              ],
+              "meters": 10
+            },
+            {
+              "name": "서구청",
+              "ids": [
+                "osm-node-4815414486",
+                "osm-node-13228069158"
+              ],
+              "meters": 14
+            },
+            {
+              "name": "돌고개역(서)",
+              "ids": [
+                "osm-node-4815414489",
+                "osm-node-13228069159"
+              ],
+              "meters": 12
+            },
+            {
+              "name": "화정중흥파크",
+              "ids": [
+                "osm-node-4818130442",
+                "osm-node-13228069157"
+              ],
+              "meters": 7
+            },
+            {
+              "name": "화정중흥파크",
+              "ids": [
+                "osm-node-4818130443",
+                "osm-node-13238487738"
+              ],
+              "meters": 11
+            },
+            {
+              "name": "광천치안센터",
+              "ids": [
+                "osm-node-4818130446",
+                "osm-node-13234902867"
+              ],
+              "meters": 4
+            },
+            {
+              "name": "광천치안센터",
+              "ids": [
+                "osm-node-4818130447",
+                "osm-node-13234864093"
+              ],
+              "meters": 11
+            },
+            {
+              "name": "양동시장역(북)",
+              "ids": [
+                "osm-node-4818188161",
+                "osm-node-4818188162"
+              ],
+              "meters": 24
+            },
+            {
+              "name": "양동시장역(북)",
+              "ids": [
+                "osm-node-4818188161",
+                "osm-node-13228069160"
+              ],
+              "meters": 16
+            }
+          ]
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/childcare-official.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/childcare.geojson": {
+        "state": "has-data",
+        "features": 17,
+        "points": 10,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 17,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/civic.geojson": {
+        "state": "has-data",
+        "features": 18,
+        "points": 11,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 18,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/cold.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/community.geojson": {
+        "state": "has-data",
+        "features": 1,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 1,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/culture.geojson": {
+        "state": "has-data",
+        "features": 11,
+        "points": 6,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 11,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/ev.geojson": {
+        "state": "has-data",
+        "features": 4,
+        "points": 4,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 4,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/fire.geojson": {
+        "state": "has-data",
+        "features": 5,
+        "points": 2,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 5,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/government.geojson": {
+        "state": "has-data",
+        "features": 17,
+        "points": 3,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 17,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/grit.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/kindergarten.geojson": {
+        "state": "has-data",
+        "features": 25,
+        "points": 18,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 25,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/library.geojson": {
+        "state": "has-data",
+        "features": 4,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 4,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/medical.geojson": {
+        "state": "has-data",
+        "features": 130,
+        "points": 118,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 130,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/museum.geojson": {
+        "state": "has-data",
+        "features": 3,
+        "points": 1,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 3,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/parking.geojson": {
+        "state": "has-data",
+        "features": 287,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 287,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/pharmacy.geojson": {
+        "state": "empty",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/playground.geojson": {
+        "state": "has-data",
+        "features": 126,
+        "points": 8,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 126,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/police.geojson": {
+        "state": "has-data",
+        "features": 10,
+        "points": 2,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 10,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/post.geojson": {
+        "state": "has-data",
+        "features": 12,
+        "points": 6,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 12,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/rail.geojson": {
+        "state": "has-data",
+        "features": 9,
+        "points": 8,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 9,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/recycle.geojson": {
+        "state": "empty",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/school.geojson": {
+        "state": "has-data",
+        "features": 104,
+        "points": 52,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 52,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 2,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.881315,
+                35.14925067
+              ],
+              "ids": [
+                "school-B000012316",
+                "school-B000008938"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8784967,
+                35.1446869
+              ],
+              "ids": [
+                "school-B000012317",
+                "school-B000008939"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/shade-structures.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/snow-priority.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/snow-routes.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/sports.geojson": {
+        "state": "has-data",
+        "features": 124,
+        "points": 14,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 124,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/toilet.geojson": {
+        "state": "has-data",
+        "features": 18,
+        "points": 6,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 18,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/university.geojson": {
+        "state": "empty",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/welfare-official.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/infra/welfare.geojson": {
+        "state": "has-data",
+        "features": 1,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-27T02:33:08Z",
+        "featuresWithoutSourceDate": 1,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/local-cooling.geojson": {
+        "state": "has-data",
+        "features": 7,
+        "points": 7,
+        "sourceDate": "2026-01-06",
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-28T15:22:13Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/local-flood-history.geojson": {
+        "state": "has-data",
+        "features": 468,
+        "points": 468,
+        "sourceDate": "2025-11-24",
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-28T15:22:13Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 16,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8883313,
+                35.15648354
+              ],
+              "ids": [
+                "local-flood-history-6",
+                "local-flood-history-9"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8818999,
+                35.1501855
+              ],
+              "ids": [
+                "local-flood-history-7",
+                "local-flood-history-68",
+                "local-flood-history-87"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8814767,
+                35.15050345
+              ],
+              "ids": [
+                "local-flood-history-15",
+                "local-flood-history-53"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8817359,
+                35.15417845
+              ],
+              "ids": [
+                "local-flood-history-17",
+                "local-flood-history-447"
+              ]
+            },
+            {
+              "coordinates": [
+                126.880911,
+                35.151585
+              ],
+              "ids": [
+                "local-flood-history-34",
+                "local-flood-history-365"
+              ]
+            },
+            {
+              "coordinates": [
+                126.880869,
+                35.151594
+              ],
+              "ids": [
+                "local-flood-history-39",
+                "local-flood-history-187"
+              ]
+            },
+            {
+              "coordinates": [
+                126.879842,
+                35.165577
+              ],
+              "ids": [
+                "local-flood-history-43",
+                "local-flood-history-375"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8805487,
+                35.15180455
+              ],
+              "ids": [
+                "local-flood-history-58",
+                "local-flood-history-419"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8817247,
+                35.15004264
+              ],
+              "ids": [
+                "local-flood-history-62",
+                "local-flood-history-83"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8368902,
+                35.15464557
+              ],
+              "ids": [
+                "local-flood-history-71",
+                "local-flood-history-82",
+                "local-flood-history-376"
+              ]
+            },
+            {
+              "coordinates": [
+                126.882878,
+                35.149514
+              ],
+              "ids": [
+                "local-flood-history-107",
+                "local-flood-history-369"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8248433,
+                35.13375533
+              ],
+              "ids": [
+                "local-flood-history-131",
+                "local-flood-history-442"
+              ]
+            },
+            {
+              "coordinates": [
+                126.822231,
+                35.10740338
+              ],
+              "ids": [
+                "local-flood-history-144",
+                "local-flood-history-438"
+              ]
+            },
+            {
+              "coordinates": [
+                126.88213,
+                35.151091
+              ],
+              "ids": [
+                "local-flood-history-362",
+                "local-flood-history-498"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8811784,
+                35.15088353
+              ],
+              "ids": [
+                "local-flood-history-423",
+                "local-flood-history-457"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/local-shade.geojson": {
+        "state": "has-data",
+        "features": 199,
+        "points": 199,
+        "sourceDate": "2026-01-06",
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-28T15:22:13Z",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 1,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8474064,
+                35.1482522
+              ],
+              "ids": [
+                "local-shade-74",
+                "local-shade-75"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/bus-info-terminal.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/cctv.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/child-protection-zone.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/civil-kiosk.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/cold-shelter.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/earthquake-shelter.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/emergency-bell.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/heat-shelter.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/security-light.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/senior-disabled-protection-zone.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/shade-shelter.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/toilet.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/official/traditional-market.geojson": {
+        "state": "not-connected",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/park-areas.geojson": {
+        "state": "has-data",
+        "features": 94,
+        "points": 0,
+        "sourceDate": "2026-09-26",
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 39,
+          "examples": [
+            {
+              "id": "osm-way-485053649",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-489969347",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-492964682",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-523948913",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-541286925",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-544958187",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-544958189",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-893655249",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-938793797",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-987272483",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-1019337095",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-1019342699",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-1019343491",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-1020495900",
+              "name": "이름 미등록 공원 도형"
+            },
+            {
+              "id": "osm-way-1090218925",
+              "name": "이름 미등록 공원 도형"
+            }
+          ]
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/facilities.geojson": {
+        "state": "empty",
+        "features": 0,
+        "points": 0,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/layers/libraries.geojson": {
+        "state": "has-data",
+        "features": 83,
+        "points": 83,
+        "sourceDate": null,
+        "sourceDateRange": [
+          "2025-11-09",
+          "2026-08-06"
+        ],
+        "collectedAt": "2026-09-26T19:03:04.495411+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 1,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8719446395,
+                35.1639854873
+              ],
+              "ids": [
+                "libraries:4c9c56f622fa9bfccd60",
+                "libraries:801b0428834d9deeaa45"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/layers/parking.geojson": {
+        "state": "has-data",
+        "features": 67,
+        "points": 67,
+        "sourceDate": "2026-08-06",
+        "sourceDateRange": [
+          "2026-08-06"
+        ],
+        "collectedAt": "2026-09-26T19:02:31.527438+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 4,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.9013634,
+                35.15509075
+              ],
+              "ids": [
+                "parking:176-2-000068",
+                "parking:176-2-000056"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8465404,
+                35.15982792
+              ],
+              "ids": [
+                "parking:176-2-000067",
+                "parking:176-2-000066",
+                "parking:176-2-000063"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8526003,
+                35.16667956
+              ],
+              "ids": [
+                "parking:176-2-000065",
+                "parking:176-2-000064",
+                "parking:176-2-000059"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8901112,
+                35.15203177
+              ],
+              "ids": [
+                "parking:176-2-000027",
+                "parking:176-2-000020",
+                "parking:176-2-000019"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 1,
+          "examples": [
+            {
+              "name": "유촌동 주거환경개선지구",
+              "ids": [
+                "parking:176-2-000059",
+                "parking:176-2-000058"
+              ],
+              "meters": 24
+            }
+          ]
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/layers/parks.geojson": {
+        "state": "has-data",
+        "features": 87,
+        "points": 87,
+        "sourceDate": null,
+        "sourceDateRange": [
+          "2026-06-29",
+          "2026-08-06"
+        ],
+        "collectedAt": "2026-09-26T19:02:12.623029+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 5,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8573987,
+                35.13650107
+              ],
+              "ids": [
+                "parks:29140-00039",
+                "parks:29140-00035"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8764191,
+                35.14337133
+              ],
+              "ids": [
+                "parks:29140-00028",
+                "parks:29140-00024"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8577838,
+                35.16086468
+              ],
+              "ids": [
+                "parks:29140-00066",
+                "parks:29140-00062"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8886003,
+                35.15564453
+              ],
+              "ids": [
+                "parks:29140-00016",
+                "parks:29140-00012"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8422202,
+                35.15221868
+              ],
+              "ids": [
+                "parks:29140-00006",
+                "parks:29140-00004"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/layers/public-facilities.geojson": {
+        "state": "has-data",
+        "features": 58,
+        "points": 58,
+        "sourceDate": null,
+        "sourceDateRange": [
+          "2026-04-30",
+          "2026-08-06"
+        ],
+        "collectedAt": "2026-09-26T19:02:55.939065+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 19,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8777206,
+                35.156420477
+              ],
+              "ids": [
+                "public-facilities:82ec2ad1561fdcf66c0e",
+                "public-facilities:85e5a79d60a5f03f68e6"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8815305919,
+                35.1475601741
+              ],
+              "ids": [
+                "public-facilities:4af0321789caacb3f8b5",
+                "public-facilities:8f8a6a86839da03befff"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8737654,
+                35.14182727
+              ],
+              "ids": [
+                "public-facilities:f9aa04d2bb6ca81dece4",
+                "public-facilities:3904721a6979ac443f60",
+                "public-facilities:0cf8a0ce9d1289c5dcff"
+              ]
+            },
+            {
+              "coordinates": [
+                126.876911,
+                35.1435978343
+              ],
+              "ids": [
+                "public-facilities:d35a3b7b7a85a0f21e26",
+                "public-facilities:e68631b89ac8c838b424"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8432942221,
+                35.14994609
+              ],
+              "ids": [
+                "public-facilities:21e2a2a33652e6532370",
+                "public-facilities:6e7ab937aae3b6c38e99"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8432833214,
+                35.15650869
+              ],
+              "ids": [
+                "public-facilities:9fbb9afd16d41b0946d1",
+                "public-facilities:a05680295d51edc54972"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8302906,
+                35.11449975
+              ],
+              "ids": [
+                "public-facilities:9ca5ad3b83733da447d9",
+                "public-facilities:1329a649c834d0471dc2"
+              ]
+            },
+            {
+              "coordinates": [
+                126.86641,
+                35.14656434
+              ],
+              "ids": [
+                "public-facilities:b6ca7cac3b4f1475721d",
+                "public-facilities:6e982459f87593aa4557"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8670811,
+                35.1534637337
+              ],
+              "ids": [
+                "public-facilities:afc49cf79dc5a7ee2b7d",
+                "public-facilities:d6fb7fb240359a3d0e8b"
+              ]
+            },
+            {
+              "coordinates": [
+                126.860191855,
+                35.1315313668
+              ],
+              "ids": [
+                "public-facilities:cbd3c94f461ae67d1c1a",
+                "public-facilities:dccabe735f8cad89536e",
+                "public-facilities:f5f547e318b991fa591a"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8646705257,
+                35.1709037735
+              ],
+              "ids": [
+                "public-facilities:45eb3a10d93b47834695",
+                "public-facilities:ef7eed433ee6e342ee24",
+                "public-facilities:67c1047816a7c0839df3"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8818583,
+                35.12979872
+              ],
+              "ids": [
+                "public-facilities:f2e94d6f8f187ceb6531",
+                "public-facilities:d23e02c8ee9efcd597f8"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8889178,
+                35.15522263
+              ],
+              "ids": [
+                "public-facilities:15bcbeb79542582da878",
+                "public-facilities:953530f68cb171b64534",
+                "public-facilities:058a5f196100cd2385bb"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8896982181,
+                35.1567139191
+              ],
+              "ids": [
+                "public-facilities:2bbfa2b87cdc48284fe7",
+                "public-facilities:9d16c6710ee587b83ef9"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8571559,
+                35.12899182
+              ],
+              "ids": [
+                "public-facilities:7a1991e19d5a392fe055",
+                "public-facilities:666a91a7af9cdfb036ef",
+                "public-facilities:bab7acf738efb1956806"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/layers/shelter-schools.geojson": {
+        "state": "has-data",
+        "features": 30,
+        "points": 30,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-09-26T19:07:12.914282+00:00",
+        "featuresWithoutSourceDate": 30,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    }
   }
 }

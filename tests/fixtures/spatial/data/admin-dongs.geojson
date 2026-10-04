@@ -1,0 +1,87 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "sourceName": "시험용 가상 경계",
+  "sourceDate": "2026-01-01",
+  "sourceUrl": "https://example.invalid/dongs",
+  "boundaryType": "administrative-dong"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       126.85,
+       35.13
+      ],
+      [
+       126.86,
+       35.13
+      ],
+      [
+       126.86,
+       35.14
+      ],
+      [
+       126.85,
+       35.14
+      ],
+      [
+       126.85,
+       35.13
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "dongId": "seogu-01",
+    "dongName": "가람동",
+    "labelPoint": [
+     126.855,
+     35.135
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       126.86,
+       35.13
+      ],
+      [
+       126.87,
+       35.13
+      ],
+      [
+       126.87,
+       35.14
+      ],
+      [
+       126.86,
+       35.14
+      ],
+      [
+       126.86,
+       35.13
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "dongId": "seogu-02",
+    "dongName": "나래1동",
+    "labelPoint": [
+     126.865,
+     35.135
+    ]
+   }
+  }
+ ]
+}

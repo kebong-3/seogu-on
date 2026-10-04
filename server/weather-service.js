@@ -1,4 +1,5 @@
 import {fetchJsonLimited} from './http.js';
+import {keyCandidates,diagnose} from './diagnostics.js';
 // KMA published Lambert conformal grid conversion; 5 km grid, not point observations.
 export function kmaGrid(lon,lat){
   if(!Number.isFinite(lon)||!Number.isFinite(lat)||lon<126.7||lon>127.05||lat<34.98||lat>35.35)throw Error('지역 좌표 범위를 확인하세요.');
@@ -15,15 +16,15 @@ export function weatherBase(now=new Date()){
 }
 const cache=new Map();
 export async function readWeather(lon,lat,{fetcher=fetch,now=new Date(),env=process.env}={}){
-  const keys=[...new Set([env.KMA_SERVICE_KEY,env.DATA_GO_KR_SERVICE_KEY].filter(Boolean))];if(!keys.length)throw Error('KEY_MISSING');
+  const keys=keyCandidates(env.KMA_SERVICE_KEY,env.DATA_GO_KR_SERVICE_KEY);if(!keys.length)throw Error('KEY_MISSING');
   const grid=kmaGrid(lon,lat),base=weatherBase(now),id=JSON.stringify([grid,base]);
   if(cache.has(id))return cache.get(id);
   let raw,lastError;
   for(const [index,key] of keys.entries()){
    const url=new URL('https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst');let decoded=key;try{decoded=decodeURIComponent(key);}catch{}
    for(const [k,v] of Object.entries({...grid,...base,serviceKey:decoded,pageNo:1,numOfRows:100,dataType:'JSON'}))url.searchParams.set(k,String(v));
-   try{const candidate=await fetchJsonLimited(url,9500,fetcher);if(candidate.response?.header?.resultCode!=='00')throw Error('KMA_RESULT_'+String(candidate.response?.header?.resultCode||'MISSING').replace(/[^A-Z0-9_-]/gi,'').slice(0,24));raw=candidate;break;}
-   catch(e){lastError=e;console.warn('[weather] key candidate',index===0?'primary':'fallback',String(e.message||'UNKNOWN').replace(/[^A-Z0-9_-]/gi,'').slice(0,64));}
+   try{const candidate=await fetchJsonLimited(url,6000,fetcher);if(candidate.response?.header?.resultCode!=='00')throw Error('KMA_RESULT_'+String(candidate.response?.header?.resultCode||'MISSING').replace(/[^A-Z0-9_-]/gi,'').slice(0,24));raw=candidate;break;}
+   catch(e){lastError=e;console.warn('[weather] key candidate',index===0?'primary':'fallback',String(e.message||'UNKNOWN').replace(/[^A-Z0-9_-]/gi,'').slice(0,64));if(!['KEY_REJECTED','ACCESS_DENIED','QUOTA_EXCEEDED'].includes(diagnose(e)?.code))break;}
   }
   if(!raw)throw lastError;
   const items=raw.response?.body?.items?.item;if(!Array.isArray(items)||!items.length)throw Error('NO_OBSERVATIONS');

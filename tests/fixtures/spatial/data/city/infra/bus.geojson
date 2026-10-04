@@ -1,0 +1,80 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "sourceName": "시험 OSM",
+  "snapshotAt": "2026-02-03T00:00:00Z",
+  "coverage": "시험용 부분 자료"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.852,
+     35.132
+    ]
+   },
+   "properties": {
+    "id": "b1",
+    "name": "가람초교"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.855,
+     35.135
+    ]
+   },
+   "properties": {
+    "id": "b2",
+    "name": "가람시장"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.865,
+     35.135
+    ]
+   },
+   "properties": {
+    "id": "b3",
+    "name": "나래역"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.868,
+     35.138
+    ]
+   },
+   "properties": {
+    "id": "b4",
+    "name": "나래공원"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.88,
+     35.135
+    ]
+   },
+   "properties": {
+    "id": "b5",
+    "name": "경계밖 정류장"
+   }
+  }
+ ]
+}

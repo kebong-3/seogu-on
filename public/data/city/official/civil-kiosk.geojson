@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[],"metadata":{"state":"not-connected","coverage":"검수된 자료 미연결. 0개 시설이라는 뜻이 아닙니다.","sourceDate":null,"expectedSourceName":"전국무인민원발급정보표준데이터","expectedSourceUrl":"https://www.data.go.kr/data/15012893/standard.do","howToConnect":"docs/DATA_INBOX.md 참고 · CSV를 data-inbox/ 에 넣고 node scripts/data/ingest.mjs 실행"}}

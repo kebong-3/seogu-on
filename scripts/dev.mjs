@@ -12,8 +12,13 @@ const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost'); const path = decodeURIComponent(url.pathname);
     if (path.startsWith('/api/')) {
-      const name = path.slice(5);
-      if (!['config', 'vworld', 'vworld-scene', 'public-data', 'layers', 'weather', 'geocode', 'city-config', 'city-scene', 'city-data', 'city-wms'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
+      let name = path.slice(5);
+      // vercel.json 의 rewrites 와 같은 규칙: /api/mcp, /api/ask → api/ai.js?route=...
+      if (name === 'mcp' || name === 'ask') {
+        req.url = `/api/ai?route=${name}${url.search ? `&${url.search.slice(1)}` : ''}`;
+        name = 'ai';
+      }
+      if (!['config', 'vworld', 'vworld-scene', 'public-data', 'layers', 'weather', 'geocode', 'city-config', 'city-scene', 'city-data', 'city-wms', 'ai'].includes(name)) { res.writeHead(404); res.end('Not found'); return; }
       const mod = await import(pathToFileURL(resolve(root, 'api', `${name}.js`)).href);
       await mod.default(req, res); return;
     }

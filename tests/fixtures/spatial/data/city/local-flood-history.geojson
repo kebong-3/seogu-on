@@ -1,0 +1,90 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "sourceName": "시험 침수기록",
+  "sourceDate": "2025-11-24",
+  "state": "published"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.853,
+     35.133
+    ]
+   },
+   "properties": {
+    "id": "f1",
+    "name": "과거 침수기록 1",
+    "eventYear": "2023",
+    "address": "시험길 1",
+    "originalAttributes": {
+     "피해내용": "주택침수",
+     "발생연도": "2023"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.853,
+     35.1331
+    ]
+   },
+   "properties": {
+    "id": "f2",
+    "name": "과거 침수기록 2",
+    "eventYear": "2025",
+    "address": "시험길 2",
+    "originalAttributes": {
+     "피해내용": "상가침수",
+     "발생연도": "2025"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.866,
+     35.136
+    ]
+   },
+   "properties": {
+    "id": "f3",
+    "name": "과거 침수기록 3",
+    "eventYear": "2025",
+    "address": "시험길 3",
+    "originalAttributes": {
+     "피해내용": "주택침수",
+     "발생연도": "2025"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.858,
+     35.139
+    ]
+   },
+   "properties": {
+    "id": "f4",
+    "name": "과거 침수기록 4",
+    "eventYear": "2025",
+    "address": "시험길 4",
+    "originalAttributes": {
+     "피해내용": "주택침수",
+     "발생연도": "2025"
+    }
+   }
+  }
+ ]
+}

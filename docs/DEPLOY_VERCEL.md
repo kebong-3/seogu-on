@@ -1,13 +1,36 @@
-# 기존 GitHub → Vercel 배포 유지
+# Vercel 배포
 
-기존 seogu-on 프로젝트에서 Framework Other / Build npm run build / Output dist / Node22.x를 유지합니다. 새 저장소나 별도 Unity 프로젝트를 만들지 않습니다.
+GitHub 저장소 `main`에 파일이 올라가면 Vercel이 자동으로 다시 배포합니다. 따로 누를 것은 없습니다.
 
-현재 개선 앱 소스는 ZIP으로 전달합니다. 생성된 브랜치에는 수집·진단 워크플로만 있습니다. ZIP 안의 개선 소스를 해당 브랜치에 업로드한 뒤 main에 병합하거나, 검토 후 기존 main에 업로드합니다. 환경변수는 Settings → Environment Variables에서 Production에 지정합니다. Preview에 설정한 값만으로 Production 배포가 바뀌지 않습니다. 저장 후 Deployments에서 Production 재배포를 실행합니다.
+## 프로젝트 설정(바꾸지 않습니다)
 
-초기 진단 당시 배포 `/api/config`는 version0.1.0, vworld3d=false, vworldRest=false, publicData=false를 반환했습니다. 계정의 환경변수 화면을 직접 열어 확인한 것은 아니므로 미입력·다른 환경 지정·재배포 누락 중 어느 원인인지 확정하지 않습니다.
+| 항목 | 값 |
+|---|---|
+| Framework Preset | Other |
+| Root Directory | 저장소 최상위 |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Node.js Version | 22.x |
 
-새 배포 후 확인: `/api/config` version0.2.0 → 18개동 선택 → 실제자료325개 → 브이월드 및 REST 설정 상태 → 연결센터에서 실제 수신시험. JSON에 키 값이 나오지 않아야 합니다.
+`vendor/cesium-1.121.0.tar.gz`는 빌드할 때 풀어서 쓰는 3D 엔진 파일입니다. **지우거나 빼고 올리면 빌드가 실패합니다.**
 
-키가 설정되어도 인증 실패 시 VWorld 계정의 서비스 승인·도메인 등록·현재 접속 도메인을 확인합니다. 단순 SDK 준비 메시지만으로 모델 수신 성공이라고 판정하지 않습니다. Preview의 긴 자동 생성 주소는 Production과 다른 도메인입니다.
+## 환경변수를 바꿨을 때
 
-최초 공개본만 확인할 때는 API 키가 없어도 됩니다. 기본 OSM 지도는 외부 CDN·타일과 WebGL이 필요하며 네트워크 정책이 차단하면 오류를 표시합니다.
+Settings → Environment Variables에서 값을 저장한 뒤 Deployments → 맨 위 배포의 ⋯ → **Redeploy**를 눌러야 반영됩니다.
+Preview에만 넣은 값은 실제 사이트(Production)에 적용되지 않습니다.
+
+## 배포 뒤 확인
+
+1. `https://seogu-on.vercel.app/data/release.json`의 `builtAt`이 방금 시각인지 봅니다.
+2. `https://seogu-on.vercel.app/api/city-config`의 `configured`에서 필요한 항목이 `true`인지 봅니다. `true`는 "변수가 있다"는 뜻이지 인증 성공이 아닙니다.
+3. 첫 화면 상단의 기온·강수·PM10이 숫자로 나오는지 봅니다. "미수신"이면 값을 눌러 원인 코드를 확인합니다(`docs/API_SETUP.md`).
+4. 실제 브이월드 3D 화면에서 서구 전체 → 동 선택 → "폭염 그늘 살펴보기"를 눌러 봅니다.
+
+## 배포가 실패했을 때
+
+Deployments에서 실패한 배포를 눌러 Build Logs의 마지막 붉은 줄을 봅니다.
+
+- `vendor` 파일이 없다는 내용: `vendor/cesium-1.121.0.tar.gz`가 저장소에 있는지 확인합니다.
+- 문법 오류: 방금 올린 파일을 이전 것으로 되돌립니다(GitHub의 History에서 Revert).
+
+브이월드 키가 있어도 지도가 뜨지 않으면 브이월드 계정의 서비스 승인·등록 도메인(`https://seogu-on.vercel.app`)을 확인합니다. Preview 배포의 긴 자동 주소는 등록 도메인과 다르므로 3D 지도가 뜨지 않는 것이 정상입니다.

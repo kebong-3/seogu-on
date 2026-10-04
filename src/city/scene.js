@@ -2,6 +2,7 @@ import {createSunController} from './sun-engine.js';
 import {applyQuality,displayOptions,setBuildingStyle,applyBaseBrightness} from './graphics.js';
 import {parseKst} from './solar.js';
 import {loadCleanModel} from './clean-model.js';
+import {createDongLabels3D} from './dong-labels-3d.js';
 import {fc,multi,inside,representative,distance,maskGeometry,boundsOf} from './geometry.js';
 import {CameraDirector,frameFor,clamp} from './camera.js';
 import {LAYERS,LAYER_BY_ID,iconData} from './catalog.js';
@@ -10,7 +11,7 @@ import {terrainGrid,slopeSummary,profilePoints,parseGlb} from './analysis.js';
 const tell=(type,data={})=>parent.postMessage({seoguCity:true,type,...data},location.origin);
 const notice=document.getElementById('notice');
 const clean=window.SEO_ENGINE==='clean';
-let sunController=null;
+let sunController=null,dongLabels=null;
 let buildingStyleResult=null,renderFrames=0,renderFailed=false;
 let quality='balanced',visual=displayOptions(),lastBoundary,cleanStats=null;
 let viewer,map,C,director,ready=false,queued=[],admin,scope,dong='all',currentPose,selectionMode=null,profileStart=null;
@@ -22,6 +23,8 @@ function color(hex,alpha=1){return C.Color.fromCssColorString(hex).withAlpha(alp
 function requestRender(){viewer.scene.requestRender?.();}
 function setNotice(s){if(notice)notice.textContent=s;}
 function clearOwned(ds){ds.entities.removeAll();}
+/* 지형이 없는 도시모형에서는 지면 고정(CLAMP)을 쓰면 먼 거리에서 아이콘·글자가 엉뚱한 곳에 그려진다. 높이 0에 그대로 둔다. */
+function groundRef(){return clean?C.HeightReference.NONE:C.HeightReference.CLAMP_TO_GROUND;}
 async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))return false;C=window.Cesium;viewer=clean?window.seoCleanViewer:window.ws3d.viewer;if(!viewer.entities||!viewer.scene?.globe)return false;ready=true;
  viewer.scene.globe.depthTestAgainstTerrain=false;
  if(viewer.scene.screenSpaceCameraController){viewer.scene.screenSpaceCameraController.minimumZoomDistance=65;viewer.scene.screenSpaceCameraController.maximumZoomDistance=60000;}
@@ -29,6 +32,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  for(const s of [boundarySource,maskSource,analysisSource,modelSource])await viewer.dataSources.add(s);
  currentPose={center:[126.86,35.145],range:16000,heading:320,pitch:-48,level:'overview'};
  sunController=createSunController(viewer,C,{emit:tell,getPose:readPose});
+ dongLabels=createDongLabels3D({C,viewer,source:boundarySource,requestRender,clampToGround:!clean,onPlan:numbered=>tell('dong-labels',{numbered})});
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
  for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>director.stop(),{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
@@ -48,15 +52,16 @@ function writePose(p){const cart=C.Cartographic.fromDegrees(...p.center),sample=
  const target=C.Cartesian3.fromDegrees(...p.center,h+8);viewer.camera.lookAt(target,new C.HeadingPitchRange(C.Math.toRadians(p.heading),C.Math.toRadians(p.pitch),Math.max(80,p.range)));viewer.camera.lookAtTransform(C.Matrix4.IDENTITY);currentPose=p;requestRender();}
 function hierarchy(poly){return new C.PolygonHierarchy(C.Cartesian3.fromDegreesArray(poly[0].flatMap(p=>p.slice(0,2))),poly.slice(1).map(r=>new C.PolygonHierarchy(C.Cartesian3.fromDegreesArray(r.flatMap(p=>p.slice(0,2))))));}
 function addGeometry(ds,f,style){const g=f.geometry,p=f.properties||{},base=`${style.layer}:${p.id||f.id||ds.entities.values.length}`;const attrs={facilityId:p.id||f.id,layerId:style.layer,dongId:p.dongId};
- if(g.type==='Point')return ds.entities.add({id:base,position:C.Cartesian3.fromDegrees(...g.coordinates.slice(0,2)),properties:attrs,billboard:{image:iconData(style.icon,style.color),width:34,height:39,verticalOrigin:C.VerticalOrigin.BOTTOM,heightReference:C.HeightReference.CLAMP_TO_GROUND,disableDepthTestDistance:Number.POSITIVE_INFINITY,scaleByDistance:new C.NearFarScalar(250,1.2,15000,.65)},label:{text:p.mapLabel||p.name||'',font:'12px sans-serif',fillColor:C.Color.WHITE,showBackground:true,backgroundColor:color('#102735',.84),pixelOffset:new C.Cartesian2(0,-45),heightReference:C.HeightReference.CLAMP_TO_GROUND,distanceDisplayCondition:new C.DistanceDisplayCondition(0,p.mapLabel?45000:2200),disableDepthTestDistance:Number.POSITIVE_INFINITY}});
+ if(g.type==='Point')return ds.entities.add({id:base,position:C.Cartesian3.fromDegrees(...g.coordinates.slice(0,2)),properties:attrs,billboard:{image:iconData(style.icon,style.color),width:34,height:39,verticalOrigin:C.VerticalOrigin.BOTTOM,heightReference:groundRef(),disableDepthTestDistance:Number.POSITIVE_INFINITY,scaleByDistance:new C.NearFarScalar(250,1.2,15000,.65)},label:{text:p.mapLabel||p.name||'',font:'12px sans-serif',fillColor:C.Color.WHITE,showBackground:true,backgroundColor:color('#102735',.84),pixelOffset:new C.Cartesian2(0,-45),heightReference:groundRef(),distanceDisplayCondition:new C.DistanceDisplayCondition(0,p.mapLabel?45000:2200),disableDepthTestDistance:Number.POSITIVE_INFINITY}});
  if(multi(g).length){for(const [i,poly]of multi(g).entries()){
   ds.entities.add({id:`${base}:p${i}`,properties:attrs,polygon:{hierarchy:hierarchy(poly),material:color(style.color,style.alpha??.25),classificationType:C.ClassificationType.TERRAIN}});
   if(style.width!==0)for(const [j,r]of poly.entries())ds.entities.add({id:`${base}:p${i}r${j}`,properties:attrs,polyline:{positions:C.Cartesian3.fromDegreesArray(r.flatMap(p=>p.slice(0,2))),width:style.width||2,clampToGround:true,material:color(style.color,.94)}});
  }}else {const lines=g.type==='LineString'?[g.coordinates]:g.type==='MultiLineString'?g.coordinates:[];lines.forEach((r,i)=>ds.entities.add({id:`${base}:l${i}`,properties:attrs,polyline:{positions:C.Cartesian3.fromDegreesArray(r.flatMap(p=>p.slice(0,2))),clampToGround:true,width:style.width||4,material:color(style.color,.92)}}));}
 }
 async function boundaries(m){lastBoundary=m;visual=displayOptions(m.visual||visual);sampleSequence++;selectionMode=null;profileStart=null;admin=m.district;scope=m.scope;dong=m.dong||'all';focusOn=m.focus!==false;clearOwned(boundarySource);clearOwned(maskSource);
- for(const f of m.features){const selected=f.properties.dongId===dong;const style={layer:'dong',color:f.properties.color,alpha: dong==='all'?visual.boundaryOpacity:selected?Math.min(.18,visual.boundaryOpacity+.04):.005,width:selected?4:1.5};addGeometry(boundarySource,f,style);const center=f.properties.labelPoint||representative(f.geometry);
- if(visual.labels)boundarySource.entities.add({id:`label-${f.properties.dongId}`,properties:{dongId:f.properties.dongId,layerId:'dong'},position:C.Cartesian3.fromDegrees(...center),label:{text:f.properties.dongName,font:`${selected?'bold ':''}16px sans-serif`,fillColor:color('#ffffff'),showBackground:true,backgroundColor:color(selected?'#0752a7':'#102b46',.94),heightReference:C.HeightReference.CLAMP_TO_GROUND,disableDepthTestDistance:Number.POSITIVE_INFINITY,pixelOffset:new C.Cartesian2(0,-6)}});}
+ for(const f of m.features){const selected=f.properties.dongId===dong;const style={layer:'dong',color:f.properties.color,alpha: dong==='all'?visual.boundaryOpacity:selected?Math.min(.18,visual.boundaryOpacity+.04):.005,width:selected?4:1.5};addGeometry(boundarySource,f,style);}
+ /* 동 이름표: 겹치면 번호표로 줄이고 카메라 이동 때 다시 배치한다(dong-labels-3d.js). */
+ dongLabels?.set(m.features.map(f=>({...f,properties:{...f.properties,labelPoint:f.properties.labelPoint||representative(f.geometry)}})),{dong,visible:visual.labels});
  if(focusOn){const g=maskGeometry(scope);if(g)addGeometry(maskSource,{geometry:g,properties:{id:'outside'}},{layer:'mask',color:'#091c2a',alpha:visual.maskOpacity,width:0});}
  if(!m.visualOnly){for(const [id,item]of imagery){viewer.imageryLayers.remove(item,true);imagery.delete(id);}for(const l of (m.rasters||[]))toggleRaster(l,true);}
  requestRender();
@@ -115,10 +120,10 @@ async function handle(m){switch(m.type){
  case'diagnostics':{const cv=viewer.scene.canvas;tell('diagnostics',{engine:clean?'clean':'vworld',webgl:!cv.isContextLost?.(),rendered:renderFrames>0&&!renderFailed,renderFrames,renderFailed,css:[cv.clientWidth,cv.clientHeight],buffer:[cv.width,cv.height],resolutionScale:viewer.resolutionScale,buildingStyle:buildingStyleResult,model:cleanStats?{buildingCount:cleanStats.buildingCount,note:cleanStats.note}:null,visibleSources:[...sources].filter(([,ds])=>ds.show).map(([id,ds])=>({id,entities:ds.entities.values.length})),note:'렌더 루프·표시 객체 확인입니다. 건물의 정확성·외부 API 인증·실측 검증을 뜻하지 않습니다.'});break;}
  case'quality':quality=m.mode||'balanced';tell('quality-result',applyQuality(viewer,quality,devicePixelRatio||1));break;
  case'visual':visual=displayOptions(m.options);if(lastBoundary)await boundaries({...lastBoundary,visual,visualOnly:true});break;
- case'resize':viewer.resize?.();try{applyQuality(viewer,quality,devicePixelRatio||1);}catch{}requestRender();break;
+ case'resize':viewer.resize?.();try{applyQuality(viewer,quality,devicePixelRatio||1);}catch{}requestRender();dongLabels?.layout(true);break;
  }}
 window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==parent||!event.data?.seoguCity)return;const m=event.data;if(!ready){queued.push(m);if(queued.length>100)queued.shift();return;}Promise.resolve(handle(m)).catch(e=>tell('error',{message:e.message||'3D 처리 실패'}));});
-window.addEventListener('beforeunload',()=>{sunController?.destroy();director?.stop();if(modelUrl)URL.revokeObjectURL(modelUrl);});
+window.addEventListener('beforeunload',()=>{sunController?.destroy();dongLabels?.destroy();director?.stop();if(modelUrl)URL.revokeObjectURL(modelUrl);});
 
 if(clean){try{C=window.Cesium;window.seoCleanViewer=new C.Viewer('vmap',{animation:false,timeline:false,baseLayer:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,fullscreenButton:false,infoBox:false,selectionIndicator:false,skyBox:false,skyAtmosphere:false,terrainProvider:new C.EllipsoidTerrainProvider(),shadows:false,contextOptions:{webgl:{alpha:false,antialias:true}},scene3DOnly:true,requestRenderMode:true,maximumRenderTimeChange:Infinity});
  const sc=window.seoCleanViewer.scene;sc.backgroundColor=C.Color.fromCssColorString('#c5d2ca');sc.globe.baseColor=C.Color.fromCssColorString('#c5d2ca');sc.globe.enableLighting=false;

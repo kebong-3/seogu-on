@@ -17,17 +17,28 @@ const specs=[
  ['shade-structures','그늘막·그늘쉼터','기후·안전','sun','#e2ce8e']
 ];
 export const INFRA_LAYERS=specs.map(([name,title,group,icon,color])=>({id:'infra-'+name,name,title,group,icon,color,kind:'mixed',url:`/data/city/infra/${name}.geojson`,note:name==='school'?'교육부 학교 대표위치 + OSM 도형 · 서로 더해 학교 수로 계산하지 않음':'출처별 부분 수록 · 점은 대표위치, 면은 확보한 도형. 실제 출입구·운영 여부 별도 확인'}));
+/* Official file snapshots written by scripts/data/ingest.mjs (see docs/DATA_INBOX.md). Kept beside OSM layers, never merged into them. */
+const official=[
+ ['heat-shelter','무더위쉼터 (표준데이터 파일)','기후·안전','sun','#f5b477','official/heat-shelter'],['shade-shelter','그늘막쉼터 (전국 표준데이터)','기후·안전','sun','#d9b45c','official/shade-shelter'],
+ ['cold-shelter','한파쉼터 (공개 파일)','기후·안전','home','#a9c5ed','official/cold-shelter'],['earthquake-shelter','지진 옥외대피장소 (표준데이터)','안전','shield','#95cfee','official/earthquake-shelter'],
+ ['childcare','어린이집 (공식 표준데이터)','교육·돌봄','home','#e6a4bb','infra/childcare-official'],['toilet','공중화장실 (공식 표준데이터)','생활편의','building','#a1d5d9','official/toilet'],
+ ['child-protection-zone','어린이보호구역 대상시설','안전','shield','#f0c36a','official/child-protection-zone'],['senior-disabled-protection-zone','노인·장애인보호구역 대상시설','안전','shield','#c9b2e8','official/senior-disabled-protection-zone'],
+ ['civil-kiosk','무인민원발급기','행정','building','#6dd6c7','official/civil-kiosk'],['traditional-market','전통시장','생활편의','home','#eeb59a','official/traditional-market'],
+ ['bus-info-terminal','버스도착안내단말기 설치 정류소','교통','road','#e8d296','official/bus-info-terminal']
+];
+export const OFFICIAL_LAYERS=official.map(([name,title,categoryGroup,icon,color,file])=>({id:'official-'+name,name,title,group:'공식 표준자료',categoryGroup,icon,color,kind:'point',url:`/data/city/${file}.geojson`,official:true,note:'공공데이터포털 공개 파일 중 서구 경계 안 위치 · 전수·현재 운영 여부 미확인'}));
 export const INFRA_CATEGORIES=[
  {id:'park',title:'공원',group:'공원·생활',icon:'tree',layers:['parks','park-areas']},
  {id:'library',title:'도서관',group:'문화·체육',icon:'book',layers:['libraries','infra-library']},
  {id:'parking',title:'주차장',group:'교통',icon:'parking',layers:['parking','infra-parking']},
  {id:'rooms',title:'공공 개방공간',group:'공원·생활',icon:'building',layers:['public-facilities']},
- ...INFRA_LAYERS.filter(l=>!['library','parking'].includes(l.name)).map(l=>({id:l.name,title:l.title,group:l.group,icon:l.icon,layers:[l.id]})),
+ ...INFRA_LAYERS.filter(l=>!['library','parking'].includes(l.name)).map(l=>({id:l.name,title:l.title,group:l.group,icon:l.icon,layers:l.name==='shade-structures'?['local-shade',l.id]:[l.id]})),
  {id:'heat',title:'무더위쉼터',group:'기후·안전',icon:'sun',layers:['heat'],api:true},
  {id:'evacuation',title:'지진대피 학교',group:'안전',icon:'shield',layers:['shelter-schools']},
  {id:'emergency',title:'응급의료기관',group:'건강·복지',icon:'cross',layers:['emergency'],api:true}
 ];
-INFRA_CATEGORIES.push({id:'official-shade',title:'공식 그늘막·쿨링포그',group:'기후·안전',icon:'sun',layers:['local-shade','local-cooling']},{id:'flood-history',title:'과거 침수피해 기록',group:'기후·안전',icon:'water',layers:['local-flood-history']});
+/* 서구 그늘막 공개본(local-shade)은 위 '그늘막·그늘쉼터' 종류에 연결. 쿨링포그는 그늘막이 아니므로 따로 둔다. */
+INFRA_CATEGORIES.push(...OFFICIAL_LAYERS.map(l=>({id:l.id,title:l.title,group:l.categoryGroup,icon:l.icon,layers:[l.id]})),{id:'official-cooling',title:'쿨링포그 (서구 공개본)',group:'기후·안전',icon:'water',layers:['local-cooling']},{id:'flood-history',title:'과거 침수피해 기록',group:'기후·안전',icon:'water',layers:['local-flood-history']});
 export const OVERLAY_LAYERS=[
  {id:'shade-result',title:'시간별 그늘 근사',group:'분석·관측',kind:'polygon',color:'#756f96',icon:'sun',analysis:true},
  {id:'weather-observed',title:'기상청 격자 실황',group:'분석·관측',kind:'point',color:'#efca7c',icon:'sun',analysis:true},

@@ -1,0 +1,97 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "sourceName": "시험 학교",
+  "sourceDate": "2026-03-20",
+  "coverage": "시험용 부분 자료"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.856,
+     35.136
+    ]
+   },
+   "properties": {
+    "id": "school-1",
+    "name": "가람초등학교",
+    "schoolType": "초등학교",
+    "address": "가람로 1"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       126.8555,
+       35.1355
+      ],
+      [
+       126.8565,
+       35.1355
+      ],
+      [
+       126.8565,
+       35.1365
+      ],
+      [
+       126.8555,
+       35.1365
+      ],
+      [
+       126.8555,
+       35.1355
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "osm-way-1",
+    "name": "가람초",
+    "pairedOfficialIds": [
+     "school-1"
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       126.866,
+       35.131
+      ],
+      [
+       126.867,
+       35.131
+      ],
+      [
+       126.867,
+       35.132
+      ],
+      [
+       126.866,
+       35.132
+      ],
+      [
+       126.866,
+       35.131
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "osm-way-2",
+    "name": "나래중학교"
+   }
+  }
+ ]
+}

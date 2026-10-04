@@ -1,14 +1,46 @@
+# ── 비밀값: 실제 키가 든 파일은 절대 올리지 않습니다 ──
 .env
 .env.*
 !.env.example
+
+# ── 자동으로 만들어지는 것 ──
 node_modules/
 dist/
+.vercel/
 evidence/
 __pycache__/
 *.pyc
 
-# Generated from the pinned local vendor archive during dev/build.
+# vendor/ 의 압축본에서 dev/build 때 풀리는 3D 엔진 (압축본 vendor/*.tar.gz 는 올려야 합니다)
 public/vendor/cesium/
 
-# Explicit public API retrieval remains in review until manually approved
+# 화면 시험이 실행할 때마다 다시 만드는 캡처·결과
+docs/v03/ui-evidence/
+docs/v04/ui-evidence/
+docs/v06/ui-evidence/
+docs/v061/ui/
+docs/v061/records-ui/
+docs/v061/regression-ui/
+docs/v061/v06-regression-ui/
+docs/v061/FLOW_TEST_RESULTS.json
+live-v04-result.json
+
+# ── 자료 넣는 곳: 원본 파일은 올리지 않고 안내문만 남깁니다 ──
+data-inbox/*
+!data-inbox/README.md
+!data-inbox/.gitkeep
+!data-inbox/README.txt
+
+# 공개 API 수신본은 검토·승인 전까지 올리지 않습니다
 data-staging/
+
+# ── 컴퓨터·편집기가 만드는 잡파일 ──
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.log

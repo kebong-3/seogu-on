@@ -1,0 +1,55 @@
+# main 브랜치에 올리거나 PR을 만들면 실행됩니다.
+#  - verify: 문법 검사 + 단위시험 + 빌드 + 배포 묶음 점검. 이 작업이 실패하면 고쳐야 합니다.
+#  - ui-offline: 브라우저로 경계도 화면을 열어 보는 참고용 시험. 실패해도 전체 결과를 막지 않습니다.
+# 외부 API 키 없이 돌며, 실제 브이월드 3D·실제 API 응답을 검증하지는 않습니다.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    name: 검사 · 시험 · 빌드 (npm run verify)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm run verify
+
+  ui-offline:
+    name: 오프라인 화면 시험 (참고용 · 3D 아님)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - name: 배치·메뉴·좁은 화면 (360~1440px)
+        run: python3 tests/ui-layout.py
+      - name: 기존 화면 회귀 시험
+        if: always()
+        run: python3 tests/city-regression-ui.py && python3 tests/city-final-ui.py && python3 tests/v05-ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-offline-evidence-NOT-live3D
+          path: evidence/
+          if-no-files-found: ignore
+          retention-days: 7

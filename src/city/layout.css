@@ -1,0 +1,313 @@
+/*
+ * 서구:온 배치 보정 (맨 마지막에 읽히는 스타일)
+ *  1. 홈 패널: 주요 카드 3개 + "더 보기"
+ *  2. 동 번호표(왼쪽 목록) · 지도 위 HTML 이름표(OSM 경량지도)
+ *  3. 상단 관측정보 띠: 좁은 화면에서 잘리지 않게
+ *  4. 누르는 영역 40px 이상
+ *  5. 820px 이하: 왼쪽 패널을 서랍으로, 지도는 화면 전체
+ * 기존 style.css / appearance.css / identity.css 는 고치지 않고 여기에서 덮어쓴다.
+ * 820이라는 값은 src/city/home-panel.js 의 COMPACT_WIDTH 와 같아야 한다.
+ */
+
+/* ───────── 1. 홈 패널 ───────── */
+.home-primary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 8px;
+}
+.home-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 56px;
+  padding: 9px 10px;
+  text-align: left;
+  color: var(--text);
+  background: linear-gradient(155deg, var(--surface), var(--control));
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  box-shadow: var(--raised);
+}
+.home-card:hover:not(:disabled) { border-color: var(--mint); filter: none; }
+.home-card-icon { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; color: var(--mint); background: var(--surface-soft); }
+.home-card-icon .icon { width: 19px; height: 19px; }
+.home-card-text { min-width: 0; }
+.home-card strong { display: block; font-size: 14px; line-height: 1.3; font-weight: 800; }
+.home-card small { display: block; margin-top: 2px; font-size: 11px; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+
+/* 대표 시나리오(폭염 그늘): 한 줄 전체를 쓰는 강조 카드 */
+.home-hero {
+  grid-column: 1 / -1;
+  min-height: 66px;
+  padding: 11px 12px;
+  color: #fff;
+  background: linear-gradient(120deg, #0b57b8, #0d84b8 62%, #14a58f);
+  border-color: #0b57b8;
+}
+.home-hero .home-card-icon { width: 38px; height: 38px; color: #fff; background: #ffffff2e; }
+.home-hero .home-card-icon .icon { width: 23px; height: 23px; }
+.home-hero strong { font-size: 16px; }
+.home-hero small { color: #e3f3ff; font-size: 12px; }
+.home-ai { grid-column: 1 / -1; }
+
+/* AI 버튼이 켜지면(hidden 제거) '재난 상황판' 카드는 "더 보기"로 물러난다 → 주요 카드는 항상 3개 이하 */
+.home-more .home-moved { display: none; }
+.sidebar-heading:has(.home-ai:not([hidden])) .home-yield { display: none; }
+.sidebar-heading:has(.home-ai:not([hidden])) .home-more .home-moved { display: block; }
+.sidebar-heading:has(.home-ai:not([hidden])) .home-primary > .home-card:not(.home-hero):not(.home-ai):not(.home-yield) { grid-column: 1 / -1; }
+
+.home-more { margin: 0 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-soft); }
+.home-more:not(.open) .home-more-list { display: none; } /* 접힘: 처음에는 주요 카드만 보인다 */
+.home-more-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 4px 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  border-radius: 9px;
+}
+.home-more-toggle::after { content: '▾'; margin-left: auto; color: var(--muted); transition: transform .15s; }
+.home-more.open .home-more-toggle::after { transform: rotate(180deg); }
+.home-more-toggle small { font-size: 11px; font-weight: 500; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.home-more .sidebar-tools { margin: 2px 8px 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.home-more .sidebar-secondary { margin: 0 8px 8px; flex-wrap: wrap; }
+.home-more .sidebar-secondary button { flex: 1 1 calc(50% - 6px); }
+.home-more .sidebar-tools button, .home-more .sidebar-secondary button { min-height: 40px; font-size: 13px; }
+[data-ui-theme="night"] .home-card { color: var(--text); }
+
+/* 폭염 그늘 요약 상자 · 관측 상태 상세 */
+.scenario-summary { margin: 0 0 12px; padding: 11px 12px; border: 1px solid var(--line); border-left: 4px solid #0d84b8; border-radius: 10px; background: var(--surface-soft); color: var(--text); }
+.scenario-summary strong { font-size: 15px; }
+.scenario-summary ul { list-style: none; margin: 8px 0; padding: 0; }
+.scenario-summary li { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 14px; border-bottom: 1px dashed var(--line); }
+.scenario-summary li b.missing { color: #b05a00; }
+.detail-panel .scenario-summary .small { color: var(--text); margin: 8px 0 0; }
+[data-ui-theme="night"] .scenario-summary li b.missing { color: #ffc98a; }
+.live-diagnostic-row code { font: 600 12px/1 ui-monospace, monospace; padding: 2px 5px; border-radius: 4px; background: var(--control); color: var(--text); }
+
+/* ───────── 2. 동 번호표 · HTML 이름표 ───────── */
+.dong-button { position: relative; }
+.dong-button .dong-no {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #102b46;
+  color: #fff;
+  box-shadow: none;
+  font: 700 11px/1 system-ui, sans-serif;
+  font-style: normal;
+}
+.dong-button.active .dong-no { background: #0752a7; }
+
+.dong-label-layer { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.dong-label {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  pointer-events: auto;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background: #102b46f0;
+  border: 1px solid #83a6ce;
+  border-radius: 5px;
+}
+.dong-label.number { border-radius: 999px; font-weight: 800; }
+.dong-label.selected { background: #0752a7; border-color: #a8e3ff; font-weight: 800; }
+
+/* ───────── 3. 상단 관측정보 띠 ───────── */
+button.live-reading { padding: 4px 6px; border-radius: 8px; text-align: left; }
+button.live-reading:hover:not(:disabled) { background: var(--control); filter: none; }
+.live-reading.is-missing strong { color: #b05a00; text-decoration: underline dotted; text-underline-offset: 3px; }
+[data-ui-theme="night"] .live-reading.is-missing strong { color: #ffc98a; }
+.live-ribbon .live-reading { min-height: 40px; align-items: center; }
+
+@media (max-width: 900px) {
+  /* 가로로 밀어 보던 띠를 칸으로 나눠 한 화면에 모두 보이게 한다. */
+  .live-ribbon {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 4px;
+    height: 52px;
+    min-height: 52px;
+    padding: 4px 8px;
+    overflow: hidden;
+  }
+  .live-ribbon .live-place { flex-direction: column; justify-content: center; align-items: flex-start; gap: 1px; min-width: 0; }
+  .live-ribbon .live-place strong { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .live-ribbon .live-place span { font-size: 10px; display: block; }
+  .live-ribbon .live-reading {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    min-width: 0;
+    min-height: 44px;
+    padding: 2px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .live-ribbon .live-reading span { font-size: 10.5px; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .live-ribbon .live-reading strong { font-size: 13.5px; line-height: 1.25; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  #live-observed { display: none; }
+}
+
+/* ───────── 4. 누르는 영역 40px 이상 ───────── */
+.camera-controls { width: 48px; }
+.camera-controls button { width: 40px; height: 40px; }
+.topbar .icon-button, .topbar .appearance-open { min-width: 40px; min-height: 40px; }
+.breadcrumbs button { min-height: 40px; }
+.sidebar-tabs button { min-height: 40px; }
+.panel-title .text-button { min-height: 40px; min-width: 44px; padding: 0 6px; }
+.district-panel .secondary.full, .district-panel .overview-card { min-height: 40px; }
+.footnote .text-button, .section-title .text-button { min-height: 40px; padding: 0 6px; }
+.layer-row { min-height: 40px; }
+.detail-head button { min-width: 40px; min-height: 40px; }
+.detail-panel .primary, .detail-panel .secondary, .detail-panel .record, .detail-panel .tool-grid button, .detail-panel .infra-groups button { min-height: 40px; }
+.show-panels { min-height: 40px; }
+.live-safety { min-height: 40px; }
+.source-footer .osm-minicredit { display: inline-flex; align-items: center; min-height: 40px; padding: 0 4px; }
+.map-credits summary { display: inline-flex; align-items: center; min-height: 40px; }
+.credit-popover a { display: inline-block; padding: 6px 0; }
+.credit-popover .credit-more { min-height: 40px; }
+.preset { min-width: 44px; min-height: 44px; }
+.show-panels[hidden] { display: none !important; }
+
+/* ───────── 5. 820px 이하: 서랍형 배치 ───────── */
+@media (max-width: 820px) {
+  :root, [data-ui-theme="day"], [data-ui-theme="sky"], [data-ui-theme="night"] {
+    --map-left: 0px;
+    --sidebar-w: min(400px, calc(100vw - 20px));
+    --header-h: 126px; /* 상단바 74 + 관측정보 52 */
+    --footer-h: 50px;
+    --dock-h: 68px;
+  }
+  .topbar { height: 74px; }
+  .live-ribbon { top: 74px; }
+  #map, .map-focus #map { left: 0 !important; right: 0 !important; }
+
+  /* 왼쪽 패널은 '☰ 지역·정보 열기'로 여는 서랍 */
+  .district-panel { display: none; left: 10px; top: calc(var(--header-h) + 8px); bottom: 8px; width: var(--sidebar-w); max-height: none; z-index: 12; }
+  .district-panel.mobile-open { display: flex !important; }
+  .show-panels { display: block; left: 10px; top: calc(var(--header-h) + 8px); z-index: 8; padding: 0 14px; font-size: 13px; }
+
+  /* 오른쪽 상세 패널도 화면 폭 안에서 독립적으로 스크롤 */
+  .detail-panel { left: auto; right: 10px; top: calc(var(--header-h) + 8px); bottom: 8px; width: min(420px, calc(100vw - 20px)); max-width: none; max-height: none; z-index: 13; }
+  #detail-body { overflow-y: auto; overscroll-behavior: contain; }
+
+  .scene-caption, .map-focus .scene-caption, .clean-model .scene-caption { left: 10px; top: calc(var(--header-h) + 56px); max-width: calc(100vw - 76px); }
+  .bottom-dock, .map-focus .bottom-dock { left: 10px !important; right: 10px; bottom: calc(var(--footer-h) + 8px); height: var(--dock-h); padding: 6px 8px; gap: 6px; }
+  .bottom-dock .dock-label, .bottom-dock .dock-actions { display: none; }
+  .bottom-dock .preset-buttons { flex: 1; min-width: 0; display: flex; justify-content: space-between; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .camera-controls { right: 10px; bottom: calc(var(--footer-h) + var(--dock-h) + 18px); }
+
+  /* 패널이 열려 있는 동안에는 아래 분야 막대·카메라 버튼이 내용 위로 올라오지 않게 숨긴다. */
+  .detail-open .bottom-dock, .detail-open .camera-controls, .detail-open .scene-caption, .detail-open .show-panels,
+  .drawer-open .bottom-dock, .drawer-open .camera-controls, .drawer-open .scene-caption { display: none !important; }
+
+  .bottom-status { display: flex; left: 0; right: 0; max-width: none; padding: 4px 10px; gap: 8px; justify-content: space-between; }
+  .bottom-status .local-brand-strip { min-width: 0; gap: 6px; }
+  .bottom-status .local-brand-strip img { height: 26px; max-width: 22vw; }
+  .bottom-status #map-disclosure, .bottom-status .release-credit { display: none !important; }
+  .source-footer { gap: 6px; flex: none; }
+  .credit-popover { right: 0; width: min(290px, calc(100vw - 20px)); }
+}
+
+/* 휴대전화 폭 */
+@media (max-width: 600px) {
+  :root, [data-ui-theme="day"], [data-ui-theme="sky"], [data-ui-theme="night"] { --header-h: 122px; --dock-h: 64px; --sidebar-w: calc(100vw - 20px); }
+  .topbar { height: 70px; padding: 0 8px; }
+  .live-ribbon { top: 70px; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px 6px; }
+  .live-ribbon .live-place { display: none; } /* 선택 구역 이름은 지도 위 카드에 이미 있다. */
+  .brand { max-width: calc(100% - 96px); }
+  .top-actions .appearance-open { width: 40px; height: 40px; }
+  .top-actions .icon-button { width: 40px; height: 40px; padding: 9px; }
+  .detail-panel { left: 10px; right: 10px; width: auto; }
+  .home-card small { font-size: 11px; }
+  .preset { min-width: 42px; padding: 3px 2px; }
+  .preset span { font-size: 9px; }
+  .bottom-status { display: flex; grid-template-rows: none; }
+  .bottom-status .local-brand-strip img { height: 22px; max-width: 24vw; padding: 1px 3px; }
+  .osm-minicredit { font-size: 10px; }
+  .map-credits summary { padding: 0 8px; font-size: 11px; }
+}
+
+/* 아주 좁은 화면(360px 안팎): 로고 하나만 남겨 출처 링크 자리를 지킨다. */
+@media (max-width: 380px) {
+  .bottom-status .local-brand-strip img:first-child { display: none; }
+  .live-ribbon .live-reading { padding: 2px 4px; }
+  .live-ribbon .live-reading span { font-size: 10px; }
+  .live-ribbon .live-reading strong { font-size: 12px; letter-spacing: -.3px; }
+}
+
+/* 낮은 화면(노트북 1024×768 등): 홈 카드 높이를 줄여 동 목록이 보이게 한다. */
+@media (max-height: 800px) and (min-width: 821px) {
+  .home-card { min-height: 48px; padding: 6px 9px; }
+  .home-hero { min-height: 56px; }
+  .home-card small { font-size: 10.5px; }
+  .home-more { margin-bottom: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-more-toggle::after { transition: none; }
+}
+
+/* ───────── 6. 지도 번호표 안내(번호 → 동 이름) ───────── */
+.dong-legend {
+  position: absolute;
+  z-index: 3;
+  left: calc(var(--map-left) + 16px);
+  top: calc(var(--header-h) + 96px);
+  max-width: min(640px, calc(100vw - var(--map-left) - 100px));
+  max-height: 100px; /* 두 줄까지. 더 많으면 상자 안에서 스크롤 */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 6px;
+  background: var(--panel-fill, var(--panel));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.map-focus .dong-legend { left: 16px; top: calc(var(--header-h) + 144px); }
+.dong-legend-title { flex: none; white-space: nowrap; font-size: 11px; font-weight: 700; color: var(--muted); padding: 0 4px; }
+.dong-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 40px;
+  padding: 0 9px 0 5px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.dong-legend button b { display: grid; place-items: center; min-width: 24px; height: 24px; border-radius: 12px; background: #102b46; color: #fff; font-size: 12px; }
+@media (min-width: 1000px) { .detail-open .dong-legend { max-width: min(640px, calc(100vw - var(--map-left) - 470px)); } }
+@media (max-width: 820px) {
+  /* 좁은 화면: 한 줄로 두고 옆으로 밀어 본다(지도를 가리지 않게). */
+  .dong-legend { left: 10px; right: 66px; top: calc(var(--header-h) + 124px); max-width: none; max-height: none; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+  .dong-legend::-webkit-scrollbar { display: none; }
+  .detail-open .dong-legend, .drawer-open .dong-legend { display: none !important; }
+}
+@media (min-width: 821px) { .live-ribbon { padding-top: 1px; padding-bottom: 1px; } }

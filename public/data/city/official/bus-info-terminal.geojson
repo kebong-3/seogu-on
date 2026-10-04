@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[],"metadata":{"state":"not-connected","coverage":"검수된 자료 미연결. 0개 시설이라는 뜻이 아닙니다.","sourceDate":null,"expectedSourceName":"광주광역시 버스도착안내단말기 설치 현황","expectedSourceUrl":"https://www.data.go.kr/data/15055905/fileData.do","howToConnect":"docs/DATA_INBOX.md 참고 · CSV를 data-inbox/ 에 넣고 node scripts/data/ingest.mjs 실행"}}

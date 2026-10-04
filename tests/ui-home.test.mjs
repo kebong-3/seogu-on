@@ -1,0 +1,122 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {registerAction,runRegisteredAction,hasAction} from '../src/city/actions.js';
+import {explainFailure,failureTooltip,DIAGNOSTIC_REASONS} from '../src/city/live-diagnostics.js';
+import {DIAGNOSTIC_CODES} from '../server/diagnostics.js';
+import {legendEntries,labelSignature} from '../src/city/dong-legend.js';
+
+const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
+const html = read('index.html');
+const actionsIn = fragment => [...fragment.matchAll(/<button[^>]*data-action="([^"]+)"[^>]*>/g)].map(m => ({action: m[1], hidden: /\shidden(\s|>)/.test(m[0]), tag: m[0]}));
+const primary = html.match(/<div class="home-primary"[\s\S]*?<\/div>\s*<!--/)[0];
+const more = html.match(/<div class="home-more-list"[\s\S]*?<\/div>\s*<\/div><\/div>/)[0];
+
+test('home panel: a first-time visitor sees at most three primary entry points, heat shade first', () => {
+  const visible = actionsIn(primary).filter(b => !b.hidden);
+  // '지도에게 묻기'가 켜진 뒤로는 '재난 상황판' 카드(home-yield)가 layout.css 규칙으로 "더 보기"로 물러난다.
+  const shown = visible.filter(b => !/home-yield/.test(b.tag));
+  assert.deepEqual(shown.map(b => b.action), ['heat-shade', 'ask-ai', 'infra']);
+  assert.ok(shown.length <= 3);
+  assert.match(primary, /폭염 그늘/);
+  assert.match(visible[0].tag, /home-hero/);
+});
+
+test('home panel: the ask-ai card is on, and a card yields so the count stays at three', () => {
+  const slot = actionsIn(primary).find(b => b.action === 'ask-ai');
+  assert.ok(slot, 'button exists'); assert.equal(slot.hidden, false);
+  assert.match(slot.tag, /home-ai/);
+  assert.match(primary, /수록 자료로 답하는/);
+  assert.match(actionsIn(primary).find(b => b.action === 'resilience').tag, /home-yield/);
+  assert.match(actionsIn(more).find(b => b.action === 'resilience').tag, /home-moved/);
+  const css = read('src/city/layout.css');
+  assert.match(css, /:has\(\.home-ai:not\(\[hidden\]\)\) \.home-yield \{ display: none; \}/);
+  assert.match(css, /:has\(\.home-ai:not\(\[hidden\]\)\) \.home-more \.home-moved \{ display: block; \}/);
+});
+
+test('home panel: every previous menu action is still reachable (primary or under 더 보기)', () => {
+  const reachable = new Set([...actionsIn(primary).filter(b => !b.hidden), ...actionsIn(more)].map(b => b.action));
+  for (const action of ['infra', 'safety-hub', 'native-sun', 'resilience', 'themes', 'city-questions', 'list', 'tools', 'report']) assert.ok(reachable.has(action), action);
+  assert.ok(reachable.has('settings'), '연결 설정 is reachable on phones where the top-bar button is hidden');
+  assert.match(html, /<button type="button" class="home-more-toggle" id="home-more-toggle" aria-expanded="false" aria-controls="home-more-list"><span>더 보기<\/span>/);
+  assert.match(read('src/city/layout.css'), /\.home-more:not\(\.open\) \.home-more-list \{ display: none; \}/);
+});
+
+test('home panel: all data-action names used in index.html keep a handler somewhere in src/city', () => {
+  const sources = fs.readdirSync(new URL('../src/city/', import.meta.url)).filter(f => f.endsWith('.js')).map(f => read('src/city/' + f)).join('\n');
+  const names = new Set([...html.matchAll(/data-action="([^"]+)"/g)].map(m => m[1]));
+  for (const name of names) {
+    assert.ok(sources.includes(`case'${name}'`) || sources.includes(`registerAction('${name}'`), `no handler for ${name}`);
+  }
+});
+
+test('action registry: registered handlers run first and can decline', async () => {
+  const seen = [];
+  const off = registerAction('test-only-action', (button, api) => { seen.push([button.dataset.id, api.tag]); });
+  assert.equal(hasAction('test-only-action'), true);
+  assert.equal(await runRegisteredAction({dataset: {action: 'test-only-action', id: '7'}}, {tag: 'api'}), true);
+  assert.deepEqual(seen, [['7', 'api']]);
+  assert.equal(await runRegisteredAction({dataset: {action: 'unknown-action'}}, {}), false);
+  const decline = registerAction('test-only-decline', () => false);
+  assert.equal(await runRegisteredAction({dataset: {action: 'test-only-decline'}}, {}), false);
+  off(); decline();
+  assert.equal(hasAction('test-only-action'), false);
+  assert.throws(() => registerAction('', () => {}));
+});
+
+test('app wiring: registry runs before the built-in switch and modules receive the shared api', () => {
+  const app = read('src/city/app.js');
+  assert.match(app, /async function action\(button\)\{if\(await runRegisteredAction\(button,api\)\)return;/);
+  assert.match(app, /const api=\{state,show,close,/);
+  assert.match(app, /installHeatScenario\(api\)/);
+  assert.match(app, /확장 모듈 등록 위치/);
+});
+
+test('live diagnostics: every server code has a Korean reason and an owner hint', () => {
+  for (const code of Object.keys(DIAGNOSTIC_CODES)) {
+    const info = explainFailure({code, stage: 'measurement', status: DIAGNOSTIC_CODES[code].status});
+    assert.equal(info.code, code); assert.match(info.reason, /[가-힣]/); assert.ok(info.hint.length > 10);
+  }
+  assert.ok(DIAGNOSTIC_REASONS.UNKNOWN);
+});
+
+test('live diagnostics: tooltip names the stage and code, and hints name the variable or portal API', () => {
+  const missing = explainFailure({code: 'NOT_CONFIGURED', stage: 'station-list', status: 503});
+  assert.equal(failureTooltip(missing), '미수신 · 에어코리아 측정소정보 · 인증키 미설정 (NOT_CONFIGURED)');
+  assert.match(missing.hint, /AIRKOREA_SERVICE_KEY/);
+  assert.match(explainFailure({code: 'ACCESS_DENIED', stage: 'measurement'}).hint, /에어코리아_대기오염정보/);
+  assert.equal(explainFailure({name: 'TimeoutError'}, 'weather').code, 'CLIENT_TIMEOUT');
+  assert.equal(explainFailure({message: 'anything'}, 'weather').code, 'UNKNOWN');
+  assert.equal(explainFailure(null), null);
+});
+
+test('live diagnostics: UI text never contains a key value or an upstream URL', () => {
+  const text = JSON.stringify(DIAGNOSTIC_REASONS) + read('src/city/live-status.js');
+  assert.doesNotMatch(text, /serviceKey=|apis\.data\.go\.kr/);
+  assert.match(read('src/city/live-status.js'), /'미수신'/);
+  assert.match(read('src/city/live-status.js'), /'미관측'/);
+});
+
+test('live ribbon: readings open the diagnostics panel', () => {
+  const ribbon = html.match(/<section class="live-ribbon"[\s\S]*?<\/section>/)[0];
+  assert.equal((ribbon.match(/data-action="live-detail"/g) || []).length, 3);
+  for (const id of ['live-temperature', 'live-rainfall', 'live-air', 'live-safety', 'live-observed']) assert.match(ribbon, new RegExp(`id="${id}"`));
+});
+
+test('dong legend: only numbered dongs are listed, in dong order', () => {
+  const dongs = JSON.parse(read('public/data/admin-dongs.geojson')).features;
+  const entries = legendEntries(dongs, ['seogu-12', 'seogu-03']);
+  assert.deepEqual(entries.map(e => [e.number, e.name]), [[3, '농성1동'], [12, '화정3동']]);
+  assert.deepEqual(legendEntries(dongs, []), []);
+  assert.equal(labelSignature([{id: 'a', mode: 'name'}, {id: 'b', mode: 'number'}, {id: 'c', mode: 'hidden'}]), 'b');
+  assert.match(html, /<nav id="dong-legend" class="dong-legend"[^>]*hidden><\/nav>/);
+});
+
+test('responsive: compact breakpoint is the same in CSS and JS', () => {
+  const js = read('src/city/home-panel.js'), css = read('src/city/layout.css');
+  const width = Number(js.match(/COMPACT_WIDTH = (\d+)/)[1]);
+  assert.equal(width, 820);
+  assert.ok(css.includes(`@media (max-width: ${width}px)`));
+  assert.ok(css.includes(`@media (min-width: ${width + 1}px)`));
+  assert.match(html, /href="\/src\/city\/layout\.css"/);
+});
