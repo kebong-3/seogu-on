@@ -1,7 +1,7 @@
 /*
  * 서구:온 배치 보정 (맨 마지막에 읽히는 스타일)
  *  1. 홈 패널: 주요 카드 3개 + "더 보기"
- *  2. 동 번호표(왼쪽 목록) · 지도 위 HTML 이름표(OSM 경량지도)
+ *  2. 지도 위 HTML 이름표(OSM 경량지도)
  *  3. 상단 관측정보 띠: 좁은 화면에서 잘리지 않게
  *  4. 누르는 영역 40px 이상
  *  5. 820px 이하: 왼쪽 패널을 서랍으로, 지도는 화면 전체
@@ -91,26 +91,7 @@
 [data-ui-theme="night"] .scenario-summary li b.missing { color: #ffc98a; }
 .live-diagnostic-row code { font: 600 12px/1 ui-monospace, monospace; padding: 2px 5px; border-radius: 4px; background: var(--control); color: var(--text); }
 
-/* ───────── 2. 동 번호표 · HTML 이름표 ───────── */
-.dong-button { position: relative; }
-.dong-button .dong-no {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 21px;
-  height: 21px;
-  border-radius: 50%;
-  background: #102b46;
-  color: #fff;
-  box-shadow: none;
-  font: 700 11px/1 system-ui, sans-serif;
-  font-style: normal;
-}
-.dong-button.active .dong-no { background: #0752a7; }
-
+/* ───────── 2. 지도 위 HTML 이름표 ───────── */
 .dong-label-layer { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
 .dong-label {
   position: absolute;
@@ -126,7 +107,6 @@
   border: 1px solid #83a6ce;
   border-radius: 5px;
 }
-.dong-label.number { border-radius: 999px; font-weight: 800; }
 .dong-label.selected { background: #0752a7; border-color: #a8e3ff; font-weight: 800; }
 
 /* ───────── 3. 상단 관측정보 띠 ───────── */
@@ -267,47 +247,4 @@ button.live-reading:hover:not(:disabled) { background: var(--control); filter: n
   .home-more-toggle::after { transition: none; }
 }
 
-/* ───────── 6. 지도 번호표 안내(번호 → 동 이름) ───────── */
-.dong-legend {
-  position: absolute;
-  z-index: 3;
-  left: calc(var(--map-left) + 16px);
-  top: calc(var(--header-h) + 96px);
-  max-width: min(640px, calc(100vw - var(--map-left) - 100px));
-  max-height: 100px; /* 두 줄까지. 더 많으면 상자 안에서 스크롤 */
-  overflow-y: auto;
-  scrollbar-width: thin;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 6px;
-  background: var(--panel-fill, var(--panel));
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-}
-.map-focus .dong-legend { left: 16px; top: calc(var(--header-h) + 144px); }
-.dong-legend-title { flex: none; white-space: nowrap; font-size: 11px; font-weight: 700; color: var(--muted); padding: 0 4px; }
-.dong-legend button {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 40px;
-  padding: 0 9px 0 5px;
-  font-size: 13px;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  white-space: nowrap;
-}
-.dong-legend button b { display: grid; place-items: center; min-width: 24px; height: 24px; border-radius: 12px; background: #102b46; color: #fff; font-size: 12px; }
-@media (min-width: 1000px) { .detail-open .dong-legend { max-width: min(640px, calc(100vw - var(--map-left) - 470px)); } }
-@media (max-width: 820px) {
-  /* 좁은 화면: 한 줄로 두고 옆으로 밀어 본다(지도를 가리지 않게). */
-  .dong-legend { left: 10px; right: 66px; top: calc(var(--header-h) + 124px); max-width: none; max-height: none; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
-  .dong-legend::-webkit-scrollbar { display: none; }
-  .detail-open .dong-legend, .drawer-open .dong-legend { display: none !important; }
-}
 @media (min-width: 821px) { .live-ribbon { padding-top: 1px; padding-bottom: 1px; } }

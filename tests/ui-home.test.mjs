@@ -4,7 +4,6 @@ import fs from 'node:fs';
 import {registerAction,runRegisteredAction,hasAction} from '../src/city/actions.js';
 import {explainFailure,failureTooltip,DIAGNOSTIC_REASONS} from '../src/city/live-diagnostics.js';
 import {DIAGNOSTIC_CODES} from '../server/diagnostics.js';
-import {legendEntries,labelSignature} from '../src/city/dong-legend.js';
 
 const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const html = read('index.html');
@@ -46,7 +45,8 @@ test('home panel: all data-action names used in index.html keep a handler somewh
   const sources = fs.readdirSync(new URL('../src/city/', import.meta.url)).filter(f => f.endsWith('.js')).map(f => read('src/city/' + f)).join('\n');
   const names = new Set([...html.matchAll(/data-action="([^"]+)"/g)].map(m => m[1]));
   for (const name of names) {
-    assert.ok(sources.includes(`case'${name}'`) || sources.includes(`registerAction('${name}'`), `no handler for ${name}`);
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    assert.ok(new RegExp(`case\\s*['"]${escaped}['"]\\s*:`).test(sources) || new RegExp(`registerAction\\(\\s*['"]${escaped}['"]`).test(sources), `no handler for ${name}`);
   }
 });
 
@@ -103,13 +103,11 @@ test('live ribbon: readings open the diagnostics panel', () => {
   for (const id of ['live-temperature', 'live-rainfall', 'live-air', 'live-safety', 'live-observed']) assert.match(ribbon, new RegExp(`id="${id}"`));
 });
 
-test('dong legend: only numbered dongs are listed, in dong order', () => {
-  const dongs = JSON.parse(read('public/data/admin-dongs.geojson')).features;
-  const entries = legendEntries(dongs, ['seogu-12', 'seogu-03']);
-  assert.deepEqual(entries.map(e => [e.number, e.name]), [[3, '농성1동'], [12, '화정3동']]);
-  assert.deepEqual(legendEntries(dongs, []), []);
-  assert.equal(labelSignature([{id: 'a', mode: 'name'}, {id: 'b', mode: 'number'}, {id: 'c', mode: 'hidden'}]), 'b');
-  assert.match(html, /<nav id="dong-legend" class="dong-legend"[^>]*hidden><\/nav>/);
+test('dong navigation: village BI and names remain without map numbers or a number legend', () => {
+  const app = read('src/city/app.js');
+  assert.match(app, /<img src="\/brand\/dongs\/\$\{f.properties.dongId\}.png"/);
+  assert.match(app, /<span>\$\{esc\(f.properties.dongName\)\}<\/span>/);
+  assert.doesNotMatch(html + app, /dong-legend|dong-no|dongNumber|번호표/);
 });
 
 test('responsive: compact breakpoint is the same in CSS and JS', () => {

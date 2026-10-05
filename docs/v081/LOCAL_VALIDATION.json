@@ -1,0 +1,23 @@
+{
+  "version": "0.8.1",
+  "checkedAt": "2026-10-05T13:59:10.286325+00:00",
+  "scope": "local code, public snapshots and local HTTP; production pending",
+  "syntax": "passed",
+  "nodeTests": {
+    "tests": 551,
+    "pass": 551,
+    "fail": 0
+  },
+  "build": "passed",
+  "packagingChecks": {
+    "checks": 12,
+    "pass": 12
+  },
+  "localHttpChecks": {
+    "checks": 48,
+    "pass": 48
+  },
+  "includedOfficialDatasets": 19,
+  "includedMapRecords": 9375,
+  "notProofOf": "Vercel production API authentication or current facility operation"
+}

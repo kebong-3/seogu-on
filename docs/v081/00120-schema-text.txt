@@ -1,0 +1,385 @@
+Metadata Table
+.modal-pop .modal-close {top:0;}
+오픈 API 데이터
+오픈API 에러코드
+오픈API 에러코드
+에러코드 목록 테이블 에러코드, 에러메시지, 설명을 나타낸다.
+에러코드
+에러메시지
+설명
+01
+APPLICATION ERROR
+어플리케이션 에러
+02
+TIMEOUT ERROR
+요청시간초과 에러
+10
+INVALID_REQUEST_PARAMETER_ERROR
+잘못된 요청 파라메터 에러
+11
+INDENT REQUEST PARAMETER ERROR
+필수 파라메터 에러
+12
+NO OPENAPI SERVICE ERROR
+해당 오픈API서비스가 없거나 폐기됨
+13
+INVALID METHOD REQUEST ERROR
+잘못된 메소드 요청
+20
+SERVICE ACCESS DENIED ERROR
+서비스 접근거부
+22
+LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR
+서비스 요청제한횟수 초과
+30
+SERVICE KEY IS NOT REGISTERED ERROR
+등록되지 않은 서비스키
+31
+DEADLINE HAS EXPIRED ERROR
+기한만료된 서비스키
+32
+UNREGISTERED IP ERROR
+등록되지 않은 IP
+33
+NO SERVICE KEY ERROR
+서비스키가 없음
+34
+DOZEN SERVICE KEY ERROR
+여러개의 서비스키
+99
+UNKNOWN ERROR
+기타에러
+게이트웨이에서 출력되는 오류메시지는 XML로만 출력되며, 형태는 아래와 같습니다.
+<OpenAPI ServiceResponsive>
+				    <cmmMsgHeader>
+				    <erroMsg>SERVICE ERROR<errMsg>
+				    <returnAuthMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR<returnAuthMsg>
+				    <returnReasonCode>30<returnReasonCode>
+				    <cmmMsgHeader>
+				<OpenAPI ServiceResponsive>
+닫기
+open API의 대한 설명을 나타낸다.
+재난안전데이터명
+행정안전부_상습결빙구간
+재난안전데이터설명
+상습적으로 도로에 결빙이 일어날수 있는 구간을 표출하는 구간입니다
+정보제공기관
+행정안전부
+정보담당부서
+예방안전과
+담당부서 전화번호
+044-205-4922
+수집방법
+시스템연계
+갱신주기
+1일
+데이터 갱신 일자
+2026-10-05
+재난유형
+조수,지진,풍수해(태풍,호우,대설)
+데이터유형
+정형
+재난관리
+지점 관리,대책 수립,재발 방지
+피해대상
+공공시설,사유시설
+주관기관
+국토교통부,행정안전부
+재난자원
+(시설) 기타
+키워드
+도로,교통,결빙
+유형
+공공
+API 유형
+REST
+데이터포맷
+JSON
+URL 주소
+/V2/api/DSSP-IF-00120
+이용가이드
+첨부파일
+요청변수(Request Parameter)
+요청변수 테이블 항목명 (국문, 영문), 타입, 항목크기, 구분, 설명을 나타낸다.
+항목명(국문)
+항목명(영문)
+타입
+항목크기
+항목구분
+항목설명
+서비스키
+serviceKey
+STRING
+50
+Y
+서비스키
+페이지당개수
+numOfRows
+NUMBER
+30
+N
+페이지당개수
+페이지번호
+pageNo
+NUMBER
+30
+N
+페이지번호
+응답타입(json,xml)
+returnType
+VARCHAR
+30
+N
+응답타입(json,xml)
+출력결과(Response Element)
+출력결과 테이블 항목명 (국문, 영문), 타입, 항목크기, 구분, 설명을 나타낸다.
+항목명(국문)
+항목명(영문)
+타입
+항목크기
+항목구분
+항목설명
+일련번호
+SN
+22
+Y
+일련번호
+구분
+SE
+50
+Y
+구분
+구간번호
+SCTN_NO
+256
+Y
+구간번호
+관리기관명
+MNG_INST_NM
+200
+Y
+관리기관명
+대표지역
+RPRS_RGN
+256
+Y
+대표지역
+도로노선명
+ROAD_RTE_NM
+256
+Y
+도로노선명
+취약유형
+FRGL_TYPE
+256
+Y
+취약유형
+정북기준도로방향각도
+TRNORTH_CRTR_ROAD_DRTN_DEG
+256
+Y
+정북기준도로방향각도
+X지도좌표
+XMAP_CRTS
+22
+Y
+X지도좌표
+Y지도좌표
+YMAP_CRTS
+22
+Y
+Y지도좌표
+지오메트리
+GEOM
+Y
+지오메트리
+샘플코드
+Java
+Python
+C#
+PHP
+cURL
+Swift
+/* Java 1.8 샘플 코드 */
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLEncoder;
+
+class ApiTest {
+    public static void main(String[] args) throws Exception {
+
+        String dataName = "데이터명";
+        String serviceKey = "서비스키";
+        String pageNo = "1";
+        String numOfRows = "10";
+
+        /* API를 호출하기 위한 URL 생성 */
+        StringBuilder urlBuilder = new StringBuilder("https://www.safetydata.go.kr/V2/api/DSSP-IF-00120"); 
+        /* API 키 */
+        urlBuilder.append("?" + "serviceKey=" + serviceKey);
+        /* 페이지 번호 */
+        urlBuilder.append("&" + "pageNo=" + pageNo);
+        /* 페이지당 데이터 수 */
+        urlBuilder.append("&" + "numOfRows=" + numOfRows);
+
+
+        System.out.println(urlBuilder.toString());
+        URI uri = new URI(urlBuilder.toString());
+        URL url = uri.toURL();
+
+        /* API 호출하기 위한 HTTP 커넥션과 리더 생성 */
+        HttpURLConnection connection =
+                (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        BufferedReader reader;
+
+        /* API 호출 */
+        connection.connect();
+        if (connection.getResponseCode() >= 200) {
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        } else {
+            System.err.println("Connection failed.");
+            return;
+        }
+
+        /* API 응답에서 데이터 추출 */
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+
+            reader.close();
+            connection.disconnect();
+        }
+    }
+}
+# Python3 샘플 코드 #
+
+import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+url = "https://www.safetydata.go.kr/V2/api/DSSP-IF-00120"
+serviceKey = "서비스키"
+payloads = {
+    "serviceKey": serviceKey,
+    "returnType": "json",
+    "pageNo": "1",
+    "numOfRows": "5",
+    
+}
+
+response = requests.get(url, params=payloads)
+# C# 샘플 코드 샘플 코드 #
+
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static HttpClient client = new HttpClient();
+
+        static async Task Main(string[] args)
+        {
+	    string url = "https://www.safetydata.go.kr/V2/api/DSSP-IF-00120"; // URL
+            url += "?serviceKey=" + "서비스키"; // service Key
+            url += "&pageNo=1";
+            url += "&numOfRows=10";
+
+	     try
+            {
+                // 비동기 요청을 보냄
+                HttpResponseMessage response = await client.GetAsync(url);
+                
+                // 응답이 성공적이면 데이터를 읽고 출력
+                if (response.IsSuccessStatusCode)
+                {
+                    string results = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(results);
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+}
+# PHP 샘플 코드 샘플 코드 #
+
+$ch = curl_init();
+$url = 'https://www.safetydata.go.kr/V2/api/DSSP-IF-00120'; /*URL*/
+$queryParams = '?' . urlencode('serviceKey') . '=서비스키'; /*Service Key*/
+$queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
+$queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('10'); /**/
+
+
+curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$response = curl_exec($ch);
+curl_close($ch);
+
+var_dump($response);
+# cURL 코드 샘플 코드 #
+
+curl --include --request GET
+'https://www.safetydata.go.kr/V2/api/DSSP-IF-00120?serviceKey=서비스키
+&pageNo=1&numOfRows=10&
+# swift 코드 샘플 코드 #
+
+import Foundation
+	
+class RequestAPI {
+    static let shared = RequestAPI()
+    private init() { }
+    
+    private let apiKey = Bundle.main.object(forInfoDictionaryKey: "서비스키") as? String
+    
+    func fetchData(){
+        
+        guard let apiKey = apiKey else { return }
+        
+        // API URL 설정
+        guard let url = URL(string: "https://www.safetydata.go.kr/V2/api/DSSP-IF-00120?serviceKey=\(apiKey)&pageNo=1&numOfRows=10&") else{
+            return
+        }
+        
+        // URLSession 사용하여 데이터 요청
+        let session = URLSession(configuration: .default)
+        
+        let task = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                print("데이터 가져오기 실패. 상태 코드: \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+                return
+            }
+            
+            
+            // 데이터 출력
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("응답 데이터: \(jsonString)")  // JSON 형식으로 출력
+            }
+        }
+        
+        task.resume()
+    }
+}

@@ -1,4 +1,4 @@
-/** Nine provider-specific public-data adapters. Keys are read only in the server.
+/** Provider-specific public-data adapters. Keys are read only in the server.
  * Official field references: src/city/safety-catalog.js (2026-09-28 snapshot).
  * No undocumented region filtering, fuzzy hospital joins, or fabricated geometry.
  */
@@ -6,6 +6,7 @@ import {createHash} from 'node:crypto';
 import {SAFETY_SOURCES,SAFETY_BY_ID} from '../../src/city/safety-catalog.js';
 import {HttpError,requireKey,json,endpoint,scopeFor,text,n} from './common.js';
 import {inside,boundsOf,validGeometry,clipFeature,fc} from '../../src/city/geometry.js';
+import {icingGeometry,icingRegionMatches} from './icing.js';
 const BASE='https://www.safetydata.go.kr/V2/api/';
 const PAGE_SIZE=500;
 const ERROR_MESSAGES={
@@ -28,7 +29,7 @@ export function getSafetyKey(source,env=process.env){
 }
 export function safetyStatus(env=process.env){return SAFETY_SOURCES.map(s=>{let configured=false,configurationError=false;try{configured=!!getSafetyKey(s,env);}catch{configurationError=true;}return {id:s.id,code:s.code,title:s.title,configured,configurationError,requestMode:s.requestMode,locationJoinRequired:['sd-aws','sd-beds','sd-risk'].includes(s.id),sourceUrl:s.sourceUrl};});}
 export function safetyTTL(kind){return ['sd-aws','sd-road','sd-beds'].includes(kind)?15*60000:60*60000;}
-function codeOf(body){const paths=[body?.response?.header,body?.header,body?.OpenAPI_ServiceResponse?.cmmMsgHeader,body?.cmmMsgHeader,body];for(const a of paths){const v=a?.resultCode??a?.returnReasonCode??a?.errorCode;if(v!==undefined&&v!==null)return String(v);}return null;}
+function codeOf(body){const paths=[body?.response?.header,body?.header,body?.OpenAPI_ServiceResponse?.cmmMsgHeader,body?.cmmMsgHeader,body];for(const a of paths){const v=a?.resultCode??a?.returnReasonCode??a?.errorCode;if(v!==undefined&&v!==null)return String(v).trim();}return null;}
 export function safetyEnvelope(body){
  const code=codeOf(body);
  if(code!==null&&!['0','00','000','NORMAL_SERVICE','INFO-000'].includes(code)){
@@ -44,7 +45,7 @@ export function safetyEnvelope(body){
  return {rows,total};
 }
 export function dms(deg,min,sec){const d=n(deg),m=n(min),s=n(sec);if(d===null||m===null||s===null||!Number.isInteger(d)||m<0||m>=60||s<0||s>=60)return null;return d+(m/60)+(s/3600);}
-function publicAttributes(row,source){return Object.fromEntries(Object.keys(source.fields).filter(k=>Object.hasOwn(row,k)&&!['GEOM','WHOL_PSTN_DTIN'].includes(k)).map(k=>[k,typeof row[k]==='number'?row[k]:row[k]===null?null:text(row[k],600)]));}
+function publicAttributes(row,source){return Object.fromEntries(Object.keys(source.fields).filter(k=>Object.hasOwn(row,k)&&k!=='WHOL_PSTN_DTIN'&&(k!=='GEOM'||source.id==='sd-icing')).map(k=>[k,typeof row[k]==='number'?row[k]:row[k]===null?null:text(row[k],600)]));}
 function sourceGeometry(row,source){
  if(Array.isArray(source.coordinates)){const lo=n(row[source.coordinates[0]]),la=n(row[source.coordinates[1]]);if(lo===null||la===null)return null;return {type:'Point',coordinates:[lo,la]};}
  if(source.coordinates==='dms'){const lo=dms(row.LOT_PROVIN,row.LOT_MIN,row.LOT_SEC),la=dms(row.LAT_PROVIN,row.LAT_MIN,row.LAT_SEC);return lo===null||la===null?null:{type:'Point',coordinates:[lo,la]};}
@@ -67,16 +68,22 @@ function datedValue(row,source){
  return v===undefined||v===null?null:text(v,60);
 }
 export function normalizeSafetyRows(rows,source,scope,{locationIndex={},collectedAt=new Date().toISOString()}={}){
- const features=[],unlocated=[];let outside=0,invalid=0,needsLocation=0,privateFieldsRemoved=0;
+ const features=[],unlocated=[];let outside=0,invalid=0,needsLocation=0,privateFieldsRemoved=0,regionMatched=0,regionExcluded=0,regionUnknown=0,regionBoundaryConflict=0;
  for(const row of rows){if(!row||typeof row!=='object'||Array.isArray(row)){invalid++;continue;}
+  if(source.id==='sd-icing'){
+   if(!String(row.RPRS_RGN??'').trim()){regionUnknown++;continue;}
+   if(!icingRegionMatches(row.RPRS_RGN)){regionExcluded++;continue;}
+   regionMatched++;
+  }
   for(const k of Object.keys(row))if(/ONDT_DR|^CLR$|WRTR_OGDP|IDFR_OGDP|MNG_RBPRSN|MNG_CTZN|COPL_RMRK/.test(k))privateFieldsRemoved++;
   const attrs=publicAttributes(row,source),originalId=text(row[source.idField],150)||createHash('sha256').update(JSON.stringify(attrs)).digest('hex').slice(0,20);
   const address=text(row[source.addressField]||row.DADDR||row.DTL_ADRES||row.FCLT_ADDR_LOTNO);
-  let geometry=sourceGeometry(row,source),joined=null;
-  if(!geometry)joined=joinLocation(row,source,locationIndex,scope);
+  const icing=source.id==='sd-icing'?icingGeometry(row):null;
+  let geometry=icing?icing.geometry:sourceGeometry(row,source),joined=null;
+  if(!geometry&&!icing)joined=joinLocation(row,source,locationIndex,scope);
   if(joined)geometry=joined.geometry;
-  if(!geometry){needsLocation++;if(fullSeoguAddress(address)&&unlocated.length<40)unlocated.push({sourceId:originalId,name:text(row[source.nameField]||source.title),address,reason:source.id==='sd-flood'?'원본 도형·좌표계 확인 필요':'원문 주소의 좌표 검수 필요'});continue;}
-  if(!validGeometry(geometry)){outside++;continue;}
+  if(!geometry){needsLocation++;if((fullSeoguAddress(address)||source.id==='sd-icing')&&unlocated.length<40)unlocated.push({sourceId:originalId,name:text(row[source.nameField]||source.title),address,originalAttributes:attrs,reason:icing?.reason||(source.id==='sd-flood'?'원본 도형·좌표계 확인 필요':'원문 주소의 좌표 검수 필요')});continue;}
+  if(!validGeometry(geometry)){outside++;if(icing)regionBoundaryConflict++;continue;}
   const observedAt=datedValue(row,source);
   const id=source.id+'-'+originalId+(source.id==='sd-aws'?'@'+(observedAt||'unknown'):'');
   const props={id,name:joined?.name||text(row[source.nameField]||source.title),sourceId:originalId,sourceName:source.sourceName,sourceUrl:source.sourceUrl,sourceDate:null,collectedAt,observedAt,address,category:source.kind,note:source.note,originalAttributes:attrs,originalFieldLabels:source.fields,
@@ -88,9 +95,10 @@ export function normalizeSafetyRows(rows,source,scope,{locationIndex={},collecte
   if(source.id==='sd-aws'){props.temperature=n(row.AIRTP);props.stationCode=originalId;props.observationStatus='원자료 품질 플래그 확인 필요';}
   if(source.id==='sd-flood')props.eventYear=row.FLDN_YR??null;
   if(source.id==='sd-road')props.providerGrade=row.RSK_ELMN_GRD??null;
-  try{const f=clipFeature({type:'Feature',geometry,properties:props},scope);if(f)features.push(f);else outside++;}catch{invalid++;}
+  if(icing){props.sectionNo=text(row.SCTN_NO);props.region=text(row.RPRS_RGN);props.manager=text(row.MNG_INST_NM);props.vulnerabilityType=text(row.FRGL_TYPE);props.pointType=text(row.SE);props.originalCrs=icing.originalCrs;props.crsEvidence=source.crsEvidence;props.locationBasis=icing.locationBasis;props.geometryMeaning=icing.geometryMeaning;}
+  try{const f=clipFeature({type:'Feature',geometry,properties:props},scope);if(f)features.push(f);else{outside++;if(icing)regionBoundaryConflict++;}}catch{invalid++;}
  }
- return {features,unlocated,quality:{outside,invalid,needsLocation,privateFieldsRemoved}};
+ return {features,unlocated,quality:{outside,invalid,needsLocation,privateFieldsRemoved,...(source.id==='sd-icing'?{regionMatched,regionExcluded,regionUnknown,regionBoundaryConflict,mappedRows:features.length}:{})}};
 }
 export async function readSafetyData(id,q,{env=process.env,fetcher=fetch}={}){
  const source=SAFETY_BY_ID[id];if(!source)throw new HttpError(404,'등록하지 않은 재난안전 자료입니다.');
@@ -109,10 +117,13 @@ export async function readSafetyData(id,q,{env=process.env,fetcher=fetch}={}){
  const body=await json(endpoint(BASE+source.code,params),{fetcher,timeout:12000,max:4*1024*1024});
  const {rows,total}=safetyEnvelope(body);if(rows.length>PAGE_SIZE)throw new HttpError(502,'요청한 페이지 크기를 넘는 원자료 응답입니다.','PAGE_SIZE_MISMATCH');
  if(total!==null&&rows.length===0&&(page-1)*PAGE_SIZE<total)throw new HttpError(502,'전체 건수와 빈 페이지 응답이 충돌합니다.','PAGE_GAP');
- const data=normalizeSafetyRows(rows,source,scope,{locationIndex});
+ const collectedAt=new Date().toISOString();
+ const data=normalizeSafetyRows(rows,source,scope,{locationIndex,collectedAt});
  const complete=total!==null?page*PAGE_SIZE>=total:rows.length<PAGE_SIZE;
- return {ok:true,id,title:source.title,sourceName:source.sourceName,sourceUrl:source.sourceUrl,sourceDate:null,collectedAt:new Date().toISOString(),page,pageSize:PAGE_SIZE,total,scanned:rows.length,complete,nextPage:complete?null:page+1,scope:q.get('dong')||'all',requestMode:source.requestMode,
+ if(source.id==='sd-icing'&&total!==null&&rows.length<Math.min(PAGE_SIZE,Math.max(0,total-(page-1)*PAGE_SIZE)))throw new HttpError(502,'원자료 건수와 페이지 크기가 일치하지 않습니다. 일부 응답을 전체 수집으로 처리하지 않습니다.','PAGE_GAP');
+ return {ok:true,id,title:source.title,sourceName:source.sourceName,sourceUrl:source.sourceUrl,sourceDate:null,collectedAt,page,pageSize:PAGE_SIZE,total,scanned:rows.length,complete,nextPage:complete?null:page+1,scope:q.get('dong')||'all',requestMode:source.requestMode,
   pageFingerprint:createHash('sha256').update(JSON.stringify(rows.map(r=>[r?.[source.idField],r?.OBSRVN_HR]))).digest('hex'),geojson:fc(data.features),unlocated:data.unlocated,quality:data.quality,note:source.note,
-  coverageNote:source.requestMode==='bbox'?'공식 경위도 범위 요청 후 실제 행정동 경계로 필터했습니다.':'공식 지역 요청변수가 없는 경우 전국 페이지를 검사한 뒤 서구 경계로 제한합니다. 모든 페이지 완료 전에는 전수 수집이 아닙니다.',
+  ...(source.id==='sd-icing'?{endpoint:source.endpoint,coordinateSystem:source.coordinateSystem,crsEvidence:source.crsEvidence,rawSample:rows.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)).slice(0,5).map(row=>publicAttributes(row,source)),rawSampleScope:'전국 원자료 현재 페이지 앞 5행 · 서구 필터 전',regionalRows:rows.filter(row=>icingRegionMatches(row?.RPRS_RGN)).map(row=>publicAttributes(row,source)),sectionCount:new Set(data.features.map(f=>f.properties.sectionNo).filter(Boolean)).size}:{}),
+  coverageNote:source.id==='sd-icing'?'전국 페이지를 받아 대표지역이 광주 서구인 행을 고르고, 변환한 원본 지점을 실제 행정동 경계와 대조했습니다. 구간번호와 지점 수를 구분하며 모든 페이지 수신 전에는 전수 수집이 아닙니다.':source.requestMode==='bbox'?'공식 경위도 범위 요청 후 실제 행정동 경계로 필터했습니다.':'공식 지역 요청변수가 없는 경우 전국 페이지를 검사한 뒤 서구 경계로 제한합니다. 모든 페이지 완료 전에는 전수 수집이 아닙니다.',
   licenseNote:'원 제공기관 출처·공공누리 이용조건 확인. 원자료 값과 표시용 도형을 구분합니다.'};
 }

@@ -1,0 +1,82 @@
+{
+  "dataset": "행정안전부 생활안전지도 상습결빙구간",
+  "collectedAt": "2026-10-05T13:35:06.441Z",
+  "countUnit": "관리지점",
+  "sourceRows": 26,
+  "accepted": 23,
+  "rejectedOutside": 3,
+  "sourceSectionRecords": 13,
+  "sourceManagementNumbers": 11,
+  "sourceDate": "2025-12-18",
+  "sourceDateMeaning": "생활안전지도 API 상세화면 메타데이터 수정일(수집년도 2025년), 개별 관리구간 갱신일은 공개되지 않음",
+  "files": [
+    {
+      "file": "local-icing.geojson",
+      "sha256": "e7fe0f7d2d9ed47728152b7a3c2e1db80b8d9be36911b87f5f4d4c536029eef1",
+      "bytes": 40523
+    },
+    {
+      "file": "icing-seogu-original.geojson",
+      "sha256": "7d03b94582b4edfc9dd3c8af33542080992d60ef49e3552798ad3791c59212ab",
+      "bytes": 16619
+    },
+    {
+      "file": "icing-rejected.geojson",
+      "sha256": "4b8fc0360cdefe2445018d103749183cdc0f1ede5ce3120bf7745cf9ef37d747",
+      "bytes": 2978
+    },
+    {
+      "file": "icing-public-features.txt",
+      "sha256": "6994e515c979300191f959bc3e28204254276374a143de553ff61b3c13d6b730",
+      "bytes": 30796
+    },
+    {
+      "file": "icing-public-lines.txt",
+      "sha256": "141856798e0e5db6ea33d472095acd992dcef480d3c1e62e2465ae3cfad8f9ae",
+      "bytes": 7507
+    },
+    {
+      "file": "00120-schema-text.txt",
+      "sha256": "e05ab945929d96907a92e2bfe8422ca99b51babc27e7d79d905b693a13265fea",
+      "bytes": 8971
+    },
+    {
+      "file": "00120-meta.html",
+      "sha256": "1d7e72e0c67d0916791a9a484cc97675ec3648880f108fea2fe4e16f10ce688d",
+      "bytes": 1243
+    },
+    {
+      "file": "safemap-wfs-capabilities.txt",
+      "sha256": "98b64e3fc0546f36701f423f15926bb5c56c93677e280399e666414490969df4",
+      "bytes": 164063
+    },
+    {
+      "file": "safemap-capabilities.txt",
+      "sha256": "34be5d74a02993a085322ba0d7b86a14eddcc2801bc04a481d0e670ea5300073",
+      "bytes": 641906
+    },
+    {
+      "file": "icing-point-describe.txt",
+      "sha256": "75b493e6686b60837cc9498bb92e8d6eb0d281dc98188c697e310ada9a1b232c",
+      "bytes": 2006
+    },
+    {
+      "file": "icing-line-describe.txt",
+      "sha256": "c9b33aeacc4ec097452806513611d5d625eefb9691b6955f456b38ae70b461f9",
+      "bytes": 2324
+    }
+  ],
+  "sourceUrls": {
+    "catalog": "https://www.safetydata.go.kr/disaster-data/view?dataSn=111",
+    "schema": "https://www.safetydata.go.kr/disaster-data/apiDataTable?dataSn=111",
+    "mapMetadata": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=221",
+    "wfsCapabilities": "https://www.safemap.go.kr/geoserver_pos/safemap/ows?service=WFS&request=GetCapabilities",
+    "points": "https://www.safemap.go.kr/geoserver_pos/safemap/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=safemap%3AA2SM_FREEZINGSECTION&srsName=EPSG%3A4326&bbox=14113085.042771222%2C4170678.022022106%2C14133122.551114012%2C4193818.6019500964%2CEPSG%3A3857&count=1000&outputFormat=application%2Fjson",
+    "sections": "https://www.safemap.go.kr/geoserver_pos/safemap/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=safemap%3AA2SM_FREEZINGSECTION_L&srsName=EPSG%3A4326&cql_filter=area_name%3D%27%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%84%9C%EA%B5%AC%27&count=1000&outputFormat=application%2Fjson"
+  },
+  "keyRequired": false,
+  "originalGeometryPreserved": true,
+  "displayData": "local-icing.geojson",
+  "excludedData": "icing-rejected.geojson",
+  "rawSectionData": "icing-public-lines.txt"
+}

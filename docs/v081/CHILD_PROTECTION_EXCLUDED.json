@@ -1,0 +1,13 @@
+[
+  {
+    "sourceRow": 26,
+    "name": "치평초교",
+    "address": "전남광주통합특별시 서구 마재로 27",
+    "coordinates": [
+      126.8628737642,
+      35.1306310994
+    ],
+    "reason": "same-school-name-official-coordinate-conflict-over-500m",
+    "distanceMeters": 2701
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "scope": "local built files",
+  "version": "0.8.1",
+  "webBundleSha256": "f6efc79d7748e82537ec23c664fb8f7f1c2eed3d13c049c7d211f831bfe34a52",
+  "results": [
+    {
+      "name": "Release identifier equals application version",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/finish-tools.js",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/layer-sync.js",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/local-records.js",
+      "passed": true
+    },
+    {
+      "name": "Built data/city/civic-index.json",
+      "passed": true
+    },
+    {
+      "name": "Built model.html",
+      "passed": true
+    },
+    {
+      "name": "Built classic.html",
+      "passed": true
+    },
+    {
+      "name": "Vercel preserves data file for geocode server",
+      "passed": true
+    },
+    {
+      "name": "Civic index has 18 unique dong names",
+      "passed": true
+    },
+    {
+      "name": "Civic index does not claim field verification",
+      "passed": true
+    },
+    {
+      "name": "Pending coordinates are not fabricated",
+      "passed": true
+    },
+    {
+      "name": "No secrets files or font files in web package",
+      "passed": true
+    }
+  ]
+}

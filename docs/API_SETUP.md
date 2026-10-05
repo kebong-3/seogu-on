@@ -7,7 +7,7 @@
 
 ## 1. 환경변수 목록
 
-전체 표는 저장소 최상위 `README.md`의 "환경변수" 절에 있습니다. 재난안전 API 9종의 자세한 설정은 `docs/v06/API_SETUP.md`를 보세요.
+전체 표는 저장소 최상위 `README.md`의 "환경변수" 절에 있습니다. 재난안전 API는 0.8.1에서 상습결빙구간을 추가해 10종입니다. 현재 목록과 상습결빙구간 설정은 아래 6절, 기존 9종의 당시 설정 기록은 [0.6.0 설정 문서](v06/API_SETUP.md)를 보세요.
 
 공공데이터포털(data.go.kr) 키에 대해 알아 둘 점:
 
@@ -69,3 +69,84 @@ Vercel 로그에는 `[air] station-list primary KEY_REJECTED`처럼 **단계 · 
 - 받지 못한 값은 "미수신", 응답에 값이 없거나 점검 플래그가 있으면 "미관측"으로 표시합니다. 0이나 다른 지역 값으로 채우지 않습니다.
 - 갱신에 실패하면 같은 구역의 이전 정상값을 원래 관측시각과 "갱신 실패" 표시와 함께 보여 줍니다.
 - "환경변수 설정됨"은 인증 성공이나 자료 수신 성공을 뜻하지 않습니다.
+
+## 6. 재난안전 API 10종과 상습결빙구간
+
+### 6-1. 서비스별 환경변수
+
+Vercel의 서버 전용 환경변수에 서비스별로 저장합니다. 이 값에 `VITE_`, `NEXT_PUBLIC_` 같은 브라우저 공개 접두사를 붙이지 않습니다. 공식 데이터 설명·이용조건은 각 서비스의 링크에서 확인합니다.
+
+| 서비스 | 공식 식별자 | 개별 서버 환경변수 | 공식 설명 |
+|---|---|---|---|
+| 한파쉼터 | `DSSP-IF-10804` | `SAFETYDATA_10804_KEY` | [dataSn=966](https://www.safetydata.go.kr/disaster-data/view?dataSn=966) |
+| 무더위쉼터 | `DSSP-IF-10942` | `SAFETYDATA_10942_KEY` | [dataSn=1338](https://www.safetydata.go.kr/disaster-data/view?dataSn=1338) |
+| 침수흔적도 | `DSSP-IF-00117` | `SAFETYDATA_00117_KEY` | [dataSn=108](https://www.safetydata.go.kr/disaster-data/view?dataSn=108) |
+| 지역 재해위험지구 | `DSSP-IF-00058` | `SAFETYDATA_00058_KEY` | [dataSn=52](https://www.safetydata.go.kr/disaster-data/view?dataSn=52) |
+| AWS 10분 관측 | `DSSP-IF-00026` | `SAFETYDATA_00026_KEY` | [dataSn=21](https://www.safetydata.go.kr/disaster-data/view?dataSn=21) |
+| 의료기관 병상 원자료 | `DSSP-IF-00242` | `SAFETYDATA_00242_KEY` | [dataSn=227](https://www.safetydata.go.kr/disaster-data/view?dataSn=227) |
+| 폭염저감시설 | `DSSP-IF-10926` | `SAFETYDATA_10926_KEY` | [dataSn=1326](https://www.safetydata.go.kr/disaster-data/view?dataSn=1326) |
+| 민방위 대피소 | `DSSP-IF-00195` | `SAFETYDATA_00195_KEY` | [dataSn=184](https://www.safetydata.go.kr/disaster-data/view?dataSn=184) |
+| 도로위험상황예보 | `DSSP-IF-10005` | `SAFETYDATA_10005_KEY` | [dataSn=732](https://www.safetydata.go.kr/disaster-data/view?dataSn=732) |
+| **상습결빙구간** | **`DSSP-IF-00120`** | **`SAFETYDATA_00120_KEY`** | [dataSn=111](https://www.safetydata.go.kr/disaster-data/view?dataSn=111) |
+
+기존 `SAFETYDATA_KEYS_JSON`에 서비스 식별자와 키를 묶어 사용하는 방식도 유지됩니다. 같은 서비스가 두 곳에 있으면 개별 환경변수의 값을 먼저 사용합니다. 새 키 하나만 추가하려면 기존 JSON을 바꾸지 않고 `SAFETYDATA_00120_KEY`를 저장하면 됩니다. 10종은 등록된 조회 대상 수이며 정상 수신한 서비스 수가 아닙니다.
+
+### 6-2. 상습결빙구간 API 주소와 요청 항목
+
+- 공식 API: `https://www.safetydata.go.kr/V2/api/DSSP-IF-00120`
+- 공식 상세페이지: [상습결빙구간(dataSn=111)](https://www.safetydata.go.kr/disaster-data/view?dataSn=111)
+- 공식 요청·출력 명세: [요청변수·출력결과](https://www.safetydata.go.kr/disaster-data/apiDataTable?dataSn=111)
+- 확인한 명세 사본: [00120-schema-text.txt](v081/00120-schema-text.txt)
+- 서구온 내부 조회: `/api/city-data?kind=sd-icing&dong=all&page=1`
+
+공식 명세의 요청변수는 다음 4개입니다.
+
+| 요청변수 | 공식 필수 여부 | 현재 서버가 보내는 값·의미 |
+|---|---|---|
+| `serviceKey` | 필수 | `SAFETYDATA_00120_KEY` 등 서버 환경변수에서 읽은 해당 서비스 키 |
+| `numOfRows` | 선택 | 페이지당 `500`행 요청 |
+| `pageNo` | 선택 | `1`부터 순서대로 조회 |
+| `returnType` | 선택 | `json` |
+
+이 API의 명세에 없는 `sido`, `gugun`, 위경도 범위 변수를 임의로 덧붙이지 않습니다. 전국 응답을 페이지별로 받은 뒤 대표지역명과 업로드된 서구 18개 행정동 경계를 함께 확인합니다. 내부 URL의 `dong=all`은 광주 서구 전체라는 뜻이며 외부 API의 요청변수가 아닙니다.
+
+전용 **상습결빙구간** 메뉴에서는 광주 서구를 우선 대상으로 열고, 선택한 동이 있으면 표시 범위를 좁힙니다. 수신 현황에는 검사한 원자료 행, 서구에 해당하는 행, 지도 표시 지점, 좌표 검수 대상과 원래 구간번호를 구분합니다. 지점 여러 개를 이어 실제 도로 선형을 만들지 않습니다.
+
+### 6-3. 실제 키 시험에서 확인한 오류
+
+2026-10-05 로컬 실행환경에서 실제 키로 호출했을 때 **HTTP 200이 반환됐지만 응답 본문은 다음 오류**였습니다. 근거: [키를 제외한 수신 요약](v081/keyed-response-summary.json).
+
+```json
+{
+  "httpStatus": 200,
+  "header": {
+    "resultCode": "32",
+    "resultMsg": "UNREGISTERED IP ERROR"
+  },
+  "bodyCount": null
+}
+```
+
+따라서 확인한 것은 **등록 IP 오류**이며, 인증 성공·자료 수신 성공·서구 0건은 확인하지 않았습니다. 서구온 서버는 이 응답을 `SAFETYDATA_32` 오류로 처리하며 정상 자료로 집계하지 않습니다. 위 결과는 로컬 출발 IP의 관찰입니다. Vercel의 실제 출발 IP 또는 Vercel 배포 후 결과를 대신하지 않습니다.
+
+| 항목 | 문서 작성 시점의 확인 상태 |
+|---|---|
+| 공식 API 식별자·명세 연결 코드 | `DSSP-IF-00120`, 요청변수 4개 반영 |
+| 로컬 환경의 실제 키 호출 | HTTP 200 안의 `32 / UNREGISTERED IP ERROR` 확인 |
+| Vercel Production 환경변수 | `SAFETYDATA_00120_KEY` 저장 확인; 값은 비공개 |
+| 환경변수와 코드를 반영한 새 Production 배포 | 배포·검증 대기 |
+| Vercel 환경의 인증·실자료 수신 | 새 배포 후 확인 필요; 성공으로 기록하지 않음 |
+
+이후 배포 상태는 [0.8.1 변경·확인 기록](v081/RELEASE.md)에 실제 관찰과 함께 갱신합니다.
+
+### 6-4. 등록 IP 오류가 계속될 때
+
+1. 플랫폼에서 해당 서비스의 활용승인·키·허용 IP 설정을 확인합니다. 사용자 PC의 공인 IP와 서버가 요청할 때의 출발 IP는 별개입니다.
+2. 새 배포 후 다시 호출하여 HTTP 상태와 본문의 `resultCode`를 함께 확인합니다. 실패할 때 반복 호출로 성공을 가정하지 않습니다.
+3. 허용 IP 범위 변경, 와일드카드 허용 여부, 다른 승인된 실행환경 사용은 **사용자의 선택사항**입니다. 이번 작업에서는 플랫폼의 IP 허용 설정이나 와일드카드를 변경하지 않았습니다.
+
+유료 고정 IP 구매를 전제로 하지 않습니다. API 인증이 해결되기 전에도 별도로 수집한 **생활안전지도 공식 공개본 23개 관리지점**을 확인할 수 있도록 준비했습니다. 이 공개본 표시를 `DSSP-IF-00120` 인증 성공으로 표시하지 않습니다. 공개본의 원자료 날짜·제외 내역은 [수집·검증 기록](v081/RELEASE.md)에 있습니다.
+
+### 6-5. 공개본의 출처와 이용조건
+
+상습결빙구간의 API 명세 출처와 생활안전지도 공개본 출처는 구분해 보존합니다. 생활안전지도 [상습결빙구간 상세페이지](https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=221)에 표시된 **공공누리 제4유형(출처표시·상업적 이용금지·변경금지)** 등 원문 이용조건을 함께 남깁니다. 상업적 재이용이나 추가 편집을 하려면 해당 원문 조건을 먼저 확인해야 합니다. 코드의 MIT 라이선스는 원자료의 이용조건을 바꾸지 않습니다. 자세한 구분은 [출처·이용조건](../THIRD_PARTY_NOTICES.md)을 참고하세요.

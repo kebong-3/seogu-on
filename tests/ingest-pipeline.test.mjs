@@ -190,12 +190,15 @@ test('ingest: school file replaces only official points and keeps OSM polygons; 
   assert.equal(out.metadata.officialPoints.preservedOtherSourceFeatures, 52);
 });
 
-test('ingest: command line prints a Korean summary and exits 0 on a clean dry run', t => {
+test('ingest: command line can preview a smaller fixture explicitly without changing the published snapshot', t => {
   const box = sandbox(t, { 'zone-a.csv': 'zone-a.csv' });
-  const output = execFileSync(process.execPath, [resolve(root, 'scripts/data/ingest.mjs'), '--dry-run', `--inbox=${box.inboxDir}`], { encoding: 'utf8' });
+  const published = resolve(root, 'public/data/city/official/child-protection-zone.geojson');
+  const before = readFileSync(published, 'utf8');
+  const output = execFileSync(process.execPath, [resolve(root, 'scripts/data/ingest.mjs'), '--dry-run', '--force', `--inbox=${box.inboxDir}`], { encoding: 'utf8' });
   assert.match(output, /전국어린이보호구역표준데이터/);
   assert.match(output, /원본 1행 → 서구 안 1개 채택/);
   assert.match(output, /미리보기\(저장하지 않음\)/);
   assert.match(output, /전체 목록이 아닙니다/);
   assert.equal(existsSync(join(box.outRoot, 'public')), false);
+  assert.equal(readFileSync(published, 'utf8'), before);
 });

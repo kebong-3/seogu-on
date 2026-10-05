@@ -22,6 +22,7 @@ export const LAYERS=[
  {id:'cadastral',group:'입지·계획',title:'지적도 참고층',icon:'parcel',color:'#e0cc9d',kind:'raster',key:'vworldRest',note:'법적 경계 확정·측량용 아님'}
 ];
 LAYERS.push(...INFRA_LAYERS,...OFFICIAL_LAYERS,...OVERLAY_LAYERS,...VW_LAYERS,...SAFETY_LAYERS,
+ {id:'local-icing',title:'상습결빙구간 (공식 공개본)',group:'서구 공식자료',icon:'warning',color:'#36a1db',kind:'mixed',url:'/data/city/local-icing.geojson',note:'생활안전지도 광주 서구 등록구간의 시작·종료 관리지점 · 지점 수와 구간 수는 다름 · 현재 노면 결빙 관측 아님'},
  {id:'local-shade',title:'서구 그늘막 공개본',group:'서구 공식자료',icon:'sun',color:'#de9a27',kind:'point',url:'/data/city/local-shade.geojson',note:'공식 공개본 · 기준일은 자료 상세 참조 · 현재 운영 별도'},
  {id:'local-cooling',title:'서구 쿨링포그 공개본',group:'서구 공식자료',icon:'water',color:'#209ab7',kind:'point',url:'/data/city/local-cooling.geojson',note:'공식 공개본 · 기준일은 자료 상세 참조 · 현재 가동 별도'},
  {id:'local-flood-history',title:'과거 침수피해 기록',group:'서구 공식자료',icon:'water',color:'#7769ba',kind:'point',url:'/data/city/local-flood-history.geojson',note:'발생연도별 과거 기록 · 현재 위험 예측 아님'}

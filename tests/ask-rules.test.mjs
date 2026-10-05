@@ -1,6 +1,7 @@
 // "지도에게 묻기" 규칙 기반 모드: 질문 해석(동·분류·반경·의도)과 실제 엔진 호출.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { ASK_EXAMPLES } from '../src/city/ask-examples.js';
 import { answerQuestion, pickMap, resetAskLimits } from '../server/ai/ask.js';
@@ -215,7 +216,30 @@ test('실제 자료: 대표 질문의 도구 선택과 지도 지시(느슨한 �
   assert.match(flood.answer, /위험 예측이 아닙니다/);
   assert.ok(flood.caveats.some(c => /미래 침수 위험 예측이 아닙니다/.test(c)));
 
-  const shelter = await run('무더위쉼터 어디 있어?');
-  assert.match(shelter.answer, /미연결|자료 없음/);
-  assert.doesNotMatch(shelter.answer, /0곳입니다/);
+  // 이 배포에는 실제 공식 쉼터 자료가 있다. 미연결이라는 과거 가정 대신
+  // 답변의 전체 건수와 지도 지시가 각 공식 원본 파일에서 왔는지 확인한다.
+  for (const [question, category, file] of [
+    ['한파쉼터 어디 있어?', 'official-cold-shelter', 'cold-shelter'],
+    ['무더위쉼터 어디 있어?', 'official-heat-shelter', 'heat-shelter'],
+  ]) {
+    const original = JSON.parse(readFileSync(new URL(`../public/data/city/official/${file}.geojson`, import.meta.url), 'utf8'));
+    assert.ok(original.features.length > 0, `${file}: 공식 공개본이 실제로 수록되어야 한다`);
+    const expected = new Map(original.features.map(feature => [String(feature.properties.id || feature.id), feature]));
+    const shelter = await run(question);
+    assert.deepEqual(shelter.steps.map(step => [step.tool, step.args.category, step.ok]), [['find_facilities', category, true]]);
+    assert.match(shelter.answer, new RegExp(`수록된 지점은 ${original.features.length.toLocaleString('ko-KR')}곳`));
+    assert.doesNotMatch(shelter.answer, /미연결|자료 없음|0곳입니다/);
+    assert.ok(shelter.sources.some(source => source.url === original.metadata.sourceUrl));
+    assert.equal(shelter.map.highlight.type, 'FeatureCollection');
+    assert.ok(shelter.map.highlight.features.length > 0 && shelter.map.highlight.features.length <= original.features.length);
+    for (const feature of shelter.map.highlight.features) {
+      assert.equal(feature.properties.category, category);
+      const found = expected.get(String(feature.properties.id));
+      assert.ok(found, `공식 원본에 없는 지도 지점: ${feature.properties.id}`);
+      assert.equal(feature.geometry.type, 'Point');
+      const [lon, lat] = feature.geometry.coordinates, [sourceLon, sourceLat] = found.geometry.coordinates;
+      const displayOffsetM = Math.hypot((lon - sourceLon) * Math.cos(sourceLat * Math.PI / 180), lat - sourceLat) * 111320;
+      assert.ok(displayOffsetM < 0.1, '지도 지점은 공식 원본에서 10cm 미만이어야 한다(표시 좌표 반올림 허용)');
+    }
+  }
 });

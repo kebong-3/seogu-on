@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "reason": "광주 서구 대표지역이지만 현재 행정동 경계 밖의 좌표",
+    "sourceName": "행정안전부 생활안전지도 / 상습결빙구간",
+    "sourceUrl": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=221",
+    "collectedAt": "2026-10-05T13:35:06.441Z"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "A2SM_FREEZINGSECTION.fid--4d829725_1a10c43e922_-7f19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8428737,
+          35.17620093
+        ]
+      },
+      "geometry_name": "ag_geom",
+      "properties": {
+        "gid": 12677,
+        "objt_id": 505,
+        "type": "S",
+        "mng_no": "29000-2",
+        "org": "광주광역시(본청)",
+        "area_name": "광주광역시 서구",
+        "road_name": "광역시도",
+        "division": "-",
+        "degree": "346.7322515",
+        "x": 14120084,
+        "y": 4187852
+      },
+      "rejectionReason": "official-area-name-matches-but-coordinate-outside-current-seogu-boundary",
+      "locationAudit": {
+        "inDistrict": false,
+        "dongId": null,
+        "dongName": null,
+        "ambiguous": false
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "A2SM_FREEZINGSECTION.fid--4d829725_1a10c43e922_-7ef1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8370602,
+          35.17757173
+        ]
+      },
+      "geometry_name": "ag_geom",
+      "properties": {
+        "gid": 15978,
+        "objt_id": 3863,
+        "type": "E",
+        "mng_no": "29000-2",
+        "org": "광주광역시(본청)",
+        "area_name": "광주광역시 서구",
+        "road_name": "광역시도",
+        "division": "-",
+        "degree": "346.7322515",
+        "x": 14119437,
+        "y": 4188039
+      },
+      "rejectionReason": "official-area-name-matches-but-coordinate-outside-current-seogu-boundary",
+      "locationAudit": {
+        "inDistrict": false,
+        "dongId": null,
+        "dongName": null,
+        "ambiguous": false
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "A2SM_FREEZINGSECTION.fid--4d829725_1a10c43e922_-7ee2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8854636,
+          35.14067384
+        ]
+      },
+      "geometry_name": "ag_geom",
+      "properties": {
+        "gid": 16052,
+        "objt_id": 3939,
+        "type": "E",
+        "mng_no": "29140-5",
+        "org": "광주광역시(서구)",
+        "area_name": "광주광역시 서구",
+        "road_name": "지방도",
+        "division": "-",
+        "degree": "205.798893",
+        "x": 14124825,
+        "y": 4183015
+      },
+      "rejectionReason": "official-area-name-matches-but-coordinate-outside-current-seogu-boundary",
+      "locationAudit": {
+        "inDistrict": false,
+        "dongId": null,
+        "dongName": null,
+        "ambiguous": false
+      }
+    }
+  ]
+}

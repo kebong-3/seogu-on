@@ -1,4 +1,4 @@
-/** Exact public endpoint and field metadata, verified 2026-09-28. No service keys. */
+/** Public endpoint and field metadata. Icing source verified 2026-10-05. No service keys. */
 export const SAFETY_SOURCES=[
   {
     "id": "sd-cold",
@@ -482,6 +482,45 @@ export const SAFETY_SOURCES=[
     "keyEnv": "SAFETYDATA_10005_KEY",
     "icon": "shield",
     "color": "#d58342"
+  },
+  {
+    "id": "sd-icing",
+    "code": "DSSP-IF-00120",
+    "title": "상습결빙구간",
+    "sourceName": "행정안전부 / 재난안전데이터공유플랫폼",
+    "sourceUrl": "https://www.safetydata.go.kr/disaster-data/view?dataSn=111",
+    "endpoint": "https://www.safetydata.go.kr/V2/api/DSSP-IF-00120",
+    "requestMode": "national",
+    "kind": "designation",
+    "idField": "SN",
+    "nameField": "ROAD_RTE_NM",
+    "addressField": "RPRS_RGN",
+    "coordinates": "icing-3857",
+    "coordinateSystem": "EPSG:3857",
+    "crsEvidence": {
+      "sourceName": "행정안전부 생활안전지도",
+      "layer": "A2SM_FREEZINGSECTION",
+      "sourceUrl": "https://www.safemap.go.kr/",
+      "verifiedAt": "2026-10-05"
+    },
+    "fields": {
+      "SN": "일련번호",
+      "SE": "구분",
+      "SCTN_NO": "구간번호",
+      "MNG_INST_NM": "관리기관명",
+      "RPRS_RGN": "대표지역",
+      "ROAD_RTE_NM": "도로노선명",
+      "FRGL_TYPE": "취약유형",
+      "TRNORTH_CRTR_ROAD_DRTN_DEG": "진북기준 도로방향각",
+      "XMAP_CRTS": "X 지도좌표",
+      "YMAP_CRTS": "Y 지도좌표",
+      "GEOM": "원본 지점 도형"
+    },
+    "requestFields": ["serviceKey", "numOfRows", "pageNo", "returnType"],
+    "note": "상습결빙 관리구간의 등록 지점입니다. 대표지역과 서구 경계를 함께 확인합니다. 현재 결빙 관측이나 제설 완료정보가 아닙니다.",
+    "keyEnv": "SAFETYDATA_00120_KEY",
+    "icon": "shield",
+    "color": "#45a6c6"
   }
 ];
 export const SAFETY_BY_ID=Object.fromEntries(SAFETY_SOURCES.map(s=>[s.id,s]));

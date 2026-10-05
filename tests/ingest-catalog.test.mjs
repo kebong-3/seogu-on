@@ -38,14 +38,21 @@ test('ingest catalog: source URLs agree with the roadmap document', () => {
 });
 
 test('ingest catalog: targets shown on the map point at the same file as the layer catalogue, and every file exists', () => {
+  const snapshots = read('public/data/city/official-collection.json').datasets;
   for (const source of SOURCES) {
     assert.ok(existsSync(resolve(root, source.target)), source.target);
     if (!source.layerId) continue;
     assert.equal('public' + LAYER_BY_ID[source.layerId]?.url, source.target, source.key);
   }
   for (const layer of OFFICIAL_LAYERS) {
-    assert.ok(SOURCES.some(source => source.layerId === layer.id), layer.id);
+    const snapshot = snapshots.find(source => source.layerId === layer.id);
+    assert.ok(SOURCES.some(source => source.layerId === layer.id) || snapshot, layer.id);
     const collection = read('public' + layer.url);
+    if (snapshot) {
+      assert.equal(snapshot.file, layer.url, layer.id);
+      assert.equal(snapshot.accepted, collection.features.length, layer.id);
+      assert.equal(collection.metadata.state, 'published', layer.id);
+    }
     assert.ok(collection.features.length > 0 || collection.metadata.state === 'not-connected', `${layer.id}: 0개와 미연결을 구분`);
   }
 });

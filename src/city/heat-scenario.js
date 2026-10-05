@@ -14,6 +14,7 @@ import {LAYER_BY_ID,esc} from './catalog.js';
 export const HEAT_LAYERS = [
   {id: 'local-shade', label: '그늘막', kind: 'static'},
   {id: 'local-cooling', label: '쿨링포그', kind: 'static'},
+  {id: 'official-heat-shelter', label: '무더위쉼터(공식 공개본)', kind: 'static'},
   {id: 'sd-heat', label: '무더위쉼터', kind: 'manual'},
   {id: 'heat', label: '무더위쉼터(기존 API)', kind: 'api', key: 'safety'},
   {id: 'park-areas', label: '공원 면', kind: 'static'}

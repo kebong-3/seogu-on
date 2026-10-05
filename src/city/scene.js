@@ -32,7 +32,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  for(const s of [boundarySource,maskSource,analysisSource,modelSource])await viewer.dataSources.add(s);
  currentPose={center:[126.86,35.145],range:16000,heading:320,pitch:-48,level:'overview'};
  sunController=createSunController(viewer,C,{emit:tell,getPose:readPose});
- dongLabels=createDongLabels3D({C,viewer,source:boundarySource,requestRender,clampToGround:!clean,onPlan:numbered=>tell('dong-labels',{numbered})});
+ dongLabels=createDongLabels3D({C,viewer,source:boundarySource,requestRender,clampToGround:!clean});
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
  for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>director.stop(),{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
@@ -60,7 +60,7 @@ function addGeometry(ds,f,style){const g=f.geometry,p=f.properties||{},base=`${s
 }
 async function boundaries(m){lastBoundary=m;visual=displayOptions(m.visual||visual);sampleSequence++;selectionMode=null;profileStart=null;admin=m.district;scope=m.scope;dong=m.dong||'all';focusOn=m.focus!==false;clearOwned(boundarySource);clearOwned(maskSource);
  for(const f of m.features){const selected=f.properties.dongId===dong;const style={layer:'dong',color:f.properties.color,alpha: dong==='all'?visual.boundaryOpacity:selected?Math.min(.18,visual.boundaryOpacity+.04):.005,width:selected?4:1.5};addGeometry(boundarySource,f,style);}
- /* 동 이름표: 겹치면 번호표로 줄이고 카메라 이동 때 다시 배치한다(dong-labels-3d.js). */
+ /* 동 이름표: 선택 동의 이름을 먼저 배치하고 자리가 부족한 이름은 확대 시 다시 표시한다(dong-labels-3d.js). */
  dongLabels?.set(m.features.map(f=>({...f,properties:{...f.properties,labelPoint:f.properties.labelPoint||representative(f.geometry)}})),{dong,visible:visual.labels});
  if(focusOn){const g=maskGeometry(scope);if(g)addGeometry(maskSource,{geometry:g,properties:{id:'outside'}},{layer:'mask',color:'#091c2a',alpha:visual.maskOpacity,width:0});}
  if(!m.visualOnly){for(const [id,item]of imagery){viewer.imageryLayers.remove(item,true);imagery.delete(id);}for(const l of (m.rasters||[]))toggleRaster(l,true);}

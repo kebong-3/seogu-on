@@ -24,12 +24,18 @@ tests/                node:test 단위시험(*.test.mjs)과 오프라인 화면�
 | `heat-scenario.js` | 대표 시나리오 "폭염 그늘" |
 | `ask-ai.js`, `ask-examples.js` | "지도에게 묻기" 패널과 예시 질문. 결과 지점은 `ask-result` 지도층으로 그림(`docs/AI_PANEL.md`) |
 | `live-status.js`, `live-diagnostics.js` | 상단 관측정보와 미수신 원인 설명 |
-| `label-layout.js` | 동 이름표 배치 계산(엔진 공통, 순수 함수) |
-| `dong-labels-3d.js`, `dong-labels-dom.js`, `dong-legend.js` | 3D·OSM 지도의 이름표, 번호표 안내 |
+| `label-layout.js` | 동 이름표 배치 계산(엔진 공통, 순수 함수). 선택 동 우선, 겹친 이름은 숨김 |
+| `dong-labels-3d.js`, `dong-labels-dom.js` | 3D·OSM 지도의 동 이름 표시와 카메라 이동 시 재배치 |
 | `viewer.js` | 지도 엔진 3종: 브이월드/도시모형(iframe), 경계도(canvas), OSM 경량지도(MapLibre) |
 | `scene.js` | iframe 안에서 도는 Cesium 장면(브이월드 3D와 밝은 도시모형이 함께 씀) |
 | `enhancements.js` → `experience.js`, `resilience-tools.js`, `finish-tools.js`, `safety-hub.js` | 인프라·기후·주제도·상황판·기록·재난안전 API 패널 |
 | `style.css` → `appearance.css` → `identity.css` → `layout.css` | 뒤에 읽히는 파일이 앞의 것을 덮어씀. 배치 보정은 `layout.css` |
+
+### 동 이름표 배치
+
+`label-layout.js`는 화면 좌표를 받아 `name` 또는 `hidden` 상태를 돌려줍니다. 선택한 동의 전체 이름을 먼저 배치하고, 가까운 후보 위치에도 자리가 없으면 해당 이름을 숨깁니다. 확대·이동 시 각 엔진이 다시 계산하므로 읽을 공간이 생기면 이름이 나타납니다. 브이월드·밝은 도시모형에서 화면 좌표를 구하지 못하는 경우에는 선택한 동 이름만 표시합니다.
+
+0.8.1에서 동 카드 숫자 배지, 번호표 범례 DOM·CSS, `dong-legend.js`, 번호 변환 함수와 범례 전달 이벤트를 제거했습니다. 동 카드의 공식 마을 BI와 이름, 동 선택 기능은 유지합니다.
 
 ### 버튼이 동작하는 순서
 
@@ -57,7 +63,7 @@ export function installMyFeature(api) {
 ### 지도 엔진과 주고받는 메시지
 
 `app.js`는 `view.send({type, ...})`로 지도에 지시하고, 지도는 `onEvent({type, ...})`로 알립니다.
-주요 메시지: `boundaries`(동 경계), `layer`(지도층), `camera`, `raster`, `sun`, `tool` / `ready`, `dong`, `select`, `point`, `dong-labels`(번호표가 된 동 목록).
+주요 메시지: `boundaries`(동 경계), `layer`(지도층), `camera`, `raster`, `sun`, `tool` / `ready`, `dong`, `select`, `point`.
 
 ## 서버(api, server)
 
@@ -72,7 +78,16 @@ export function installMyFeature(api) {
 
 - `server/city/common.js`: 요청 제한(`gate`), 허용 호스트, 응답 크기·시간 제한, 결과코드 검사.
 - `server/city/air-quality.js`: 에어코리아 측정소·측정값. `server/diagnostics.js`: 실패 원인 코드와 키 정리.
+- `src/city/safety-catalog.js`, `server/city/safetydata.js`: 재난안전 API 10종의 공식 식별자·필드와 서버 조회·결과코드·위치 검수. 서비스별 키는 환경변수에서 읽습니다.
 - 서버는 사용자가 준 주소로 요청하지 않습니다. 키는 환경변수에서만 읽고 응답·로그에 남기지 않습니다.
+
+### 상습결빙구간 조회
+
+전용 메뉴는 `safety-hub.js`에서 서구 전체를 우선 대상으로 열고 `/api/city-data?kind=sd-icing&dong=all`로 조회합니다. 서버는 Secret `SAFETYDATA_00120_KEY`를 사용해 공식 `DSSP-IF-00120` 엔드포인트를 호출합니다. 전국 원자료를 페이지별로 받아 지역명과 실제 서구 행정경계를 검수하며, 다른 지역의 서구 자료가 섞이지 않게 처리합니다.
+
+API 원자료의 구간번호(`SCTN_NO`)와 지점 구분(`SE`)을 보존하고, 지점 수와 고유 구간번호 수를 분리합니다. 원자료가 점으로 제공되면 점으로 표시하며 이를 임의로 이어 구간 선형을 만들지 않습니다. 별도로 확보한 공개 구간 도형은 출처를 구분합니다. 키 설정, 인증 결과, 자료 수신, 위치 검수 상태도 각각 유지합니다. HTTP 200 안의 `resultCode: 32`는 등록 IP 오류로 처리합니다.
+
+공식 명세: [재난안전데이터공유플랫폼 상습결빙구간](https://www.safetydata.go.kr/disaster-data/view?dataSn=111). 실제 확보자료·수신 검증은 [0.8.1 기록](v081/RELEASE.md), 환경변수 안내는 [API 설정](API_SETUP.md)을 참고하세요.
 
 ## 하지 않는 것
 

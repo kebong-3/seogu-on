@@ -41,7 +41,7 @@ MEASURE = '''() => {
   const ribbon = document.querySelector('.live-ribbon');
   return { scrollWidth: document.documentElement.scrollWidth, iw, outside, small,
     ribbon: [ribbon.scrollWidth, ribbon.clientWidth], readings: [...ribbon.querySelectorAll('.live-reading')].map(e => box('#' + (e.querySelector('strong').id))).filter(Boolean).length,
-    dock: box('.bottom-dock'), camera: box('.camera-controls'), panel: box('#district-panel'), detail: box('#detail-panel'), opener: box('#show-panels'), legend: box('#dong-legend'),
+    dock: box('.bottom-dock'), camera: box('.camera-controls'), panel: box('#district-panel'), detail: box('#detail-panel'), opener: box('#show-panels'),
     primary: [...document.querySelectorAll('.home-primary .home-card')].filter(visible).map(e => e.dataset.action) };
 }'''
 
@@ -65,7 +65,7 @@ def run(page, base, width, height):
     check(f'{tag}: status ribbon is not cut off', m['ribbon'][0] <= m['ribbon'][1] + 1 and m['readings'] == 4, m['ribbon'])
     check(f'{tag}: tap targets are at least 40px', not m['small'], m['small'])
     check(f'{tag}: category dock stays inside the map and off the side panel', m['dock'] and m['dock'][2] <= width and not overlap(m['dock'], m['panel']), [m['dock'], m['panel']])
-    check(f'{tag}: 18 dong labels shown as names or numbers (numbers listed in legend)', page.evaluate("document.querySelectorAll('#dong-legend button').length") <= 18)
+    check(f'{tag}: dong BI and names remain without number badges or legend', page.evaluate("document.querySelectorAll('.dong-button img').length === 18 && document.querySelectorAll('.dong-button span').length === 18 && !document.querySelector('.dong-no, #dong-legend, .dong-label.number')"))
 
     compact = width <= COMPACT
     if compact:

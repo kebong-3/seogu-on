@@ -1,0 +1,170 @@
+{
+  "checkedAt": "2026-10-05T13:46:48.620Z",
+  "checks": "Production loadDongIndex+locate reused independently against normalized outputs; unique ID, required source fields and date-null counts checked.",
+  "datasets": [
+    {
+      "file": "aed.geojson",
+      "features": 412,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 412,
+      "dateMissing": 273
+    },
+    {
+      "file": "chemical-shelter.geojson",
+      "features": 9,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 9,
+      "dateMissing": 0
+    },
+    {
+      "file": "child-protection-zone.geojson",
+      "features": 62,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 62,
+      "dateMissing": 0
+    },
+    {
+      "file": "civil-defense-shelter.geojson",
+      "features": 98,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 98,
+      "dateMissing": 98
+    },
+    {
+      "file": "cold-shelter.geojson",
+      "features": 256,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 256,
+      "dateMissing": 0
+    },
+    {
+      "file": "earthquake-shelter.geojson",
+      "features": 43,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 43,
+      "dateMissing": 0
+    },
+    {
+      "file": "emergency-medical.geojson",
+      "features": 6,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 6,
+      "dateMissing": 2
+    },
+    {
+      "file": "emergency-water.geojson",
+      "features": 26,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 26,
+      "dateMissing": 26
+    },
+    {
+      "file": "fine-dust-shelter.geojson",
+      "features": 10,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 10,
+      "dateMissing": 10
+    },
+    {
+      "file": "heat-shelter.geojson",
+      "features": 297,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 297,
+      "dateMissing": 0
+    },
+    {
+      "file": "pharmacy-official.geojson",
+      "features": 158,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 158,
+      "dateMissing": 158
+    },
+    {
+      "file": "police-official.geojson",
+      "features": 8,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 8,
+      "dateMissing": 8
+    },
+    {
+      "file": "security-light.geojson",
+      "features": 7887,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 7887,
+      "dateMissing": 0
+    },
+    {
+      "file": "senior-disabled-protection-zone.geojson",
+      "features": 13,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 13,
+      "dateMissing": 0
+    },
+    {
+      "file": "steep-slope.geojson",
+      "features": 14,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 14,
+      "dateMissing": 0
+    },
+    {
+      "file": "temporary-housing.geojson",
+      "features": 38,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 38,
+      "dateMissing": 38
+    },
+    {
+      "file": "traditional-market.geojson",
+      "features": 8,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 8,
+      "dateMissing": 0
+    },
+    {
+      "file": "welfare-official.geojson",
+      "features": 7,
+      "outsideBoundary": 0,
+      "dongAssignmentMismatches": 0,
+      "missingRequiredFields": 0,
+      "uniqueIds": 7,
+      "dateMissing": 0
+    }
+  ],
+  "totalFeatures": 9352,
+  "passed": true
+}

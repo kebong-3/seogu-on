@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "access": "공식 공개 화면 및 공개 다운로드가 사용하는 인증 없는 읽기 요청. 원자료를 다시 수신할 때 공급기관 변경·휴지 여부 확인 필요.",
+  "privacy": "재수신 원본에는 개인 담당자·등록 계정 등이 포함될 수 있으므로 원본을 그대로 웹 배포하지 않고 시설 필드 허용목록으로 정규화.",
+  "datasets": [
+    {
+      "key": "child-protection-zone",
+      "sourceName": "공공데이터포털 / 어린이보호구역 대상시설",
+      "sourceUrl": "https://www.data.go.kr/data/15012891/standard.do",
+      "accepted": 62,
+      "requests": [
+        {
+          "url": "https://www.data.go.kr/download/standard.json?publicDataPk=15012891&colNmList=FCLTY_KND&colNmList=TRGET_FCLTY_NM&colNmList=RDNMADR&colNmList=LNMADR&colNmList=LATITUDE&colNmList=LONGITUDE&colNmList=INSTITUTION_NM&colNmList=CMPTNC_POLCSTTN_NM&colNmList=CCTV_YN&colNmList=CCTV_NUMBER&colNmList=CHLD_PRTN_ZON_YN&colNmList=CHLD_PRTN_ZON_YN_MDFCN_DATE&colNmList=PRTCAREA_RW&colNmList=REFERENCE_DATE&totalCount=14642&svcTableNm=tn_pubr_public_child_prtc_zn_svc&perPage=10000&page=1",
+          "status": 200,
+          "method": "GET",
+          "rawFilename": "child-protection-page1.json",
+          "sha256": "41c7edeedc5a0d1eb36bfa9fe79a556f1f6307cbf6003d757d8d6ef896e3244a",
+          "receivedAt": "2026-10-05T13:31:53.134038+00:00"
+        },
+        {
+          "url": "https://www.data.go.kr/download/standard.json?publicDataPk=15012891&colNmList=FCLTY_KND&colNmList=TRGET_FCLTY_NM&colNmList=RDNMADR&colNmList=LNMADR&colNmList=LATITUDE&colNmList=LONGITUDE&colNmList=INSTITUTION_NM&colNmList=CMPTNC_POLCSTTN_NM&colNmList=CCTV_YN&colNmList=CCTV_NUMBER&colNmList=CHLD_PRTN_ZON_YN&colNmList=CHLD_PRTN_ZON_YN_MDFCN_DATE&colNmList=PRTCAREA_RW&colNmList=REFERENCE_DATE&totalCount=14642&svcTableNm=tn_pubr_public_child_prtc_zn_svc&perPage=10000&page=2",
+          "status": 200,
+          "method": "GET",
+          "rawFilename": "child-protection-page2.json",
+          "sha256": "702a558d5b0e76022fb2fd9ba7a5facfa218317d7a237211325f42af4e0240af",
+          "receivedAt": "2026-10-05T13:31:50.501053+00:00"
+        }
+      ]
+    },
+    {
+      "key": "senior-disabled-protection-zone",
+      "sourceName": "공공데이터포털 / 노인·장애인보호구역 대상시설",
+      "sourceUrl": "https://www.data.go.kr/data/15034532/standard.do",
+      "accepted": 13,
+      "requests": [
+        {
+          "url": "https://www.data.go.kr/download/standard.json?publicDataPk=15034532&colNmList=LC_TYPE&colNmList=TRGET_FCLTY_NM&colNmList=CTPRVN_NM&colNmList=SIGNGU_NM&colNmList=SIGNGU_CODE&colNmList=RDNMADR&colNmList=LNMADR&colNmList=LATITUDE&colNmList=LONGITUDE&colNmList=LMTT_VE&colNmList=INSTITUTION_NM&colNmList=INSTITUTION_PHONE_NUMBER&colNmList=CMPTNC_POLCSTTN_NM&colNmList=CCTV_YN&colNmList=CCTV_NUMBER&colNmList=PRTCAREA_RW&colNmList=REFERENCE_DATE&totalCount=4162&svcTableNm=tn_pubr_public_oldnddspsnprt_carea_svc&perPage=10000&page=1",
+          "status": 200,
+          "method": "GET",
+          "rawFilename": "senior-protection-page1.json",
+          "sha256": "64127a82cc5f671bf1e260a53958aa22e41c2f59d3c3b5814765b4b8cfd13ba9",
+          "receivedAt": "2026-10-05T13:31:50.032238+00:00"
+        }
+      ]
+    },
+    {
+      "key": "traditional-market",
+      "sourceName": "공공데이터포털 / 전통시장",
+      "sourceUrl": "https://www.data.go.kr/data/15012894/standard.do",
+      "accepted": 8,
+      "requests": [
+        {
+          "url": "https://www.data.go.kr/download/standard.json?publicDataPk=15012894&colNmList=MRKT_NM&colNmList=MRKT_TYPE&colNmList=RDNMADR&colNmList=LNMADR&colNmList=MRKT_ESTBL_CYCLE&colNmList=LATITUDE&colNmList=LONGITUDE&colNmList=STOR_NUMBER&colNmList=TRTMNT_PRDLST&colNmList=USE_GCCT&colNmList=HOMEPAGE_URL&colNmList=PBLIC_TOILET_YN&colNmList=PRKPLCE_YN&colNmList=ESTBL_YEAR&colNmList=PHONE_NUMBER&colNmList=REFERENCE_DATE&totalCount=1393&svcTableNm=tn_pubr_public_trdit_mrkt_svc&perPage=10000&page=1",
+          "status": 200,
+          "method": "GET",
+          "rawFilename": "traditional-market-page1.json",
+          "sha256": "13ffd04a946ec7eec28222c8c3762f2e77aab919cd250888cdaaf7f51cce303b",
+          "receivedAt": "2026-10-05T13:31:49.401501+00:00"
+        }
+      ]
+    },
+    {
+      "key": "welfare-official",
+      "sourceName": "공공데이터포털 / 무료급식소·복지관",
+      "sourceUrl": "https://www.data.go.kr/data/15013107/standard.do",
+      "accepted": 7,
+      "requests": [
+        {
+          "url": "https://www.data.go.kr/download/standard.json?publicDataPk=15013107&colNmList=FCLTY_NM&colNmList=RDNMADR&colNmList=LNMADR&colNmList=OPER_INSTITUTION_NM&colNmList=PHONE_NUMBER&colNmList=MLSV_PLACE&colNmList=MLSV_TRGET&colNmList=MLSV_TIME&colNmList=MLSV_DATE&colNmList=OPER_OPEN_DATE&colNmList=OPER_CLOSE_DATE&colNmList=LATITUDE&colNmList=LONGITUDE&colNmList=REFERENCE_DATE&totalCount=1274&svcTableNm=tn_pubr_public_free_mlsv_svc&perPage=10000&page=1",
+          "status": 200,
+          "method": "GET",
+          "rawFilename": "welfare-free-meal-page1.json",
+          "sha256": "8d82acb87047117a3fbe776db3ab430863f0a1600641a7ab967c755cc962049d",
+          "receivedAt": "2026-10-05T13:31:58.572746+00:00"
+        }
+      ]
+    },
+    {
+      "key": "security-light",
+      "sourceName": "서구청 / 전국보안등정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15017320/standard.do",
+      "accepted": 7887,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000003698474&fileDetailSn=1&insertDataPrcus=N",
+          "rawFilename": "security-light-seogu.csv",
+          "sha256": "c40326e47c3768e647fc4de63e02caed1efa00ac439a2f87a90ed7400d7f7505",
+          "receivedAt": "2026-10-05T13:34:34.087008+00:00"
+        }
+      ]
+    },
+    {
+      "key": "earthquake-shelter",
+      "sourceName": "행정안전부 국민안전24 / 지진옥외대피장소",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 43,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_ACMD_SPCE_FCLTY_TEMP",
+            "tableKorNm": "지진옥외대피소",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "earthquake-shelter-safekorea.json",
+          "sha256": "919e4d493007c3c4ea622ac780aebf0ae3585d6a7aaad5e4a57866123acd63d0",
+          "receivedAt": "2026-10-05T13:33:32.601658+00:00"
+        }
+      ]
+    },
+    {
+      "key": "civil-defense-shelter",
+      "sourceName": "행정안전부 국민안전24 / 민방위대피소",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 98,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_CIVIL_EMR_FACL_TEMP",
+            "tableKorNm": "민방위대피소",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "civil-defense-shelter-safekorea.json",
+          "sha256": "910b008caba455f7b6646fc8fb87fd6123c17cd29e60871f515e007cc1b8f823",
+          "receivedAt": "2026-10-05T13:33:44.034087+00:00"
+        }
+      ]
+    },
+    {
+      "key": "emergency-water",
+      "sourceName": "행정안전부 국민안전24 / 비상급수시설",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 26,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_CIVIL_EMR_FACL_TEMP",
+            "tableKorNm": "비상급수시설",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "emergency-water-safekorea.json",
+          "sha256": "6f27bd5e37ab391ba474fc77f0a867d0fa73920bcc6e92f718437ee5eb324bac",
+          "receivedAt": "2026-10-05T13:33:43.898590+00:00"
+        }
+      ]
+    },
+    {
+      "key": "chemical-shelter",
+      "sourceName": "행정안전부 국민안전24 / 화학사고대피소",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 9,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_CHMSTRY_ACDNT_SHLTR_TEMP",
+            "tableKorNm": "화학사고대피소",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "chemical-shelter-safekorea.json",
+          "sha256": "a4d0705447e738e2777493cbf39c353b844542f045325bd5c70563c1535c01be",
+          "receivedAt": "2026-10-05T13:33:32.255174+00:00"
+        }
+      ]
+    },
+    {
+      "key": "fine-dust-shelter",
+      "sourceName": "행정안전부 국민안전24 / 미세먼지쉼터",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 10,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_FIND_DUST_RSTR_FCLTY_TEMP",
+            "tableKorNm": "미세먼지쉼터",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "fine-dust-shelter-safekorea.json",
+          "sha256": "e2a260193d2a7e5777678d6cb1d223e768946f5e151341b463935d369262433e",
+          "receivedAt": "2026-10-05T13:33:32.347465+00:00"
+        }
+      ]
+    },
+    {
+      "key": "temporary-housing",
+      "sourceName": "행정안전부 국민안전24 / 이재민임시주거시설",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 38,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_ACMDFCLTY_TEMP",
+            "tableKorNm": "이재민임시주거시설",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "temporary-housing-safekorea.json",
+          "sha256": "a93c0f9ebebf13bf48a3d888acd4b6cd20ebfdae320d86236af691b13a8dba3e",
+          "receivedAt": "2026-10-05T13:33:43.292700+00:00"
+        }
+      ]
+    },
+    {
+      "key": "police-official",
+      "sourceName": "행정안전부 국민안전24 / 경찰서·지구대·파출소",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 8,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TFK_POLICE_STATION_TEMP",
+            "tableKorNm": "경찰서",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "police-safekorea.json",
+          "sha256": "7023133deeee6ad7c5e13a00c7953aeec200fd7c74019fc09620a919102440db",
+          "receivedAt": "2026-10-05T13:33:50.878799+00:00"
+        }
+      ]
+    },
+    {
+      "key": "emergency-medical",
+      "sourceName": "행정안전부 국민안전24 / 응급의료시설",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 6,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TB_SFK_ESR_MDLCR_CNTR",
+            "tableKorNm": "응급의료센터",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "emergency-medical-safekorea.json",
+          "sha256": "26b4a34f608c811f4ccbe146c0e1f2d735ebcdc2638fadc6b6ba9976953689da",
+          "receivedAt": "2026-10-05T13:33:50.947206+00:00"
+        }
+      ]
+    },
+    {
+      "key": "steep-slope",
+      "sourceName": "행정안전부 국민안전24 / 급경사지 공개 등록위치",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 14,
+      "requests": [
+        {
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "method": "POST",
+          "params": {
+            "tableNm": "TB_SFK_ASS",
+            "tableKorNm": "급경사지",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "status": 200,
+          "rawFilename": "steep-slope-safekorea.json",
+          "sha256": "9642ca9b5ffe7d41cbf1aac722b86bef7884217c2a344e439aae0c58012183d3",
+          "receivedAt": "2026-10-05T13:34:06.304658+00:00"
+        }
+      ]
+    },
+    {
+      "key": "pharmacy-official",
+      "sourceName": "행정안전부 생활안전지도 / 약국",
+      "sourceUrl": "https://www.safemap.go.kr/main/smap.do",
+      "accepted": 158,
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://www.safemap.go.kr/geoserver_pos/safemap/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=safemap%3AA2SM_PHARMACY&srsName=EPSG%3A4326&bbox=14111971.84786329%2C4172037.896749009%2C14127556.57657435%2C4189731.45606446%2CEPSG%3A3857&count=10000&outputFormat=application%2Fjson",
+          "status": 200,
+          "rawFilename": "pharmacy-official-wfs.json",
+          "sha256": "47eddc15991b087550d822db0d55d2880ca4713fe344d68bc17e210a8fe76ffc",
+          "receivedAt": "2026-10-05T13:43:48.854467+00:00"
+        }
+      ]
+    },
+    {
+      "key": "heat-shelter",
+      "sourceName": "행정안전부 국민안전24 무더위쉼터",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 297,
+      "requests": [
+        {
+          "method": "POST",
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "parameters": {
+            "tableNm": "TFK_HTW_RSTR_TEMP",
+            "tableKorNm": "무더위쉼터",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "recordPath": "mapList"
+        }
+      ]
+    },
+    {
+      "key": "cold-shelter",
+      "sourceName": "행정안전부 국민안전24 한파쉼터",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "accepted": 256,
+      "requests": [
+        {
+          "method": "POST",
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilityDataList.do",
+          "parameters": {
+            "tableNm": "TFK_CDW_RSTR_TEMP",
+            "tableKorNm": "한파쉼터",
+            "sggCd": "29140",
+            "page": 1,
+            "size": 5
+          },
+          "recordPath": "mapList"
+        }
+      ]
+    },
+    {
+      "key": "aed",
+      "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+      "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+      "accepted": 412,
+      "requests": [
+        {
+          "method": "POST",
+          "url": "https://e-gen.or.kr/egen/retrieve_aed_list_grid.do",
+          "parameters": {
+            "searchType": "general",
+            "jusoType": "addrroad",
+            "loca": "26",
+            "sidoCode": "12",
+            "gugunCode": "240"
+          },
+          "recordPath": "$"
+        }
+      ]
+    }
+  ]
+}

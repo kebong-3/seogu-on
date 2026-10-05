@@ -143,9 +143,15 @@
       "use": "외부 API",
       "note": "쉼터 주소·유형·수용인원 등을 활용한 폭염 대피시설 지도.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/heat-shelter.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 297,
+        "sourceDate": null,
+        "sourceDateRange": [
+          "2025-09-08",
+          "2026-06-25"
+        ],
+        "collectedAt": "2026-10-05T22:34:49+09:00"
       }
     },
     {
@@ -202,9 +208,15 @@
       "use": "CSV·API",
       "note": "학교·어린이집 주변 보호구역 기준시설 및 관련 정보.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/child-protection-zone.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 62,
+        "sourceDate": "2026-07-10",
+        "sourceDateRange": [
+          "2026-07-10",
+          "2026-07-10"
+        ],
+        "collectedAt": "2026-10-05T13:31:53Z"
       }
     },
     {
@@ -214,9 +226,15 @@
       "use": "CSV·API",
       "note": "노인·장애인 보호구역과 교통·안전시설 중첩.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/senior-disabled-protection-zone.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 13,
+        "sourceDate": "2026-07-31",
+        "sourceDateRange": [
+          "2026-07-31",
+          "2026-07-31"
+        ],
+        "collectedAt": "2026-10-05T13:31:50Z"
       }
     },
     {
@@ -226,9 +244,15 @@
       "use": "CSV·API",
       "note": "야간 보행시설 분포. 실측 조도·현재 점등 상태는 별도.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/security-light.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 7887,
+        "sourceDate": "2026-08-06",
+        "sourceDateRange": [
+          "2026-08-06",
+          "2026-08-06"
+        ],
+        "collectedAt": "2026-10-05T13:34:34Z"
       }
     },
     {
@@ -250,9 +274,15 @@
       "use": "외부 API",
       "note": "지진 대피장소 지도. 침수·민방위 대피시설과 혼용하지 않기.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/earthquake-shelter.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 43,
+        "sourceDate": null,
+        "sourceDateRange": [
+          "2024-05-07",
+          "2026-05-07"
+        ],
+        "collectedAt": "2026-10-05T13:33:32Z"
       }
     },
     {
@@ -318,9 +348,15 @@
       "use": "CSV·API",
       "note": "시장·주변 상가·주차장·편의시설 연결.",
       "snapshot": {
-        "state": "not-collected",
+        "state": "published",
         "file": "/data/city/official/traditional-market.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "features": 8,
+        "sourceDate": "2025-11-10",
+        "sourceDateRange": [
+          "2025-11-10",
+          "2025-11-10"
+        ],
+        "collectedAt": "2026-10-05T13:31:49Z"
       }
     },
     {
@@ -568,9 +604,15 @@
     "L01",
     "L02",
     "L03",
+    "S02",
     "S03",
     "S04",
+    "S06",
+    "S07",
+    "S08",
+    "S10",
     "S13",
+    "S16",
     "S17"
   ],
   "rawDataCollectedMeaning": "rawDataCollected=false 는 60개 링크 전체를 수집하지 않았다는 뜻입니다. 실제로 공개본이 들어온 항목은 collectedItemIds 와 각 항목의 snapshot 을 보세요."
