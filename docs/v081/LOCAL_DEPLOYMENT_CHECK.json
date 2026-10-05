@@ -6,7 +6,7 @@
     {
       "name": "All public JSON/GeoJSON parse",
       "passed": true,
-      "detail": "111 files; invalid=0"
+      "detail": "127 files; invalid=0"
     },
     {
       "name": "No font files bundled",

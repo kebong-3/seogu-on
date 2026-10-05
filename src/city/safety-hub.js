@@ -5,7 +5,7 @@ import {validGeometry,filterFeatures,fc} from './geometry.js';
 const $=id=>document.getElementById(id);
 const ICING='sd-icing', LOCAL_ICING='local-icing';
 const kindLabels={static:'등록시설',history:'과거 이력',designation:'지정구역',observation:'관측 원자료',forecast:'제공기관 예보'};
-const dateText=value=>value?String(value).replace('T',' ').replace(/\.\d+Z$/,' UTC'):'미수신';
+const dateText=value=>{if(!value)return '미수신';const date=new Date(value);return Number.isFinite(+date)?date.toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})+' KST':String(value);};
 const countText=value=>Number.isFinite(value)?value.toLocaleString():'미확인';
 const qualityKeys=['needsLocation','outside','invalid','privateFieldsRemoved','regionMatched','regionExcluded','regionUnknown','regionBoundaryConflict','mappedRows'];
 export function createSafetyHub(api){

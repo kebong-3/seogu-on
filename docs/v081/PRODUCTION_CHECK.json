@@ -1,0 +1,215 @@
+{
+  "checkedAt": "2026-10-05T14:10:11.510385+00:00",
+  "url": "https://seogu-on.vercel.app",
+  "deploymentUrl": "https://vercel.com/kevin-jeong/seogu-on/Gxi25RaLpQ5tf36urLZR2KLchcA8",
+  "verifiedCommit": "0736a72a2a56083251f33f611b976d9ef5657355",
+  "release": {
+    "version": "0.8.1",
+    "builtAt": "2026-10-05T14:02:03.895Z",
+    "codeSha256": "f85dd3c06ceee473bb1e37cf2d7e85f81b4db29f8660853cf214f87715ed15d2",
+    "datasetVersion": "v0.8.1 official public snapshots: 19 datasets / 9375 map records; existing v0.6 local records retained. SafetyData10 and WFS66 catalogues are not received API data.",
+    "officialCollection": {
+      "datasetCount": 19,
+      "recordCount": 9375,
+      "collectedAt": "2026-10-05T13:46:26Z",
+      "manifestSha256": "b3f01ac9525af244cb7756edde328efa8087a94e490d393087f23837c1a21e81"
+    },
+    "meaning": "Build identifier and included public snapshot counts only. Not proof of deployed API authentication, current facility operation or source data freshness."
+  },
+  "manifestMatchesLocal": true,
+  "datasets": [
+    {
+      "file": "/data/city/local-icing.geojson",
+      "http": 200,
+      "records": 23,
+      "expectedRecords": 23,
+      "sha256": "0fc18d78b4f28cb91947d421d4f8a698374ee4c660d69606dcc0f6f7ac06fb6b",
+      "expectedSha256": "0fc18d78b4f28cb91947d421d4f8a698374ee4c660d69606dcc0f6f7ac06fb6b",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/child-protection-zone.geojson",
+      "http": 200,
+      "records": 62,
+      "expectedRecords": 62,
+      "sha256": "c8eeab77806dfe69b87dae4f2158108b6dfc8eebf70474247029d5466ea962ec",
+      "expectedSha256": "c8eeab77806dfe69b87dae4f2158108b6dfc8eebf70474247029d5466ea962ec",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/senior-disabled-protection-zone.geojson",
+      "http": 200,
+      "records": 13,
+      "expectedRecords": 13,
+      "sha256": "19f2e9c74c2da07db36142223fcf91c4ae70dfcb1f20108371b69f3bfff1f95e",
+      "expectedSha256": "19f2e9c74c2da07db36142223fcf91c4ae70dfcb1f20108371b69f3bfff1f95e",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/traditional-market.geojson",
+      "http": 200,
+      "records": 8,
+      "expectedRecords": 8,
+      "sha256": "6e620f0a1ab37a6fcbe1b33495b5b4d57042484301ec8bfbe7b28485d0737fd9",
+      "expectedSha256": "6e620f0a1ab37a6fcbe1b33495b5b4d57042484301ec8bfbe7b28485d0737fd9",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/welfare-official.geojson",
+      "http": 200,
+      "records": 7,
+      "expectedRecords": 7,
+      "sha256": "c9348cf1bcee17eda1fe3d54f43a96ebf87c85c797e96fe7dc2faa87cb67fbca",
+      "expectedSha256": "c9348cf1bcee17eda1fe3d54f43a96ebf87c85c797e96fe7dc2faa87cb67fbca",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/security-light.geojson",
+      "http": 200,
+      "records": 7887,
+      "expectedRecords": 7887,
+      "sha256": "1734ae51412363d62551d2551ccce0898676469b70a0eb26e28840526f2399fa",
+      "expectedSha256": "1734ae51412363d62551d2551ccce0898676469b70a0eb26e28840526f2399fa",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/earthquake-shelter.geojson",
+      "http": 200,
+      "records": 43,
+      "expectedRecords": 43,
+      "sha256": "fb1584982f0116620e4a5313248bdcf6c3925547a02db4df33a58fbdfe5af830",
+      "expectedSha256": "fb1584982f0116620e4a5313248bdcf6c3925547a02db4df33a58fbdfe5af830",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/civil-defense-shelter.geojson",
+      "http": 200,
+      "records": 98,
+      "expectedRecords": 98,
+      "sha256": "5b8224ffe824d90abb0fcb1033b0942c45bf932ca7d0cab650cd325246a10c36",
+      "expectedSha256": "5b8224ffe824d90abb0fcb1033b0942c45bf932ca7d0cab650cd325246a10c36",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/emergency-water.geojson",
+      "http": 200,
+      "records": 26,
+      "expectedRecords": 26,
+      "sha256": "7f99ac715765b03d8ad8ebb8b5f005e3fc59a9c0f199d77793f07d28976cfb56",
+      "expectedSha256": "7f99ac715765b03d8ad8ebb8b5f005e3fc59a9c0f199d77793f07d28976cfb56",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/chemical-shelter.geojson",
+      "http": 200,
+      "records": 9,
+      "expectedRecords": 9,
+      "sha256": "b7849bcee1631fdd846e5e9721e478593eff6a4e7ffda8f203a2eb90b37ccb40",
+      "expectedSha256": "b7849bcee1631fdd846e5e9721e478593eff6a4e7ffda8f203a2eb90b37ccb40",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/fine-dust-shelter.geojson",
+      "http": 200,
+      "records": 10,
+      "expectedRecords": 10,
+      "sha256": "513b6ef3fe924bc76e58f244ab49ce45827d7859c8b731bc8454b209c6c33f25",
+      "expectedSha256": "513b6ef3fe924bc76e58f244ab49ce45827d7859c8b731bc8454b209c6c33f25",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/temporary-housing.geojson",
+      "http": 200,
+      "records": 38,
+      "expectedRecords": 38,
+      "sha256": "92f12a3e00b2d719022a4c2545ade64971ff5ca71855513a10ede74d526ab0f8",
+      "expectedSha256": "92f12a3e00b2d719022a4c2545ade64971ff5ca71855513a10ede74d526ab0f8",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/police-official.geojson",
+      "http": 200,
+      "records": 8,
+      "expectedRecords": 8,
+      "sha256": "08bb41520e2efbaa1407adf4635715dbc29db5e9524e07ab7500fc0ff9084fee",
+      "expectedSha256": "08bb41520e2efbaa1407adf4635715dbc29db5e9524e07ab7500fc0ff9084fee",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/emergency-medical.geojson",
+      "http": 200,
+      "records": 6,
+      "expectedRecords": 6,
+      "sha256": "6633bddc465ea6b434ea809c56a8cdb63023c53b4b50afc9ee5ae9b8926c8a2f",
+      "expectedSha256": "6633bddc465ea6b434ea809c56a8cdb63023c53b4b50afc9ee5ae9b8926c8a2f",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/steep-slope.geojson",
+      "http": 200,
+      "records": 14,
+      "expectedRecords": 14,
+      "sha256": "c78c31576d262542aa41d329472ab06ea48036eedfe40353b59cd652743121c5",
+      "expectedSha256": "c78c31576d262542aa41d329472ab06ea48036eedfe40353b59cd652743121c5",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/pharmacy-official.geojson",
+      "http": 200,
+      "records": 158,
+      "expectedRecords": 158,
+      "sha256": "e469d6144cd6f4c733d7e50a018ad7fd9bc62faa5a2cc0b0e9593b572868e899",
+      "expectedSha256": "e469d6144cd6f4c733d7e50a018ad7fd9bc62faa5a2cc0b0e9593b572868e899",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/heat-shelter.geojson",
+      "http": 200,
+      "records": 297,
+      "expectedRecords": 297,
+      "sha256": "a17b2db78a3e28bf20719bdfe92febed5fc1110c5795ed4a018709b815199ad7",
+      "expectedSha256": "a17b2db78a3e28bf20719bdfe92febed5fc1110c5795ed4a018709b815199ad7",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/cold-shelter.geojson",
+      "http": 200,
+      "records": 256,
+      "expectedRecords": 256,
+      "sha256": "e89cef5947fe4c52d3ee4b1e3e5ef50f01a5b4f288935c631f1a711b1e619af7",
+      "expectedSha256": "e89cef5947fe4c52d3ee4b1e3e5ef50f01a5b4f288935c631f1a711b1e619af7",
+      "passed": true
+    },
+    {
+      "file": "/data/city/official/aed.geojson",
+      "http": 200,
+      "records": 412,
+      "expectedRecords": 412,
+      "sha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6",
+      "expectedSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6",
+      "passed": true
+    }
+  ],
+  "api": {
+    "route": "/api/city-data?kind=sd-icing&dong=all&page=1",
+    "http": 403,
+    "response": {
+      "ok": false,
+      "error": "등록되지 않은 IP입니다. 플랫폼에 등록한 허용 IP와 Vercel 서버의 실제 출발 IP 조건을 확인하세요.",
+      "code": "SAFETYDATA_32"
+    },
+    "keyConfigured": true,
+    "sourceCode": "DSSP-IF-00120",
+    "dataReceived": false
+  },
+  "browser": {
+    "footerVersion": "0.8.1",
+    "numberLegendElements": 0,
+    "numberBadgeElements": 0,
+    "icingWholeDistrictPoints": 23,
+    "icingChiPyeongPoints": 4,
+    "apiReceiptView": "SAFETYDATA_32 and no received raw records shown",
+    "mapModeUsedForDataVerification": "boundary",
+    "threeDVerification": "Cloud browser reported VWorld SDK unavailable and Cesium WebGL initialization failure. 3D visual behavior not verified."
+  }
+}

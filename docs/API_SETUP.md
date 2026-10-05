@@ -134,8 +134,8 @@ Vercel의 서버 전용 환경변수에 서비스별로 저장합니다. 이 값
 | 공식 API 식별자·명세 연결 코드 | `DSSP-IF-00120`, 요청변수 4개 반영 |
 | 로컬 환경의 실제 키 호출 | HTTP 200 안의 `32 / UNREGISTERED IP ERROR` 확인 |
 | Vercel Production 환경변수 | `SAFETYDATA_00120_KEY` 저장 확인; 값은 비공개 |
-| 환경변수와 코드를 반영한 새 Production 배포 | 배포·검증 대기 |
-| Vercel 환경의 인증·실자료 수신 | 새 배포 후 확인 필요; 성공으로 기록하지 않음 |
+| 환경변수와 코드를 반영한 새 Production 배포 | Ready · Production · Current 확인 |
+| Vercel 환경의 인증·실자료 수신 | HTTP 403 / SAFETYDATA_32 등록 IP 오류 확인; 원자료 본문 미수신 |
 
 이후 배포 상태는 [0.8.1 변경·확인 기록](v081/RELEASE.md)에 실제 관찰과 함께 갱신합니다.
 
@@ -150,3 +150,7 @@ Vercel의 서버 전용 환경변수에 서비스별로 저장합니다. 이 값
 ### 6-5. 공개본의 출처와 이용조건
 
 상습결빙구간의 API 명세 출처와 생활안전지도 공개본 출처는 구분해 보존합니다. 생활안전지도 [상습결빙구간 상세페이지](https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=221)에 표시된 **공공누리 제4유형(출처표시·상업적 이용금지·변경금지)** 등 원문 이용조건을 함께 남깁니다. 상업적 재이용이나 추가 편집을 하려면 해당 원문 조건을 먼저 확인해야 합니다. 코드의 MIT 라이선스는 원자료의 이용조건을 바꾸지 않습니다. 자세한 구분은 [출처·이용조건](../THIRD_PARTY_NOTICES.md)을 참고하세요.
+
+### 0.8.1 운영 서버 확인 결과 (2026-10-05)
+
+`seogu-on.vercel.app`의 `/api/city-config`에서 `sd-icing.configured=true`를 확인했습니다. 운영 `/api/city-data?kind=sd-icing&dong=all&page=1`은 HTTP 403과 `SAFETYDATA_32`를 반환했습니다. 웹 수신 현황에도 동일한 등록 IP 오류가 표시됩니다. 키를 저장하고 배포한 것과 제공기관에서 실제 자료를 받은 것을 구분해야 합니다. 등록 IP 조건은 변경하지 않았으며, 직접 수집한 공식 공개본 23개 관리지점은 별도로 표시됩니다.

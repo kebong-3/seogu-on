@@ -1,7 +1,7 @@
 {
   "version": "0.8.1",
-  "checkedAt": "2026-10-05T13:59:10.286325+00:00",
-  "scope": "local code, public snapshots and local HTTP; production pending",
+  "checkedAt": "2026-10-05T14:12:48.600440+00:00",
+  "scope": "local code, public snapshots and local HTTP",
   "syntax": "passed",
   "nodeTests": {
     "tests": 551,
@@ -19,5 +19,12 @@
   },
   "includedOfficialDatasets": 19,
   "includedMapRecords": 9375,
-  "notProofOf": "Vercel production API authentication or current facility operation"
+  "notProofOf": "Vercel production API authentication or current facility operation",
+  "codeSha256": "66e9fa0e04934e31c601365b8095fb8a7fdf75fc80ad17a13b80acf8e27dbfc0",
+  "productionEvidence": "PRODUCTION_CHECK.json",
+  "displayFollowupTests": {
+    "tests": 73,
+    "pass": 73,
+    "fail": 0
+  }
 }
