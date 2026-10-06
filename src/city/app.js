@@ -14,7 +14,7 @@ import {installHomePanel,isCompact} from './home-panel.js';
 import {installHeatScenario} from './heat-scenario.js';
 import {installAskAi} from './ask-ai.js';
 const $=s=>document.querySelector(s),byId=id=>document.getElementById(id);
-const state={dongs:[],district:null,scope:null,dong:'all',engine:'vworld',ready:false,activePreset:'safety',enabled:new Set(['official-cold-shelter','official-heat-shelter']),entries:new Map(),selected:null,isolate:false,focus:true,view:null,results:[],config:null,point:null,rasterStates:new Map(),loading:false,capabilities:{},importMode:'features',listQuery:''};
+const state={dongs:[],district:null,scope:null,dong:'all',engine:'vworld',ready:false,activePreset:'parks',enabled:new Set(['parks','park-areas']),entries:new Map(),selected:null,isolate:false,focus:true,view:null,results:[],config:null,point:null,rasterStates:new Map(),loading:false,capabilities:{},importMode:'features',listQuery:''};
 let enhancements,liveStatus,homePanel,tourTimer=null,tourIndex=0,tourAdvancing=false;const spatialCache=new Map(),layerSync=new LayerSync();
 let view,toastTimer,loadSequences=new Map(),floodImages=[],activeRequest=0;
 function toast(message){byId('toast').textContent=message;byId('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>byId('toast').hidden=true,5200);}
@@ -62,10 +62,13 @@ async function loadSafetySnapshots(){
    if(body.type!=='FeatureCollection'||body.metadata?.complete!==true||!Array.isArray(body.features))return;
    const accepted=body.features.filter(f=>validGeometry(f.geometry));
    state.entries.set(item.id,{features:accepted,state:'loaded',title:LAYER_BY_ID[item.id].title,loadedAt:body.metadata.collectedAt,metadata:body.metadata,rejected:body.features.length-accepted.length});
-   if(item.id==='sd-cold'){state.enabled.delete('official-cold-shelter');state.enabled.add(item.id);}
-   if(item.id==='sd-heat'){state.enabled.delete('official-heat-shelter');state.enabled.add(item.id);}
+   if(item.id==='sd-cold'&&state.enabled.has('official-cold-shelter')){state.enabled.delete('official-cold-shelter');state.enabled.add(item.id);}
+   if(item.id==='sd-heat'&&state.enabled.has('official-heat-shelter')){state.enabled.delete('official-heat-shelter');state.enabled.add(item.id);}
   }catch{}
  }));
+ if(published.some(item=>['sd-cold','sd-heat'].includes(item.id)&&state.entries.get(item.id)?.features?.length)&&state.activePreset==='parks'){
+  state.activePreset='safety';state.enabled=new Set(['sd-cold','sd-heat'].map(id=>state.entries.get(id)?.features?.length?id:id==='sd-cold'?'official-cold-shelter':'official-heat-shelter'));
+ }
  drawData();
 }
 async function loadAPI(id){const l=LAYER_BY_ID[id];if(!l?.api)return;if(!state.config?.configured[l.key]){toast(`${l.title}는 해당 API 키와 활용 승인이 필요합니다.`);showSettings();return;}
