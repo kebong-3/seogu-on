@@ -7,18 +7,26 @@ import {readSafetyData,getSafetyKey} from '../server/city/safetydata.js';
 import {SAFETY_BY_ID} from '../src/city/safety-catalog.js';
 const IDS=['sd-cold','sd-heat','sd-heat-reduction','sd-civil-shelter','sd-icing','sd-flood','sd-risk'];
 const MAX_PAGES=8;
+const RUNNING_SITE='https://seogu-on.vercel.app';
+async function readPage(id,page,key){
+ if(process.env.VERCEL_ENV){try{
+  const response=await fetch(RUNNING_SITE+'/api/city-data?kind='+encodeURIComponent(id)+'&dong=all&page='+page,{signal:AbortSignal.timeout(18000)});
+  const result=await response.json();if(response.ok&&result.ok!==false&&result.page===page&&Array.isArray(result.geojson?.features))return result;
+ }catch{} }
+ if(!key)throw Error('running-site-unavailable');
+ return readSafetyData(id,new URLSearchParams({dong:'all',page:String(page)}));
+}
 export async function collectSafetySnapshots(out){
  const dir=join(out,'data/city/safety');await mkdir(dir,{recursive:true});
  const summary=[];
  async function collectOne(id){
   const source=SAFETY_BY_ID[id];let key='';
   try{key=getSafetyKey(source);}catch{summary.push({id,state:'configuration-error'});return;}
-  if(!key){summary.push({id,state:'not-configured'});return;}
+  if(!key&&!process.env.VERCEL_ENV){summary.push({id,state:'not-configured'});return;}
   const features=new Map();let last=null,scanned=0,failed=null;
   for(let page=1;page<=MAX_PAGES;page++){
    try{
-    const q=new URLSearchParams({dong:'all',page:String(page)});
-    const result=await readSafetyData(id,q);
+    const result=await readPage(id,page,key);
     if(result.stale||result.page!==page||!Array.isArray(result.geojson?.features))throw Error('invalid-page');
     scanned+=result.scanned;
     for(const f of result.geojson.features)features.set(String(f.properties?.id||f.id),f);
