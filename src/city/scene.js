@@ -5,7 +5,7 @@ import {loadCleanModel} from './clean-model.js';
 import {createDongLabels3D} from './dong-labels-3d.js';
 import {fc,multi,inside,representative,distance,maskGeometry,boundsOf} from './geometry.js';
 import {CameraDirector,frameFor,clamp} from './camera.js';
-import {LAYERS,LAYER_BY_ID,iconData} from './catalog.js';
+import {LAYERS,LAYER_BY_ID,iconData,clusterIconData} from './catalog.js';
 import {maskedProvider} from './raster.js';
 import {terrainGrid,slopeSummary,profilePoints,parseGlb} from './analysis.js';
 const tell=(type,data={})=>parent.postMessage({seoguCity:true,type,...data},location.origin);
@@ -66,11 +66,10 @@ async function boundaries(m){lastBoundary=m;visual=displayOptions(m.visual||visu
  if(!m.visualOnly){for(const [id,item]of imagery){viewer.imageryLayers.remove(item,true);imagery.delete(id);}for(const l of (m.rasters||[]))toggleRaster(l,true);}
  requestRender();
 }
-function renderLayer(m){const style=LAYER_BY_ID[m.id]||{id:m.id,color:m.color||'#d5b791',icon:'pin'};let ds=sources.get(m.id);if(!ds){ds=new C.CustomDataSource(`seo-city-${m.id}`);sources.set(m.id,ds);viewer.dataSources.add(ds);}
+function renderLayer(m){const style=LAYER_BY_ID[m.id]||{id:m.id,color:m.color||'#d5b791',icon:'pin'};let ds=sources.get(m.id);if(!ds){ds=new C.CustomDataSource(`seo-city-${m.id}`);sources.set(m.id,ds);viewer.dataSources.add(ds);ds.clustering.clusterEvent.addEventListener((entities,cluster)=>{const badge=clusterIconData(style.color);cluster.billboard.show=true;cluster.billboard.image=badge;cluster.billboard.width=45;cluster.billboard.height=45;cluster.label.show=true;cluster.label.text=String(entities.length);cluster.label.font='bold 13px sans-serif';cluster.label.fillColor=C.Color.WHITE;cluster.label.showBackground=false;cluster.label.pixelOffset=new C.Cartesian2(0,0);cluster.label.horizontalOrigin=C.HorizontalOrigin.CENTER;cluster.label.verticalOrigin=C.VerticalOrigin.CENTER;});}
  if(!Array.isArray(m.features)){ds.show=m.visible!==false;requestRender();return;}
  clearOwned(ds);registry.set(m.id,m.features||[]);for(const f of m.features||[]){const selected=String(f.properties?.id||f.id)===String(m.selectedId);addGeometry(ds,f,{...style,layer:m.id,color:selected?'#ffe0a1':(/^#[0-9a-f]{6}$/i.test(f.properties?.displayColor||'')?f.properties.displayColor:style.color),alpha:m.id==='shade-result'?.18:selected?.48:.28,width:m.id==='shade-result'?0:selected?4:2});}ds.show=m.visible!==false;
- if(ds.clustering)ds.clustering.enabled=false;
- if(ds.clustering&&m.features?.filter(f=>f.geometry.type==='Point').length>250){ds.clustering.enabled=true;ds.clustering.pixelRange=35;ds.clustering.minimumClusterSize=5;}
+ if(ds.clustering){const points=m.features?.filter(f=>f.geometry.type==='Point').length||0;ds.clustering.enabled=points>25;ds.clustering.pixelRange=52;ds.clustering.minimumClusterSize=3;}
  requestRender();}
 function toggleRaster(id,visible){const existing=imagery.get(id);if(!visible){if(existing){viewer.imageryLayers.remove(existing,true);imagery.delete(id);}return;}
  if(existing||!scope)return;try{const layer=LAYER_BY_ID[id];const p=maskedProvider(C,layer,scope,dong,(id,state)=>tell('raster-state',{id,state}));const imageryLayer=viewer.imageryLayers.addImageryProvider(p);imageryLayer.alpha=.65;imagery.set(id,imageryLayer);tell('raster-state',{id,state:'requesting'});}catch{tell('raster-state',{id,state:'unsupported'});}}
