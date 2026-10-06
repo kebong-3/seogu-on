@@ -8,29 +8,30 @@ import {DIAGNOSTIC_CODES} from '../server/diagnostics.js';
 const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const html = read('index.html');
 const actionsIn = fragment => [...fragment.matchAll(/<button[^>]*data-action="([^"]+)"[^>]*>/g)].map(m => ({action: m[1], hidden: /\shidden(\s|>)/.test(m[0]), tag: m[0]}));
-const regions = html.match(/<section id="sidebar-regions"[\\s\\S]*?<section id="sidebar-layers"/)[0];
+const regions = html.slice(html.indexOf('<section id="sidebar-regions"'), html.indexOf('<section id="sidebar-layers"'));
 const primary = regions.slice(regions.indexOf('<div class="home-primary"'), regions.indexOf('<div class="home-more"'));
-const more = regions.slice(regions.indexOf('<div class="home-more-list"'), regions.indexOf('</div></div>\\n    </div>'));
+const more = regions.slice(regions.indexOf('<div class="home-more-list"'), regions.indexOf('id="dong-tour"'));
 
 test('dong navigation: all 18 dong are before scenario actions, with compact brand tiles', () => {
   assert.ok(html.indexOf('id="dong-grid"') < html.indexOf('class="home-primary"'));
-  assert.match(read('src/city/layout.css'), /#sidebar-regions \\.dong-grid \\{ grid-template-columns: repeat\\(4,/);
-  assert.match(read('src/city/layout.css'), /#sidebar-regions \\.dong-button img \\{[^}]*width: 29px/);
-  assert.doesNotMatch(html, /상습결빙구간 · 서구 관리지점 보기/);
+  const css = read('src/city/layout.css');
+  assert.ok(css.includes('#sidebar-regions .dong-grid { grid-template-columns: repeat(4,'));
+  assert.ok(css.includes('#sidebar-regions .dong-button img { display: block; width: 29px'));
+  assert.ok(!html.includes('상습결빙구간 · 서구 관리지점 보기'));
 });
 
 test('home panel: four clear scenario actions follow the dong choice', () => {
   assert.deepEqual(actionsIn(primary).map(b => b.action), ['heat-shade', 'ask-ai', 'infra', 'resilience']);
-  assert.match(primary, /폭염·그늘/);
-  assert.match(primary, /지도에게 묻기/);
+  assert.ok(primary.includes('폭염·그늘'));
+  assert.ok(primary.includes('지도에게 묻기'));
 });
 
 test('home panel: secondary tools remain reachable in the folded group', () => {
   const reachable = new Set([...actionsIn(primary), ...actionsIn(more)].map(b => b.action));
   for (const action of ['infra', 'safety-hub', 'native-sun', 'resilience', 'themes', 'city-questions', 'list', 'tools', 'report']) assert.ok(reachable.has(action), action);
   assert.ok(reachable.has('settings'));
-  assert.match(html, /id="home-more-toggle" aria-expanded="false"/);
-  assert.match(read('src/city/layout.css'), /\\.home-more:not\\(\\.open\\) \\.home-more-list \\{ display: none; \\}/);
+  assert.ok(html.includes('id="home-more-toggle" aria-expanded="false"'));
+  assert.ok(read('src/city/layout.css').includes('.home-more:not(.open) .home-more-list { display: none; }'));
 });
 
 test('home panel: all data-action names used in index.html keep a handler somewhere in src/city', () => {
