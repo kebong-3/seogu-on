@@ -153,9 +153,11 @@ test('icing UI: partial API solo, hide, and restore actions report the actual vi
  }finally{globalThis.document=oldDocument;}
 });
 
-test('icing UI: menu and per-service key helper are reachable',()=>{
+test('icing UI: data hub and per-service key helper are reachable without a home shortcut',()=>{
  const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
- assert.match(html,/data-action="icing"/);assert.match(html,/data-action="official-data"/);
+ const hub=fs.readFileSync(new URL('../src/city/safety-hub.js',import.meta.url),'utf8');
+ assert.doesNotMatch(html,/data-action="icing"/);assert.match(html,/data-action="safety-hub"/);
+ assert.match(hub,/data-action="icing"/);assert.match(html,/data-action="official-data"/);
  const helper=fs.readFileSync(new URL('../tools/safety-key-import.html',import.meta.url),'utf8');
  assert.match(helper,/\['00120','상습결빙구간'\]/);
 });
