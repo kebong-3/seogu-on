@@ -11,7 +11,7 @@ const RUNNING_SITE='https://seogu-on.vercel.app';
 async function readPage(id,page,key){
  if(process.env.VERCEL_ENV){try{
   const response=await fetch(RUNNING_SITE+'/api/city-data?kind='+encodeURIComponent(id)+'&dong=all&page='+page,{signal:AbortSignal.timeout(18000)});
-  const result=await response.json();if(response.ok&&result.ok!==false&&result.page===page&&Array.isArray(result.geojson?.features))return result;
+  const result=await response.json();if(response.ok&&result.ok!==false&&!result.stale&&result.page===page&&Array.isArray(result.geojson?.features))return result;
  }catch{} }
  if(!key)throw Error('running-site-unavailable');
  return readSafetyData(id,new URLSearchParams({dong:'all',page:String(page)}));
