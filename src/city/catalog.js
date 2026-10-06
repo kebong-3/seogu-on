@@ -32,7 +32,7 @@ export const PRESETS=[
  {id:'parks',label:'공원',icon:'tree',layers:['parks','park-areas']},
  {id:'parking',label:'주차',icon:'parking',layers:['parking','infra-parking']},
  {id:'culture',label:'생활시설',icon:'book',layers:['libraries','public-facilities']},
- {id:'safety',label:'안전·복지',icon:'shield',layers:['shelter-schools']},
+ {id:'safety',label:'안전·복지',icon:'shield',layers:['official-cold-shelter','official-heat-shelter']},
  {id:'traffic',label:'교통',icon:'road',layers:[]},
  {id:'environment',label:'환경',icon:'wind',layers:[]},
  {id:'planning',label:'입지·계획',icon:'parcel',layers:[]},
