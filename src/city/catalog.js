@@ -32,7 +32,7 @@ export const PRESETS=[
  {id:'parks',label:'공원',icon:'tree',layers:['parks','park-areas']},
  {id:'parking',label:'주차',icon:'parking',layers:['parking','infra-parking']},
  {id:'culture',label:'생활시설',icon:'book',layers:['libraries','public-facilities']},
- {id:'safety',label:'안전·복지',icon:'shield',layers:['shelter-schools']},
+ {id:'safety',label:'안전·복지',icon:'shield',layers:['official-cold-shelter','official-heat-shelter']},
  {id:'traffic',label:'교통',icon:'road',layers:[]},
  {id:'environment',label:'환경',icon:'wind',layers:[]},
  {id:'planning',label:'입지·계획',icon:'parcel',layers:[]},
@@ -40,4 +40,22 @@ export const PRESETS=[
 export const PATHS={tree:'M12 3 5 13h4l-3 5h12l-3-5h4L12 3Zm0 15v4',parking:'M8 21V3h6a5 5 0 0 1 0 10H8',book:'M3 4h7l2 2 2-2h7v15h-7l-2 2-2-2H3V4Zm9 2v15',building:'M5 21V3h14v18M3 21h18M9 7h1m4 0h1M9 11h1m4 0h1M10 21v-5h4v5',shield:'M12 3 3 7v5c0 5 9 10 9 10s9-5 9-10V7L12 3Zm-4 9 3 3 5-6',sun:'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2',cross:'M9 3h6v6h6v6h-6v6H9v-6H3V9h6Z',warning:'m12 3 10 18H2L12 3Zm0 5v6m0 3v1',camera:'M3 7h13v12H3V7Zm13 4 5-3v10l-5-3M7 3h5',road:'M8 3 3 21M16 3l5 18M12 3v4m0 3v4m0 3v4',water:'M12 2C9 7 4 10 4 15a8 8 0 0 0 16 0c0-5-5-8-8-13Z',wind:'M2 8h13a3 3 0 1 0-3-3M2 12h18a3 3 0 1 1-3 3M2 17h8a3 3 0 1 1-3 3',parcel:'m3 7 9-4 9 4v10l-9 4-9-4V7Zm9-4v18M3 7l18 10',home:'m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7',layers:'m12 3 10 6-10 6L2 9l10-6Zm-10 10 10 6 10-6M2 17l10 6 10-6',close:'m6 6 12 12M6 18 18 6',search:'M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6',arrow:'m9 5 7 7-7 7',rotate:'M20 7a9 9 0 1 0 1 9M20 2v6h-6',expand:'M3 9V3h6m6 0h6v6M3 15v6h6m6 0h6v-6',settings:'M4 6h16M4 12h16M4 18h16M8 3v6m8 0v6m-7 0v6',download:'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',pin:'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6',cube:'m12 2 10 6v8l-10 6L2 16V8l10-6ZM2 8l10 6 10-6m-10 6v8',chart:'M3 3v18h18M6 15l4-5 5 3 6-8'};
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const icon=(id,cls='')=>`<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${PATHS[id]||PATHS.pin}"/></svg>`;
-export function iconData(id,color='#8dd7bd'){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="46" viewBox="0 0 40 46"><rect x="3" y="2" width="34" height="34" rx="11" fill="#122b39" stroke="${color}" stroke-width="2"/><path d="m16 36 4 6 4-6" fill="${color}"/><g transform="translate(9 8) scale(.9)" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${PATHS[id]||PATHS.pin}"/></g></svg>`);}
+const SYMBOL_SHAPES={tree:'circle',sun:'sun',shield:'shield',cross:'square',warning:'diamond',water:'drop',road:'diamond',wind:'circle',camera:'square',parking:'square',book:'square',building:'square',home:'house',pin:'drop',cube:'hex',layers:'hex'};
+function markerShape(shape,color){
+ const fill=color;
+ if(shape==='circle')return `<circle cx="22" cy="22" r="19" fill="${fill}"/>`;
+ if(shape==='sun')return `<path d="M22 2 27 8 35 6 36 14 43 18 38 25 41 33 33 36 29 43 22 39 15 43 11 36 3 33 6 25 1 18 8 14 9 6 17 8Z" fill="${fill}"/>`;
+ if(shape==='shield')return `<path d="M22 2 41 9v13c0 12-10 20-19 25C13 42 3 34 3 22V9Z" fill="${fill}"/>`;
+ if(shape==='diamond')return `<path d="M22 2 43 23 22 44 1 23Z" fill="${fill}"/>`;
+ if(shape==='drop')return `<path d="M22 2C15 12 4 23 4 31a18 18 0 0 0 36 0C40 23 29 12 22 2Z" fill="${fill}"/>`;
+ if(shape==='house')return `<path d="M3 20 22 3l19 17v23H3Z" fill="${fill}"/>`;
+ if(shape==='hex')return `<path d="M12 3h20l11 19-11 19H12L1 22Z" fill="${fill}"/>`;
+ return `<rect x="3" y="3" width="38" height="38" rx="8" fill="${fill}"/>`;
+}
+export function iconData(id,color='#8dd7bd'){
+ const shape=SYMBOL_SHAPES[id]||'circle',glyph=PATHS[id]||PATHS.pin;
+ return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="50" viewBox="0 0 44 48"><g stroke="#08202f" stroke-width="2.5" stroke-linejoin="round">${markerShape(shape,color)}</g><g transform="translate(10 10) scale(1)" fill="none" stroke="#102735" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="${glyph}"/></g></svg>`);
+}
+export function clusterIconData(color='#8dd7bd'){
+ return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#0b2534" stroke="${color}" stroke-width="4"/><circle cx="28" cy="28" r="21" fill="${color}" fill-opacity=".2"/></svg>`);
+}

@@ -1,4 +1,5 @@
 import {ensureRuntime} from './ensure-runtime.mjs';
+import {collectSafetySnapshots} from './collect-safety-snapshots.mjs';
 await ensureRuntime();
 import {createHash} from 'node:crypto';
 import { mkdir, cp, rm, readdir, readFile, writeFile } from 'node:fs/promises';
@@ -12,6 +13,7 @@ await cp(resolve(root, 'index.html'), resolve(out, 'index.html'));
 await cp(resolve(root, 'classic.html'), resolve(out, 'classic.html'));
 await cp(resolve(root, 'src'), resolve(out, 'src'), { recursive: true });
 await cp(resolve(root, 'public'), out, { recursive: true });
+await collectSafetySnapshots(out);
 const pkg=JSON.parse(await readFile(resolve(root,'package.json'),'utf8'));
 const digest=createHash('sha256');
 async function hashFiles(dir){for(const entry of (await readdir(dir,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){const path=resolve(dir,entry.name);if(entry.isDirectory())await hashFiles(path);else{digest.update(path.slice(root.length));digest.update(await readFile(path));}}}
