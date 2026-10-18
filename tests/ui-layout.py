@@ -124,7 +124,7 @@ def run(page, base, width, height):
         page.click('[data-action=close-detail]')
     if compact and not page.is_visible('#district-panel'):
         page.click('#show-panels')
-    page.click('#home-more-toggle') if page.get_attribute('#home-more-toggle', 'aria-expanded') == 'false' else None
+    page.click('.home-primary [data-action=heat-plan]')
 
     # 기존 그림자 검토 기능도 계속 도달할 수 있다.
     page.click('[data-action=heat-shade]')
