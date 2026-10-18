@@ -53,6 +53,9 @@
 
 /* AI 버튼이 켜지면(hidden 제거) '재난 상황판' 카드는 "더 보기"로 물러난다 → 주요 카드는 항상 3개 이하 */
 .home-more .home-moved { display: none; }
+.home-actions:has(.home-ai:not([hidden])) .home-primary > .home-yield { display: none; }
+.home-actions:has(.home-ai:not([hidden])) .home-more .home-moved { display: block; }
+.dong-context .text-button { display: inline-flex; align-items: center; min-width: 40px; min-height: 40px; }
 .sidebar-heading:has(.home-ai:not([hidden])) .home-yield { display: none; }
 .sidebar-heading:has(.home-ai:not([hidden])) .home-more .home-moved { display: block; }
 .sidebar-heading:has(.home-ai:not([hidden])) .home-primary > .home-card:not(.home-hero):not(.home-ai):not(.home-yield) { grid-column: 1 / -1; }
