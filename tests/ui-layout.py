@@ -101,7 +101,7 @@ def run(page, base, width, height):
     report = page.locator('.hp-report').get_attribute('srcdoc')
     check(f'{tag}: report preserves review reason, comparison and source fingerprint', '시험 기록: 보도 폭 확인 전 보류' in report and 'SHA-256' in report and '담당자 검토용 초안' in report)
     page.screenshot(path=str(OUT / f'heat-report-{width}.png'))
-    page.click('[data-action=heat-plan]')
+    page.click('#detail-panel [data-action=heat-plan]')
 
     # 기존 그림자 검토 기능도 계속 도달할 수 있다.
     page.click('[data-action=heat-shade]')
