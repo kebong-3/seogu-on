@@ -231,7 +231,7 @@ export async function answerQuestion(input, ctx = {}) {
       { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name) },
       { key, model, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir, budgetMs: ctx.budgetMs, now: ctx.clock },
     );
-    return buildResponse('llm', outcome, { model });
+    return buildResponse('llm', outcome, { model: outcome.model || model, modelRecovered: !!outcome.modelRecovered });
   } catch (error) {
     const code = error instanceof LlmError ? error.code : 'LLM_BAD_RESPONSE';
     // 질문·키·요청 주소는 남기지 않고 코드만 기록한다.

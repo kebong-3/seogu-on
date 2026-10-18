@@ -142,7 +142,7 @@ export function answerHtml(view) {
   const notice = result.mode === 'rules' && result.notice
     ? `<p class="small ask-notice">${esc(result.notice)}${result.code && result.code !== 'LLM_NOT_CONFIGURED' ? ` <code>${esc(result.code)}</code>` : ''}</p>` : '';
   return `<article class="ask-answer"><header><span class="ask-question-echo">${esc(view.question)}</span>${badgeHtml(result)}</header>`
-    + `<p class="ask-text">${esc(result.answer)}</p>${notice}</article>`
+    + `<p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}</article>`
     + listHtml(view.features || [], view.drawn || 0)
     + evidenceHtml(result);
 }
