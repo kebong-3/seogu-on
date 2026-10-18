@@ -1,5 +1,6 @@
 import {ensureRuntime} from './ensure-runtime.mjs';
-await ensureRuntime();
+// 배포본 미리보기는 빌드에 포함된 실행자료를 그대로 사용한다.
+if (!process.argv.includes('--dist')) await ensureRuntime();
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, dirname, extname, relative, sep } from 'node:path';
