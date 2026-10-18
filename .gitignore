@@ -13,6 +13,7 @@ __pycache__/
 
 # vendor/ 의 압축본에서 dev/build 때 풀리는 3D 엔진 (압축본 vendor/*.tar.gz 는 올려야 합니다)
 public/vendor/cesium/
+public/vendor/cesium-building-*/
 
 # 화면 시험이 실행할 때마다 다시 만드는 캡처·결과
 docs/v03/ui-evidence/

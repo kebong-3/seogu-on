@@ -75,7 +75,7 @@ def run(page, base, width, height):
         m = page.evaluate(MEASURE)
         check(f'{tag}: open drawer hides dock and camera buttons instead of overlapping', m['panel'] and m['dock'] is None and m['camera'] is None, [m['dock'], m['camera']])
         check(f'{tag}: drawer fits the viewport', m['panel'][0] >= 0 and m['panel'][2] <= width, m['panel'])
-    check(f'{tag}: at most three primary entry points, heat shade first', m['primary'] == ['heat-shade', 'ask-ai', 'infra'], m['primary'])
+    check(f'{tag}: at most three primary entry points, heat planning first', m['primary'] == ['heat-plan', 'ask-ai', 'infra'], m['primary'])
     check(f'{tag}: side panel list scrolls independently', page.evaluate("(() => { const e = document.getElementById('sidebar-scroll'); return getComputedStyle(e).overflowY === 'auto' && e.scrollHeight > e.clientHeight; })()"))
 
     check(f'{tag}: 더 보기 starts collapsed', page.get_attribute('#home-more-toggle', 'aria-expanded') == 'false' and not page.is_visible('#home-more-list'))
@@ -86,7 +86,24 @@ def run(page, base, width, height):
     check(f'{tag}: opened tools keep 40px tap targets', not page.evaluate(MEASURE)['small'], page.evaluate(MEASURE)['small'])
     page.screenshot(path=str(OUT / f'home-{width}.png'))
 
-    # 대표 시나리오: 폭염 그늘
+    # 대표 업무: 대안 비교 → 담당자 기록 → 보고서. 비용 미입력은 미산정.
+    page.click('[data-action=heat-plan]')
+    page.select_option('#heat-plan-form [name=scopeId]', label='풍암동')
+    page.click('[data-action=heat-plan-calculate]')
+    page.wait_for_selector('#hp-results-title')
+    comparison = page.inner_text('.hp-table')
+    check(f'{tag}: heat comparison uses real Pungam data and unknown costs', '17지점 / 7개 쉼터' in comparison and '3지점' in comparison and '미산정' in comparison, comparison)
+    page.click('.hp-candidate summary >> nth=0')
+    first = page.locator('.hp-candidate').first
+    first.locator('textarea').fill('시험 기록: 보도 폭 확인 전 보류')
+    first.locator('[data-field=choice]').select_option('exclude')
+    page.click('[data-action=heat-plan-report]')
+    report = page.locator('.hp-report').get_attribute('srcdoc')
+    check(f'{tag}: report preserves review reason, comparison and source fingerprint', '시험 기록: 보도 폭 확인 전 보류' in report and 'SHA-256' in report and '담당자 검토용 초안' in report)
+    page.screenshot(path=str(OUT / f'heat-report-{width}.png'))
+    page.click('[data-action=heat-plan]')
+
+    # 기존 그림자 검토 기능도 계속 도달할 수 있다.
     page.click('[data-action=heat-shade]')
     page.wait_for_selector('.scenario-summary')
     page.wait_for_timeout(300)
