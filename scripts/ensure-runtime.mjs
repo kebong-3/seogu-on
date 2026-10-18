@@ -2,7 +2,7 @@
 import {readFile,writeFile,mkdir,rename,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
-import {resolve,dirname} from 'node:path';
+import {resolve,dirname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 export async function ensureRuntime(root=ROOT) {
@@ -18,7 +18,7 @@ export async function ensureRuntime(root=ROOT) {
    const size=parseInt(txt(124,136).trim()||'0',8),type=head[156];offset+=512;
    if(type!==0&&type!==48)throw Error('실행자료에 파일 이외의 항목이 포함되어 있습니다.');
    if(!Number.isSafeInteger(size)||size<0||offset+size>data.length||name.startsWith('/')||name.includes('\\')||name.split('/').some(p=>p==='..'||p==='.')||/\.(ttf|otf|woff2?|eot)$/i.test(name)||++count>1000)throw Error('실행자료 경로·크기 검증 실패');
-   const dest=resolve(stage,name);if(!dest.startsWith(stage+'/'))throw Error('실행자료 경로 오류');
+   const dest=resolve(stage,name);if(!dest.startsWith(stage+sep))throw Error('실행자료 경로 오류');
    await mkdir(dirname(dest),{recursive:true});await writeFile(dest,data.subarray(offset,offset+size));offset+=Math.ceil(size/512)*512;
   }
   await readFile(resolve(stage,'Cesium.js'));await readFile(resolve(stage,'LICENSE.md'));

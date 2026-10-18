@@ -70,7 +70,7 @@ test('ingest catalog: official shade points are reachable from the shade categor
 });
 
 test('ingest catalog: coverage.json is generated from the files and is up to date', () => {
-  assert.equal(readFileSync(resolve(root, 'public/data/city/coverage.json'), 'utf8'), coverageText(root),
+  assert.equal(readFileSync(resolve(root, 'public/data/city/coverage.json'), 'utf8').replace(/\r\n/g, '\n'), coverageText(root),
     'node scripts/data/build-coverage.mjs 를 다시 실행하세요');
   const coverage = buildCoverage(root);
   assert.equal(coverage.version, '0.4.0');

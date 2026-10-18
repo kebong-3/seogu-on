@@ -21,8 +21,8 @@ test('dong navigation: all 18 dong are before scenario actions, with compact bra
 });
 
 test('home panel: four clear scenario actions follow the dong choice', () => {
-  assert.deepEqual(actionsIn(primary).map(b => b.action), ['heat-shade', 'ask-ai', 'infra', 'resilience']);
-  assert.ok(primary.includes('폭염·그늘'));
+  assert.deepEqual(actionsIn(primary).map(b => b.action), ['heat-plan', 'ask-ai', 'infra', 'resilience']);
+  assert.ok(primary.includes('폭염 대응계획'));
   assert.ok(primary.includes('지도에게 묻기'));
 });
 
