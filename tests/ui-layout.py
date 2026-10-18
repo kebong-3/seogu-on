@@ -62,7 +62,7 @@ def run(page, base, width, height):
     page.screenshot(path=str(OUT / f'overview-{width}.png'))
     check(f'{tag}: no horizontal page scroll', m['scrollWidth'] <= width, m['scrollWidth'])
     check(f'{tag}: nothing sticks out of the viewport', not m['outside'], m['outside'])
-    check(f'{tag}: status ribbon is not cut off', m['ribbon'][0] <= m['ribbon'][1] + 1 and m['readings'] == 4, m['ribbon'])
+    check(f'{tag}: status ribbon is not cut off', m['ribbon'][0] <= m['ribbon'][1] + 1 and m['readings'] == 3, m['ribbon'])
     check(f'{tag}: tap targets are at least 40px', not m['small'], m['small'])
     check(f'{tag}: category dock stays inside the map and off the side panel', m['dock'] and m['dock'][2] <= width and not overlap(m['dock'], m['panel']), [m['dock'], m['panel']])
     check(f'{tag}: dong BI and names remain without number badges or legend', page.evaluate("document.querySelectorAll('.dong-button img').length === 18 && document.querySelectorAll('.dong-button span').length === 18 && !document.querySelector('.dong-no, #dong-legend, .dong-label.number')"))
@@ -103,6 +103,29 @@ def run(page, base, width, height):
     page.screenshot(path=str(OUT / f'heat-report-{width}.png'))
     page.click('#detail-panel [data-action=heat-plan]')
 
+    # 신규 행정 업무 네 가지 모두 대상 → 확인기록 → 전체 보고서까지 확인한다.
+    page.click('[data-action=close-detail]')
+    for kind in ['cold', 'icing', 'flood', 'school']:
+        if compact and not page.is_visible('#district-panel'):
+            page.click('#show-panels')
+        page.click(f'.home-workflows [data-action={kind}-plan]')
+        page.select_option('#admin-plan-form [name=scopeId]', 'all')
+        page.click('[data-action=admin-plan-load]')
+        page.wait_for_selector('.admin-plan .hp-candidate')
+        first = page.locator('.admin-plan .hp-candidate').first
+        first.locator('summary').click()
+        first.locator('[data-ap-field=note]').fill('시험 기록: 담당부서 현장 확인 필요')
+        first.locator('[data-ap-field=department]').fill('현장점검 담당부서')
+        first.locator('[data-ap-field=status]').select_option('checked')
+        page.click('[data-action=admin-plan-report]')
+        report = page.locator('.hp-report').get_attribute('srcdoc')
+        check(f'{tag}: {kind} workflow exports records with source fingerprint', '시험 기록: 담당부서 현장 확인 필요' in report and '현장점검 담당부서' in report and 'SHA-256' in report)
+        check(f'{tag}: {kind} report fits viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+        page.click('[data-action=close-detail]')
+    if compact and not page.is_visible('#district-panel'):
+        page.click('#show-panels')
+    page.click('#home-more-toggle') if page.get_attribute('#home-more-toggle', 'aria-expanded') == 'false' else None
+
     # 기존 그림자 검토 기능도 계속 도달할 수 있다.
     page.click('[data-action=heat-shade]')
     page.wait_for_selector('.scenario-summary')
@@ -118,11 +141,11 @@ def run(page, base, width, height):
 
     # 관측자료 미수신 원인(키가 없는 로컬 서버이므로 NOT_CONFIGURED가 나와야 한다)
     page.click('[data-action=close-detail]')
-    page.click('#live-air')
+    page.click('#live-temperature')
     page.wait_for_function("document.getElementById('detail-body').innerText.includes('NOT_CONFIGURED')")
     body = page.inner_text('#detail-body')
-    check(f'{tag}: PM10 chip explains why it is 미수신 without leaking keys or URLs', '미수신' in body and 'AIRKOREA_SERVICE_KEY' in body and 'serviceKey' not in body and 'apis.data.go.kr' not in body, body[:120])
-    check(f'{tag}: PM10 value itself stays 미수신', page.inner_text('#live-air') == '미수신' and 'NOT_CONFIGURED' in page.get_attribute('#live-air', 'title'))
+    check(f'{tag}: Temperature chip explains why it is 미수신 without leaking keys or URLs', '미수신' in body and 'KMA_SERVICE_KEY' in body and 'serviceKey' not in body and 'apis.data.go.kr' not in body, body[:120])
+    check(f'{tag}: Temperature value itself stays 미수신', page.inner_text('#live-temperature') == '미수신' and 'NOT_CONFIGURED' in page.get_attribute('#live-temperature', 'title'))
     page.click('[data-action=close-detail]')
 
 

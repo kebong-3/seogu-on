@@ -161,7 +161,7 @@ test('ask http: api/ai.js 가 route=ask 를 처리기로 넘긴다(새 함수 �
 test('ask 문서: 진단 코드 표와 환경변수 안내가 코드와 맞는다', () => {
   const doc = read('docs/AI_PANEL.md');
   for (const code of Object.keys(ASK_CODES)) assert.ok(doc.includes(`\`${code}\``), code);
-  for (const name of ['GEMINI_API_KEY', 'GEMINI_MODEL', 'ASK_DAILY_LIMIT']) {
+  for (const name of ['GEMINI_API_KEY', 'AI_PROVIDER', 'AI_MODEL', 'AI_API_BASE', 'AI_API_KEY', 'ASK_DAILY_LIMIT']) {
     assert.ok(doc.includes(name), name);
     assert.match(read('.env.example'), new RegExp(`^${name}=`, 'm'));
     assert.ok(read('README.md').includes(name), name);

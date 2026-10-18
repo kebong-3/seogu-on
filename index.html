@@ -15,9 +15,8 @@
   <div class="live-place"><strong id="live-place">서구 전체</strong><span>대표위치 기준</span></div>
   <button class="live-reading" data-action="live-detail" title="관측자료 수신 상태 보기"><span>기온</span><strong id="live-temperature">조회 중</strong></button>
   <button class="live-reading" data-action="live-detail" title="관측자료 수신 상태 보기"><span>1시간 강수</span><strong id="live-rainfall">조회 중</strong></button>
-  <button class="live-reading" data-action="live-detail" title="관측자료 수신 상태 보기"><span>미세먼지 PM10</span><strong id="live-air">조회 중</strong></button>
   <button class="live-reading live-safety" data-action="resilience" title="재난안전 상황판에서 자료별 수신 상태 확인"><span>재난 자료</span><strong id="live-safety">확인 중</strong></button>
-  <small id="live-observed">기상청 격자·에어코리아 측정소의 관측 시각을 확인합니다.</small>
+  <small id="live-observed">기상청 격자 관측 시각을 확인합니다.</small>
  </section>
  <aside id="district-panel" class="district-panel glass" aria-label="행정동 선택 및 정보">
   <header class="sidebar-heading"><div class="panel-title"><span class="eyebrow">공간행정 워크스페이스</span><button class="text-button" data-action="panels">지도 집중</button></div><h1>광주 서구 · 동 선택</h1>
@@ -33,6 +32,12 @@
         <button class="home-card home-ai" data-action="ask-ai"><span class="home-card-icon" data-icon="search" aria-hidden="true"></span><span class="home-card-text"><strong>지도에게 묻기</strong><small>자료를 근거로 질문하기</small></span></button>
         <button class="home-card" data-action="infra"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>생활시설</strong><small>학교·공원·복지</small></span></button>
         <button class="home-card home-yield" data-action="resilience"><span class="home-card-icon" data-icon="shield" aria-hidden="true"></span><span class="home-card-text"><strong>재난 자료</strong><small>폭염·침수·한파</small></span></button>
+      </div>
+      <div class="home-workflows" role="group" aria-label="계절 대응과 현장 점검">
+        <button class="home-card" data-action="cold-plan"><span class="home-card-icon" data-icon="home" aria-hidden="true"></span><span class="home-card-text"><strong>한파 대응계획</strong><small>쉼터 연결 · 대기환경 보완</small></span></button>
+        <button class="home-card" data-action="icing-plan"><span class="home-card-icon" data-icon="warning" aria-hidden="true"></span><span class="home-card-text"><strong>결빙 관리지점 점검</strong><small>관리구간 확인 · 후속조치</small></span></button>
+        <button class="home-card" data-action="flood-plan"><span class="home-card-icon" data-icon="water" aria-hidden="true"></span><span class="home-card-text"><strong>침수 이력 현장점검</strong><small>과거 기록 확인 · 정비 협의</small></span></button>
+        <button class="home-card" data-action="school-plan"><span class="home-card-icon" data-icon="shield" aria-hidden="true"></span><span class="home-card-text"><strong>통학환경 현장점검</strong><small>대상시설 확인 · 합동 점검표</small></span></button>
       </div>
       <div class="home-more" id="home-more"><button type="button" class="home-more-toggle" id="home-more-toggle" aria-expanded="false" aria-controls="home-more-list"><span>기타 자료·도구</span></button><div class="home-more-list" id="home-more-list">
         <div class="sidebar-tools"><button class="home-moved" data-action="resilience">재난 자료</button><button data-action="native-sun">5분 그림자</button><button data-action="official-data">공식 수집자료</button><button data-action="safety-hub">재난안전 API</button><button data-action="themes">공식 주제도</button><button data-action="city-questions">생활·정책 검토</button></div>
