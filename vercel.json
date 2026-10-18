@@ -7,7 +7,7 @@
   "cleanUrls": true,
   "functions": {
     "api/ai.js": {
-      "maxDuration": 15,
+      "maxDuration": 30,
       "includeFiles": "public/data/**"
     },
     "api/city-config.js": {

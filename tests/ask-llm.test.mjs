@@ -234,7 +234,7 @@ test('llm: 키가 없으면 호출하지 않고 LLM_NOT_CONFIGURED', async () =>
 test('llm: GEMINI_MODEL 과 키의 공백·따옴표를 정리하고, 이상한 모델 이름은 기본값으로', async () => {
   const fake = fakeFetcher([modelSays(text('이 지도로는 답할 수 없습니다.'))]);
   const ctx = { dataDir, fetcher: fake.fetcher };
-  await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: ` "${KEY}" `, GEMINI_MODEL: ' models/gemini-9-test ' } });
+  await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: ` "${KEY}" `, AI_MODEL: ' models/gemini-9-test ' } });
   await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: KEY, GEMINI_MODEL: '../../evil?x=1' } });
   assert.equal(fake.requests[0].headers['x-goog-api-key'], KEY);
   assert.match(fake.requests[0].url, /\/models\/gemini-9-test:generateContent$/);
@@ -271,11 +271,11 @@ test('llm 한도: 시간 예산을 넘기면 새 호출을 시작하지 않고 L
   quiet(t);
   let clock = 0;
   const fake = fakeFetcher([() => { clock += 6000; return modelSays(call('dong_profile', { dong: '가람동' })); }]);
-  const result = await answerQuestion(input('가람동'), { env, dataDir, fetcher: fake.fetcher, clock: () => clock });
+  const result = await answerQuestion(input('가람동'), { env, dataDir, fetcher: fake.fetcher, clock: () => clock, budgetMs: 11000 });
   assert.equal(result.mode, 'rules');
   assert.equal(result.code, 'LLM_TIMEOUT');
   assert.equal(fake.requests.length, 2, '11초 예산: 6초짜리 호출 두 번 뒤에는 더 부르지 않는다');
-  assert.ok(LIMITS.budgetMs <= 12000, '함수 제한 15초 안에 여유를 둔다');
+  assert.ok(LIMITS.budgetMs <= 26000, '함수 제한 30초 안에 여유를 둔다');
 });
 
 test('llm 한도: 응답이 오지 않으면 AbortController 로 끊는다', async t => {

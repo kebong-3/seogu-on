@@ -7,29 +7,24 @@
  */
 import { SpatialError, TOOLS, callTool } from '../spatial/tools.js';
 
-export const DEFAULT_MODEL = 'gemini-2.5-flash';
+import {DEFAULT_MODEL} from './model-config.js';
+import {LlmError} from './llm-errors.js';
+import {generateCompatible} from './compatible.js';
+export {DEFAULT_MODEL,LlmError};
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 export const LIMITS = {
   rounds: 4, // 모델 호출 횟수(마지막 호출은 도구 없이 글만 쓰게 한다)
   toolCalls: 6, // 한 질문에서 실행하는 도구 수
-  budgetMs: 11000, // 함수 제한 15초 안에서 규칙 기반으로 물러날 여유를 남긴다
+  budgetMs: 25000, // 함수 제한 30초 안에서 규칙 기반으로 물러날 여유를 남긴다
   minCallMs: 1500, // 남은 시간이 이보다 적으면 새 호출을 시작하지 않는다
   answerChars: 1200,
   resultChars: 6000, // 모델에게 돌려주는 도구 결과 한 건의 크기
 };
 
 /** AI 호출 실패. code 는 응답의 code 로 나가 운영자가 원인을 알 수 있게 한다. */
-export class LlmError extends Error {
-  constructor(code, message) {
-    super(message);
-    this.name = 'LlmError';
-    this.code = code;
-  }
-}
-
-/** 404일 때만 현재 키로 제공되는 안정형 Flash 모델을 조회한다. 다른 가격군/미리보기 모델은 선택하지 않는다. */
-export async function discoverFlashModel({fetcher, key, excluded, timeoutMs}) {
+/** 404일 때만 현재 키로 제공되는 같은 계열의 안정형 모델을 조회한다. 다른 계열/미리보기 모델은 선택하지 않는다. */
+export async function discoverCompatibleModel({fetcher, key, excluded, timeoutMs}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), Math.max(1, timeoutMs));
   try {
@@ -41,7 +36,7 @@ export async function discoverFlashModel({fetcher, key, excluded, timeoutMs}) {
     return (Array.isArray(payload.models) ? payload.models : [])
       .filter(m => m.supportedGenerationMethods?.includes('generateContent'))
       .map(m => String(m.name || '').replace(/^models\//, ''))
-      .filter(name => /^gemini-\d+(?:\.\d+)?-flash$/.test(name) && name !== excluded)
+      .filter(name => (excluded.startsWith('gemma-')? /^gemma-4-(?:26b-a4b|31b)-it$/:/^gemini-\d+(?:\.\d+)?-flash$/).test(name) && name !== excluded)
       .sort((a, b) => b.localeCompare(a, 'en', {numeric: true}))[0] || null;
   } catch { return null; }
   finally { clearTimeout(timer); }
@@ -254,6 +249,7 @@ export async function answerByLlm(question, context, ctx) {
   const now = ctx.now || Date.now;
   const deadline = now() + (ctx.budgetMs ?? LIMITS.budgetMs);
   let model = ctx.model;
+  const send=ctx.provider==='openai-compatible'?generateCompatible:generate;
   const state = { steps: [], results: [] };
   const declarations = toFunctionDeclarations();
   const contents = [{ role: 'user', parts: [{ text: userText(question, context) }] }];
@@ -271,20 +267,21 @@ export async function answerByLlm(question, context, ctx) {
     const request = {
       fetcher: ctx.fetcher,
       key: ctx.key,
+      baseUrl: ctx.baseUrl,
       model,
       timeoutMs: remaining,
       body: { ...base, contents, toolConfig: { functionCallingConfig: { mode: textOnly ? 'NONE' : 'AUTO' } } },
     };
     let payload;
-    try { payload = await generate(request); }
+    try { payload = await send(request); }
     catch (error) {
       // 첫 요청에서만 복구: 서로 다른 모델의 함수 호출/생각 서명을 섞지 않는다.
-      if (round !== 1 || error.code !== 'LLM_MODEL_NOT_FOUND' || deadline - now() < LIMITS.minCallMs * 2) throw error;
-      const alternative = await discoverFlashModel({fetcher: ctx.fetcher, key: ctx.key, excluded: model, timeoutMs: Math.min(2000, deadline - now() - LIMITS.minCallMs)});
+      if (ctx.provider==='openai-compatible' || round !== 1 || error.code !== 'LLM_MODEL_NOT_FOUND' || deadline - now() < LIMITS.minCallMs * 2) throw error;
+      const alternative = await discoverCompatibleModel({fetcher: ctx.fetcher, key: ctx.key, excluded: model, timeoutMs: Math.min(2000, deadline - now() - LIMITS.minCallMs)});
       if (!alternative) throw error;
       if (deadline - now() < LIMITS.minCallMs) throw new LlmError('LLM_TIMEOUT', '모델 복구 중 응답 시간 예산을 다 썼습니다.');
       model = alternative;
-      payload = await generate({...request, model, timeoutMs: deadline - now()});
+      payload = await send({...request, model, timeoutMs: deadline - now()});
     }
     const { parts, calls, text } = readCandidate(payload);
 

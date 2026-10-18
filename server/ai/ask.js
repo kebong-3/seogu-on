@@ -1,13 +1,14 @@
 /**
  * /api/ask — "지도에게 묻기".
  * 질문을 받아 공간 도구(server/spatial/tools.js)의 결과만으로 짧은 답을 만든다.
- *   - AI 모드(llm): GEMINI_API_KEY 가 있으면 Gemini 가 도구를 골라 부르고 답을 쓴다.
+ *   - AI 모드(llm): 모델 연결 설정이 있으면 AI가 도구를 골라 부르고 답을 쓴다.
  *   - 규칙 기반(rules): 키가 없거나 AI 호출이 실패하면 정해진 규칙으로 답한다. 이때 code 로 이유를 알린다.
  * 이 사이트의 화면만 부르는 경로라 같은 출처의 POST 만 받는다. 질문 내용은 로그에 남기지 않는다.
  */
 import { ASK_EXAMPLES } from '../../src/city/ask-examples.js';
 import { getStore } from '../spatial/store.js';
-import { DEFAULT_MODEL, LlmError, answerByLlm } from './gemini.js';
+import { LlmError, answerByLlm } from './gemini.js';
+import {modelConfig} from './model-config.js';
 import { RULES_NOTICE, answerByRules } from './rules.js';
 
 export const ASK_LIMITS = {
@@ -20,8 +21,8 @@ export const ASK_LIMITS = {
 
 /** 응답의 code 값과 뜻. docs/AI_PANEL.md 의 표와 같아야 한다. */
 export const ASK_CODES = {
-  LLM_NOT_CONFIGURED: 'GEMINI_API_KEY 가 설정되지 않음',
-  LLM_MODEL_NOT_FOUND: '모델 이름을 찾지 못함(GEMINI_MODEL 확인)',
+  LLM_NOT_CONFIGURED: 'AI_API_KEY 또는 GEMINI_API_KEY 가 설정되지 않음',
+  LLM_MODEL_NOT_FOUND: '모델 이름을 찾지 못함(AI_MODEL 확인)',
   LLM_QUOTA: 'Google 쪽 사용량 한도 초과(429)',
   LLM_KEY_REJECTED: '키가 거부됨(오타·만료·제한 설정)',
   LLM_TIMEOUT: '시간 안에 응답이 오지 않음',
@@ -150,14 +151,6 @@ export function resetAskLimits() {
 
 /* ───────────────────────── 답 조립 ───────────────────────── */
 
-/** 붙여 넣을 때 섞인 공백·따옴표를 지운다. */
-const cleanEnv = value => String(value ?? '').trim().replace(/^['"]|['"]$/g, '').trim();
-
-function modelName(env) {
-  const name = cleanEnv(env.GEMINI_MODEL).replace(/^models\//, '');
-  return /^[A-Za-z0-9._-]{1,80}$/.test(name) ? name : DEFAULT_MODEL;
-}
-
 /** 실제로 쓴 도구 결과에서만 출처·한계를 모은다. */
 function mergeEvidence(results) {
   const sources = new Map();
@@ -219,19 +212,20 @@ async function rulesResponse(input, ctx, code) {
 export async function answerQuestion(input, ctx = {}) {
   const env = ctx.env || process.env;
   const now = ctx.now ?? Date.now();
-  const key = cleanEnv(env.GEMINI_API_KEY);
-  if (!key) return rulesResponse(input, ctx, 'LLM_NOT_CONFIGURED');
+  const config=modelConfig(env);
+  if(config.error)return rulesResponse(input,ctx,'LLM_BAD_REQUEST');
+  const {key,model,provider,baseUrl}=config;
+  if (!key && provider==='google') return rulesResponse(input, ctx, 'LLM_NOT_CONFIGURED');
   if (!takeDaily(env, now)) return rulesResponse(input, ctx, 'LLM_DAILY_LIMIT');
 
   const store = getStore(ctx.dataDir);
-  const model = modelName(env);
   try {
     const outcome = await answerByLlm(
       input.question,
       { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name) },
-      { key, model, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir, budgetMs: ctx.budgetMs, now: ctx.clock },
+      { key, model, provider,baseUrl, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir, budgetMs: ctx.budgetMs, now: ctx.clock },
     );
-    return buildResponse('llm', outcome, { model: outcome.model || model, modelRecovered: !!outcome.modelRecovered });
+    return buildResponse('llm', outcome, { provider,model: outcome.model || model, modelRecovered: !!outcome.modelRecovered });
   } catch (error) {
     const code = error instanceof LlmError ? error.code : 'LLM_BAD_RESPONSE';
     // 질문·키·요청 주소는 남기지 않고 코드만 기록한다.

@@ -9,7 +9,7 @@ const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const html = read('index.html');
 const actionsIn = fragment => [...fragment.matchAll(/<button[^>]*data-action="([^"]+)"[^>]*>/g)].map(m => ({action: m[1], hidden: /\shidden(\s|>)/.test(m[0]), tag: m[0]}));
 const regions = html.slice(html.indexOf('<section id="sidebar-regions"'), html.indexOf('<section id="sidebar-layers"'));
-const primary = regions.slice(regions.indexOf('<div class="home-primary"'), regions.indexOf('<div class="home-more"'));
+const primary = regions.slice(regions.indexOf('<div class="home-primary"'), regions.indexOf('<div class="home-workflows"'));
 const more = regions.slice(regions.indexOf('<div class="home-more-list"'), regions.indexOf('id="dong-tour"'));
 
 test('dong navigation: all 18 dong are before scenario actions, with compact brand tiles', () => {
@@ -92,8 +92,8 @@ test('live diagnostics: UI text never contains a key value or an upstream URL', 
 
 test('live ribbon: readings open the diagnostics panel', () => {
   const ribbon = html.match(/<section class="live-ribbon"[\s\S]*?<\/section>/)[0];
-  assert.equal((ribbon.match(/data-action="live-detail"/g) || []).length, 3);
-  for (const id of ['live-temperature', 'live-rainfall', 'live-air', 'live-safety', 'live-observed']) assert.match(ribbon, new RegExp(`id="${id}"`));
+  assert.equal((ribbon.match(/data-action="live-detail"/g) || []).length, 2);
+  for (const id of ['live-temperature', 'live-rainfall', 'live-safety', 'live-observed']) assert.match(ribbon, new RegExp(`id="${id}"`));
 });
 
 test('dong navigation: village BI and names remain without map numbers or a number legend', () => {

@@ -1,3 +1,4 @@
+.home-workflows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}.home-workflows .home-card{min-height:74px;min-width:0}.home-workflows .home-card strong{font-size:13px}.home-workflows .home-card small{font-size:11px;line-height:1.45}
 #detail-panel:has(.heat-plan){width:min(740px,calc(100vw - 32px));max-width:none}
 .heat-plan{font-size:14px;line-height:1.6;color:var(--text);overflow-wrap:anywhere}
 .heat-plan h3{font-size:18px;margin:26px 0 12px}.heat-plan p{margin:10px 0}.hp-kicker{color:var(--mint);font-weight:700;font-size:12px;letter-spacing:.03em}.hp-intro{font-size:19px;font-weight:700}

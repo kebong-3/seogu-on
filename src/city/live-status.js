@@ -1,12 +1,12 @@
 /**
- * 상단 관측정보 띠: 기온·1시간 강수(기상청 격자), PM10(서구 안 에어코리아 측정소), 재난 관련 지도층 수신 종류 수.
+ * 상단 관측정보 띠: 기온·1시간 강수(기상청 격자), 재난 관련 지도층 수신 종류 수.
  *
  * 정직성 원칙
  *  - 받지 못한 값은 '미수신', 받은 응답에 값이 없으면 '미관측'. 0이나 다른 지역 값으로 채우지 않는다.
  *  - 갱신에 실패하면 같은 구역의 이전 정상값을 원래 관측시각과 함께 '갱신 실패'로 표시한다.
  *  - 미수신일 때는 이유(code)를 말풍선과 상세 패널에 보여 준다. 인증키·주소는 표시하지 않는다.
  */
-import {representative,distance} from './geometry.js';
+import {representative} from './geometry.js';
 import {RESILIENCE_PRESETS} from './resilience-tools.js';
 import {explainFailure,failureTooltip} from './live-diagnostics.js';
 import {registerAction} from './actions.js';
@@ -18,8 +18,8 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '
 
 export function createLiveStatus({state, fetchJSON, label, show}) {
   let sequence = 0;
-  const weatherCache = new Map(), airCache = new Map(); // 구역별 마지막 정상값
-  const failures = new Map(); // 구역별 {weather, air} 실패 이유
+  const weatherCache = new Map(); // 구역별 마지막 정상값
+  const failures = new Map(); // 구역별 weather 실패 이유
   let lastCheckedAt = null;
 
   const place = () => state.dong === 'all'
@@ -37,14 +37,11 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   }
 
   function render(key) {
-    const weather = weatherCache.get(key), air = airCache.get(key), failed = failureOf(key);
+    const weather = weatherCache.get(key), failed = failureOf(key);
     el('live-place').textContent = label();
     const weatherTip = failed.weather ? failureTooltip(failed.weather) : weather ? '기상청 5km 격자 실황' : '';
     setReading('live-temperature', weather ? value(weather.data.values?.T1H, '℃') : '미수신', weatherTip, !weather && failed.weather);
     setReading('live-rainfall', weather ? value(weather.data.values?.RN1, 'mm') : '미수신', weatherTip, !weather && failed.weather);
-    const airTip = failed.air ? failureTooltip(failed.air) : air ? `${air.data.station} 측정소${air.data.pm10Flag ? ' · 상태: ' + air.data.pm10Flag : ''}` : '';
-    setReading('live-air', air ? value(air.data.pm10, '㎍/㎥') : '미수신', airTip, !air && failed.air);
-
     const tracked = new Set(RESILIENCE_PRESETS.flatMap(p => p.layers));
     const received = [...state.entries].filter(([id, e]) => tracked.has(id) && e.state === 'loaded' && e.features?.length).length;
     el('live-safety').textContent = `관련 자료 ${received}종`;
@@ -52,11 +49,9 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
     const notes = [];
     if (weather) notes.push(`기상청 격자 ${time(weather.data.base?.base_date, weather.data.base?.base_time)}${weather.stale ? ' · 갱신 실패' : ''}`);
     else if (failed.weather) notes.push(`기상 미수신: ${failed.weather.reason}`);
-    if (air) notes.push(`${air.data.station} 측정소 ${air.data.observedAt || '시각 미확인'}${air.stale ? ' · 갱신 실패' : ''}`);
-    else if (failed.air) notes.push(`미세먼지 미수신: ${failed.air.reason}`);
     const observed = el('live-observed');
     observed.textContent = notes.join(' / ') || '관측자료 미수신 · 연결 설정을 확인하세요.';
-    observed.title = failed.weather || failed.air ? '값을 누르면 미수신 원인을 볼 수 있습니다.' : '';
+    observed.title = failed.weather ? '값을 누르면 미수신 원인을 볼 수 있습니다.' : '';
     if (state.view === 'live-detail') detail();
   }
 
@@ -72,29 +67,12 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
     }
   }
 
-  async function refreshAir(key, point) {
-    try {
-      const stations = await fetchJSON('/api/city-data?kind=air-stations&dong=all&page=1');
-      const nearest = (stations.geojson?.features || [])
-        .filter(f => f.geometry?.type === 'Point' && f.properties?.stationName)
-        .sort((a, b) => distance(point, a.geometry.coordinates) - distance(point, b.geometry.coordinates))[0];
-      if (!nearest) throw Object.assign(Error('서구 안 측정소 없음'), {code: 'NO_STATION', stage: 'station-list'});
-      const result = await fetchJSON(`/api/city-data?kind=air&station=${encodeURIComponent(nearest.properties.stationName)}`);
-      airCache.set(key, {data: result, stale: false});
-      setFailure(key, 'air', null);
-    } catch (error) {
-      if (airCache.has(key)) airCache.set(key, {...airCache.get(key), stale: true});
-      setFailure(key, 'air', explainFailure(error, 'station-list'));
-    }
-  }
-
   async function refresh() {
     const id = ++sequence, key = state.dong, point = place();
     if (!point) return;
     render(key);
     await Promise.all([
-      refreshWeather(key, point).then(() => { if (id === sequence) render(key); }),
-      refreshAir(key, point)
+      refreshWeather(key, point).then(() => { if (id === sequence) render(key); })
     ]);
     lastCheckedAt = new Date();
     if (id === sequence) render(key);
@@ -103,7 +81,7 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   /** 상세 패널: 자료별 수신 상태와 운영자 확인 사항 */
   function detail() {
     if (!show) return;
-    const key = state.dong, failed = failureOf(key), weather = weatherCache.get(key), air = airCache.get(key);
+    const key = state.dong, failed = failureOf(key), weather = weatherCache.get(key);
     const row = (title, ok, okText, info) => `<div class="result-box live-diagnostic-row"><strong>${esc(title)}</strong>` + (ok
       ? `<p class="small">${esc(okText)}</p>${info ? `<p class="note warning">최근 갱신 실패: ${esc(info.reason)} <code>${esc(info.code)}</code><br>${esc(info.hint)}</p>` : ''}`
       : info
@@ -111,7 +89,6 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
         : '<p class="small">조회 중이거나 아직 조회하지 않았습니다.</p>') + '</div>';
     show('관측자료 수신 상태', `<p class="muted">${esc(label())} · 받지 못한 값은 ‘미수신’으로 두며 0이나 다른 지역 값으로 채우지 않습니다.</p>`
       + row('기온·1시간 강수 (기상청 격자)', !!weather, weather ? `${time(weather.data.base?.base_date, weather.data.base?.base_time)} · 5km 격자값` : '', failed.weather)
-      + row('미세먼지 PM10 (에어코리아 측정소)', !!air, air ? `${air.data.station} 측정소 · ${air.data.observedAt || '시각 미확인'} (한국시간)${air.data.pm10 === null ? ' · 이 시각 PM10 미관측' : ''}` : '', failed.air)
       + `<p class="small">마지막 확인: ${lastCheckedAt ? esc(lastCheckedAt.toLocaleTimeString('ko-KR')) : '확인 전'} · 10분마다 자동으로 다시 조회합니다.</p>`
       + '<div class="detail-actions"><button class="primary" data-action="live-refresh">지금 다시 조회</button><button class="secondary" data-action="settings">연결 설정 보기</button></div>'
       + '<p class="small">괄호 안 영문 코드는 원인 구분용입니다. 인증키 값은 이 화면과 응답에 표시되지 않습니다. 코드별 점검 방법은 저장소의 docs/API_SETUP.md에 있습니다.</p>', 'live-detail');

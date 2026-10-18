@@ -13,6 +13,7 @@ import {runRegisteredAction} from './actions.js';
 import {installHomePanel,isCompact} from './home-panel.js';
 import {installHeatScenario} from './heat-scenario.js';
 import {installHeatPlan} from './heat-plan.js';
+import {installAdminPlans} from './admin-plans.js';
 import {installAskAi} from './ask-ai.js';
 const $=s=>document.querySelector(s),byId=id=>document.getElementById(id);
 const state={dongs:[],district:null,scope:null,dong:'all',engine:'vworld',ready:false,activePreset:'parks',enabled:new Set(['parks','park-areas']),entries:new Map(),selected:null,isolate:false,focus:true,view:null,results:[],config:null,point:null,rasterStates:new Map(),loading:false,capabilities:{},importMode:'features',listQuery:''};
@@ -155,6 +156,7 @@ homePanel=installHomePanel();
 /* 확장 모듈 등록 위치: 새 패널·동작은 install…(api) 한 줄을 여기에 더한다. (예: installAskAi(api)) */
 installHeatScenario(api);
 installHeatPlan(api);
+installAdminPlans(api);
 installAskAi(api);
 byId('app').addEventListener('change',e=>{try{enhancements.change(e);}catch(err){toast(err.message);}if(e.target.dataset.layer)toggleLayer(e.target.dataset.layer,e.target.checked);if(e.target.id==='focus-switch'){state.focus=e.target.checked;drawBounds();}if(e.target.id==='model-height')modelEdit();});
 byId('app').addEventListener('input',e=>{try{enhancements.input(e);}catch(err){toast(err.message);}if(['model-heading','model-scale'].includes(e.target.id))modelEdit();});

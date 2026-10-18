@@ -246,7 +246,7 @@ export function installAskAi(api) {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({question: text, dongId: state.dong === 'all' ? undefined : state.dong, history: asked.slice(-3).map(q => ({role: 'user', text: q}))}),
-        signal: AbortSignal.timeout(20000),
+        signal: AbortSignal.timeout(35000),
       });
       let body = null;
       try { body = await response.json(); } catch { /* 아래에서 형식 오류로 처리 */ }
