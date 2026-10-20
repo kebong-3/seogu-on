@@ -30,7 +30,8 @@ function fakeFetcher(responses) {
 const input = (question, extra = {}) => ({ question, dong: null, previousQuestions: [], ...extra });
 const run = (question, responses, more = {}) => {
   const fake = fakeFetcher(responses);
-  return answerQuestion(input(question, more.input), { env, dataDir, fetcher: fake.fetcher, ...more.ctx }).then(result => ({ result, requests: fake.requests }));
+  // 이 파일은 자유질문의 native 함수호출 반복을 검증한다. 기본 근거요약 경로는 ask-work-brief에서 검증한다.
+  return answerQuestion(input(question, more.input), { env, dataDir, fetcher: fake.fetcher, precompute: false, ...more.ctx }).then(result => ({ result, requests: fake.requests }));
 };
 
 test.beforeEach(() => resetAskLimits());
@@ -231,14 +232,16 @@ test('llm: 키가 없으면 호출하지 않고 LLM_NOT_CONFIGURED', async () =>
   assert.equal(fake.requests.length, 0);
 });
 
-test('llm: GEMINI_MODEL 과 키의 공백·따옴표를 정리하고, 이상한 모델 이름은 기본값으로', async () => {
+test('llm: 모델과 키의 공백·따옴표를 정리하고, 잘못된 명시 모델은 요청 전에 거절한다', async () => {
   const fake = fakeFetcher([modelSays(text('이 지도로는 답할 수 없습니다.'))]);
   const ctx = { dataDir, fetcher: fake.fetcher };
   await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: ` "${KEY}" `, AI_MODEL: ' models/gemini-9-test ' } });
-  await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: KEY, GEMINI_MODEL: '../../evil?x=1' } });
+  const invalid = await answerQuestion(input('안녕'), { ...ctx, env: { GEMINI_API_KEY: KEY, GEMINI_MODEL: '../../evil?x=1' } });
   assert.equal(fake.requests[0].headers['x-goog-api-key'], KEY);
   assert.match(fake.requests[0].url, /\/models\/gemini-9-test:generateContent$/);
-  assert.match(fake.requests[1].url, new RegExp(`/models/${DEFAULT_MODEL}:generateContent$`));
+  assert.equal(fake.requests.length, 1);
+  assert.equal(invalid.mode, 'rules');
+  assert.equal(invalid.code, 'LLM_BAD_REQUEST');
 });
 
 test('llm 한도: 모델 호출은 4번까지, 마지막 호출은 도구 없이 글만 쓰게 한다', async t => {
@@ -271,7 +274,7 @@ test('llm 한도: 시간 예산을 넘기면 새 호출을 시작하지 않고 L
   quiet(t);
   let clock = 0;
   const fake = fakeFetcher([() => { clock += 6000; return modelSays(call('dong_profile', { dong: '가람동' })); }]);
-  const result = await answerQuestion(input('가람동'), { env, dataDir, fetcher: fake.fetcher, clock: () => clock, budgetMs: 11000 });
+  const result = await answerQuestion(input('가람동'), { env, dataDir, fetcher: fake.fetcher, precompute: false, clock: () => clock, budgetMs: 11000 });
   assert.equal(result.mode, 'rules');
   assert.equal(result.code, 'LLM_TIMEOUT');
   assert.equal(fake.requests.length, 2, '11초 예산: 6초짜리 호출 두 번 뒤에는 더 부르지 않는다');

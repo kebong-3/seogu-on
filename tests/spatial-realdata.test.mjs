@@ -42,6 +42,7 @@ test('실자료: 모든 도구가 약속한 모양으로 답한다', async () =>
   const dong = data.dongs[0].dongName;
 
   const calls = [
+    ['work_brief', { theme: 'heat', dong }],
     ['locate', { query: dong }],
     ['dong_profile', { dong }],
     ['find_facilities', { category: first, dong, limit: 200 }],

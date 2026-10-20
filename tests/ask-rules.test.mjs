@@ -194,7 +194,13 @@ test('실제 자료: 화면의 예시 질문은 모두 규칙 기반 모드에�
   for (const question of ASK_EXAMPLES) {
     const r = await answerQuestion({ question, dong: null, previousQuestions: [] }, { env: {} });
     assert.equal(r.mode, 'rules', question);
-    assert.ok(r.steps.length >= 1 && r.steps.every(s => s.ok), `${question} → ${JSON.stringify(r.steps)}`);
+    const spatialSteps = r.steps.filter(s => s.tool !== 'weather_observation');
+    assert.ok(spatialSteps.length >= 1 && spatialSteps.every(s => s.ok), `${question} → ${JSON.stringify(r.steps)}`);
+    const weather = r.steps.find(s => s.tool === 'weather_observation');
+    if (weather) {
+      assert.equal(weather.ok, false, '빈 환경변수에서는 기상값을 성공으로 위장하지 않는다');
+      assert.equal(r.brief.observation.code, 'NOT_CONFIGURED');
+    }
     assert.ok(r.answer.length > 20 && r.sources.length >= 1 && r.caveats.length >= 1, question);
     assert.equal(r.examples, undefined, question);
   }

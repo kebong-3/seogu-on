@@ -32,11 +32,18 @@ const TOOL_TITLES = {
   compare_dongs: '동별 비교표',
   flood_history: '과거 침수피해 기록',
   sun_position: '태양 고도·방위',
+  work_brief: '업무별 공간검토',
+  weather_observation: '기상청 관측 조회',
 };
 
 const ARG_LABELS = {
   category: '분류', target: '대상', service: '서비스', dong: '동', dongs: '동', place: '기준', radiusM: '반경(m)',
-  n: '개수', categories: '분류', datetime: '일시', heightM: '높이(m)', query: '검색어', yearFrom: '시작 연도', yearTo: '끝 연도', perKm2: '㎢당',
+  n: '개수', categories: '분류', datetime: '일시', heightM: '높이(m)', query: '검색어', yearFrom: '시작 연도', yearTo: '끝 연도', perKm2: '㎢당', theme: '업무',
+};
+const THEME_TITLES = {heat: '폭염 대응', cold: '한파 대응', icing: '결빙 점검', flood: '침수 이력 점검', living: '생활시설', school: '통학환경 점검'};
+const ANALYSIS_ROLES = {
+  'grounded-summary': '자료 조회·공간계산 후 AI가 근거를 요약했습니다.',
+  'tool-selection': 'AI가 필요한 조회 도구를 선택하고 결과를 요약했습니다.',
 };
 
 /* ───────────────────────── 순수 함수(테스트 대상) ───────────────────────── */
@@ -45,7 +52,7 @@ const ARG_LABELS = {
 export function describeArgs(args) {
   return Object.entries(args || {})
     .filter(([key]) => ARG_LABELS[key])
-    .map(([key, value]) => `${ARG_LABELS[key]} ${Array.isArray(value) ? value.join(', ') : value}`)
+    .map(([key, value]) => `${ARG_LABELS[key]} ${key === 'theme' ? THEME_TITLES[value] || value : Array.isArray(value) ? value.join(', ') : value}`)
     .join(' · ');
 }
 
@@ -53,7 +60,8 @@ export function describeArgs(args) {
 export function highlightFeatures(map) {
   const features = Array.isArray(map?.highlight?.features) ? map.highlight.features : [];
   return features
-    .filter(f => f?.geometry?.type === 'Point' && f.geometry.coordinates?.slice(0, 2).every(Number.isFinite))
+    .filter(f => f?.geometry?.type === 'Point' && Array.isArray(f.geometry.coordinates) && f.geometry.coordinates.length >= 2
+      && f.geometry.coordinates.slice(0, 2).every(Number.isFinite) && Math.abs(f.geometry.coordinates[0]) <= 180 && Math.abs(f.geometry.coordinates[1]) <= 90)
     .map((f, index) => ({
       type: 'Feature',
       geometry: {type: 'Point', coordinates: f.geometry.coordinates.slice(0, 2)},
@@ -96,17 +104,56 @@ export function cameraTarget(map) {
 
 const dateText = source => (source.date ? `${source.date}${source.dateBasis && source.dateBasis !== '자료 기준일' ? ` · ${source.dateBasis}` : ' 기준'}` : '날짜 미제공');
 
+function sourceUrl(source) {
+  try {
+    const url = new URL(source.url || source.sourceUrl || '');
+    return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : '';
+  } catch { return ''; }
+}
+
+const MODE_NOTICES = {
+  LLM_NOT_CONFIGURED: 'AI 모델이 아직 연결되지 않아 수록 자료를 직접 계산한 결과입니다.',
+  LLM_TIMEOUT: 'AI 응답이 늦어 수록 자료를 직접 계산한 결과를 먼저 보여드립니다.',
+  LLM_QUOTA: 'AI 사용량 한도로 수록 자료를 직접 계산한 결과를 보여드립니다.',
+  LLM_DAILY_LIMIT: '오늘의 AI 호출 한도에 도달해 수록 자료를 직접 계산했습니다.',
+  LLM_UNGROUNDED: 'AI 설명의 근거를 확인하지 못해 검증 가능한 자료 계산 결과를 보여드립니다.',
+};
+
+/** 화면과 저장 메모 모두 같은 근거·확인사항을 사용한다. */
+export function reviewMemo(view) {
+  const result = view.result;
+  if (!result) return '';
+  const lines = ['서구:온 공간행정 검토메모', '', `질문: ${view.question}`, `질문 당시 선택 구역: ${view.queryScope || '미기록'}`,
+    `작성: ${view.completedAt || '미기록'}`, `응답 방식: ${result.mode === 'llm' ? `AI 근거 요약 (${result.model || '모델 미기록'})` : '수록 자료 직접 계산 (규칙 기반)'}`,
+    '', '□ 검토 결과', result.answer || '답변 없음'];
+  if (result.mode === 'llm' && ANALYSIS_ROLES[result.analysisPath]) lines.push('', `AI 역할: ${ANALYSIS_ROLES[result.analysisPath]}`);
+  if (result.brief) {
+    const brief = result.brief;
+    if (brief.basis) lines.push('', `검토 범위: ${brief.basis}`);
+    if (brief.evidence?.length) lines.push('', '□ 확인한 자료', ...brief.evidence.map(item => `- ${item.title}: ${item.summary}${item.ok === false ? ' (미확인)' : ''}`));
+    if (brief.nextActions?.length) lines.push('', '□ 담당자 확인사항 (확정 판단 아님)', ...brief.nextActions.map(item => `- ${item}`));
+    if (brief.missingData?.length) lines.push('', '□ 아직 없는 판단 근거', ...brief.missingData.map(item => `- ${item}`));
+  }
+  if (view.features?.length) lines.push('', '□ 결과 지점 (수록 자료 기준)', ...view.features.map(f => `- ${f.properties.name}${f.properties.distanceM === undefined ? '' : ` · 직선거리 약 ${Number(f.properties.distanceM).toLocaleString('ko-KR')}m`}`));
+  if (result.steps?.length) lines.push('', '□ 실제 조회 내역', ...result.steps.map(step => `- ${TOOL_TITLES[step.tool] || step.tool} · ${describeArgs(step.args)}: ${step.summary}${step.ok === false ? ' (조회 미완료)' : ''}`));
+  if (result.sources?.length) lines.push('', '□ 출처와 기준일', ...result.sources.map(source => `- ${source.name} · ${dateText(source)}${sourceUrl(source) ? ` · ${sourceUrl(source)}` : ''}`));
+  lines.push('', '□ 자료의 한계', ...(result.caveats || []).map(item => `- ${item}`), '- 수록 건수는 지역 전체 시설 수가 아닙니다. 현장·운영 여부와 최신 자료를 담당자가 확인해야 합니다.');
+  if (result.mode !== 'llm') lines.push('', MODE_NOTICES[result.code] || result.notice || 'AI 설명 없이 수록 자료의 계산 결과를 정리했습니다.');
+  return lines.join('\n');
+}
+
 /** 근거 상자: 사용한 도구, 출처와 기준일, 자료의 한계. */
 export function evidenceHtml(result) {
   const steps = (result.steps || []).map(step => `<li class="${step.ok === false ? 'failed' : ''}"><b>${esc(TOOL_TITLES[step.tool] || step.tool)}</b>`
     + `${describeArgs(step.args) ? `<span>${esc(describeArgs(step.args))}</span>` : ''}<small>${esc(step.summary)}</small></li>`).join('');
-  const sources = (result.sources || []).map(source => `<li>${esc(source.name)} <small>${esc(dateText(source))}</small></li>`).join('');
+  const sources = (result.sources || []).map(source => `<li>${sourceUrl(source) ? `<a href="${esc(sourceUrl(source))}" target="_blank" rel="noopener noreferrer">${esc(source.name)} ↗</a>` : esc(source.name)} <small>${esc(dateText(source))}</small></li>`).join('');
   const caveats = (result.caveats || []).map(caveat => `<li>${esc(caveat)}</li>`).join('');
   if (!steps && !sources && !caveats) return '';
   return '<section class="ask-evidence" aria-label="답의 근거"><h3>근거</h3>'
     + (steps ? `<h4>조회한 내용</h4><ol class="ask-steps">${steps}</ol>` : '')
     + (sources ? `<h4>출처와 기준일</h4><ul class="ask-sources">${sources}</ul>` : '')
     + (caveats ? `<h4>자료의 한계</h4><ul class="ask-caveats">${caveats}</ul>` : '')
+    + (result.code ? `<details class="ask-diagnostic"><summary>응답 상태 자세히</summary><code>${esc(result.code)}</code></details>` : '')
     + '</section>';
 }
 
@@ -116,46 +163,65 @@ function badgeHtml(result) {
   return `<span class="ask-badge ${llm ? 'llm' : 'rules'}" title="${esc(title)}">${llm ? 'AI 답변' : '규칙 기반'}</span>`;
 }
 
-function listHtml(features, drawn) {
+function listHtml(features, drawn, view = {}) {
   if (!features.length) return '';
   const rows = features.slice(0, LIST_LIMIT).map(f => `<li><button class="ask-point" data-action="ask-point" data-id="${esc(f.properties.id)}">`
     + `<i class="legend-dot" style="background:${HIGHLIGHT_COLOR}"></i><span>${esc(f.properties.name)}</span>`
     + `${f.properties.distanceM === undefined ? '' : `<small>약 ${esc(Number(f.properties.distanceM).toLocaleString('ko-KR'))}m</small>`}</button></li>`).join('');
   const more = features.length > LIST_LIMIT ? `<p class="small">목록은 ${LIST_LIMIT}곳까지만 보여 줍니다.</p>` : '';
-  const note = drawn === features.length
-    ? `지도에 ${drawn}곳을 표시했습니다.`
-    : `결과 ${features.length}곳 중 지도에는 ${drawn}곳을 표시했습니다(행정동 경계 밖이거나 이 지도 모드가 그리지 못한 지점 제외).`;
+  const note = view.mapCleared ? '지도 표시를 지웠습니다. 결과 목록과 근거는 그대로 남아 있습니다.'
+    : view.mapDeferred ? '질문 뒤 선택 구역이 바뀌었습니다. 결과를 지도에서 보려면 아래 버튼을 눌러 주세요.'
+    : !view.mapReady ? '지도 연결 전입니다. 아래 결과 목록과 근거는 바로 확인할 수 있습니다.'
+    : `결과 ${features.length}곳 중 ${drawn}곳을 지도 표시 대상으로 연결했습니다. 지점명을 누르면 해당 위치로 이동합니다.`;
   return `<section class="ask-results" aria-label="결과 지점"><h3>결과 지점 <small>수록 자료 기준 · 전체 목록 아님</small></h3><p class="small">${esc(note)}</p>`
-    + `<ul>${rows}</ul>${more}<div class="detail-actions"><button class="secondary ask-show-map" data-action="ask-show-map">지도에서 보기</button><button class="secondary" data-action="ask-clear">지도 표시 지우기</button></div></section>`;
+    + `<ul>${rows}</ul>${more}<div class="detail-actions"><button class="secondary" data-action="ask-restore-map">결과를 지도에서 보기</button>${view.mapCleared ? '' : '<button class="secondary" data-action="ask-clear">지도 표시 지우기</button>'}</div></section>`;
+}
+
+function briefHtml(brief) {
+  if (!brief) return '';
+  const section = (title, items, className) => Array.isArray(items) && items.length
+    ? `<section class="ask-brief-section ${className}"><h3>${title}</h3><ul>${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul></section>` : '';
+  return `<section class="ask-work-brief" aria-label="업무 검토사항"><h3>${esc(brief.title || '업무 검토 메모')}</h3>${brief.basis ? `<p class="small">${esc(brief.basis)}</p>` : ''}`
+    + (brief.evidence?.length ? `<dl class="ask-brief-evidence">${brief.evidence.map(item => `<div><dt>${esc(item.title)}${item.ok === false ? ' · 미확인' : ''}</dt><dd>${esc(item.summary)}</dd></div>`).join('')}</dl>` : '')
+    + section('담당자 확인사항', brief.nextActions, 'ask-next-actions')
+    + section('아직 없는 판단 근거', brief.missingData, 'ask-missing-data')
+    + '<p class="small">담당자 검토를 돕는 확인사항이며, 현장 점검이나 최종 결정을 대신하지 않습니다.</p></section>';
 }
 
 /** 답 영역 HTML. status: idle | loading | done | error */
 export function answerHtml(view) {
   if (view.status === 'loading') {
-    return '<div class="ask-status" role="status"><span class="ask-spinner" aria-hidden="true"></span>답변 중… 지도 자료를 조회하고 있습니다.</div>';
+    return '<div class="ask-status" role="status"><span class="ask-spinner" aria-hidden="true"></span><div><strong>질문에 맞는 자료를 확인하고 있습니다.</strong><small>수록 자료 분석 → 근거 확인 → 지도와 검토메모로 정리</small></div></div>';
   }
   if (view.status === 'error') {
     return `<p class="note warning ask-error" role="alert">${esc(view.error)}</p>`;
   }
   if (view.status !== 'done') return '';
   const result = view.result;
-  const notice = result.mode === 'rules' && result.notice
-    ? `<p class="small ask-notice">${esc(result.notice)}${result.code && result.code !== 'LLM_NOT_CONFIGURED' ? ` <code>${esc(result.code)}</code>` : ''}</p>` : '';
+  const notice = result.mode === 'rules'
+    ? `<p class="small ask-notice">${esc(MODE_NOTICES[result.code] || result.notice || 'AI 설명 없이 수록 자료를 직접 계산한 결과입니다.')}</p>` : '';
+  const queried = (result.steps || []).filter(step => step.ok !== false).length;
+  const failed = (result.steps || []).filter(step => step.ok === false).length;
+  const summary = `<div class="ask-result-summary" aria-label="실제 조회 결과"><span>조회 완료 <b>${queried}건</b></span><span>출처 <b>${(result.sources || []).length}개</b></span><span>결과 지점 <b>${(view.features || []).length}곳</b></span></div>`;
   return `<article class="ask-answer"><header><span class="ask-question-echo">${esc(view.question)}</span>${badgeHtml(result)}</header>`
-    + `<p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}</article>`
-    + listHtml(view.features || [], view.drawn || 0)
+    + `<p class="small ask-query-scope">질문 당시 선택 구역: ${esc(view.queryScope || '서구 전체')}</p>${summary}${failed ? `<p class="small ask-notice">조회하지 못한 항목 ${failed}건은 아래 근거에서 확인하세요.</p>` : ''}`
+    + `<p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `${ANALYSIS_ROLES[result.analysisPath] ? `<p class="small ask-ai-role">${esc(ANALYSIS_ROLES[result.analysisPath])}</p>` : ''}<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}`
+    + '<div class="ask-export-actions"><button class="secondary" data-action="ask-copy">검토메모 복사</button><button class="secondary" data-action="ask-download">검토메모 저장</button></div></article>'
+    + briefHtml(result.brief)
+    + listHtml(view.features || [], view.drawn || 0, view)
     + evidenceHtml(result);
 }
 
 export function panelHtml(view, scopeLabel) {
   const chips = ASK_EXAMPLES.map((text, index) => `<button class="ask-chip" data-action="ask-example" data-id="${index}">${esc(text)}</button>`).join('');
   return '<div class="ask-panel">'
-    + '<p class="ask-scope">지도에 실린 <b>수록 자료만</b>으로 답합니다. 수록 건수는 서구 전체 시설 수가 아니며, 결과는 현장 확인 전 참고용입니다.</p>'
+    + '<div class="ask-intro"><strong>질문하면, 자료와 위치가 함께 나옵니다.</strong><p>점검할 자료를 찾고, 확인할 일을 검토메모로 가져가세요.</p></div>'
+    + '<p class="ask-scope"><b>수록 공간자료</b>와 필요한 경우 조회한 <b>기상청 관측</b>을 근거로 답합니다. AI 사용 여부·출처·기준일과 관측시각을 결과에서 확인하세요.</p>'
     + '<div class="ask-form"><label class="ask-label" for="ask-question">질문</label>'
     + `<div class="ask-row"><input id="ask-question" type="text" maxlength="${MAX_QUESTION}" autocomplete="off" enterkeyhint="search" placeholder="예: 풍암동 그늘막 어디 있어?" value="${esc(view.draft || '')}">`
     + `<button class="primary" id="ask-submit" data-action="ask-submit"${view.status === 'loading' ? ' disabled' : ''}>묻기</button></div>`
     + `<p class="small ask-context">현재 선택 구역: <b id="ask-scope-name">${esc(scopeLabel)}</b> · 질문에 동 이름이 없으면 이 구역을 기준으로 합니다.</p></div>`
-    + `<div class="ask-chips" role="group" aria-label="예시 질문">${chips}</div>`
+    + `<details class="ask-examples"${view.status === 'idle' ? ' open' : ''}><summary>이렇게 물어보세요</summary><div class="ask-chips" role="group" aria-label="예시 질문">${chips}</div></details>`
     + `<div id="ask-output" class="ask-output" aria-live="polite">${answerHtml(view)}</div>`
     + '</div>';
 }
@@ -164,14 +230,34 @@ export function panelHtml(view, scopeLabel) {
 
 export function installAskAi(api) {
   const state = api.state;
-  const view = {status: 'idle', draft: '', question: '', result: null, error: '', features: [], drawn: 0};
+  const view = {status: 'idle', draft: '', question: '', result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: '', completedAt: ''};
   const asked = []; // 이번 방문에서 한 질문(다음 질문의 문맥으로 최근 3개만 보낸다)
   let sequence = 0;
+  let applyingMap = false;
+  let lastScope = state.dong;
+  let requestController = null;
 
   const open = () => state.view === VIEW;
   const input = () => document.getElementById('ask-question');
+  const quickInput = document.getElementById('ask-quick-question');
+  const quickForm = document.getElementById('ask-quick-form');
+  const quickButton = document.getElementById('ask-quick-submit');
 
-  function render() {
+  function syncQuick() {
+    const loading = view.status === 'loading';
+    quickForm?.setAttribute('aria-busy', String(loading));
+    if (quickButton) {
+      quickButton.disabled = loading;
+      quickButton.innerHTML = loading ? '<span class="ask-spinner" aria-hidden="true"></span><span>조회 중</span>' : '묻기 <span aria-hidden="true">↗</span>';
+    }
+    const scope = api.label();
+    const hint = document.getElementById('ask-quick-hint');
+    if (hint) hint.textContent = `${scope}의 수록 자료를 기준으로 답합니다. 질문에 동 이름을 쓰면 해당 동을 조회합니다.`;
+    if (quickInput) quickInput.placeholder = state.dong === 'all' ? '예: 치평동 폭염 점검자료 정리해줘' : `${scope}, 무엇을 살펴볼까요?`;
+  }
+
+  function render({scroll = true} = {}) {
+    syncQuick();
     if (!open()) return;
     const output = document.getElementById('ask-output');
     if (output) output.innerHTML = answerHtml(view);
@@ -180,17 +266,24 @@ export function installAskAi(api) {
     // 답을 그리면서 구역이 바뀌었을 수 있다(예: 서구 전체 → 풍암동).
     const scope = document.getElementById('ask-scope-name');
     if (scope) scope.textContent = api.label();
+    if (view.status !== 'idle') document.querySelector('.ask-examples')?.removeAttribute('open');
     // 답이 나오면 예시 단추 아래로 가려지지 않게 답 위치로 스크롤한다.
     // (scrollIntoView 는 화면 전체를 밀 수 있어 패널 본문만 직접 움직인다.)
     const host = document.getElementById('detail-body');
-    if (view.status !== 'idle' && output && host) host.scrollTop += output.getBoundingClientRect().top - host.getBoundingClientRect().top - 10;
+    if (scroll && view.status !== 'idle' && output && host) host.scrollTop += output.getBoundingClientRect().top - host.getBoundingClientRect().top - 10;
   }
 
-  function show() {
+  function show({focus = true} = {}) {
+    if (view.status === 'done' && !view.mapApplied && !view.mapDeferred && !view.mapCleared) view.drawn = applyMap(view.result.map);
+    else if (view.mapApplied && !view.mapDeferred && !view.mapCleared) {
+      view.mapReady = !!state.ready;
+      view.drawn = state.ready ? api.scoped(ASK_LAYER).length : 0;
+    }
     api.show('지도에게 묻기', panelHtml(view, api.label()), VIEW);
     const eyebrow = document.getElementById('detail-eyebrow');
-    if (eyebrow) eyebrow.textContent = '수록 자료로 답하기';
-    if (innerWidth > 820) input()?.focus();
+    if (eyebrow) eyebrow.textContent = '질문 → 자료 분석 → 지도·검토메모';
+    syncQuick();
+    if (focus && innerWidth > 820) input()?.focus();
   }
 
   /** 이전 답의 지도 표시를 지운다. */
@@ -214,6 +307,7 @@ export function installAskAi(api) {
     clearMap(false);
     const features = highlightFeatures(map);
     view.features = features;
+    applyingMap = true;
     try {
       const target = scopeFor(map, features, state);
       if (target) api.chooseDong(target);
@@ -225,10 +319,17 @@ export function installAskAi(api) {
       }
       api.drawData();
       const camera = cameraTarget(map);
-      if (camera) fly(camera);
-      return api.scoped(ASK_LAYER).length;
+      if (camera && state.ready) fly(camera);
+      view.mapReady = !!state.ready;
+      view.mapApplied = true;
+      view.mapCleared = false;
+      view.mapDeferred = false;
+      return state.ready ? api.scoped(ASK_LAYER).length : 0;
     } catch {
+      view.mapReady = false;
       return 0; // 지도 엔진 문제로 그리지 못해도 목록은 패널에 남긴다.
+    } finally {
+      applyingMap = false;
     }
   }
 
@@ -236,32 +337,69 @@ export function installAskAi(api) {
     const text = String(question || '').replace(/\s+/g, ' ').trim();
     if (!text) { api.toast('질문을 입력하세요.'); input()?.focus(); return; }
     if (text.length > MAX_QUESTION) { api.toast(`질문은 ${MAX_QUESTION}자 이하로 적어 주세요.`); return; }
-    if (view.status === 'loading') return;
+    if (view.status === 'loading') { if (!open()) show({focus: false}); return; }
     const token = ++sequence;
-    Object.assign(view, {status: 'loading', question: text, draft: text, result: null, error: '', features: [], drawn: 0});
+    const requestScope = state.dong;
+    Object.assign(view, {status: 'loading', question: text, draft: text, result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: api.label(), completedAt: ''});
+    if (quickInput) quickInput.value = text;
+    if (input()) input().value = text;
     clearMap();
+    if (!open()) show({focus: false});
     render();
+    requestController = new AbortController();
+    const timeout = setTimeout(() => requestController?.abort('timeout'), 35000);
     try {
       const response = await fetch('/api/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({question: text, dongId: state.dong === 'all' ? undefined : state.dong, history: asked.slice(-3).map(q => ({role: 'user', text: q}))}),
-        signal: AbortSignal.timeout(35000),
+        body: JSON.stringify({question: text, dongId: requestScope === 'all' ? undefined : requestScope, history: asked.slice(-3).map(q => ({role: 'user', text: q}))}),
+        signal: requestController.signal,
       });
       let body = null;
       try { body = await response.json(); } catch { /* 아래에서 형식 오류로 처리 */ }
       if (token !== sequence) return;
       if (!response.ok || !body?.ok) throw Error(body?.error || (response.status === 429 ? '질문이 많습니다. 잠시 후 다시 시도하세요.' : '답을 받지 못했습니다. 잠시 후 다시 시도하세요.'));
-      asked.push(text);
+      if (!view.mapDeferred) asked.push(text);
+      if (asked.length > 3) asked.shift();
       view.result = body;
       view.status = 'done';
-      view.drawn = open() ? applyMap(body.map) : 0;
+      view.completedAt = new Date().toLocaleString('ko-KR', {timeZone: 'Asia/Seoul'}) + ' (한국시간)';
+      view.features = highlightFeatures(body.map);
+      view.drawn = open() && !view.mapDeferred ? applyMap(body.map) : 0;
     } catch (error) {
       if (token !== sequence) return;
       view.status = 'error';
-      view.error = error?.name === 'TimeoutError' ? '응답이 늦어 중단했습니다. 잠시 후 다시 시도하세요.' : (error?.message || '답을 받지 못했습니다.');
+      view.error = requestController?.signal.aborted ? '응답이 늦어 중단했습니다. 잠시 후 다시 시도하세요.' : (error?.message || '답을 받지 못했습니다.');
+    } finally {
+      clearTimeout(timeout);
+      if (token === sequence) requestController = null;
     }
     render();
+  }
+
+  function scopeChanged() {
+    if (lastScope !== state.dong) {
+      lastScope = state.dong;
+      if (!applyingMap) {
+        asked.length = 0;
+        if (view.status === 'loading' || view.status === 'done') view.mapDeferred = true;
+      }
+    }
+    if (!applyingMap) render({scroll: false});
+  }
+
+  function downloadMemo() {
+    const memo = reviewMemo(view);
+    if (!memo) return;
+    const url = URL.createObjectURL(new Blob(['\uFEFF', memo], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `서구온_검토메모_${new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Seoul'})}.txt`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    api.toast('출처와 확인사항을 포함한 검토메모를 저장했습니다.');
   }
 
   const offs = [
@@ -273,24 +411,48 @@ export function installAskAi(api) {
       if (input()) input().value = text;
       return ask(text);
     }),
-    registerAction('ask-clear', () => { clearMap(); view.drawn = 0; view.features = []; render(); }),
+    registerAction('ask-clear', () => { clearMap(); view.drawn = 0; view.mapCleared = true; view.mapApplied = false; render({scroll: false}); }),
     registerAction('ask-show-map', () => api.close()),
+    registerAction('ask-restore-map', () => {
+      if (!view.result) return;
+      view.drawn = applyMap(view.result.map);
+      render({scroll: false});
+      if (!state.ready) { api.toast('지도 연결 전입니다. 지도 모드를 연결하면 결과 위치를 볼 수 있습니다.'); return; }
+      if (innerWidth <= 820) api.close();
+    }),
+    registerAction('ask-copy', async () => {
+      const memo = reviewMemo(view);
+      if (!memo) return;
+      try { await navigator.clipboard.writeText(memo); api.toast('출처와 확인사항까지 검토메모를 복사했습니다.'); }
+      catch { api.toast('복사 권한을 확인하거나 ‘검토메모 저장’을 이용하세요.'); }
+    }),
+    registerAction('ask-download', downloadMemo),
     registerAction('ask-point', button => {
       const feature = view.features.find(f => f.properties.id === button.dataset.id);
+      if (!state.ready) { api.toast('지도가 연결되면 해당 위치로 이동할 수 있습니다.'); return; }
       if (feature) fly(boxAround(feature.geometry.coordinates, 120));
     }),
   ];
 
   // Enter 로 묻기(한글 조합 중의 Enter 는 글자 확정이므로 건너뛴다). 입력 중인 글은 패널을 다시 열어도 남긴다.
-  const body = document.getElementById('detail-body');
+  const body = document.getElementById('app');
   const onKey = event => {
-    if (event.target?.id !== 'ask-question' || event.key !== 'Enter' || event.isComposing || event.keyCode === 229) return;
+    if (!['ask-question', 'ask-quick-question'].includes(event.target?.id) || event.key !== 'Enter') return;
     event.preventDefault();
+    if (event.isComposing || event.keyCode === 229 || event.repeat) return;
     ask(event.target.value);
   };
-  const onInput = event => { if (event.target?.id === 'ask-question') view.draft = event.target.value; };
+  const onInput = event => {
+    if (!['ask-question', 'ask-quick-question'].includes(event.target?.id)) return;
+    view.draft = event.target.value;
+    const other = event.target.id === 'ask-question' ? quickInput : input();
+    if (other && other.value !== view.draft) other.value = view.draft;
+  };
+  const onSubmit = event => { event.preventDefault(); ask(quickInput?.value); };
   body?.addEventListener('keydown', onKey);
   body?.addEventListener('input', onInput);
+  quickForm?.addEventListener('submit', onSubmit);
+  syncQuick();
 
-  return {ask, show, clearMap, destroy() { offs.forEach(off => off()); body?.removeEventListener('keydown', onKey); body?.removeEventListener('input', onInput); }};
+  return {ask, show, clearMap, scopeChanged, destroy() { sequence++; requestController?.abort('destroy'); offs.forEach(off => off()); body?.removeEventListener('keydown', onKey); body?.removeEventListener('input', onInput); quickForm?.removeEventListener('submit', onSubmit); }};
 }

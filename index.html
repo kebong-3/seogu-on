@@ -12,11 +12,19 @@
   <div class="top-actions"><button class="appearance-open" data-action="appearance" title="테마·밝기·화면 배치">화면 설정</button><span id="engine-state" class="status-badge">지도 준비</span><button class="icon-button" data-action="fullscreen" title="화면 크게 보기" aria-label="화면 크게 보기" id="fullscreen-button"></button><button class="icon-button" data-action="settings" title="연결 설정" aria-label="연결 설정" id="settings-button"></button></div>
  </header>
  <section class="live-ribbon" aria-label="현재 환경 및 자료 상태">
+  <div class="live-weather">
   <div class="live-place"><strong id="live-place">서구 전체</strong><span>대표위치 기준</span></div>
   <button class="live-reading" data-action="live-detail" title="관측자료 수신 상태 보기"><span>기온</span><strong id="live-temperature">조회 중</strong></button>
   <button class="live-reading" data-action="live-detail" title="관측자료 수신 상태 보기"><span>1시간 강수</span><strong id="live-rainfall">조회 중</strong></button>
   <button class="live-reading live-safety" data-action="resilience" title="재난안전 상황판에서 자료별 수신 상태 확인"><span>재난 자료</span><strong id="live-safety">확인 중</strong></button>
   <small id="live-observed">기상청 격자 관측 시각을 확인합니다.</small>
+  </div>
+  <form id="ask-quick-form" class="ask-quick" role="search" aria-label="지도에게 바로 묻기">
+   <label for="ask-quick-question" class="ask-quick-label"><span aria-hidden="true">✦</span> 지도에게 묻기</label>
+   <input id="ask-quick-question" type="text" maxlength="300" autocomplete="off" enterkeyhint="search" aria-label="지도에게 바로 질문" placeholder="어디를 먼저 살펴볼까요?" aria-describedby="ask-quick-hint">
+   <button id="ask-quick-submit" type="submit">묻기 <span aria-hidden="true">↗</span></button>
+   <span id="ask-quick-hint" class="ask-sr-only">현재 선택 구역의 자료를 찾아 답변과 지도 결과로 보여줍니다.</span>
+  </form>
  </section>
  <aside id="district-panel" class="district-panel glass" aria-label="행정동 선택 및 정보">
   <header class="sidebar-heading"><div class="panel-title"><span class="eyebrow">공간행정 워크스페이스</span><button class="text-button" data-action="panels">지도 집중</button></div><h1>광주 서구 · 동 선택</h1>

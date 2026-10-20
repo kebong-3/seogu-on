@@ -667,6 +667,98 @@ function sunPosition(store, args) {
   };
 }
 
+/* ───────────────────────── 업무별 근거 묶음 ───────────────────────── */
+
+const WORK_THEMES = {
+  heat: {
+    title: '폭염 대응 점검자료',
+    datasets: [['무더위쉼터', '무더위쉼터'], ['그늘막', '그늘막'], ['쿨링포그', '쿨링포그']],
+    gap: {target: '버스정류장', service: '그늘막', radiusM: 150},
+    nextActions: ['시설 목록과 실제 개방시간·수용인원·가동 상태를 대조합니다.', '그늘막 공백 후보의 보행 동선·대기환경·기존 수목을 현장에서 확인합니다.', '추가 설치를 검토할 때 이용자 수·부지 사용·관리 주체를 함께 확인합니다.'],
+    missingData: ['현시점 폭염특보·체감온도·현장 온도', '시간대별 이용 수요와 시설의 실제 개방·가동 상태'],
+  },
+  cold: {
+    title: '한파 대응 점검자료',
+    datasets: [['한파쉼터', '한파쉼터'], ['버스정류장', '버스정류장']],
+    gap: {target: '버스정류장', service: '한파쉼터', radiusM: 300},
+    nextActions: ['한파쉼터의 실제 개방시간·난방·접근 가능 여부를 확인합니다.', '쉼터와 떨어진 정류장 후보의 대기시간·보행 경로를 현장에서 확인합니다.', '시설 관리부서와 안내·임시 대기공간 운영 가능 여부를 협의합니다.'],
+    missingData: ['현시점 한파특보·체감온도', '정류장별 밀폐 대기공간·온열시설과 시간대별 이용 수요'],
+  },
+  icing: {
+    title: '결빙 관리지점 점검자료',
+    datasets: [['local-icing', '상습결빙 관리지점'], ['제설함', '제설함'], ['snow-routes', '제설노선']],
+    nextActions: ['수록 관리지점을 현장·도로관리대장과 대조합니다.', '노면 상태·배수·일조·교량 여부와 제설자재 비축 상태를 확인합니다.', '관리 주체·점검 일정·현장 조치 결과를 기록합니다.'],
+    missingData: ['현재 노면 온도·습도와 실제 결빙 관측', '구간별 최신 제설자재 수량·순찰·작업 기록'],
+  },
+  flood: {
+    title: '침수 이력 현장점검 자료',
+    datasets: [['대피소', '대피장소'], ['official-temporary-housing', '임시주거시설']],
+    nextActions: ['과거 피해 지점의 현재 배수시설·정비 이력·현장 상태를 확인합니다.', '대피장소의 재난 유형별 사용 가능 여부와 실제 보행 경로를 확인합니다.', '최근 피해·공사·배수 변경사항을 담당부서 자료와 대조합니다.'],
+    missingData: ['현재 침수·수위·배수시설 가동 상태', '홍수 예측모형과 실시간 위험도', '지진대피장소의 침수 재난 시 사용 적합성'],
+  },
+  school: {
+    title: '통학환경 현장점검 자료',
+    datasets: [['학교', '학교'], ['어린이보호구역', '어린이보호구역'], ['비상벨', '비상벨']],
+    nextActions: ['학교 출입구와 실제 통학 동선·횡단시설을 현장에서 확인합니다.', '보호구역 지정도·시설물 관리대장을 수록 위치와 대조합니다.', '학교·도로관리·경찰 등과 합동 점검 및 후속조치를 협의합니다.'],
+    missingData: ['학생별 통학 동선·시간대별 통행량', '현시점 시설 정상 작동 여부와 사고 위험도'],
+  },
+  living: {
+    title: '생활시설 검토자료',
+    datasets: [['학교', '학교'], ['도서관', '도서관'], ['공원', '공원'], ['복지시설', '복지시설']],
+    nextActions: ['수록 시설의 실제 운영 여부·이용시간을 확인합니다.', '보행 접근성·출입구·이용 수요를 현장에서 대조합니다.', '시설 확충 판단 전 인구·수요·유사시설 운영자료를 확보합니다.'],
+    missingData: ['시설별 실제 개방시간·수용능력', '인구·이용 수요·보행 경로를 반영한 적정성 분석'],
+  },
+};
+
+/** 여러 공개 자료를 실제 조회·공간 계산하고 확인할 일과 함께 반환한다. */
+function workBrief(store, args) {
+  const theme = typeof args.theme === 'string' && Object.hasOwn(WORK_THEMES, args.theme) ? WORK_THEMES[args.theme] : null;
+  if (!theme) throw new SpatialError('INVALID_ARGUMENT', 'theme은 heat, cold, icing, flood, school, living 중 하나여야 합니다.');
+  const dong = optionalDong(store, args);
+  const scopeArgs = dong ? {dong: dong.name} : {};
+  const checks = [];
+  const add = (name, title, input, run) => {
+    let result;
+    try { result = run(store, input); }
+    catch (error) {
+      if (!(error instanceof SpatialError)) throw error;
+      result = {ok: false, summary: `${title}: 조회 가능한 수록자료를 확인하지 못했습니다.`, data: {code: error.code}, sources: [], caveats: [`${title} 자료 미확인은 시설이 없다는 뜻이 아닙니다.`]};
+    }
+    checks.push({tool: name, title, args: input, result});
+  };
+  if (args.theme === 'flood') add('flood_history', '과거 침수피해 기록', {...scopeArgs, limit: 50}, floodHistory);
+  for (const [category, title] of theme.datasets) add('find_facilities', title, {category, ...scopeArgs, limit: 40}, findFacilities);
+  if (theme.gap) {
+    const radiusM = numberArg(args, 'radiusM', {min: 10, max: 3000, def: theme.gap.radiusM});
+    add('coverage_gap', '시설 공백 후보 공간계산', {...theme.gap, ...scopeArgs, radiusM, limit: 50}, coverageGap);
+  }
+  const successful = checks.filter(c => c.result.ok);
+  const gap = checks.find(c => c.tool === 'coverage_gap' && c.result.ok);
+  const primary = gap?.result.map?.highlight?.features?.length ? gap : checks.find(c => c.result.map?.highlight?.features?.length);
+  const allPoints = successful.flatMap(c => c.result.map?.highlight?.features || []);
+  const seen = new Set();
+  const features = (primary?.tool === 'coverage_gap' ? primary.result.map.highlight.features : allPoints)
+    .filter(f => {const key = `${f.properties?.category}|${f.properties?.id}`; if (seen.has(key)) return false; seen.add(key); return true;}).slice(0, MAX_HIGHLIGHT);
+  const sources = new Map();
+  for (const c of checks) for (const s of c.result.sources || []) sources.set(`${s.name}|${s.date}`, s);
+  const missingData = [...checks.filter(c => !c.result.ok).map(c => `${c.title}: 수록자료 미확인·미연결`), ...theme.missingData];
+  const basis = '공개 수록자료의 조회·공간계산 결과입니다. 실시간 관측·전수조사·위험 예측이나 최적 입지 결정이 아닙니다.';
+  return {
+    ok: successful.length > 0,
+    summary: `${dong?.name || '서구 전체'} ${theme.title}. ${checks.map(c => c.result.summary).join(' ')}`,
+    data: {
+      title: theme.title, scope: dong?.name || '서구 전체', theme: args.theme, basis,
+      evidence: checks.map(c => ({title: c.title, tool: c.tool, args: c.args, summary: c.result.summary, ok: c.result.ok})),
+      nextActions: theme.nextActions, missingData,
+      rows: primary?.result.data?.rows?.slice(0, 12) || [],
+      ...(gap ? {comparison: {radiusM: gap.result.data.radiusM, targets: gap.result.data.targets, uncovered: gap.result.data.uncovered}} : {}),
+    },
+    map: { ...(dong ? {focus: {dongId: dong.id}} : {}), highlight: {type: 'FeatureCollection', features} },
+    sources: [...sources.values()],
+    caveats: [...new Set([basis, ...checks.flatMap(c => c.result.caveats || []), ...(theme.gap ? [`비교 반경 ${gap?.result.data?.radiusM || args.radiusM || theme.gap.radiusM}m는 이번 검토의 직선거리 가정이며 법정 설치기준이 아닙니다.`] : [])])],
+  };
+}
+
 /* ───────────────────────── 도구 목록 ───────────────────────── */
 
 const CATEGORY_HELP = "자료 분류. list_datasets 의 category 값(예: 'bus', 'local-shade', 'school') 또는 한국어 이름(예: '버스정류장', '그늘막', '도서관').";
@@ -687,6 +779,18 @@ function tool(name, title, description, properties, required, run) {
 }
 
 const REGISTRY = [
+  tool(
+    'work_brief',
+    '업무별 공간검토',
+    '폭염·한파 대응, 결빙·침수 이력·통학환경 점검, 생활시설 검토에 필요한 수록자료를 함께 조회하고 실제 공간계산으로 근거·지도지점·담당자 확인사항을 묶습니다. 업무를 준비하거나 점검자료·검토 메모를 요청하면 사용하세요. heat는 정류장-그늘막 공백, cold는 정류장-한파쉼터 거리 후보도 계산합니다. 미연결 자료와 없는 판단 근거를 분리하며 위험 예측·최적 입지·현재 시설 운영을 확정하지 않습니다.',
+    {
+      theme: {type: 'string', enum: ['heat', 'cold', 'icing', 'flood', 'school', 'living'], description: 'heat 폭염, cold 한파, icing 결빙, flood 침수 이력, school 통학환경, living 생활시설'},
+      dong: {type: 'string', description: `검토할 동. 생략하면 서구 전체. ${DONG_HELP}`},
+      radiusM: {type: 'number', description: '폭염·한파 시설 공백 후보 비교에 쓸 직선거리(m). 미지정 시 폭염 150, 한파 300. 법정 설치기준 아님.', minimum: 10, maximum: 3000},
+    },
+    ['theme'],
+    workBrief,
+  ),
   tool(
     'list_datasets',
     '수록 자료 목록',

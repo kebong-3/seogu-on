@@ -32,6 +32,7 @@ const CATEGORY_WORDS = [
   ['어린이보호구역', '어린이보호구역'], ['스쿨존', '어린이보호구역'],
   ['무인민원발급기', '무인민원발급기'], ['민원발급기', '무인민원발급기'],
   ['제설함', '제설함'], ['전기차충전소', '전기차'], ['충전소', '전기차'],
+  ['상습결빙구간', '결빙'], ['결빙관리지점', '결빙'], ['결빙구간', '결빙'], ['블랙아이스', '결빙'], ['결빙', '결빙'],
   ['체육시설', '체육시설'], ['약국', '약국'], ['복지관', '복지'], ['복지시설', '복지'],
   ['공원', '공원'], ['공공시설', '공공시설'],
   ['박물관', 'museum'], ['미술관', 'museum'], ['관공서', 'government'], ['공연장', 'culture'], ['문화공간', 'culture'],
@@ -381,6 +382,15 @@ async function dispatch(run, q) {
     await run.call('list_datasets', {});
     return 'list_datasets';
   }
+  // 시설명 하나가 아니라 업무를 물으면 관련 자료와 실제 공간 계산을 묶는다.
+  const work = /대응|점검|준비|계획|검토|정리|필요|확인사항|대책|우선순위|어디부터|해야/;
+  const themes = [['heat', /폭염|무더위|더위/], ['cold', /한파|추위/], ['icing', /결빙|블랙아이스|제설/], ['flood', /침수|호우/], ['school', /통학|어린이안전/], ['living', /생활시설|생활인프라/]];
+  const theme = themes.find(([, pattern]) => pattern.test(q.compact));
+  if (theme && work.test(q.compact)) {
+    const args = { theme: theme[0], ...(q.radiusM ? { radiusM: q.radiusM } : {}) };
+    await perDong(run, 'work_brief', args, q.dongs);
+    return 'work_brief';
+  }
   // '해'는 낱말 경계를 봐야 하므로 띄어쓰기가 남은 원문에서 찾는다.
   if (RE.sun.test(q.text) && RE.hour.test(q.text) && await runSun(run, q)) return 'sun_position';
   if (has(RE.flood)) return (await runFlood(run, q)) && 'flood_history';
@@ -406,7 +416,7 @@ async function dispatch(run, q) {
 
 /* ───────────────────────── 답 만들기 ───────────────────────── */
 
-export const RULES_NOTICE = '규칙 기반 답변입니다(AI 미사용). 동 이름·시설 종류·거리 같은 정해진 표현만 이해합니다.';
+export const RULES_NOTICE = '규칙 기반 답변입니다(AI 미사용). 정해진 질문 유형에 따라 자료를 조회·공간 계산하고 확인사항을 정리했습니다.';
 
 function helpAnswer() {
   return [

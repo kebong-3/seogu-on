@@ -1,7 +1,7 @@
 /**
  * /api/ask — "지도에게 묻기".
  * 질문을 받아 공간 도구(server/spatial/tools.js)의 결과만으로 짧은 답을 만든다.
- *   - AI 모드(llm): 모델 연결 설정이 있으면 AI가 도구를 골라 부르고 답을 쓴다.
+ *   - AI 모드(llm): 명확한 질문은 서버가 먼저 조회하고 AI가 요약한다. 그 밖의 질문은 AI가 도구를 고른다.
  *   - 규칙 기반(rules): 키가 없거나 AI 호출이 실패하면 정해진 규칙으로 답한다. 이때 code 로 이유를 알린다.
  * 이 사이트의 화면만 부르는 경로라 같은 출처의 POST 만 받는다. 질문 내용은 로그에 남기지 않는다.
  */
@@ -10,6 +10,7 @@ import { getStore } from '../spatial/store.js';
 import { LlmError, answerByLlm } from './gemini.js';
 import {modelConfig} from './model-config.js';
 import { RULES_NOTICE, answerByRules } from './rules.js';
+import {attachWeatherEvidence, briefFromResults} from './work-evidence.js';
 
 export const ASK_LIMITS = {
   bodyBytes: 8 * 1024,
@@ -23,10 +24,10 @@ export const ASK_LIMITS = {
 export const ASK_CODES = {
   LLM_NOT_CONFIGURED: 'AI_API_KEY 또는 GEMINI_API_KEY 가 설정되지 않음',
   LLM_MODEL_NOT_FOUND: '모델 이름을 찾지 못함(AI_MODEL 확인)',
-  LLM_QUOTA: 'Google 쪽 사용량 한도 초과(429)',
+  LLM_QUOTA: '연결된 AI 제공기관의 사용량 한도 초과(429)',
   LLM_KEY_REJECTED: '키가 거부됨(오타·만료·제한 설정)',
   LLM_TIMEOUT: '시간 안에 응답이 오지 않음',
-  LLM_BAD_REQUEST: 'Google 이 요청 형식을 거부함(400)',
+  LLM_BAD_REQUEST: '연결된 AI 제공기관이 요청 형식을 거부함(400)',
   LLM_BAD_RESPONSE: '응답이 비었거나 차단·형식 오류',
   LLM_UNGROUNDED: 'AI 답에 도구 결과에 없는 숫자가 있어 버림',
   LLM_DAILY_LIMIT: '하루 AI 호출 한도(ASK_DAILY_LIMIT) 도달',
@@ -184,6 +185,7 @@ export function pickMap(results) {
 }
 
 function buildResponse(mode, outcome, extra = {}) {
+  const brief = briefFromResults(outcome.results);
   return {
     ok: true,
     mode,
@@ -191,12 +193,13 @@ function buildResponse(mode, outcome, extra = {}) {
     steps: outcome.steps.map(step => ({ tool: step.tool, args: step.args, summary: step.summary, ok: step.ok })),
     map: pickMap(outcome.results),
     ...mergeEvidence(outcome.results),
+    ...(brief ? {brief} : {}),
     ...extra,
   };
 }
 
 async function rulesResponse(input, ctx, code) {
-  const outcome = await answerByRules(input.question, { dongId: input.dong?.id }, { dataDir: ctx.dataDir, now: ctx.now });
+  const outcome = ctx.preparedOutcome || await attachWeatherEvidence(await answerByRules(input.question, { dongId: input.dong?.id }, { dataDir: ctx.dataDir, now: ctx.now }), ctx);
   return buildResponse('rules', outcome, {
     notice: RULES_NOTICE,
     ...(outcome.matched ? {} : { examples: ASK_EXAMPLES }),
@@ -210,27 +213,37 @@ async function rulesResponse(input, ctx, code) {
  * @param {{env?: object, fetcher?: Function, dataDir?: string, now?: number, budgetMs?: number}} ctx
  */
 export async function answerQuestion(input, ctx = {}) {
+  const startedAt = Date.now();
   const env = ctx.env || process.env;
   const now = ctx.now ?? Date.now();
+  // 명확한 공간질문은 서버가 실제 조회를 먼저 해, 모델의 도구선택 왕복을 줄인다.
+  // precompute=false는 내부 테스트에서 기존 자유질문 도구선택 경로를 따로 검증할 때만 사용한다.
+  const preparedOutcome = ctx.precompute === false ? null : await attachWeatherEvidence(
+    await answerByRules(input.question, {dongId: input.dong?.id}, {dataDir: ctx.dataDir, now}),
+    {...ctx, env, now},
+  );
+  const preparedCtx = {...ctx, env, preparedOutcome};
   const config=modelConfig(env);
-  if(config.error)return rulesResponse(input,ctx,'LLM_BAD_REQUEST');
+  if(config.error)return rulesResponse(input,preparedCtx,'LLM_BAD_REQUEST');
   const {key,model,provider,baseUrl}=config;
-  if (!key && provider==='google') return rulesResponse(input, ctx, 'LLM_NOT_CONFIGURED');
-  if (!takeDaily(env, now)) return rulesResponse(input, ctx, 'LLM_DAILY_LIMIT');
+  if (!key && provider==='google') return rulesResponse(input, preparedCtx, 'LLM_NOT_CONFIGURED');
+  if (!takeDaily(env, now)) return rulesResponse(input, preparedCtx, 'LLM_DAILY_LIMIT');
 
   const store = getStore(ctx.dataDir);
   try {
     const outcome = await answerByLlm(
       input.question,
       { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name) },
-      { key, model, provider,baseUrl, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir, budgetMs: ctx.budgetMs, now: ctx.clock },
+      { key, model, provider,baseUrl, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir,
+        budgetMs: Math.max(1, (ctx.budgetMs ?? 25000) - (Date.now() - startedAt)), now: ctx.clock,
+        preparedOutcome: preparedOutcome?.matched && preparedOutcome.results.length ? preparedOutcome : null },
     );
-    return buildResponse('llm', outcome, { provider,model: outcome.model || model, modelRecovered: !!outcome.modelRecovered });
+    return buildResponse('llm', outcome, { provider,model: outcome.model || model, modelRecovered: !!outcome.modelRecovered, analysisPath: outcome.analysisPath });
   } catch (error) {
     const code = error instanceof LlmError ? error.code : 'LLM_BAD_RESPONSE';
     // 질문·키·요청 주소는 남기지 않고 코드만 기록한다.
     console.error('[ask] llm fallback', code);
-    return rulesResponse(input, ctx, code);
+    return rulesResponse(input, preparedCtx, code);
   }
 }
 
