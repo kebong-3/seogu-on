@@ -94,7 +94,10 @@ test('llm: 두 번의 도구 호출 뒤 답 — 요청 형식, 키는 헤더로�
     assert.equal(request.headers['x-goog-api-key'], KEY);
     assert.ok(request.signal instanceof AbortSignal);
     assert.equal(request.body.tools[0].functionDeclarations.length, TOOLS.length);
-    assert.match(request.body.systemInstruction.parts[0].text, /도구가 돌려준 결과에서만/);
+    const groundingInstruction = request.body.systemInstruction.parts[0].text;
+    assert.match(groundingInstruction, /서버가 실제로 조회·계산한 도구 결과에서만/);
+    assert.match(groundingInstruction, /실행 결과 없이 시설 수·거리·이름·날짜를 말하지 않습니다/);
+    assert.match(groundingInstruction, /결과에 없는 숫자를 계산하거나 어림하지 않습니다/);
   }
   const [first, , third] = requests;
   assert.deepEqual(first.body.contents.map(c => c.role), ['user']);
