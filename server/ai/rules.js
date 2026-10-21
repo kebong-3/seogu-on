@@ -7,6 +7,7 @@ import { ASK_EXAMPLES } from '../../src/city/ask-examples.js';
 import { resolveCategory } from '../spatial/resolve.js';
 import { getStore } from '../spatial/store.js';
 import { SpatialError, callTool } from '../spatial/tools.js';
+import {isCivicTheme} from '../spatial/civic-themes.js';
 
 const MAX_TOOL_CALLS = 6;
 const MAX_DONGS_PER_QUESTION = 4;
@@ -368,16 +369,35 @@ async function parseQuestion(question, context, ctx) {
   q.namedDongs = dongs;
   // 질문에 동이 없으면 화면에서 고른 동을 문맥으로 쓴다.
   const selected = context.dongId ? store.dongs.find(d => d.id === context.dongId) : null;
-  q.dongs = dongs.length ? dongs : (selected ? [selected] : []);
+  // 질문·화면 선택이 모두 없을 때에만 검토 원문에 명시된 행정동을 참고한다.
+  // 개별 장소의 주소·좌표나 사업 경계를 확인하는 기능은 아니다.
+  const reviewDongs = isCivicTheme(context.reviewContext?.theme) ? findDongs(store, squash(context.reviewContext.text || '')).dongs : [];
+  q.dongs = dongs.length ? dongs : (selected ? [selected] : reviewDongs);
   q.usedContextDong = !dongs.length && Boolean(selected);
   q.categories = findCategories(store, rest).filter(c => !c.dataset.id.includes('flood'));
   q.radiusM = parseRadius(text);
+  q.reviewTheme = isCivicTheme(context.reviewContext?.theme) ? context.reviewContext.theme : null;
+  q.reviewCategories = findCategories(store, squash([text, context.reviewContext?.text || '', ...(context.reviewContext?.alternatives || [])].join(' ')));
   return q;
 }
 
 /** 의도를 고르고 도구를 부른다. 처리한 의도 이름을 돌려준다(없으면 null). */
 async function dispatch(run, q) {
   const has = re => re.test(q.compact);
+  // 검토노트의 유형은 사용자가 선택한 문맥이다. 후속 질문도 같은 검토자료를 사용한다.
+  // 자연어 질문에서도 업무 표현을 먼저 확인해 '공간 대안 비교'를 시설 수 비교로 오해하지 않는다.
+  const civicThemes = [
+    ['coordination', /사업연계|사업조정|사업간|부서간.*(?:사업|공사|연계|협업)|(?:사업|공사).*(?:중복|연계|협업|일정조정)/],
+    ['reuse', /유휴|공간재활용|시설재활용|공간재사용|빈공간|빈건물|공간공유|공간활용|시설활용|복합활용|용도전환|기존공간|기존시설.*활용/],
+    ['agenda', /마을의제|마을문제|마을계획|주민제안|주민자치.*(?:의제|논의|검토)|의제설정|의제발굴/],
+    ['space', /도시설계|공공공간|공간대안|공간비교|공간설계|공간재구성|(?:공원|광장|놀이터|주차장|거리|보행).*(?:재설계|재구성|조성안|개선안|대안)/],
+  ];
+  const civicTheme = q.reviewTheme || civicThemes.find(([, pattern]) => pattern.test(q.compact))?.[0];
+  if (civicTheme) {
+    const categories = q.reviewCategories.slice(0, 4).map(c => c.dataset.id);
+    await perDong(run, 'work_brief', {theme: civicTheme, ...(categories.length ? {categories} : {})}, q.dongs);
+    return 'work_brief';
+  }
   if (has(RE.datasets)) {
     await run.call('list_datasets', {});
     return 'list_datasets';

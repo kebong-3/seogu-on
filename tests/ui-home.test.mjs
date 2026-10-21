@@ -20,16 +20,20 @@ test('dong navigation: all 18 dong are before scenario actions, with compact bra
   assert.ok(!html.includes('상습결빙구간 · 서구 관리지점 보기'));
 });
 
-test('home panel: four clear scenario actions follow the dong choice', () => {
-  assert.deepEqual(actionsIn(primary).map(b => b.action), ['heat-plan', 'ask-ai', 'infra', 'resilience']);
-  assert.ok(primary.includes('폭염 대응계획'));
+test('home panel: civic review and quick questions follow the dong choice; seasonal plans remain reachable', () => {
+  assert.deepEqual(actionsIn(primary).map(b => b.action), ['civic-review', 'ask-ai', 'infra', 'resilience']);
+  assert.ok(primary.includes('마을·공간 검토'));
   assert.ok(primary.includes('지도에게 묻기'));
+  const workflows = regions.slice(regions.indexOf('<div class="home-workflows"'), regions.indexOf('<div class="home-more"'));
+  const available = new Set(actionsIn(workflows).map(button => button.action));
+  for (const action of ['heat-plan', 'cold-plan', 'icing-plan', 'flood-plan', 'school-plan']) assert.ok(available.has(action), action);
 });
 
 test('home panel: secondary tools remain reachable in the folded group', () => {
   const reachable = new Set([...actionsIn(primary), ...actionsIn(more)].map(b => b.action));
   for (const action of ['infra', 'safety-hub', 'native-sun', 'resilience', 'themes', 'city-questions', 'list', 'tools', 'report']) assert.ok(reachable.has(action), action);
   assert.ok(reachable.has('settings'));
+  assert.ok(reachable.has('civic-notes'));
   assert.ok(html.includes('id="home-more-toggle" aria-expanded="false"'));
   assert.ok(read('src/city/layout.css').includes('.home-more:not(.open) .home-more-list { display: none; }'));
 });

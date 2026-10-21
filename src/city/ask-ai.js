@@ -40,7 +40,7 @@ const ARG_LABELS = {
   category: '분류', target: '대상', service: '서비스', dong: '동', dongs: '동', place: '기준', radiusM: '반경(m)',
   n: '개수', categories: '분류', datetime: '일시', heightM: '높이(m)', query: '검색어', yearFrom: '시작 연도', yearTo: '끝 연도', perKm2: '㎢당', theme: '업무',
 };
-const THEME_TITLES = {heat: '폭염 대응', cold: '한파 대응', icing: '결빙 점검', flood: '침수 이력 점검', living: '생활시설', school: '통학환경 점검'};
+const THEME_TITLES = {heat: '폭염 대응', cold: '한파 대응', icing: '결빙 점검', flood: '침수 이력 점검', living: '생활시설', school: '통학환경 점검', agenda: '마을의제', space: '공간 비교', reuse: '기존 공간 활용', coordination: '사업 연계'};
 const ANALYSIS_ROLES = {
   'grounded-summary': '자료 조회·공간계산 후 AI가 근거를 요약했습니다.',
   'tool-selection': 'AI가 필요한 조회 도구를 선택하고 결과를 요약했습니다.',
@@ -131,6 +131,16 @@ export function reviewMemo(view) {
     const brief = result.brief;
     if (brief.basis) lines.push('', `검토 범위: ${brief.basis}`);
     if (brief.evidence?.length) lines.push('', '□ 확인한 자료', ...brief.evidence.map(item => `- ${item.title}: ${item.summary}${item.ok === false ? ' (미확인)' : ''}`));
+    if (brief.review) {
+      const review = brief.review;
+      if (review.inputText) lines.push('', '□ 사용자 제공 검토내용 (공식 자료와 구분)', review.inputText);
+      if (review.scopeNote) lines.push('', review.scopeNote);
+      if (review.commonCriteria?.length) lines.push('', '□ 대안을 함께 살펴볼 기준', ...review.commonCriteria.map(item => `- ${item}`));
+      if (review.alternatives?.length) lines.push('', '□ 대안별 확인사항', ...review.alternatives.flatMap(item => [`- ${item.title} (${item.origin === 'user' ? '사용자 입력' : '검토 예시'})`, `  ${item.focus || ''}`, ...(item.checks || []).map(check => `  · ${check}`)]));
+      if (review.departments?.length) lines.push('', '□ 부서 협의 준비', ...review.departments.flatMap(item => [`- ${item.name}`, ...(item.checks || []).map(check => `  · ${check}`)]));
+      if (review.discussionQuestions?.length) lines.push('', '□ 회의에서 확인할 질문', ...review.discussionQuestions.map(item => `- ${item}`));
+      if (review.missingData?.length) lines.push('', '□ 추가로 확보할 자료', ...review.missingData.map(item => `- ${item}`));
+    }
     if (brief.nextActions?.length) lines.push('', '□ 담당자 확인사항 (확정 판단 아님)', ...brief.nextActions.map(item => `- ${item}`));
     if (brief.missingData?.length) lines.push('', '□ 아직 없는 판단 근거', ...brief.missingData.map(item => `- ${item}`));
   }
@@ -183,9 +193,26 @@ function briefHtml(brief) {
     ? `<section class="ask-brief-section ${className}"><h3>${title}</h3><ul>${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul></section>` : '';
   return `<section class="ask-work-brief" aria-label="업무 검토사항"><h3>${esc(brief.title || '업무 검토 메모')}</h3>${brief.basis ? `<p class="small">${esc(brief.basis)}</p>` : ''}`
     + (brief.evidence?.length ? `<dl class="ask-brief-evidence">${brief.evidence.map(item => `<div><dt>${esc(item.title)}${item.ok === false ? ' · 미확인' : ''}</dt><dd>${esc(item.summary)}</dd></div>`).join('')}</dl>` : '')
+    + reviewDetailsHtml(brief.review)
     + section('담당자 확인사항', brief.nextActions, 'ask-next-actions')
     + section('아직 없는 판단 근거', brief.missingData, 'ask-missing-data')
     + '<p class="small">담당자 검토를 돕는 확인사항이며, 현장 점검이나 최종 결정을 대신하지 않습니다.</p></section>';
+}
+
+/** 사용자 제안과 공공자료의 출처를 섞지 않고, 회의에서 쓸 비교 항목을 보여 준다. */
+export function reviewDetailsHtml(review) {
+  if (!review) return '';
+  const list = items => (Array.isArray(items) ? items : []).map(item => `<li>${esc(item)}</li>`).join('');
+  return '<div class="civic-result">'
+    + (review.inputText ? `<details class="civic-input-source"><summary>사용자 제공 검토내용</summary><p>${esc(review.inputText)}</p><small>입력한 의견·상황입니다. 공식 자료로 검증한 내용은 아닙니다.</small></details>` : '')
+    + (review.scopeNote ? `<p class="small">${esc(review.scopeNote)}</p>` : '')
+    + (review.sourceScope ? `<p class="small">${esc(review.sourceScope)}</p>` : '')
+    + (review.commonCriteria?.length ? `<section><h3>대안을 함께 살펴볼 기준</h3><ul>${list(review.commonCriteria)}</ul></section>` : '')
+    + (review.alternatives?.length ? `<section><h3>대안별 확인사항</h3>${review.alternativeNotice ? `<p class="small">${esc(review.alternativeNotice)}</p>` : ''}<div class="civic-alternatives">${review.alternatives.map(item => `<article><header><strong>${esc(item.title)}</strong><small>${item.origin === 'user' ? '사용자 입력' : '검토 예시'}</small></header>${item.focus ? `<p>${esc(item.focus)}</p>` : ''}<ul>${list(item.checks)}</ul></article>`).join('')}</div></section>` : '')
+    + (review.departments?.length ? `<section><h3>부서 협의 준비</h3><p class="small">업무 분야별 확인안입니다. 실제 소관 부서는 조직·사무분장을 확인하세요.</p><dl class="civic-departments">${review.departments.map(item => `<div><dt>${esc(item.name)}</dt><dd><ul>${list(item.checks)}</ul></dd></div>`).join('')}</dl></section>` : '')
+    + (review.discussionQuestions?.length ? `<section><h3>회의에서 확인할 질문</h3><ul>${list(review.discussionQuestions)}</ul></section>` : '')
+    + (review.missingData?.length ? `<section><h3>추가로 확보할 자료</h3><ul>${list(review.missingData)}</ul></section>` : '')
+    + '</div>';
 }
 
 /** 답 영역 HTML. status: idle | loading | done | error */
@@ -204,9 +231,9 @@ export function answerHtml(view) {
   const failed = (result.steps || []).filter(step => step.ok === false).length;
   const summary = `<div class="ask-result-summary" aria-label="실제 조회 결과"><span>조회 완료 <b>${queried}건</b></span><span>출처 <b>${(result.sources || []).length}개</b></span><span>결과 지점 <b>${(view.features || []).length}곳</b></span></div>`;
   return `<article class="ask-answer"><header><span class="ask-question-echo">${esc(view.question)}</span>${badgeHtml(result)}</header>`
-    + `<p class="small ask-query-scope">질문 당시 선택 구역: ${esc(view.queryScope || '서구 전체')}</p>${summary}${failed ? `<p class="small ask-notice">조회하지 못한 항목 ${failed}건은 아래 근거에서 확인하세요.</p>` : ''}`
+    + `<p class="small ask-query-scope">질문 당시 선택 구역: ${esc(view.queryScope || '서구 전체')}</p>${view.restored ? `<p class="small ask-notice">저장한 결과를 열었습니다. 작성: ${esc(view.completedAt || '미기록')} · 현재 자료로 다시 조회한 결과가 아닙니다.</p>` : ''}${summary}${failed ? `<p class="small ask-notice">조회하지 못한 항목 ${failed}건은 아래 근거에서 확인하세요.</p>` : ''}`
     + `<p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `${ANALYSIS_ROLES[result.analysisPath] ? `<p class="small ask-ai-role">${esc(ANALYSIS_ROLES[result.analysisPath])}</p>` : ''}<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}`
-    + '<div class="ask-export-actions"><button class="secondary" data-action="ask-copy">검토메모 복사</button><button class="secondary" data-action="ask-download">검토메모 저장</button></div></article>'
+    + '<div class="ask-export-actions"><button class="primary" data-action="civic-save-result">검토노트에 저장</button><button class="secondary" data-action="ask-copy">검토메모 복사</button><button class="secondary" data-action="ask-download">검토메모 저장</button></div></article>'
     + briefHtml(result.brief)
     + listHtml(view.features || [], view.drawn || 0, view)
     + evidenceHtml(result);
@@ -215,9 +242,11 @@ export function answerHtml(view) {
 export function panelHtml(view, scopeLabel) {
   const chips = ASK_EXAMPLES.map((text, index) => `<button class="ask-chip" data-action="ask-example" data-id="${index}">${esc(text)}</button>`).join('');
   return '<div class="ask-panel">'
-    + '<div class="ask-intro"><strong>질문하면, 자료와 위치가 함께 나옵니다.</strong><p>점검할 자료를 찾고, 확인할 일을 검토메모로 가져가세요.</p></div>'
+    + '<div class="ask-intro"><strong>질문하면, 자료와 위치가 함께 나옵니다.</strong><p>마을의제부터 생활시설·현장 점검까지, 자료와 확인할 일을 함께 살펴보세요.</p></div>'
+    + '<div class="civic-inline-links"><button class="text-button" data-action="civic-review">마을·공간 검토</button><button class="text-button" data-action="civic-notes">저장한 검토노트</button></div>'
     + '<p class="ask-scope"><b>수록 공간자료</b>와 필요한 경우 조회한 <b>기상청 관측</b>을 근거로 답합니다. AI 사용 여부·출처·기준일과 관측시각을 결과에서 확인하세요.</p>'
-    + '<div class="ask-form"><label class="ask-label" for="ask-question">질문</label>'
+    + (view.reviewContext ? `<div class="civic-context"><strong>${esc(THEME_TITLES[view.reviewContext.theme] || '마을·공간')} 검토를 이어갑니다.</strong><span>아래 질문에는 앞서 입력한 검토내용을 함께 사용합니다.</span><div class="civic-inline-links"><button class="text-button" data-action="civic-edit-context">입력 수정</button><button class="text-button" data-action="ask-new-question">새 질문으로 전환</button></div></div>` : '')
+    + `<div class="ask-form"><label class="ask-label" for="ask-question">${view.reviewContext ? '이 검토에 이어서 질문' : '질문'}</label>`
     + `<div class="ask-row"><input id="ask-question" type="text" maxlength="${MAX_QUESTION}" autocomplete="off" enterkeyhint="search" placeholder="예: 풍암동 그늘막 어디 있어?" value="${esc(view.draft || '')}">`
     + `<button class="primary" id="ask-submit" data-action="ask-submit"${view.status === 'loading' ? ' disabled' : ''}>묻기</button></div>`
     + `<p class="small ask-context">현재 선택 구역: <b id="ask-scope-name">${esc(scopeLabel)}</b> · 질문에 동 이름이 없으면 이 구역을 기준으로 합니다.</p></div>`
@@ -230,7 +259,7 @@ export function panelHtml(view, scopeLabel) {
 
 export function installAskAi(api) {
   const state = api.state;
-  const view = {status: 'idle', draft: '', question: '', result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: '', completedAt: ''};
+  const view = {status: 'idle', draft: '', question: '', result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: '', dongId: 'all', completedAt: '', reviewContext: null, restored: false};
   const asked = []; // 이번 방문에서 한 질문(다음 질문의 문맥으로 최근 3개만 보낸다)
   let sequence = 0;
   let applyingMap = false;
@@ -253,7 +282,7 @@ export function installAskAi(api) {
     const scope = api.label();
     const hint = document.getElementById('ask-quick-hint');
     if (hint) hint.textContent = `${scope}의 수록 자료를 기준으로 답합니다. 질문에 동 이름을 쓰면 해당 동을 조회합니다.`;
-    if (quickInput) quickInput.placeholder = state.dong === 'all' ? '예: 치평동 폭염 점검자료 정리해줘' : `${scope}, 무엇을 살펴볼까요?`;
+    if (quickInput) quickInput.placeholder = state.dong === 'all' ? '예: 풍암동 마을의제 검토자료 찾아줘' : `${scope}, 무엇을 살펴볼까요?`;
   }
 
   function render({scroll = true} = {}) {
@@ -333,18 +362,20 @@ export function installAskAi(api) {
     }
   }
 
-  async function ask(question) {
+  async function ask(question, reviewContext = null) {
     const text = String(question || '').replace(/\s+/g, ' ').trim();
     if (!text) { api.toast('질문을 입력하세요.'); input()?.focus(); return; }
     if (text.length > MAX_QUESTION) { api.toast(`질문은 ${MAX_QUESTION}자 이하로 적어 주세요.`); return; }
     if (view.status === 'loading') { if (!open()) show({focus: false}); return; }
     const token = ++sequence;
     const requestScope = state.dong;
-    Object.assign(view, {status: 'loading', question: text, draft: text, result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: api.label(), completedAt: ''});
+    const context = reviewContext ? JSON.parse(JSON.stringify(reviewContext)) : null;
+    if (JSON.stringify(context) !== JSON.stringify(view.reviewContext)) asked.length = 0;
+    Object.assign(view, {status: 'loading', question: text, draft: text, result: null, error: '', features: [], drawn: 0, mapReady: false, mapApplied: false, mapCleared: false, mapDeferred: false, queryScope: api.label(), dongId: requestScope, completedAt: '', reviewContext: context, restored: false});
     if (quickInput) quickInput.value = text;
     if (input()) input().value = text;
     clearMap();
-    if (!open()) show({focus: false});
+    show({focus: false});
     render();
     requestController = new AbortController();
     const timeout = setTimeout(() => requestController?.abort('timeout'), 35000);
@@ -352,7 +383,7 @@ export function installAskAi(api) {
       const response = await fetch('/api/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({question: text, dongId: requestScope === 'all' ? undefined : requestScope, history: asked.slice(-3).map(q => ({role: 'user', text: q}))}),
+        body: JSON.stringify({question: text, dongId: requestScope === 'all' ? undefined : requestScope, history: asked.slice(-3).map(q => ({role: 'user', text: q})), ...(context ? {reviewContext: context} : {})}),
         signal: requestController.signal,
       });
       let body = null;
@@ -402,9 +433,35 @@ export function installAskAi(api) {
     api.toast('출처와 확인사항을 포함한 검토메모를 저장했습니다.');
   }
 
+  function getReviewSnapshot() {
+    if (view.status !== 'done' || !view.result) return null;
+    return JSON.parse(JSON.stringify({question: view.question, queryScope: view.queryScope, dongId: view.dongId, completedAt: view.completedAt, reviewContext: view.reviewContext, result: view.result}));
+  }
+
+  function restoreReview(note) {
+    if (!note?.result) return;
+    sequence++; requestController?.abort('restore'); requestController = null; asked.length = 0;
+    clearMap();
+    const safe = JSON.parse(JSON.stringify(note));
+    Object.assign(view, {status: 'done', draft: '', question: safe.question, queryScope: safe.queryScope, dongId: safe.dongId || 'all', completedAt: safe.completedAt,
+      reviewContext: safe.reviewContext || null, result: safe.result, error: '', features: highlightFeatures(safe.result.map), drawn: 0, mapApplied: false, mapCleared: false, mapDeferred: false, restored: true});
+    applyingMap = true;
+    try {
+      if (safe.dongId === 'all' || state.dongs.some(f => f.properties.dongId === safe.dongId)) api.chooseDong(safe.dongId);
+    } finally { applyingMap = false; }
+    show({focus: false});
+    render();
+  }
+
   const offs = [
     registerAction('ask-ai', () => show()),
-    registerAction('ask-submit', () => ask(input()?.value)),
+    registerAction('ask-submit', () => ask(input()?.value, view.reviewContext)),
+    registerAction('ask-new-question', () => {
+      if (view.status === 'loading') { api.toast('현재 조회가 끝난 뒤 새 질문을 시작할 수 있습니다.'); return; }
+      clearMap(); asked.length = 0;
+      Object.assign(view, {status: 'idle', reviewContext: null, draft: '', question: '', result: null, features: [], restored: false});
+      show();
+    }),
     registerAction('ask-example', button => {
       const text = ASK_EXAMPLES[Number(button.dataset.id)];
       if (!text) return;
@@ -440,7 +497,7 @@ export function installAskAi(api) {
     if (!['ask-question', 'ask-quick-question'].includes(event.target?.id) || event.key !== 'Enter') return;
     event.preventDefault();
     if (event.isComposing || event.keyCode === 229 || event.repeat) return;
-    ask(event.target.value);
+    ask(event.target.value, event.target.id === 'ask-question' ? view.reviewContext : null);
   };
   const onInput = event => {
     if (!['ask-question', 'ask-quick-question'].includes(event.target?.id)) return;
@@ -454,5 +511,5 @@ export function installAskAi(api) {
   quickForm?.addEventListener('submit', onSubmit);
   syncQuick();
 
-  return {ask, show, clearMap, scopeChanged, destroy() { sequence++; requestController?.abort('destroy'); offs.forEach(off => off()); body?.removeEventListener('keydown', onKey); body?.removeEventListener('input', onInput); quickForm?.removeEventListener('submit', onSubmit); }};
+  return {ask, show, clearMap, scopeChanged, getReviewSnapshot, restoreReview, getReviewContext: () => view.reviewContext ? JSON.parse(JSON.stringify(view.reviewContext)) : null, destroy() { sequence++; requestController?.abort('destroy'); offs.forEach(off => off()); body?.removeEventListener('keydown', onKey); body?.removeEventListener('input', onInput); quickForm?.removeEventListener('submit', onSubmit); }};
 }

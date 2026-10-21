@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko" data-ui-theme="day" data-ui-finish="depth">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#063b88"><meta name="description" content="서구의 오늘을 한눈에. 18개 행정동과 재난·안전·생활정보를 연결하는 서구:온 행정 디지털트윈"><title>서구:온 · 서구의 오늘을 한눈에</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/city/style.css"><link rel="stylesheet" href="/src/city/appearance.css"><link rel="stylesheet" href="/src/city/identity.css"><link rel="stylesheet" href="/src/city/layout.css"><link rel="stylesheet" href="/src/city/ask-ai.css"><link rel="stylesheet" href="/src/city/heat-plan.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#063b88"><meta name="description" content="서구의 오늘을 한눈에. 18개 행정동의 공간자료와 AI를 연결해 마을의제·공간 활용·행정 검토를 돕는 서구:온 디지털트윈"><title>서구:온 · 서구의 오늘을 한눈에</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/city/style.css"><link rel="stylesheet" href="/src/city/appearance.css"><link rel="stylesheet" href="/src/city/identity.css"><link rel="stylesheet" href="/src/city/layout.css"><link rel="stylesheet" href="/src/city/ask-ai.css"><link rel="stylesheet" href="/src/city/heat-plan.css"><link rel="stylesheet" href="/src/city/civic-review.css"></head>
 <body>
 <a class="skip-link" href="#district-panel">지역 선택으로 이동</a>
 <div id="app">
@@ -27,7 +27,7 @@
   </form>
  </section>
  <aside id="district-panel" class="district-panel glass" aria-label="행정동 선택 및 정보">
-  <header class="sidebar-heading"><div class="panel-title"><span class="eyebrow">공간행정 워크스페이스</span><button class="text-button" data-action="panels">지도 집중</button></div><h1>광주 서구 · 동 선택</h1>
+  <header class="sidebar-heading"><div class="panel-title"><span class="eyebrow">공간행정 워크스페이스</span><button class="text-button" data-action="panels">지도 집중</button></div><h1>서구 · 동 선택</h1>
 <div class="sidebar-tabs" role="tablist" aria-label="지역 및 지도 정보"><button id="tab-regions" role="tab" aria-selected="true" aria-controls="sidebar-regions" data-action="sidebar-tab" data-id="regions">동 선택</button><button id="tab-layers" role="tab" aria-selected="false" aria-controls="sidebar-layers" data-action="sidebar-tab" data-id="layers">표시 정보</button></div></header>
   <div id="sidebar-scroll" class="sidebar-scroll" tabindex="0" aria-label="동 선택 및 메뉴 스크롤 영역">
    <section id="sidebar-regions" role="tabpanel" aria-labelledby="tab-regions">
@@ -36,12 +36,13 @@
     <div class="dong-context">선택한 동의 경계와 수록 자료를 지도에서 확인합니다. <button class="text-button" data-action="bi-gallery">동 브랜드 보기</button></div>
     <div class="home-actions"><h2>선택한 지역 살펴보기</h2>
       <div class="home-primary" role="group" aria-label="선택 지역 기능">
-        <button class="home-card home-hero" data-action="heat-plan"><span class="home-card-icon" data-icon="sun" aria-hidden="true"></span><span class="home-card-text"><strong>폭염 대응계획</strong><small>기존 시설 활용 · 추가 설치 비교 · 검토보고서</small></span></button>
+        <button class="home-card home-hero" data-action="civic-review"><span class="home-card-icon" data-icon="layers" aria-hidden="true"></span><span class="home-card-text"><strong>마을·공간 검토</strong><small>주민 의견 · 공간 활용 · 대안과 협의 준비</small></span></button>
         <button class="home-card home-ai" data-action="ask-ai"><span class="home-card-icon" data-icon="search" aria-hidden="true"></span><span class="home-card-text"><strong>지도에게 묻기</strong><small>자료를 근거로 질문하기</small></span></button>
         <button class="home-card" data-action="infra"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>생활시설</strong><small>학교·공원·복지</small></span></button>
         <button class="home-card home-yield" data-action="resilience"><span class="home-card-icon" data-icon="shield" aria-hidden="true"></span><span class="home-card-text"><strong>재난 자료</strong><small>폭염·침수·한파</small></span></button>
       </div>
       <div class="home-workflows" role="group" aria-label="계절 대응과 현장 점검">
+        <button class="home-card" data-action="heat-plan"><span class="home-card-icon" data-icon="sun" aria-hidden="true"></span><span class="home-card-text"><strong>폭염 대응계획</strong><small>기존 시설 활용 · 추가 설치 비교</small></span></button>
         <button class="home-card" data-action="cold-plan"><span class="home-card-icon" data-icon="home" aria-hidden="true"></span><span class="home-card-text"><strong>한파 대응계획</strong><small>쉼터 연결 · 대기환경 보완</small></span></button>
         <button class="home-card" data-action="icing-plan"><span class="home-card-icon" data-icon="warning" aria-hidden="true"></span><span class="home-card-text"><strong>결빙 관리지점 점검</strong><small>관리구간 확인 · 후속조치</small></span></button>
         <button class="home-card" data-action="flood-plan"><span class="home-card-icon" data-icon="water" aria-hidden="true"></span><span class="home-card-text"><strong>침수 이력 현장점검</strong><small>과거 기록 확인 · 정비 협의</small></span></button>
@@ -49,7 +50,7 @@
       </div>
       <div class="home-more" id="home-more"><button type="button" class="home-more-toggle" id="home-more-toggle" aria-expanded="false" aria-controls="home-more-list"><span>기타 자료·도구</span></button><div class="home-more-list" id="home-more-list">
         <div class="sidebar-tools"><button class="home-moved" data-action="resilience">재난 자료</button><button data-action="native-sun">5분 그림자</button><button data-action="official-data">공식 수집자료</button><button data-action="safety-hub">재난안전 API</button><button data-action="themes">공식 주제도</button><button data-action="city-questions">생활·정책 검토</button></div>
-        <div class="sidebar-secondary"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="report">검토 기록</button><button data-action="settings">연결 설정</button></div>
+        <div class="sidebar-secondary"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="civic-notes">저장한 검토노트</button><button data-action="report">지도 검토기록</button><button data-action="settings">연결 설정</button></div>
       </div></div>
     </div>
     <button class="secondary full" id="dong-tour" data-action="dong-tour" aria-pressed="false">18개 동 자동 둘러보기</button>

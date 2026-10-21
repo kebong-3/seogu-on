@@ -14,6 +14,7 @@ import { SpatialError } from './errors.js';
 import { compass, haversine, round } from './geo.js';
 import { findDong, resolveCategory, resolveDong, resolveOrigin, searchPlaces } from './resolve.js';
 import { getStore } from './store.js';
+import {CIVIC_THEMES, isCivicTheme} from './civic-themes.js';
 
 export { SpatialError };
 
@@ -670,6 +671,7 @@ function sunPosition(store, args) {
 /* ───────────────────────── 업무별 근거 묶음 ───────────────────────── */
 
 const WORK_THEMES = {
+  ...CIVIC_THEMES,
   heat: {
     title: '폭염 대응 점검자료',
     datasets: [['무더위쉼터', '무더위쉼터'], ['그늘막', '그늘막'], ['쿨링포그', '쿨링포그']],
@@ -713,9 +715,20 @@ const WORK_THEMES = {
 /** 여러 공개 자료를 실제 조회·공간 계산하고 확인할 일과 함께 반환한다. */
 function workBrief(store, args) {
   const theme = typeof args.theme === 'string' && Object.hasOwn(WORK_THEMES, args.theme) ? WORK_THEMES[args.theme] : null;
-  if (!theme) throw new SpatialError('INVALID_ARGUMENT', 'theme은 heat, cold, icing, flood, school, living 중 하나여야 합니다.');
+  if (!theme) throw new SpatialError('INVALID_ARGUMENT', 'theme은 heat, cold, icing, flood, school, living, agenda, space, reuse, coordination 중 하나여야 합니다.');
   const dong = optionalDong(store, args);
   const scopeArgs = dong ? {dong: dong.name} : {};
+  let datasets = theme.datasets;
+  if (args.categories !== undefined) {
+    if (!isCivicTheme(args.theme) || !Array.isArray(args.categories) || !args.categories.length || args.categories.length > 4 || args.categories.some(c => typeof c !== 'string' || !c.trim() || c.length > 80)) {
+      throw new SpatialError('INVALID_ARGUMENT', 'categories는 마을·공간 검토에서 조회할 시설 분류 1~4개여야 합니다.');
+    }
+    datasets = [...new Set(args.categories)].map(category => {
+      let title = category;
+      try { title = resolveCategory(store, category).title; } catch (error) { if (!(error instanceof SpatialError)) throw error; }
+      return [category, title];
+    });
+  }
   const checks = [];
   const add = (name, title, input, run) => {
     let result;
@@ -727,7 +740,7 @@ function workBrief(store, args) {
     checks.push({tool: name, title, args: input, result});
   };
   if (args.theme === 'flood') add('flood_history', '과거 침수피해 기록', {...scopeArgs, limit: 50}, floodHistory);
-  for (const [category, title] of theme.datasets) add('find_facilities', title, {category, ...scopeArgs, limit: 40}, findFacilities);
+  for (const [category, title] of datasets) add('find_facilities', title, {category, ...scopeArgs, limit: 40}, findFacilities);
   if (theme.gap) {
     const radiusM = numberArg(args, 'radiusM', {min: 10, max: 3000, def: theme.gap.radiusM});
     add('coverage_gap', '시설 공백 후보 공간계산', {...theme.gap, ...scopeArgs, radiusM, limit: 50}, coverageGap);
@@ -748,6 +761,7 @@ function workBrief(store, args) {
     summary: `${dong?.name || '서구 전체'} ${theme.title}. ${checks.map(c => c.result.summary).join(' ')}`,
     data: {
       title: theme.title, scope: dong?.name || '서구 전체', theme: args.theme, basis,
+      ...(isCivicTheme(args.theme) ? {categorySelection: args.categories ? 'mentioned' : 'theme-default'} : {}),
       evidence: checks.map(c => ({title: c.title, tool: c.tool, args: c.args, summary: c.result.summary, ok: c.result.ok})),
       nextActions: theme.nextActions, missingData,
       rows: primary?.result.data?.rows?.slice(0, 12) || [],
@@ -782,10 +796,11 @@ const REGISTRY = [
   tool(
     'work_brief',
     '업무별 공간검토',
-    '폭염·한파 대응, 결빙·침수 이력·통학환경 점검, 생활시설 검토에 필요한 수록자료를 함께 조회하고 실제 공간계산으로 근거·지도지점·담당자 확인사항을 묶습니다. 업무를 준비하거나 점검자료·검토 메모를 요청하면 사용하세요. heat는 정류장-그늘막 공백, cold는 정류장-한파쉼터 거리 후보도 계산합니다. 미연결 자료와 없는 판단 근거를 분리하며 위험 예측·최적 입지·현재 시설 운영을 확정하지 않습니다.',
+    '폭염·한파 대응, 결빙·침수·통학환경 점검, 생활시설·마을의제·공간 대안·기존 공간 활용·사업 연계 검토에 필요한 수록자료와 담당자 확인사항을 묶습니다. heat는 정류장-그늘막 공백, cold는 정류장-한파쉼터 거리 후보도 계산합니다. 마을·공간 검토는 입력에 등장한 시설 분류를 categories로 좁힐 수 있습니다. 주민 의견·사업대장·예산·유휴 여부가 연결되었다고 가정하지 않으며 위험·최적 입지·대안 우열을 확정하지 않습니다.',
     {
-      theme: {type: 'string', enum: ['heat', 'cold', 'icing', 'flood', 'school', 'living'], description: 'heat 폭염, cold 한파, icing 결빙, flood 침수 이력, school 통학환경, living 생활시설'},
+      theme: {type: 'string', enum: ['heat', 'cold', 'icing', 'flood', 'school', 'living', 'agenda', 'space', 'reuse', 'coordination'], description: 'heat 폭염, cold 한파, icing 결빙, flood 침수 이력, school 통학환경, living 생활시설, agenda 마을의제, space 공간 대안 비교, reuse 기존 공간 활용, coordination 사업 연계'},
       dong: {type: 'string', description: `검토할 동. 생략하면 서구 전체. ${DONG_HELP}`},
+      categories: {type: 'array', items: {type: 'string'}, minItems: 1, maxItems: 4, description: 'agenda·space·reuse·coordination에서 입력에 실제로 등장한 시설 분류만 조회할 때 사용. 생략하면 유형별 기본 시설자료. 입력 내용의 사실 확인이나 위치 확인이 아님.'},
       radiusM: {type: 'number', description: '폭염·한파 시설 공백 후보 비교에 쓸 직선거리(m). 미지정 시 폭염 150, 한파 300. 법정 설치기준 아님.', minimum: 10, maximum: 3000},
     },
     ['theme'],

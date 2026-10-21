@@ -82,7 +82,7 @@ test('ask http: 다른 출처의 요청은 403, 같은 출처·Origin 없는 요
   assert.equal((await post({ question: '가람동' })).statusCode, 200);
 });
 
-test('ask http: 8KB 를 넘는 본문은 413, 깨진 JSON·빈 질문·긴 질문은 400', async () => {
+test('ask http: 16KB 를 넘는 본문은 413, 깨진 JSON·빈 질문·긴 질문은 400', async () => {
   const big = await post({ question: '가람동', padding: 'x'.repeat(ASK_LIMITS.bodyBytes) });
   assert.equal(big.statusCode, 413);
   assert.equal(big.json().code, 'BODY_TOO_LARGE');

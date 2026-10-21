@@ -11,9 +11,10 @@ import { LlmError, answerByLlm } from './gemini.js';
 import {modelConfig} from './model-config.js';
 import { RULES_NOTICE, answerByRules } from './rules.js';
 import {attachWeatherEvidence, briefFromResults} from './work-evidence.js';
+import {attachCivicReview, normalizeReviewContext, ReviewInputError} from './civic-review.js';
 
 export const ASK_LIMITS = {
-  bodyBytes: 8 * 1024,
+  bodyBytes: 16 * 1024,
   questionChars: 300,
   historyItems: 3,
   perMinute: 10,
@@ -95,7 +96,8 @@ function readInput(body, store) {
     .filter(item => item && item.role === 'user' && typeof item.text === 'string' && item.text.trim())
     .slice(-ASK_LIMITS.historyItems)
     .map(item => item.text.replace(/\s+/g, ' ').trim().slice(0, ASK_LIMITS.questionChars));
-  return { question, dong: dong || null, previousQuestions };
+  const reviewContext = normalizeReviewContext(body.reviewContext);
+  return { question, dong: dong || null, previousQuestions, ...(reviewContext ? {reviewContext} : {}) };
 }
 
 /* ───────────────────────── 출처·횟수 제한 ───────────────────────── */
@@ -198,8 +200,13 @@ function buildResponse(mode, outcome, extra = {}) {
   };
 }
 
+async function prepareOutcome(input, ctx) {
+  const rules = await answerByRules(input.question, {dongId: input.dong?.id, reviewContext: input.reviewContext}, {dataDir: ctx.dataDir, now: ctx.now});
+  return attachWeatherEvidence(attachCivicReview(rules, input.reviewContext, input.question), ctx);
+}
+
 async function rulesResponse(input, ctx, code) {
-  const outcome = ctx.preparedOutcome || await attachWeatherEvidence(await answerByRules(input.question, { dongId: input.dong?.id }, { dataDir: ctx.dataDir, now: ctx.now }), ctx);
+  const outcome = ctx.preparedOutcome || await prepareOutcome(input, ctx);
   return buildResponse('rules', outcome, {
     notice: RULES_NOTICE,
     ...(outcome.matched ? {} : { examples: ASK_EXAMPLES }),
@@ -209,19 +216,17 @@ async function rulesResponse(input, ctx, code) {
 
 /**
  * 질문 하나에 답한다(HTTP 와 분리된 핵심 함수).
- * @param {{question: string, dong: object|null, previousQuestions: string[]}} input
+ * @param {{question: string, dong: object|null, previousQuestions: string[], reviewContext?: object}} input
  * @param {{env?: object, fetcher?: Function, dataDir?: string, now?: number, budgetMs?: number}} ctx
  */
 export async function answerQuestion(input, ctx = {}) {
   const startedAt = Date.now();
+  input = {...input, reviewContext: normalizeReviewContext(input.reviewContext)};
   const env = ctx.env || process.env;
   const now = ctx.now ?? Date.now();
   // 명확한 공간질문은 서버가 실제 조회를 먼저 해, 모델의 도구선택 왕복을 줄인다.
   // precompute=false는 내부 테스트에서 기존 자유질문 도구선택 경로를 따로 검증할 때만 사용한다.
-  const preparedOutcome = ctx.precompute === false ? null : await attachWeatherEvidence(
-    await answerByRules(input.question, {dongId: input.dong?.id}, {dataDir: ctx.dataDir, now}),
-    {...ctx, env, now},
-  );
+  const preparedOutcome = ctx.precompute === false ? null : await prepareOutcome(input, {...ctx, env, now});
   const preparedCtx = {...ctx, env, preparedOutcome};
   const config=modelConfig(env);
   if(config.error)return rulesResponse(input,preparedCtx,'LLM_BAD_REQUEST');
@@ -233,12 +238,13 @@ export async function answerQuestion(input, ctx = {}) {
   try {
     const outcome = await answerByLlm(
       input.question,
-      { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name) },
+      { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name), reviewContext: input.reviewContext },
       { key, model, provider,baseUrl, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir,
         budgetMs: Math.max(1, (ctx.budgetMs ?? 25000) - (Date.now() - startedAt)), now: ctx.clock,
         preparedOutcome: preparedOutcome?.matched && preparedOutcome.results.length ? preparedOutcome : null },
     );
-    return buildResponse('llm', outcome, { provider,model: outcome.model || model, modelRecovered: !!outcome.modelRecovered, analysisPath: outcome.analysisPath });
+    const withReview = attachCivicReview(outcome, input.reviewContext, input.question);
+    return buildResponse('llm', {...withReview, answer: outcome.answer}, { provider,model: outcome.model || model, modelRecovered: !!outcome.modelRecovered, analysisPath: outcome.analysisPath });
   } catch (error) {
     const code = error instanceof LlmError ? error.code : 'LLM_BAD_RESPONSE';
     // 질문·키·요청 주소는 남기지 않고 코드만 기록한다.
@@ -277,7 +283,7 @@ export async function handleAsk(req, res, ctx = {}) {
     const input = readInput(await readBody(req), getStore(ctx.dataDir));
     return send(res, 200, await answerQuestion(input, ctx));
   } catch (error) {
-    if (error instanceof RequestError) return fail(res, error.status, error.code, error.message);
+    if (error instanceof RequestError || error instanceof ReviewInputError) return fail(res, error.status, error.code, error.message);
     console.error('[ask] failure', error?.name || 'Error');
     return fail(res, 500, 'ASK_FAILED', '답을 만드는 중 오류가 났습니다. 잠시 후 다시 시도하세요.');
   }

@@ -88,6 +88,10 @@ export function briefFromResults(results) {
       ...(observationResult ? [{title: '기상청 격자 관측', summary: observationResult.summary, ok: observationResult.ok}] : [])],
     nextActions: [...new Set(briefs.flatMap(b => b.nextActions))],
     missingData: [...new Set([...briefs.flatMap(b => b.missingData), ...(observation && !observation.ok ? ['기상청 관측 미수신: 현재 관측값을 별도로 확인하세요.'] : [])])],
+    ...(briefs[0].review ? {review: {...briefs[0].review,
+      ...(many ? {scopeNote: `${[...new Set(briefs.map(b => b.scope))].join(' · ')}의 수록 시설을 동별로 참고했습니다. 입력한 개별 장소·사업의 위치·경계를 자동 확인한 결과가 아닙니다.`} : {}),
+      missingData: [...new Set(briefs.flatMap(b => b.missingData))],
+    }} : {}),
     ...(observation ? {observation} : {}),
   };
 }
