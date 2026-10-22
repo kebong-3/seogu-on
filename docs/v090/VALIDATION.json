@@ -297,5 +297,29 @@
     "resolvedEdgesPerHarness": 111,
     "unresolvedRelativeImports": 0,
     "note": "Static parser validation; not a claim that follow-up browser CI passed."
+  },
+  "finalFeatureDeployment": {
+    "commit": "147bd6a60ce419ed76d6f210110e2ce58d9c0bab",
+    "deployment": "2h7vDbMQXnCvv6Tn6whd5xo6iNze",
+    "status": "Ready",
+    "url": "https://seogu-on.vercel.app/",
+    "passed": [
+      "live_quick_question_pungam_4_actual_space_items",
+      "live_answer_source_count_2",
+      "live_answer_reservation_approval_limits",
+      "quick_question_to_space_twin_shortcut",
+      "pilot_excluded_record_empty_summary",
+      "region_panel_heading_reset"
+    ],
+    "liveModel": "gemini-3.8-flash"
+  },
+  "featureCommitCI": {
+    "run": 39782314014,
+    "verify": "success",
+    "offlineLayout": {
+      "checks": 155,
+      "passed": 155
+    },
+    "offlineRegression": "23 checks passed before stale wording expectation; assertion corrected in follow-up test-only change."
   }
 }

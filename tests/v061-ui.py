@@ -53,6 +53,19 @@ def box(p,sel):return p.locator(sel).bounding_box()
 def visible_inside(p,sel):
  b=box(p,sel)
  return b is not None and b['x']>=-1 and b['y']>=-1 and b['x']+b['width']<=p.viewport_size['width']+1 and b['y']+b['height']<=p.viewport_size['height']+1
+def check_caption(p,name,max_height,max_width,min_font_size):
+ # The readable title/BI now use a taller, wider caption. Keep compactness and
+ # viewport checks, and ensure the extra room actually prevents clipped content.
+ layout=p.locator('.scene-caption').evaluate(r'''e=>{
+  const rect=e.getBoundingClientRect(),title=e.querySelector('h2'),bi=e.querySelector('#selected-bi'),img=bi?.querySelector('img');
+  const inside=(child,parent)=>{const r=child.getBoundingClientRect(),b=parent.getBoundingClientRect();return r.left>=b.left-1&&r.top>=b.top-1&&r.right<=b.right+1&&r.bottom<=b.bottom+1;};
+  const children=[...e.children].filter(child=>child.getClientRects().length>0);
+  return {width:rect.width,height:rect.height,fontSize:parseFloat(getComputedStyle(title).fontSize),
+   contentFits:children.every(child=>inside(child,e)),
+   titleFits:title.scrollWidth<=title.clientWidth+1&&title.scrollHeight<=title.clientHeight+1,
+   imageFits:!bi?.getClientRects().length||!!img&&inside(img,bi)};
+ }''')
+ ck(name,visible_inside(p,'.scene-caption') and layout['height']<=max_height and layout['width']<=max_width and layout['fontSize']>=min_font_size and layout['contentFits'] and layout['titleFits'] and layout['imageFits'],layout)
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path=shutil.which('chromium'),headless=True,args=['--no-sandbox']);p=browser.new_page(viewport={'width':1440,'height':900});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  try:
@@ -67,7 +80,7 @@ with sync_playwright() as pw:
   ck('OpenStreetMap credit still legible',p.locator('.osm-minicredit').is_visible())
   ck('metrics not in visible region caption',not any(x in p.locator('.scene-caption').inner_text() for x in ['0개','위치','탐색','도형','가까이']))
   ck('internal renderer metrics hidden',p.locator('#render-diagnostics').is_hidden())
-  ck('city overview caption compact',box(p,'.scene-caption')['height']<=62,box(p,'.scene-caption'))
+  check_caption(p,'city overview caption compact and legible',88,470,22)
   ck('18 administrative neighborhoods retained',p.locator('.dong-button').count()==18)
   p.screenshot(path=str(OUT/'overview-2D.png'))
   for i in range(1,19):
@@ -76,7 +89,7 @@ with sync_playwright() as pw:
    ck('name and original BI linked '+id,p.locator('#scope-title').inner_text()==b['name'] and p.locator('.scene-caption #selected-bi img').get_attribute('alt')==b['title'])
    ck('original BI image loads '+id,p.locator('.scene-caption #selected-bi img').evaluate('(e)=>e.complete&&e.naturalWidth>0'))
   click(p,'.dong-button[data-id="seogu-13"]')
-  ck('district caption width at most320',box(p,'.scene-caption')['width']<=320,box(p,'.scene-caption'))
+  check_caption(p,'district caption compact without clipped title or BI',88,470,22)
   p.screenshot(path=str(OUT/'district-2D.png'))
   p.locator('.brand').screenshot(path=str(OUT/'brand-detail.png'))
   p.locator('.scene-caption').screenshot(path=str(OUT/'district-detail.png'))
@@ -113,7 +126,7 @@ with sync_playwright() as pw:
    ck(f'footer source control reachable {w}x{h}',visible_inside(p,'#map-credits summary'))
    ck(f'no horizontal overflow {w}x{h}',p.evaluate('document.documentElement.scrollWidth<=innerWidth'))
    if w<=600:
-    click(p,'.dong-button[data-id="seogu-13"]');ck(f'compact caption on mobile {w}',box(p,'.scene-caption')['height']<=55 and visible_inside(p,'.scene-caption'))
+    click(p,'.dong-button[data-id="seogu-13"]');check_caption(p,f'compact and legible caption on mobile {w}',72,w-72,18)
     if w==390:p.screenshot(path=str(OUT/'mobile-2D.png'))
    if w==1280:p.screenshot(path=str(OUT/'laptop-2D.png'))
   ck('no unhandled JavaScript errors',not errors,errors)
