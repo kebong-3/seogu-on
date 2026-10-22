@@ -243,7 +243,7 @@ export function panelHtml(view, scopeLabel) {
   const chips = ASK_EXAMPLES.map((text, index) => `<button class="ask-chip" data-action="ask-example" data-id="${index}">${esc(text)}</button>`).join('');
   return '<div class="ask-panel">'
     + '<div class="ask-intro"><strong>질문하면, 자료와 위치가 함께 나옵니다.</strong><p>마을의제부터 생활시설·현장 점검까지, 자료와 확인할 일을 함께 살펴보세요.</p></div>'
-    + '<div class="civic-inline-links"><button class="text-button" data-action="civic-review">마을·공간 검토</button><button class="text-button" data-action="civic-notes">저장한 검토노트</button></div>'
+    + '<div class="civic-inline-links"><button class="text-button" data-action="space-twin">공공공간 운영안 비교</button><button class="text-button" data-action="civic-review">마을·공간 검토</button><button class="text-button" data-action="civic-notes">저장한 검토노트</button></div>'
     + '<p class="ask-scope"><b>수록 공간자료</b>와 필요한 경우 조회한 <b>기상청 관측</b>을 근거로 답합니다. AI 사용 여부·출처·기준일과 관측시각을 결과에서 확인하세요.</p>'
     + (view.reviewContext ? `<div class="civic-context"><strong>${esc(THEME_TITLES[view.reviewContext.theme] || '마을·공간')} 검토를 이어갑니다.</strong><span>아래 질문에는 앞서 입력한 검토내용을 함께 사용합니다.</span><div class="civic-inline-links"><button class="text-button" data-action="civic-edit-context">입력 수정</button><button class="text-button" data-action="ask-new-question">새 질문으로 전환</button></div></div>` : '')
     + `<div class="ask-form"><label class="ask-label" for="ask-question">${view.reviewContext ? '이 검토에 이어서 질문' : '질문'}</label>`

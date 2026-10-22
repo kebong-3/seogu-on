@@ -18,7 +18,7 @@ HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTM
 LOADER=r'''async ({sources,fixtures})=>{
 window.__fixtureStorage=new Map();Object.defineProperty(window,'localStorage',{value:{getItem:k=>window.__fixtureStorage.get(k)||null,setItem:(k,v)=>window.__fixtureStorage.set(k,v),removeItem:k=>window.__fixtureStorage.delete(k)}});
 window.fetch=async u=>{const url=new URL(String(u),'https://test.invalid');const b=fixtures[url.pathname];return new Response(JSON.stringify(b||{ok:false,error:'TEST FIXTURE: API key not supplied'}),{status:b?200:503,headers:{'content-type':'application/json'}});};
-const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"\n]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>{const resolved=new URL(s,'https://test.invalid'+path).pathname;return p+q+build(resolved)+q;});return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
+const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>{const resolved=new URL(s,'https://test.invalid'+path).pathname;return p+q+build(resolved)+q;});return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
 window.__testModules=urls;window.__data=fixtures;await import(build('/src/city/app.js'));
 }'''
 results=[]

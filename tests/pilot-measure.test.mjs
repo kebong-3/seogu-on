@@ -14,7 +14,8 @@ function three() {return ['P001','P002','P003'].reduce((book,p,i)=>add(book,p,{s
 
 test('initial state is empty; no seeded results or effect estimates',()=>{
   const book=createPilotBook('seogu');assert.deepEqual(book.events,[]);assert.deepEqual(summarizePilot(book),[]);
-  assert.match(pilotSummaryHtml([]),/아직 저장한 측정이 없습니다/);
+  assert.match(pilotSummaryHtml([]),/현재 요약에 포함할 측정이 없습니다/);
+  assert.match(pilotSummaryHtml([]),/제외한 기록이 있다면 아래 수정·제외 목록에 보관/);
   assert.equal(pilotRawCsv(book).split('\r\n').filter(Boolean).length,1);
 });
 test('single-method rows stay pending and zero must be explicitly observed',()=>{

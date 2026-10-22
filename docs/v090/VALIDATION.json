@@ -1,8 +1,8 @@
 {
   "files": 43,
   "failed": 0,
-  "namedTests": 686,
-  "seconds": 8.54,
+  "namedTests": 691,
+  "seconds": 2.19241711,
   "results": [
     {
       "file": "tests/admin-plans.test.mjs",
@@ -22,7 +22,7 @@
     {
       "file": "tests/ask-civic-review.test.mjs",
       "passed": true,
-      "tests": 12
+      "tests": 17
     },
     {
       "file": "tests/ask-http.test.mjs",
@@ -222,7 +222,7 @@
   ],
   "scope": "Local deterministic tests; no claim of user impact, real second-region deployment or two live model providers.",
   "targetVersion": "0.9.0",
-  "completedAt": "2026-10-22T09:24:46.196328+00:00",
+  "completedAt": "2026-10-22T12:52:18.701725+00:00",
   "targetedRechecksAfterFullSuite": [
     "region-profile 13 passed after MOIS-ADM correction",
     "region-runtime 3 passed",
@@ -259,5 +259,43 @@
       "two live model providers"
     ],
     "syntheticOnly": true
+  },
+  "fullGate": {
+    "command": "npm run verify",
+    "namedTests": 691,
+    "passed": 691,
+    "failed": 0,
+    "buildAudit": {
+      "checks": 19,
+      "passed": 19
+    },
+    "httpAudit": {
+      "checks": 56,
+      "passed": 56
+    },
+    "note": "Final local full gate after public-space question regression fix and empty-summary wording assertion update."
+  },
+  "productionPolishSmoke": {
+    "commit": "ac914e89afd53d8d737741cd9cd3865842256656",
+    "deployment": "CkkhyGv4xQQuoHwjW84CdPSp4D4E",
+    "passed": [
+      "single_scenario_table_fits_panel",
+      "same_current_and_scenario_facts_explained_without_invented_benefit",
+      "ai_explanation_preserved_on_snapshot_save",
+      "current_html_contains_ai_model_and_test_evidence"
+    ],
+    "syntheticOnly": true
+  },
+  "offlineLayout": {
+    "run": 39780291983,
+    "checks": 155,
+    "passed": 155
+  },
+  "fixtureLoaderStaticCheck": {
+    "harnesses": 4,
+    "reachableModulesPerHarness": 51,
+    "resolvedEdgesPerHarness": 111,
+    "unresolvedRelativeImports": 0,
+    "note": "Static parser validation; not a claim that follow-up browser CI passed."
   }
 }

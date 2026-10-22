@@ -27,7 +27,7 @@ if(url.pathname==='/api/city-data'&&url.searchParams.get('kind')?.startsWith('vw
  b={ok:true,geojson:{type:'FeatureCollection',features:window.__testWfsMode==='empty'?[]:[feature]},complete:true,totalScanned:window.__testWfsMode==='empty'?0:1,totalCount:window.__testWfsMode==='empty'?0:1,collectedAt:'2026-09-28T00:00:00Z',sourceDate:null};
 }
 return new Response(JSON.stringify(b||{ok:false,error:'TEST FIXTURE no configured API'}),{status:b?200:503,headers:{'content-type':'application/json'}});};
-const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"\n]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>{const resolved=new URL(s,'https://test.invalid'+path).pathname;return p+q+build(resolved)+q;});return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
+const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>{const resolved=new URL(s,'https://test.invalid'+path).pathname;return p+q+build(resolved)+q;});return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
 window.__testModules=urls;window.__data=fixtures;await import(build('/src/city/app.js'));
 }'''
 results=[]

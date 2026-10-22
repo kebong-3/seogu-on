@@ -32,7 +32,7 @@ loader=r'''async ({sources,fixtures})=>{
   b={ok:true,page,scope:dong,scanned:1,total:window.__apiMode==='many'?2000:1,complete:window.__apiMode!=='many',nextPage:page+1,pageFingerprint:'TEST-FIXTURE-'+page,collectedAt:'2026-09-28T09:00:00Z',quality:{needsLocation:0,outside:0,invalid:0,privateFieldsRemoved:0},unlocated:[],geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Point',coordinates:point},properties:{id:id+'TEST'+page,name:'TEST ONLY NOT A REAL SHELTER',sourceName:'TEST FIXTURE',note:'TEST ONLY'}}]}};
  }
  return new Response(JSON.stringify(b||{ok:false,error:'Test fixture unavailable'}),{status:b?200:503,headers:{'content-type':'application/json'}});};
- const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"\n]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>p+q+build(new URL(s,'https://test.invalid'+path).pathname)+q);return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
+ const urls={};function build(path){if(urls[path])return urls[path];let code=sources[path];if(code===undefined)throw Error('Missing module '+path);code=code.replace(/(\b(?:import|export)\s+(?:[^;'"]*?\s+from\s*)?)(['"])(\.[^'"]+)\2/g,(m,p,q,s)=>p+q+build(new URL(s,'https://test.invalid'+path).pathname)+q);return urls[path]=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));}
  window.__modules=urls;window.__build=build;await import(build('/src/city/app.js'));
 }'''
 

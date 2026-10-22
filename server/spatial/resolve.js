@@ -44,7 +44,7 @@ const ALIASES = [
   [['체육시설', '체육'], ['sports']],
   [['약국'], ['pharmacy']],
   [['복지', '복지시설', '복지관'], ['welfare', 'welfare-official']],
-  [['공공시설', '개방시설'], ['layer-public-facilities']],
+  [['공공시설', '공공공간', '개방시설', '개방공간', '회의실', '강당', '대관', '주민모임', '주민회의', 'public-facilities'], ['layer-public-facilities']],
 ];
 
 function pickExisting(store, candidates) {

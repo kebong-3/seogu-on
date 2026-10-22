@@ -35,7 +35,8 @@ const CATEGORY_WORDS = [
   ['제설함', '제설함'], ['전기차충전소', '전기차'], ['충전소', '전기차'],
   ['상습결빙구간', '결빙'], ['결빙관리지점', '결빙'], ['결빙구간', '결빙'], ['블랙아이스', '결빙'], ['결빙', '결빙'],
   ['체육시설', '체육시설'], ['약국', '약국'], ['복지관', '복지'], ['복지시설', '복지'],
-  ['공원', '공원'], ['공공시설', '공공시설'],
+  ['공원', '공원'], ['공공시설', '공공시설'], ['공공공간', '공공시설'], ['개방시설', '공공시설'], ['개방공간', '공공시설'],
+  ['회의실', '공공시설'], ['강당', '공공시설'], ['대관', '공공시설'], ['주민모임', '공공시설'], ['주민회의', '공공시설'],
   ['박물관', 'museum'], ['미술관', 'museum'], ['관공서', 'government'], ['공연장', 'culture'], ['문화공간', 'culture'],
 ].sort((a, b) => b[0].length - a[0].length);
 
@@ -198,6 +199,10 @@ function detailLine(tool, data) {
   }
   if (tool === 'find_facilities' && data.rows?.length) {
     return `수록 지점${data.rows.length > 5 ? ' 일부' : ''}: ${names(data.rows, r => (r.distanceM === undefined ? r.name : `${r.name}(약 ${fmt(r.distanceM)}m)`))}.`;
+  }
+  if (tool === 'work_brief' && data.rows?.some(row => row.category === 'layer-public-facilities')) {
+    const spaces = data.rows.filter(row => row.category === 'layer-public-facilities');
+    return `공공공간 수록 항목${spaces.length > 5 ? ' 일부' : ''}: ${names(spaces, row => row.name)}.`;
   }
   if (tool === 'flood_history' && data.byDong?.length) {
     return `동별 수록 건수가 많은 순: ${names(data.byDong, r => `${r.dongName} ${fmt(r.count)}건`, 3)}. 건수 차이에는 집계·공개 범위의 차이가 섞여 있습니다.`;
@@ -388,13 +393,17 @@ async function dispatch(run, q) {
   // 자연어 질문에서도 업무 표현을 먼저 확인해 '공간 대안 비교'를 시설 수 비교로 오해하지 않는다.
   const civicThemes = [
     ['coordination', /사업연계|사업조정|사업간|부서간.*(?:사업|공사|연계|협업)|(?:사업|공사).*(?:중복|연계|협업|일정조정)/],
-    ['reuse', /유휴|공간재활용|시설재활용|공간재사용|빈공간|빈건물|공간공유|공간활용|시설활용|복합활용|용도전환|기존공간|기존시설.*활용/],
+    ['reuse', /유휴|공간재활용|시설재활용|공간재사용|빈공간|빈건물|공간공유|공간활용|시설활용|복합활용|용도전환|기존공간|기존시설.*활용|주민모임|주민회의|회의실|강당|대관/],
     ['agenda', /마을의제|마을문제|마을계획|주민제안|주민자치.*(?:의제|논의|검토)|의제설정|의제발굴/],
     ['space', /도시설계|공공공간|공간대안|공간비교|공간설계|공간재구성|(?:공원|광장|놀이터|주차장|거리|보행).*(?:재설계|재구성|조성안|개선안|대안)/],
   ];
   const civicTheme = q.reviewTheme || civicThemes.find(([, pattern]) => pattern.test(q.compact))?.[0];
   if (civicTheme) {
-    const categories = q.reviewCategories.slice(0, 4).map(c => c.dataset.id);
+    // A meeting-space request must keep the actual room/hall dataset ahead of surrounding infrastructure,
+    // including when more than four categories were mentioned before it in the question.
+    const categories = [...q.reviewCategories]
+      .sort((a, b) => Number(b.dataset.id === 'layer-public-facilities') - Number(a.dataset.id === 'layer-public-facilities'))
+      .slice(0, 4).map(c => c.dataset.id);
     await perDong(run, 'work_brief', {theme: civicTheme, ...(categories.length ? {categories} : {})}, q.dongs);
     return 'work_brief';
   }

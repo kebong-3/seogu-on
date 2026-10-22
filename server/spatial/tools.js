@@ -108,6 +108,7 @@ const CAVEAT_PARTIAL = '수록 건수는 전수조사 결과가 아닙니다. �
 const CAVEAT_STRAIGHT = '거리는 대표위치 사이의 직선거리입니다. 보행 경로·출입구·횡단 가능 여부는 반영하지 않았습니다.';
 const CAVEAT_DONG = '행정동은 대표점이 공개 가공 경계(법적 확정 경계 아님) 안에 있는지로 배정했습니다.';
 const CAVEAT_FLOOD = '과거 침수피해 기록은 이미 일어난 피해의 신고·집계 이력입니다. 현재 침수 여부나 미래 침수 위험 예측이 아닙니다.';
+const CAVEAT_PUBLIC_SPACE = '공공공간은 회의실·강당 등 공간별 수록 항목입니다. 같은 건물에 여러 공간이 포함될 수 있으며, 현재 이용 가능한 공간 수가 아닙니다. 운영시간·예약·휴관·사용 승인 여부는 관리 주체에게 확인해야 합니다.';
 
 /** 자료가 많을 때: 같은 출처는 한 줄로 합친다(분류별 출처는 list_datasets 의 행에 있다). */
 function uniqueSources(store, datasets) {
@@ -130,7 +131,7 @@ function datasetCaveat(dataset) {
   const merged = dataset.mergedAreas
     ? ` 같은 시설의 위치 점과 부지 면이 겹친 ${fmt(dataset.mergedAreas)}건은 한 지점으로 셌습니다.`
     : '';
-  return `[${dataset.title}] ${dataset.coverageNote}.${merged}`.replace('..', '.');
+  return `[${dataset.title}] ${dataset.coverageNote}.${merged}${dataset.id === 'layer-public-facilities' ? ` ${CAVEAT_PUBLIC_SPACE}` : ''}`.replace('..', '.');
 }
 
 function notConnectedText(dataset) {
@@ -316,7 +317,9 @@ function findFacilities(store, args) {
   ].filter(Boolean).join(', ');
   return {
     ok: true,
-    summary: `${where} 조건에서 '${dataset.title}' 자료에 수록된 지점은 ${fmt(total)}곳입니다(부분 자료 기준${total > shown.length ? `, ${fmt(shown.length)}곳만 표시` : ''}).`,
+    summary: dataset.id === 'layer-public-facilities'
+      ? `${where} 조건에서 '${dataset.title}' 자료에 수록된 공간은 ${fmt(total)}개입니다(부분 자료 기준${total > shown.length ? `, ${fmt(shown.length)}개만 표시` : ''}). ${CAVEAT_PUBLIC_SPACE}`
+      : `${where} 조건에서 '${dataset.title}' 자료에 수록된 지점은 ${fmt(total)}곳입니다(부분 자료 기준${total > shown.length ? `, ${fmt(shown.length)}곳만 표시` : ''}).`,
     data: {
       category: dataset.id,
       title: dataset.title,
@@ -729,6 +732,12 @@ function workBrief(store, args) {
       return [category, title];
     });
   }
+  // Category order also controls the primary result rows; rooms/halls lead when requested.
+  const isPublicSpace = ([category]) => {
+    try { return resolveCategory(store, category).id === 'layer-public-facilities'; }
+    catch (error) { if (!(error instanceof SpatialError)) throw error; return false; }
+  };
+  if (isCivicTheme(args.theme)) datasets = [...datasets].sort((a, b) => Number(isPublicSpace(b)) - Number(isPublicSpace(a)));
   const checks = [];
   const add = (name, title, input, run) => {
     let result;
@@ -747,15 +756,16 @@ function workBrief(store, args) {
   }
   const successful = checks.filter(c => c.result.ok);
   const gap = checks.find(c => c.tool === 'coverage_gap' && c.result.ok);
-  const primary = gap?.result.map?.highlight?.features?.length ? gap : checks.find(c => c.result.map?.highlight?.features?.length);
+  const publicSpace = checks.find(c => c.result.data?.category === 'layer-public-facilities');
+  const primary = gap?.result.map?.highlight?.features?.length ? gap : publicSpace || checks.find(c => c.result.map?.highlight?.features?.length);
   const allPoints = successful.flatMap(c => c.result.map?.highlight?.features || []);
   const seen = new Set();
   const features = (primary?.tool === 'coverage_gap' ? primary.result.map.highlight.features : allPoints)
     .filter(f => {const key = `${f.properties?.category}|${f.properties?.id}`; if (seen.has(key)) return false; seen.add(key); return true;}).slice(0, MAX_HIGHLIGHT);
   const sources = new Map();
   for (const c of checks) for (const s of c.result.sources || []) sources.set(`${s.name}|${s.date}`, s);
-  const missingData = [...checks.filter(c => !c.result.ok).map(c => `${c.title}: 수록자료 미확인·미연결`), ...theme.missingData];
-  const basis = '공개 수록자료의 조회·공간계산 결과입니다. 실시간 관측·전수조사·위험 예측이나 최적 입지 결정이 아닙니다.';
+  const missingData = [...checks.filter(c => !c.result.ok).map(c => `${c.title}: 수록자료 미확인·미연결`), ...(publicSpace ? ['공간별 현재 운영시간·예약·휴관·사용 승인 여부'] : []), ...theme.missingData];
+  const basis = `${publicSpace ? '회의실·강당 등 공공공간을 우선 조회하며, 함께 제시한 공원·교통 등은 주변 참고자료입니다. ' : ''}공개 수록자료의 조회·공간계산 결과입니다. 실시간 관측·전수조사·위험 예측이나 최적 입지 결정이 아닙니다.`;
   return {
     ok: successful.length > 0,
     summary: `${dong?.name || '서구 전체'} ${theme.title}. ${checks.map(c => c.result.summary).join(' ')}`,
@@ -763,7 +773,7 @@ function workBrief(store, args) {
       title: theme.title, scope: dong?.name || '서구 전체', theme: args.theme, basis,
       ...(isCivicTheme(args.theme) ? {categorySelection: args.categories ? 'mentioned' : 'theme-default'} : {}),
       evidence: checks.map(c => ({title: c.title, tool: c.tool, args: c.args, summary: c.result.summary, ok: c.result.ok})),
-      nextActions: theme.nextActions, missingData,
+      nextActions: publicSpace ? ['수록 공간의 운영·예약 조건을 관리 주체에게 확인하고, 공공공간 검토에서 확인 기록과 변경안을 같은 요일·시간으로 비교합니다.', ...theme.nextActions] : theme.nextActions, missingData,
       rows: primary?.result.data?.rows?.slice(0, 12) || [],
       ...(gap ? {comparison: {radiusM: gap.result.data.radiusM, targets: gap.result.data.targets, uncovered: gap.result.data.uncovered}} : {}),
     },

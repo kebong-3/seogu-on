@@ -1,6 +1,7 @@
 // 신규 업무 검토: 실제 fixture 시설 조회 + 모의 AI. 외부 제공기관 성공 검증과 구분한다.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {callTool, TOOLS} from '../server/spatial/tools.js';
 import {answerByRules} from '../server/ai/rules.js';
@@ -12,6 +13,7 @@ const dataDir = fileURLToPath(new URL('./fixtures/spatial/data/', import.meta.ur
 const ctx = {dataDir, env: {}};
 const input = (question, reviewContext, dong = null) => ({question, dong, previousQuestions: [], ...(reviewContext ? {reviewContext} : {})});
 const says = text => ({ok: true, status: 200, json: async () => ({candidates: [{content: {parts: [{text}]}, finishReason: 'STOP'}]})});
+const publicSpaces = JSON.parse(readFileSync(new URL('../public/data/layers/public-facilities.geojson', import.meta.url), 'utf8'));
 
 async function post(body) {
   const res = {statusCode: 200, setHeader() {}, end(text) {this.body = JSON.parse(text);}};
@@ -38,6 +40,80 @@ test('마을·공간 업무의 자연어 질문을 기존 시설 수 비교와 �
   }
   const simple = await answerByRules('가람동과 나래동 버스정류장 수 비교해줘', {}, {dataDir});
   assert.equal(simple.intent, 'compare_dongs', '기존 시설 비교 질문의 의미를 바꾸지 않는다');
+});
+
+test('운영 회귀: 주민 모임 공공공간 질문은 실제 풍암동 회의실·강당 자료를 우선한다', async () => {
+  const question = '풍암동에서 주민 모임에 쓸 공공공간 자료와 확인할 점을 알려줘';
+  const r = await answerQuestion(input(question), {env: {}});
+  const expected = publicSpaces.features.filter(f => f.properties.dongName === '풍암동');
+  assert.ok(expected.length > 0, '수록 원자료에 실제 풍암동 공간이 있다');
+  assert.equal(r.mode, 'rules', '실제 AI 호출 없이 규칙 조회 경로를 검증한다');
+  assert.equal(r.steps[0].args.theme, 'reuse');
+  assert.deepEqual(r.steps[0].args.categories, ['layer-public-facilities']);
+  assert.equal(r.brief.scope, '풍암동');
+  assert.deepEqual(r.map.highlight.features.map(f => f.properties.id).sort(), expected.map(f => f.properties.id).sort());
+  assert.ok(r.map.highlight.features.every(f => f.properties.category === 'layer-public-facilities'));
+  for (const feature of expected) assert.ok(r.answer.includes(feature.properties.name));
+  assert.ok(r.sources.some(s => s.name.includes('전국공공시설개방정보표준데이터')));
+  assert.match(r.answer, /현재 이용 가능한 공간 수가 아닙니다/);
+  assert.match(r.answer, /예약·휴관·사용 승인/);
+  assert.ok(r.brief.nextActions.some(action => /공공공간 검토.*같은 요일·시간/.test(action)));
+  assert.doesNotMatch(r.answer, /(?:이용|예약|대관) 가능한 공간은 \d/);
+});
+
+test('공공공간·주민 모임·회의실·강당·대관 표현은 공공시설 개방정보로 연결한다', async () => {
+  for (const word of ['공공공간', '개방공간', '주민 모임', '회의실', '강당', '대관']) {
+    const r = await answerByRules(`풍암동 ${word} 자료와 확인할 점을 알려줘`);
+    assert.equal(r.steps[0].args.categories?.[0] || r.steps[0].args.category, 'layer-public-facilities', word);
+    assert.ok(r.results[0].result.data.rows.length > 0, word);
+    assert.ok(r.results[0].result.data.rows.every(row => row.category === 'layer-public-facilities'), word);
+    const direct = await callTool('find_facilities', {category: word, dong: '풍암동'});
+    assert.equal(direct.data.category, 'layer-public-facilities', word);
+    assert.ok(direct.caveats.some(note => /현재 이용 가능한 공간 수가 아닙니다/.test(note)), word);
+  }
+});
+
+test('공공공간은 앞서 언급한 주변 분류 때문에 4개 조회 한도에서 빠지지 않는다', async () => {
+  const r = await answerByRules('풍암동 공원·놀이터·버스정류장·주차장 주변에서 주민 모임에 쓸 공공공간을 검토해줘');
+  assert.equal(r.steps[0].args.categories.length, 4);
+  assert.equal(r.steps[0].args.categories[0], 'layer-public-facilities');
+  assert.ok(r.steps[0].args.categories.includes('layer-parks'));
+  const result = r.results[0].result;
+  assert.ok(result.data.rows.every(row => row.category === 'layer-public-facilities'));
+  assert.equal(result.map.highlight.features[0].properties.category, 'layer-public-facilities');
+  assert.match(result.data.basis, /공공공간을 우선.*주변 참고자료/);
+});
+
+test('공간 검토 기본값과 직접 도구 조회도 공공공간을 먼저 제시하며 명시한 공원 설계는 유지한다', async () => {
+  for (const args of [{theme: 'space', dong: '풍암동'}, {theme: 'reuse', dong: '풍암동', categories: ['공원', '공공공간']}]) {
+    const r = await callTool('work_brief', args);
+    assert.ok(r.data.rows.length > 0);
+    assert.ok(r.data.rows.every(row => row.category === 'layer-public-facilities'));
+    assert.equal(r.map.highlight.features[0].properties.category, 'layer-public-facilities');
+    assert.match(r.data.evidence[0].summary, /공공시설 개방정보/);
+  }
+  const park = await answerByRules('풍암동 공원 재설계 대안을 검토해줘');
+  assert.deepEqual(park.steps[0].args.categories, ['layer-parks']);
+  assert.equal(park.steps[0].args.theme, 'space');
+  assert.match(systemInstruction([]), /공공시설 개방정보\(layer-public-facilities\).*우선/);
+});
+
+test('공공공간 질문의 AI 요약에도 실제 공간 이름과 이용 여부 미확인 근거를 전달한다', async () => {
+  const requests = [];
+  const r = await answerQuestion(input('풍암동에서 주민 모임에 쓸 공공공간 자료와 확인할 점을 알려줘'), {
+    env: {GEMINI_API_KEY: 'mock-key'}, fetcher: async (_url, init) => {
+      requests.push(JSON.parse(init.body));
+      return says('풍암동의 공공시설 개방정보에는 풍암동행정복지센터회의실 등이 수록되어 있습니다. 현재 이용 가능 여부는 확인되지 않았으므로 예약·휴관·사용 승인을 관리 주체에게 확인하세요.');
+    },
+  });
+  assert.equal(r.mode, 'llm');
+  assert.equal(r.analysisPath, 'grounded-summary');
+  assert.equal(requests.length, 1, '모의 응답만 사용한다');
+  const message = requests[0].contents[0].parts[0].text;
+  assert.match(message, /layer-public-facilities/);
+  assert.match(message, /풍암동행정복지센터회의실/);
+  assert.match(message, /현재 이용 가능한 공간 수가 아닙니다/);
+  assert.ok(r.map.highlight.features.every(f => f.properties.category === 'layer-public-facilities'));
 });
 
 test('명시한 시설 종류만 조회하고 지도·건수는 실제 fixture 결과를 쓴다', async () => {
