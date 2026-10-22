@@ -229,5 +229,35 @@
     "ui-home 12 passed",
     "v061 10 passed",
     "scene.js / experience.js / app.js syntax passed"
-  ]
+  ],
+  "productionSmoke": {
+    "date": "2026-10-22",
+    "commit": "4d3249b7e8a5d3bdafe03f86d14418864a947456",
+    "deployment": "Bta4vnt93gaNQCpEzQTgiEWhwrWn",
+    "url": "https://seogu-on.vercel.app/",
+    "browser": "Chrome cloud browser, 1363x936",
+    "mapMode": "boundary",
+    "passed": [
+      "region18_spaces58",
+      "field_record_save",
+      "scenario_save",
+      "same_condition_comparison",
+      "live_ai_gemini_3.8_flash",
+      "field_update_recalculation",
+      "historical_snapshot_preserved",
+      "html_export",
+      "json_export_import_merge",
+      "pilot_initial_empty",
+      "pilot_small_sample_unscored",
+      "pilot_void_history_csv"
+    ],
+    "notVerified": [
+      "VWorld 3D rendering",
+      "WebGL model rendering",
+      "real employee impact",
+      "real second-region rollout",
+      "two live model providers"
+    ],
+    "syntheticOnly": true
+  }
 }

@@ -51,7 +51,7 @@ export function spaceComparisonHtml(comparison) {
   const alternatives = comparison.alternatives || [];
   const columns = [{...baseline, name: '현재 확인한 현황', baseline: true}, ...alternatives];
   const metric = (label, fn) => `<tr><th scope="row">${label}</th>${columns.map(column => `<td>${fn(column)}</td>`).join('')}</tr>`;
-  return `<div class="space-table-wrap" tabindex="0" role="region" aria-label="현재 현황과 변경안 비교표"><table class="space-comparison"><caption>같은 요일·시간·공간으로 비교</caption><thead><tr><th scope="col">검토 항목</th>${columns.map(column => `<th scope="col">${esc(column.name || '변경안')}<small>${column.baseline ? '담당자 확인 기준' : '입력한 변경 가정'}</small></th>`).join('')}</tr></thead><tbody>`
+  return `<div class="space-table-wrap" tabindex="0" role="region" aria-label="현재 현황과 변경안 비교표"><table class="space-comparison${columns.length <= 2 ? ' is-compact' : ''}"><caption>같은 요일·시간·공간으로 비교</caption><thead><tr><th scope="col">검토 항목</th>${columns.map(column => `<th scope="col">${esc(column.name || '변경안')}<small>${column.baseline ? '담당자 확인 기준' : '입력한 변경 가정'}</small></th>`).join('')}</tr></thead><tbody>`
     + metric('요청 시간 개방 조건 충족', column => `${number(column.eligibleCount)}개`)
     + metric('운영 조건 미확인', column => `${number(column.unknownCount)}개`)
     + metric('요청 조건에 맞지 않음', column => `${number(column.unavailableCount)}개`)
@@ -292,7 +292,15 @@ export function installSpaceTwin(api, options = {}) {
       selected.push(...missing); invalidate(); drawCandidates(); render();
     }),
     registerAction('space-explain', explain),
-    registerAction('space-save-snapshot', () => { if (!lastComparison || restoredSnapshot) return; const comparison = calculate(); persist(saveSnapshot(workspace, comparison, {name: `${DAYS[comparison.query.dayOfWeek - 1]}요일 ${comparison.query.start}–${comparison.query.end} · ${comparison.selectedCount}개`})); api.toast('현재 비교 결과를 저장했습니다. 이후 현황이 바뀌어도 당시 결과는 보존됩니다.'); render(); }),
+    registerAction('space-save-snapshot', () => {
+      if (!lastComparison || restoredSnapshot) return;
+      const previousComparison = lastComparison, previousAi = aiResult;
+      const comparison = calculate();
+      persist(saveSnapshot(workspace, comparison, {name: `${DAYS[comparison.query.dayOfWeek - 1]}요일 ${comparison.query.start}–${comparison.query.end} · ${comparison.selectedCount}개`}));
+      // Keep the current explanation only when the refreshed facts still match; snapshots store calculations alone.
+      if (previousAi?.answer && sameSpaceComparison(previousComparison, comparison)) aiResult = previousAi;
+      api.toast('현재 비교 결과를 저장했습니다. 이후 현황이 바뀌어도 당시 결과는 보존됩니다.'); render();
+    }),
     registerAction('space-restore-snapshot', button => { const snapshot = workspace.snapshots.find(item => item.id === button.dataset.id); if (!snapshot) return; collectQuery(); invalidate(); lastComparison = snapshot.comparison; restoredSnapshot = snapshot; step = 'compare'; render(); }),
     registerAction('space-report', () => { if (!lastComparison) return; download(`서구온_공공공간_검토보고서_${dateNow()}.html`, spaceReportHtml({profile, comparison: lastComparison, ai: aiResult}), 'text/html;charset=utf-8'); }),
     registerAction('space-backup', backup),

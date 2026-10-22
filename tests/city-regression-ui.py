@@ -5,10 +5,15 @@ from pathlib import Path
 import json,re,os,traceback,csv,io,shutil
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/v061/regression-ui';OUT.mkdir(parents=True,exist_ok=True)
-SOURCES={'/'+p.relative_to(ROOT).as_posix():p.read_text() for p in (ROOT/'src').rglob('*.js')}
+SOURCES={'/'+p.relative_to(ROOT).as_posix():p.read_text() for folder in ('src','shared') for p in (ROOT/folder).rglob('*.js')}
 FIXTURES={'/data/'+p.relative_to(ROOT/'public/data').as_posix():json.loads(p.read_text()) for p in (ROOT/'public/data').rglob('*') if p.is_file() and p.suffix in ['.json','.geojson']}
+FIXTURES['/api/region-profile']={'ok':True,'profile':FIXTURES['/data/regions/seogu.json']}
 FIXTURES['/api/city-config']={'version':'0.4.0','configured':{'weather':True,'air':True},'accidentYear':'2024'}
-HTML=(ROOT/'index.html').read_text();HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+((ROOT/'src/city/style.css').read_text()+'\n'+(ROOT/'src/city/appearance.css').read_text()+'\n'+(ROOT/'src/city/identity.css').read_text())+'</style></head>')
+HTML=(ROOT/'index.html').read_text()
+# Preserve the deployed stylesheet order, including the current layout and work panels.
+CSS_PATHS=re.findall(r'''<link\b[^>]*href=["'](/[^"']+\.css)["'][^>]*>''',HTML)
+CSS='\n'.join((ROOT/path.lstrip('/')).read_text() for path in CSS_PATHS)
+HTML=re.sub(r'<link[^>]*>','',HTML);HTML=re.sub(r'<script[^>]*></script>','',HTML);HTML=HTML.replace('</head>','<style>'+CSS+'</style></head>')
 LOADER=r'''async ({sources,fixtures})=>{
 window.__testRequests=[];window.__fixtureMode=true;
 window.fetch=async u=>{const url=new URL(String(u),'https://test.invalid'),k=url.pathname;window.__testRequests.push(k+url.search);let b=fixtures[k];
@@ -28,7 +33,13 @@ def click(p,s):
  # v0.6 moved graphics into appearance and 2D climate into the native-sun panel.
  if s=='[data-action=graphics]' and not p.locator(s).count():click(p,'[data-action=appearance]')
  if s=='[data-action=climate]' and not p.locator(s).count():click(p,'[data-action=native-sun]')
- p.locator(s).first.click();p.wait_for_timeout(100)
+ # Tools now live in a collapsed menu; use the visible route rather than a hidden duplicate.
+ if not p.locator(s+':visible').count() and p.locator('#home-more-list').locator(s).count():
+  if not p.locator('#district-panel').is_visible():
+   if p.locator('#detail-panel').is_visible():p.locator('[data-action=close-detail]').click()
+   p.locator('#show-panels').click()
+  if p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
+ p.locator(s+':visible').first.click();p.wait_for_timeout(100)
 def count(p,t):return int(re.search(r'\d+',p.locator('#'+t+'-count').inner_text()).group())
 def infra(p,id):click(p,'[data-action=infra]');click(p,f'[data-action=infra-select][data-id="{id}"]')
 def boot(p):
@@ -41,7 +52,9 @@ with sync_playwright() as pw:
  print('BROWSER READY',flush=True)
  p=b.new_page(viewport={'width':1440,'height':960},accept_downloads=True);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  try:
-  boot(p);ck('Boundary clearly NOT 3D','3D 아님' in p.locator('#engine-state').inner_text());ck('All18 dong controls',p.locator('.dong-button').count()==18);ck('Baseline parks retained',count(p,'point')==87 and count(p,'area')==94)
+  boot(p);ck('Boundary clearly NOT 3D','3D 아님' in p.locator('#engine-state').inner_text());ck('All18 dong controls',p.locator('.dong-button').count()==18)
+  # Boot may show received shelter snapshots; the park-data regression uses an explicit park selection.
+  click(p,'[data-action=preset][data-id=parks]');ck('Park preset retains87points94areas',count(p,'point')==87 and count(p,'area')==94)
   click(p,'[data-action=infra]');ck('Infrastructure categories searchable',p.locator('.infra-card').count()>=30);p.locator('#infra-search').fill('학교');ck('Category name filter',p.locator('.infra-card').count()==2);p.locator('#infra-search').fill('');click(p,'[data-action=infra-select][data-id=school]');ck('School dataset52point52polygons',count(p,'point')==52 and count(p,'area')==52);ck('Solo selection hides park layers',not p.locator('[data-layer=parks]').is_checked());ck('Point versus area disclosure','합계가 실제 시설 수가 아닙니다' in p.locator('#detail-body').inner_text());p.screenshot(path=str(OUT/'school-boundary-NOT-3D.png'))
   click(p,'[data-action=dong][data-id=seogu-07]');p.wait_for_timeout(100);ck('Dong selection retained with infrastructure','치평동' in p.locator('#scope-title').inner_text());ck('Dong schools subset',0<count(p,'point')<52 and count(p,'area')<52);click(p,'.overview-card');p.wait_for_timeout(100);ck('Overview restores selected school layer',count(p,'point')==52)
   infra(p,'sports');ck('Sports only locations14areas110',count(p,'point')==14 and count(p,'area')==110);ck('School hidden after sports',not p.locator('[data-layer=infra-school]').is_checked())

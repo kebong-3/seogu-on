@@ -42,7 +42,8 @@ MEASURE = '''() => {
   return { scrollWidth: document.documentElement.scrollWidth, iw, outside, small,
     ribbon: [ribbon.scrollWidth, ribbon.clientWidth], readings: [...ribbon.querySelectorAll('.live-reading')].map(e => box('#' + (e.querySelector('strong').id))).filter(Boolean).length,
     dock: box('.bottom-dock'), camera: box('.camera-controls'), panel: box('#district-panel'), detail: box('#detail-panel'), opener: box('#show-panels'),
-    primary: [...document.querySelectorAll('.home-primary .home-card')].filter(visible).map(e => e.dataset.action) };
+    primary: [...document.querySelectorAll('.home-primary .home-card')].filter(visible).map(e => e.dataset.action),
+    workflows: [...document.querySelectorAll('.home-workflows .home-card')].filter(visible).map(e => e.dataset.action) };
 }'''
 
 
@@ -75,7 +76,8 @@ def run(page, base, width, height):
         m = page.evaluate(MEASURE)
         check(f'{tag}: open drawer hides dock and camera buttons instead of overlapping', m['panel'] and m['dock'] is None and m['camera'] is None, [m['dock'], m['camera']])
         check(f'{tag}: drawer fits the viewport', m['panel'][0] >= 0 and m['panel'][2] <= width, m['panel'])
-    check(f'{tag}: at most three primary entry points, heat planning first', m['primary'] == ['heat-plan', 'ask-ai', 'infra'], m['primary'])
+    check(f'{tag}: four primary entry points, public spaces and civic review first', m['primary'] == ['space-twin', 'civic-review', 'ask-ai', 'infra'], m['primary'])
+    check(f'{tag}: seasonal response and field checks remain in their own menu', m['workflows'] == ['heat-plan', 'cold-plan', 'icing-plan', 'flood-plan', 'school-plan'], m['workflows'])
     check(f'{tag}: side panel list scrolls independently', page.evaluate("(() => { const e = document.getElementById('sidebar-scroll'); return getComputedStyle(e).overflowY === 'auto' && e.scrollHeight > e.clientHeight; })()"))
 
     check(f'{tag}: 더 보기 starts collapsed', page.get_attribute('#home-more-toggle', 'aria-expanded') == 'false' and not page.is_visible('#home-more-list'))
@@ -87,7 +89,7 @@ def run(page, base, width, height):
     page.screenshot(path=str(OUT / f'home-{width}.png'))
 
     # 대표 업무: 대안 비교 → 담당자 기록 → 보고서. 비용 미입력은 미산정.
-    page.click('[data-action=heat-plan]')
+    page.click('.home-workflows [data-action=heat-plan]')
     page.select_option('#heat-plan-form [name=scopeId]', label='풍암동')
     page.click('[data-action=heat-plan-calculate]')
     page.wait_for_selector('#hp-results-title')
@@ -124,7 +126,7 @@ def run(page, base, width, height):
         page.click('[data-action=close-detail]')
     if compact and not page.is_visible('#district-panel'):
         page.click('#show-panels')
-    page.click('.home-primary [data-action=heat-plan]')
+    page.click('.home-workflows [data-action=heat-plan]')
 
     # 기존 그림자 검토 기능도 계속 도달할 수 있다.
     page.click('[data-action=heat-shade]')

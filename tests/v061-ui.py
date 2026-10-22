@@ -5,14 +5,19 @@ from pathlib import Path
 import json,re,base64,shutil,traceback
 from playwright.sync_api import sync_playwright
 R=Path(__file__).resolve().parents[1];OUT=R/'docs/v061/ui';OUT.mkdir(parents=True,exist_ok=True)
-sources={'/'+p.relative_to(R).as_posix():p.read_text() for p in (R/'src').rglob('*.js')}
+sources={'/'+p.relative_to(R).as_posix():p.read_text() for folder in ('src','shared') for p in (R/folder).rglob('*.js')}
 fixtures={'/data/'+p.relative_to(R/'public/data').as_posix():json.loads(p.read_text()) for p in (R/'public/data').rglob('*') if p.suffix in ['.json','.geojson']}
+fixtures['/api/region-profile']={'ok':True,'profile':fixtures['/data/regions/seogu.json']}
 brands=json.loads((R/'public/brand/dongs.json').read_text())
 def image(path):return 'data:image/png;base64,'+base64.b64encode((R/'public'/path.lstrip('/')).read_bytes()).decode()
 for b in brands['items']:b['asset']=image(b['asset'])
 fixtures['/brand/dongs.json']=brands
 fixtures['/api/city-config']={'version':'0.6.0','configured':{'vworld3d':False,'vworldRest':False,'sd-cold':True,'sd-heat':True,'sd-road':True}}
-html=(R/'index.html').read_text();html=re.sub(r'<link[^>]*>','',html);html=re.sub(r'<script[^>]*></script>','',html);html=html.replace('</head>','<style>'+('\n'.join((R/f'src/city/{n}').read_text() for n in ['style.css','appearance.css','identity.css']))+'</style></head>')
+html=(R/'index.html').read_text()
+# Preserve the deployed stylesheet order, including the current layout and work panels.
+css_paths=re.findall(r'''<link\b[^>]*href=["'](/[^"']+\.css)["'][^>]*>''',html)
+css='\n'.join((R/path.lstrip('/')).read_text() for path in css_paths)
+html=re.sub(r'<link[^>]*>','',html);html=re.sub(r'<script[^>]*></script>','',html);html=html.replace('</head>','<style>'+css+'</style></head>')
 for n in ['seogu-slogan.png','seogu-ci.png']:html=html.replace('/brand/'+n,image('/brand/'+n))
 html=html.replace('/brand/seogu-on-symbol.svg','data:image/svg+xml;base64,'+base64.b64encode((R/'public/brand/seogu-on-symbol.svg').read_bytes()).decode())
 # Runtime-generated welcome image also remains a local byte-identical image in the offline test.
@@ -35,7 +40,13 @@ results=[]
 def ck(name,ok,detail=None):
  results.append({'name':name,'passed':bool(ok),'detail':detail});print(name,bool(ok),flush=True)
  if not ok:raise AssertionError(name+' '+str(detail))
-def click(p,selector):p.locator(selector).first.click();p.wait_for_timeout(100)
+def click(p,selector):
+ if not p.locator(selector+':visible').count() and p.locator('#home-more-list').locator(selector).count():
+  if not p.locator('#district-panel').is_visible():
+   if p.locator('#detail-panel').is_visible():p.locator('[data-action=close-detail]').click()
+   p.locator('#show-panels').click()
+  if p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
+ p.locator(selector+':visible').first.click();p.wait_for_timeout(100)
 def boot(p):
  p.set_default_timeout(6000);p.set_content(html,wait_until='domcontentloaded');p.evaluate(loader,{'sources':sources,'fixtures':fixtures});p.wait_for_selector('#start-card:not([hidden])');click(p,'#start-card [data-engine=boundary]');p.wait_for_selector('.boundary-canvas');p.wait_for_timeout(250)
 def box(p,sel):return p.locator(sel).bounding_box()
@@ -94,7 +105,7 @@ with sync_playwright() as pw:
   click(p,'[data-action=native-sun]');ck('existing5min control preserved','5분 단위 재생' in p.locator('#detail-body').inner_text());click(p,'[data-action=close-detail]')
   for w,h in [(1920,1080),(1440,900),(1280,720),(1024,640),(844,390),(390,844),(360,740),(320,640)]:
    p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(150)
-   if w<=600 and p.locator('.district-panel').is_hidden():click(p,'#show-panels')
+   if w<=820 and p.locator('.district-panel').is_hidden():click(p,'#show-panels')
    ck(f'sidebar vertical fit {w}x{h}',visible_inside(p,'.district-panel'),box(p,'.district-panel'))
    p.locator('.dong-button[data-id="seogu-18"]').scroll_into_view_if_needed();ck(f'last neighborhood reachable {w}x{h}',visible_inside(p,'.dong-button[data-id="seogu-18"]'))
    ck(f'brand tagline visible {w}x{h}',p.locator('.brand-tagline').is_visible())
