@@ -26,6 +26,7 @@ export async function generateCompatible({fetcher,key,model,baseUrl,body,timeout
   const request={model,messages,temperature:body.generationConfig.temperature,max_tokens:body.generationConfig.maxOutputTokens,
     tools:body.tools[0].functionDeclarations.map(d=>({type:'function',function:{name:d.name,description:d.description,parameters:schema(d.parameters)||{type:'object',properties:{}}}})),
     tool_choice:body.toolConfig.functionCallingConfig.mode==='NONE'?'none':'auto'};
+  if (!request.tools.length) { delete request.tools; delete request.tool_choice; }
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
   try {
     const response=await fetcher(`${baseUrl}/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json',...(key?{Authorization:`Bearer ${key}`}:{})},body:JSON.stringify(request),signal:controller.signal,redirect:'error'});

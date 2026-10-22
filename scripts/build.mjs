@@ -12,12 +12,13 @@ await mkdir(out, { recursive: true });
 await cp(resolve(root, 'index.html'), resolve(out, 'index.html'));
 await cp(resolve(root, 'classic.html'), resolve(out, 'classic.html'));
 await cp(resolve(root, 'src'), resolve(out, 'src'), { recursive: true });
+await cp(resolve(root, 'shared'), resolve(out, 'shared'), { recursive: true });
 await cp(resolve(root, 'public'), out, { recursive: true });
 await collectSafetySnapshots(out);
 const pkg=JSON.parse(await readFile(resolve(root,'package.json'),'utf8'));
 const digest=createHash('sha256');
 async function hashFiles(dir){for(const entry of (await readdir(dir,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){const path=resolve(dir,entry.name);if(entry.isDirectory())await hashFiles(path);else{digest.update(path.slice(root.length));digest.update(await readFile(path));}}}
-for(const dir of ['src','server','api'])await hashFiles(resolve(root,dir));
+for(const dir of ['src','shared','server','api'])await hashFiles(resolve(root,dir));
 const official=JSON.parse(await readFile(resolve(root,'public/data/city/official-collection.json'),'utf8'));
 await writeFile(resolve(out,'data/release.json'),JSON.stringify({version:pkg.version,builtAt:new Date().toISOString(),codeSha256:digest.digest('hex'),datasetVersion:`v0.8.1 official public snapshots: ${official.datasetCount} datasets / ${official.recordCount} map records; existing v0.6 local records retained. SafetyData10 and WFS66 catalogues are not received API data.`,officialCollection:{datasetCount:official.datasetCount,recordCount:official.recordCount,collectedAt:official.collectedAt,manifestSha256:createHash('sha256').update(await readFile(resolve(root,'public/data/city/official-collection.json'))).digest('hex')},meaning:'Build identifier and included public snapshot counts only. Not proof of deployed API authentication, current facility operation or source data freshness.'},null,2));
 // Never copy .env, server source, test fixtures or development files to the public bundle.

@@ -1,3 +1,4 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 /**
  * AI 연동용 단일 서버리스 함수. Vercel Hobby 의 함수 12개 제한 때문에
  * 여러 공개 경로를 이 파일 하나로 받는다(vercel.json rewrites 참고).
@@ -10,10 +11,14 @@
  */
 import { handleAsk } from '../server/ai/ask.js';
 import { handleMcp } from '../server/spatial/mcp.js';
+import {handleSpaceReview} from '../server/ai/space-review.js';
+import {handleRegionProfile} from '../server/region-profile.js';
 
 const ROUTES = {
   mcp: handleMcp,
   ask: handleAsk,
+  'space-review': handleSpaceReview,
+  'region-profile': handleRegionProfile,
 };
 
 /** rewrite 를 거친 요청(?route=)과 원래 경로(/api/mcp) 어느 쪽으로 와도 같은 경로를 고른다. */
@@ -27,6 +32,7 @@ function routeOf(req) {
 
 export default async function handler(req, res) {
   const route = routeOf(req);
+  if(['ask','mcp'].includes(route)&&!allowLegacyRegion(req,res))return;
   const handle = Object.hasOwn(ROUTES, route) ? ROUTES[route] : null;
   if (!handle) {
     res.statusCode = 404;

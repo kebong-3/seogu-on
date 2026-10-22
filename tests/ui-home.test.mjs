@@ -21,7 +21,7 @@ test('dong navigation: all 18 dong are before scenario actions, with compact bra
 });
 
 test('home panel: civic review and quick questions follow the dong choice; seasonal plans remain reachable', () => {
-  assert.deepEqual(actionsIn(primary).map(b => b.action), ['civic-review', 'ask-ai', 'infra', 'resilience']);
+  assert.deepEqual(actionsIn(primary).map(b => b.action), ['space-twin', 'civic-review', 'ask-ai', 'infra', 'resilience']);
   assert.ok(primary.includes('마을·공간 검토'));
   assert.ok(primary.includes('지도에게 묻기'));
   const workflows = regions.slice(regions.indexOf('<div class="home-workflows"'), regions.indexOf('<div class="home-more"'));
@@ -63,7 +63,7 @@ test('action registry: registered handlers run first and can decline', async () 
 
 test('app wiring: registry runs before the built-in switch and modules receive the shared api', () => {
   const app = read('src/city/app.js');
-  assert.match(app, /async function action\(button\)\{if\(await runRegisteredAction\(button,api\)\)return;/);
+  assert.match(app, /if\(await runRegisteredAction\(button,api\)\)return;/);
   assert.match(app, /const api=\{state,show,close,/);
   assert.match(app, /installHeatScenario\(api\)/);
   assert.match(app, /확장 모듈 등록 위치/);

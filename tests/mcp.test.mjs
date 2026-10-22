@@ -239,6 +239,6 @@ test('배포 설정: 함수 12개 이하, rewrites, includeFiles, dev 서버 경
   for (const path of Object.keys(config.functions)) assert.ok(functions.includes(path.replace('api/', '')), path);
 
   const dev = readFileSync(`${root}scripts/dev.mjs`, 'utf8');
-  assert.match(dev, /name === 'mcp' \|\| name === 'ask'/);
+  assert.match(dev, /\['mcp', 'ask', 'space-review', 'region-profile'\]\.includes\(name\)/);
   assert.match(dev, /'city-wms', 'ai'\]/);
 });

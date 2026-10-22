@@ -1,8 +1,10 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 import {gate,send,fail,HttpError} from '../server/city/common.js';
 import {readProvider} from '../server/city/providers.js';
 import {safetyTTL} from '../server/city/safetydata.js';
 const cache=new Map(),inflight=new Map(),cooldowns=new Map();
 export default async function handler(req,res){
+ if(!allowLegacyRegion(req,res))return;
  if(!gate(req,res,150))return;
  const q=new URL(req.url,'https://local').searchParams,kind=q.get('kind'),safety=kind?.startsWith('sd-');
  const id=[kind,q.get('dong'),q.get('page'),q.get('station'),q.get('observed'),q.get('q'),q.get('pnu'),q.get('lon'),q.get('lat')].join('|');

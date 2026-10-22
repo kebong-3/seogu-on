@@ -44,7 +44,7 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
     setReading('live-rainfall', weather ? value(weather.data.values?.RN1, 'mm') : '미수신', weatherTip, !weather && failed.weather);
     const tracked = new Set(RESILIENCE_PRESETS.flatMap(p => p.layers));
     const received = [...state.entries].filter(([id, e]) => tracked.has(id) && e.state === 'loaded' && e.features?.length).length;
-    el('live-safety').textContent = `관련 자료 ${received}종`;
+    el('live-safety').textContent = state.regionProfile?.capabilities.legacySeoguServices === false ? '지역 공간자료' : `관련 자료 ${received}종`;
 
     const notes = [];
     if (weather) notes.push(`기상청 격자 ${time(weather.data.base?.base_date, weather.data.base?.base_time)}${weather.stale ? ' · 갱신 실패' : ''}`);

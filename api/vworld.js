@@ -1,5 +1,7 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 import { respond, allowRead, queryValue, safeDomain, fetchJsonLimited, upstreamMessage } from '../server/http.js';
 export default async function handler(req, res) {
+ if(!allowLegacyRegion(req,res))return;
   if (!allowRead(req, res)) return;
   const key = process.env.VWORLD_API_KEY, domain = safeDomain(process.env.VWORLD_DOMAIN || '');
   if (!key || !domain) { respond(res, 503, { ok: false, error: 'VWORLD_API_KEY와 VWORLD_DOMAIN 환경변수가 필요합니다.' }); return; }

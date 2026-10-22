@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "id": "adoption-template",
+  "name": "합성 예시 지역",
+  "fullName": "SAMPLE · 타 지역 적용 설명용 합성 예시",
+  "jurisdictionCode": "SAMPLE01",
+  "codeSystem": "SYNTHETIC",
+  "timeZone": "Asia/Seoul",
+  "bounds": [127.0, 36.0, 127.02, 36.02],
+  "center": [127.01, 36.01],
+  "boundaryUrl": "/data/regions/adoption-template/admin-boundaries.geojson",
+  "facilitiesUrl": "/data/regions/adoption-template/facilities.geojson",
+  "facilityLayerId": "public-facilities",
+  "districtCount": 2,
+  "capabilities": {"spaceTwin": true, "legacySeoguServices": false},
+  "serviceCodes": {},
+  "source": {
+    "name": "서구온 개발팀 합성 예시 · 실제 지자체 자료 아님",
+    "url": "https://github.com/kebong-3/seogu-on",
+    "asOf": "2026-10-22",
+    "note": "구조 설명용 템플릿입니다. 경계·자료를 실제 공개자료로 교체하고 출처·코드 체계를 확인해야 합니다."
+  },
+  "sample": true
+}

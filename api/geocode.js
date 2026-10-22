@@ -1,8 +1,10 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 import {readFile} from 'node:fs/promises';
 import {allowRead,queryValue,respond,upstreamMessage} from '../server/http.js';
 import {geocodePublicRecord} from '../server/geocode-service.js';
 let records;
 export default async function handler(req,res){
+ if(!allowLegacyRegion(req,res))return;
  if(!allowRead(req,res))return;
  const id=queryValue(req,'id');if(!/^address-\d{1,4}$/.test(id)){respond(res,400,{ok:false,error:'공개시설 목록의 항목 번호가 필요합니다.'});return;}
  try{

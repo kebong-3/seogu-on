@@ -135,7 +135,7 @@ function codeForStatus(status, body) {
 }
 
 /** generateContent 한 번. 실패는 모두 LlmError. */
-async function generate({ fetcher, key, model, body, timeoutMs }) {
+export async function generate({ fetcher, key, model, body, timeoutMs }) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   let response;
@@ -170,7 +170,7 @@ async function generate({ fetcher, key, model, body, timeoutMs }) {
 }
 
 /** 응답에서 글과 함수 호출을 꺼낸다. 후보가 없거나 차단된 응답은 LlmError. */
-function readCandidate(payload) {
+export function readCandidate(payload) {
   const candidate = Array.isArray(payload.candidates) ? payload.candidates[0] : null;
   if (!candidate) throw new LlmError('LLM_BAD_RESPONSE', 'AI 응답에 후보가 없습니다(차단되었을 수 있음).');
   const finish = String(candidate.finishReason || '');

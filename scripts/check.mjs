@@ -10,5 +10,5 @@ async function walk(path) {
     }
   }
 }
-for (const path of ['src', 'api', 'server', 'scripts', 'tests']) await walk(path);
+for (const path of ['src', 'shared', 'api', 'server', 'scripts', 'tests']) await walk(path);
 console.log('All JavaScript syntax checks passed.');

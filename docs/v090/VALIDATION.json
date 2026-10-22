@@ -1,0 +1,233 @@
+{
+  "files": 43,
+  "failed": 0,
+  "namedTests": 686,
+  "seconds": 8.54,
+  "results": [
+    {
+      "file": "tests/admin-plans.test.mjs",
+      "passed": true,
+      "tests": 5
+    },
+    {
+      "file": "tests/air-quality.test.mjs",
+      "passed": true,
+      "tests": 17
+    },
+    {
+      "file": "tests/api.test.mjs",
+      "passed": true,
+      "tests": 17
+    },
+    {
+      "file": "tests/ask-civic-review.test.mjs",
+      "passed": true,
+      "tests": 12
+    },
+    {
+      "file": "tests/ask-http.test.mjs",
+      "passed": true,
+      "tests": 10
+    },
+    {
+      "file": "tests/ask-llm.test.mjs",
+      "passed": true,
+      "tests": 28
+    },
+    {
+      "file": "tests/ask-model-recovery.test.mjs",
+      "passed": true,
+      "tests": 3
+    },
+    {
+      "file": "tests/ask-rules.test.mjs",
+      "passed": true,
+      "tests": 16
+    },
+    {
+      "file": "tests/ask-work-brief.test.mjs",
+      "passed": true,
+      "tests": 8
+    },
+    {
+      "file": "tests/camera-state.test.mjs",
+      "passed": true,
+      "tests": 4
+    },
+    {
+      "file": "tests/city-api.test.mjs",
+      "passed": true,
+      "tests": 27
+    },
+    {
+      "file": "tests/city-core.test.mjs",
+      "passed": true,
+      "tests": 31
+    },
+    {
+      "file": "tests/city-final.test.mjs",
+      "passed": true,
+      "tests": 40
+    },
+    {
+      "file": "tests/city-forecast.test.mjs",
+      "passed": true,
+      "tests": 4
+    },
+    {
+      "file": "tests/city-v04.test.mjs",
+      "passed": true,
+      "tests": 48
+    },
+    {
+      "file": "tests/civic-review-model.test.mjs",
+      "passed": true,
+      "tests": 15
+    },
+    {
+      "file": "tests/civic-review-ui.test.mjs",
+      "passed": true,
+      "tests": 3
+    },
+    {
+      "file": "tests/geometry.test.mjs",
+      "passed": true,
+      "tests": 24
+    },
+    {
+      "file": "tests/heat-plan.test.mjs",
+      "passed": true,
+      "tests": 9
+    },
+    {
+      "file": "tests/import.test.mjs",
+      "passed": true,
+      "tests": 11
+    },
+    {
+      "file": "tests/ingest-catalog.test.mjs",
+      "passed": true,
+      "tests": 6
+    },
+    {
+      "file": "tests/ingest-csv.test.mjs",
+      "passed": true,
+      "tests": 10
+    },
+    {
+      "file": "tests/ingest-pipeline.test.mjs",
+      "passed": true,
+      "tests": 10
+    },
+    {
+      "file": "tests/live-status.test.mjs",
+      "passed": true,
+      "tests": 1
+    },
+    {
+      "file": "tests/map-adapter.test.mjs",
+      "passed": true,
+      "tests": 2
+    },
+    {
+      "file": "tests/mcp.test.mjs",
+      "passed": true,
+      "tests": 13
+    },
+    {
+      "file": "tests/model-portability.test.mjs",
+      "passed": true,
+      "tests": 4
+    },
+    {
+      "file": "tests/pilot-measure.test.mjs",
+      "passed": true,
+      "tests": 15
+    },
+    {
+      "file": "tests/region-profile.test.mjs",
+      "passed": true,
+      "tests": 13
+    },
+    {
+      "file": "tests/region-runtime.test.mjs",
+      "passed": true,
+      "tests": 3
+    },
+    {
+      "file": "tests/space-review.test.mjs",
+      "passed": true,
+      "tests": 12
+    },
+    {
+      "file": "tests/space-twin-model.test.mjs",
+      "passed": true,
+      "tests": 27
+    },
+    {
+      "file": "tests/space-twin-ui.test.mjs",
+      "passed": true,
+      "tests": 5
+    },
+    {
+      "file": "tests/spatial-engine.test.mjs",
+      "passed": true,
+      "tests": 14
+    },
+    {
+      "file": "tests/spatial-realdata.test.mjs",
+      "passed": true,
+      "tests": 3
+    },
+    {
+      "file": "tests/ui-heat-scenario.test.mjs",
+      "passed": true,
+      "tests": 2
+    },
+    {
+      "file": "tests/ui-home.test.mjs",
+      "passed": true,
+      "tests": 12
+    },
+    {
+      "file": "tests/ui-label-layout.test.mjs",
+      "passed": true,
+      "tests": 12
+    },
+    {
+      "file": "tests/v02.test.mjs",
+      "passed": true,
+      "tests": 70
+    },
+    {
+      "file": "tests/v05.test.mjs",
+      "passed": true,
+      "tests": 49
+    },
+    {
+      "file": "tests/v06.test.mjs",
+      "passed": true,
+      "tests": 48
+    },
+    {
+      "file": "tests/v061.test.mjs",
+      "passed": true,
+      "tests": 10
+    },
+    {
+      "file": "tests/v081-icing.test.mjs",
+      "passed": true,
+      "tests": 13
+    }
+  ],
+  "scope": "Local deterministic tests; no claim of user impact, real second-region deployment or two live model providers.",
+  "targetVersion": "0.9.0",
+  "completedAt": "2026-10-22T09:24:46.196328+00:00",
+  "targetedRechecksAfterFullSuite": [
+    "region-profile 13 passed after MOIS-ADM correction",
+    "region-runtime 3 passed",
+    "ui-home 12 passed",
+    "v061 10 passed",
+    "scene.js / experience.js / app.js syntax passed"
+  ]
+}

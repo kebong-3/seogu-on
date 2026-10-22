@@ -44,8 +44,8 @@ class RequestError extends Error {
 
 /* ───────────────────────── 요청 읽기 ───────────────────────── */
 
-function parseText(text) {
-  if (Buffer.byteLength(text, 'utf8') > ASK_LIMITS.bodyBytes) throw tooLarge();
+function parseText(text, maxBytes = ASK_LIMITS.bodyBytes) {
+  if (Buffer.byteLength(text, 'utf8') > maxBytes) throw tooLarge(maxBytes);
   try {
     return JSON.parse(text);
   } catch {
@@ -53,32 +53,32 @@ function parseText(text) {
   }
 }
 
-const tooLarge = () => new RequestError(413, 'BODY_TOO_LARGE', `요청 본문은 ${ASK_LIMITS.bodyBytes / 1024}KB 이하여야 합니다.`);
+const tooLarge = (maxBytes = ASK_LIMITS.bodyBytes) => new RequestError(413, 'BODY_TOO_LARGE', `요청 본문은 ${maxBytes / 1024}KB 이하여야 합니다.`);
 
 /** 로컬 서버는 스트림, Vercel 은 미리 파싱된 req.body 를 준다. */
-async function readBody(req) {
-  if (Number(req.headers?.['content-length'] || 0) > ASK_LIMITS.bodyBytes) throw tooLarge();
+export async function readBody(req, {maxBytes = ASK_LIMITS.bodyBytes} = {}) {
+  if (Number(req.headers?.['content-length'] || 0) > maxBytes) throw tooLarge(maxBytes);
   let parsed;
   try {
     parsed = req.body;
   } catch {
     throw new RequestError(400, 'BAD_JSON', 'JSON 본문을 해석하지 못했습니다.');
   }
-  if (Buffer.isBuffer(parsed)) return parseText(parsed.toString('utf8'));
-  if (typeof parsed === 'string') return parseText(parsed);
+  if (Buffer.isBuffer(parsed)) return parseText(parsed.toString('utf8'), maxBytes);
+  if (typeof parsed === 'string') return parseText(parsed, maxBytes);
   if (parsed !== undefined && parsed !== null) {
-    if (Buffer.byteLength(JSON.stringify(parsed), 'utf8') > ASK_LIMITS.bodyBytes) throw tooLarge();
+    if (Buffer.byteLength(JSON.stringify(parsed), 'utf8') > maxBytes) throw tooLarge(maxBytes);
     return parsed;
   }
   if (typeof req[Symbol.asyncIterator] !== 'function') throw new RequestError(400, 'BAD_JSON', '요청 본문이 없습니다.');
   const chunks = [];
   let size = 0;
   for await (const chunk of req) {
-    size += chunk.length;
-    if (size > ASK_LIMITS.bodyBytes) throw tooLarge();
+    size += typeof chunk === 'string' ? Buffer.byteLength(chunk, 'utf8') : chunk.length;
+    if (size > maxBytes) throw tooLarge(maxBytes);
     chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
   }
-  return parseText(Buffer.concat(chunks).toString('utf8'));
+  return parseText(Buffer.concat(chunks).toString('utf8'), maxBytes);
 }
 
 /** 본문 검사. 이전 질문은 사용자가 쓴 것만, 짧게 몇 개만 받는다. */
@@ -103,7 +103,7 @@ function readInput(body, store) {
 /* ───────────────────────── 출처·횟수 제한 ───────────────────────── */
 
 /** 다른 사이트에서 온 요청인지(gate() 와 같은 생각: Origin 이 있으면 Host 와 같아야 한다). */
-function crossOrigin(req) {
+export function crossOrigin(req) {
   if (String(req.headers?.['sec-fetch-site'] || '').toLowerCase() === 'cross-site') return true;
   const origin = req.headers?.origin;
   if (!origin) return false;
@@ -118,7 +118,7 @@ const buckets = new Map();
 const daily = { day: '', count: 0 };
 
 /** 인스턴스 메모리 기반의 IP별 임시 제한. 전역 제한이 아니다. */
-function allowIp(req, now) {
+export function allowIp(req, now) {
   const forwarded = String(req.headers?.['x-forwarded-for'] || '').split(',')[0].trim();
   const ip = forwarded || req.socket?.remoteAddress || 'local';
   let bucket = buckets.get(ip);
@@ -138,7 +138,7 @@ function dailyLimit(env) {
 }
 
 /** 하루(한국시간) AI 호출 수를 센다. 한도를 넘으면 false. 인스턴스마다 따로 센다. */
-function takeDaily(env, now) {
+export function takeDaily(env, now) {
   const day = new Date(now + 9 * 3600 * 1000).toISOString().slice(0, 10);
   if (daily.day !== day) Object.assign(daily, { day, count: 0 });
   if (daily.count >= dailyLimit(env)) return false;

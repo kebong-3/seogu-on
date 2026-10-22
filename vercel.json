@@ -57,6 +57,14 @@
     {
       "source": "/api/ask",
       "destination": "/api/ai?route=ask"
+    },
+    {
+      "source": "/api/space-review",
+      "destination": "/api/ai?route=space-review"
+    },
+    {
+      "source": "/api/region-profile",
+      "destination": "/api/ai?route=region-profile"
     }
   ],
   "headers": [

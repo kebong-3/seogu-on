@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "id": "seogu",
+  "name": "서구",
+  "fullName": "전남광주통합특별시 서구",
+  "jurisdictionCode": "12240",
+  "codeSystem": "MOIS-ADM",
+  "timeZone": "Asia/Seoul",
+  "bounds": [126.80041086178436, 35.090942584004495, 126.90997195600762, 35.17858538932668],
+  "center": [126.855, 35.14],
+  "boundaryUrl": "/data/admin-dongs.geojson",
+  "facilitiesUrl": "/data/layers/public-facilities.geojson",
+  "facilityLayerId": "public-facilities",
+  "districtCount": 18,
+  "capabilities": {"spaceTwin": true, "legacySeoguServices": true},
+  "serviceCodes": {"taasSido": "29", "taasGugun": "140"},
+  "source": {
+    "name": "SGIS 행정동 경계 가공: vuski/admdongkor",
+    "url": "https://raw.githubusercontent.com/vuski/admdongkor/master/ver20260701/HangJeongDong_ver20260701.geojson",
+    "asOf": "2026-07-01",
+    "note": "수록 경계의 adm_cd2 앞 5자리(행정기관코드). 제공기관별 API 지역코드와 별도로 관리합니다."
+  },
+  "sample": false
+}

@@ -17,6 +17,7 @@ check('Relative module imports resolve',missing.length===0,JSON.stringify(missin
 check('Cesium license included',files.includes(resolve(dist,'vendor/cesium/LICENSE.md')));
 const port=Number(process.env.VERIFY_PORT||4197),url=`http://127.0.0.1:${port}`;
 const env={...process.env,PORT:String(port),VWORLD_BROWSER_KEY:'',VWORLD_DOMAIN:'',VWORLD_API_KEY:'',KMA_SERVICE_KEY:'',DATA_GO_KR_SERVICE_KEY:'',AIRKOREA_SERVICE_KEY:'',SAFETYDATA_SERVICE_KEY:'',SAFETYDATA_KEYS_JSON:'{}',SAFETYDATA_LOCATION_INDEX_JSON:'{}',INFRA_SOURCES_JSON:'[]'};
+Object.assign(env,{AI_PROVIDER:'google',AI_API_KEY:'',GEMINI_API_KEY:'',REGION_PROFILE:'seogu'});
 for(const key of Object.keys(env))if(/^SAFETYDATA_\d+_KEY$/.test(key))env[key]='';
 const child=spawn(process.execPath,['scripts/dev.mjs','--dist'],{cwd:root,env,stdio:['ignore','pipe','pipe']});
 try{
@@ -45,6 +46,17 @@ try{
  await route('/data/city/local-flood-history.geojson',200,b=>JSON.parse(b).features.length===468);
  await route('/data/city/source-roadmap.json',200,b=>JSON.parse(b).items.length===60);
  await route('/src/city/appearance.css',200);
+ await route('/shared/space-twin-model.js',200,(_,r)=>r.headers.get('content-type').includes('javascript'));
+ await route('/shared/region-profile.js',200);
+ await route('/shared/pilot-measure.js',200);
+ await route('/src/city/space-twin.js',200);
+ await route('/src/city/pilot-measure.js',200);
+ await route('/api/region-profile',200,b=>JSON.parse(b).profile.id==='seogu');
+ await route('/api/space-review',405);
+ const facilities=JSON.parse(await readFile(resolve(root,'public/data/layers/public-facilities.geojson'),'utf8'));
+ const assetId=`public-facilities::${facilities.features[0].properties.id}`;
+ const reviewResponse=await fetch(url+'/api/space-review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({regionId:'seogu',assetIds:[assetId],observations:{},query:{dayOfWeek:1,start:'18:00',end:'21:00'},scenarios:[]})});
+ const review=await reviewResponse.json();check('Public-space POST recomputes unknown current state',reviewResponse.status===200&&review.mode==='rules'&&review.comparison?.baseline.unknownCount===1&&review.comparison?.baseline.eligibleCount===0);
  await route('/src/city/identity.css',200);
  await route('/brand/seogu-on-symbol.svg',200,b=>b.includes('<svg'));
  await route('/brand/seogu-on-wordmark.svg',200,b=>b.includes('서구:온'));

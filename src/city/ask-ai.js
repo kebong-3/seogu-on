@@ -276,13 +276,13 @@ export function installAskAi(api) {
     const loading = view.status === 'loading';
     quickForm?.setAttribute('aria-busy', String(loading));
     if (quickButton) {
-      quickButton.disabled = loading;
+      quickButton.disabled = loading || state.regionProfile?.capabilities.legacySeoguServices === false;
       quickButton.innerHTML = loading ? '<span class="ask-spinner" aria-hidden="true"></span><span>조회 중</span>' : '묻기 <span aria-hidden="true">↗</span>';
     }
     const scope = api.label();
     const hint = document.getElementById('ask-quick-hint');
     if (hint) hint.textContent = `${scope}의 수록 자료를 기준으로 답합니다. 질문에 동 이름을 쓰면 해당 동을 조회합니다.`;
-    if (quickInput) quickInput.placeholder = state.dong === 'all' ? '예: 풍암동 마을의제 검토자료 찾아줘' : `${scope}, 무엇을 살펴볼까요?`;
+    if (quickInput) quickInput.placeholder = state.regionProfile?.capabilities.legacySeoguServices === false ? '공공공간 활용에서 조건을 선택하고 AI로 검토하세요' : state.dong === 'all' ? '예: 풍암동 마을의제 검토자료 찾아줘' : `${scope}, 무엇을 살펴볼까요?`;
   }
 
   function render({scroll = true} = {}) {
@@ -363,6 +363,8 @@ export function installAskAi(api) {
   }
 
   async function ask(question, reviewContext = null) {
+    if(!state.regionProfile||!state.scope){api.toast('지역 자료 준비가 끝난 뒤 질문하세요.');return;}
+    if(state.regionProfile?.capabilities.legacySeoguServices===false){api.toast('현재 지역은 공공공간 활용에서 대안을 선택해 AI로 검토하세요.');return;}
     const text = String(question || '').replace(/\s+/g, ' ').trim();
     if (!text) { api.toast('질문을 입력하세요.'); input()?.focus(); return; }
     if (text.length > MAX_QUESTION) { api.toast(`질문은 ${MAX_QUESTION}자 이하로 적어 주세요.`); return; }

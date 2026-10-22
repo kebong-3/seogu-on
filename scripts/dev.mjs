@@ -15,7 +15,7 @@ const server = createServer(async (req, res) => {
     if (path.startsWith('/api/')) {
       let name = path.slice(5);
       // vercel.json 의 rewrites 와 같은 규칙: /api/mcp, /api/ask → api/ai.js?route=...
-      if (name === 'mcp' || name === 'ask') {
+      if (['mcp', 'ask', 'space-review', 'region-profile'].includes(name)) {
         req.url = `/api/ai?route=${name}${url.search ? `&${url.search.slice(1)}` : ''}`;
         name = 'ai';
       }
@@ -25,7 +25,7 @@ const server = createServer(async (req, res) => {
     }
     let filePath;
     if (path === '/') filePath = resolve(base, 'index.html');
-    else if (/^\/(src|data|vendor|brand)\//.test(path) || path === '/favicon.svg' || path === '/index.html' || path === '/classic.html' || path === '/model.html') {
+    else if (/^\/(src|shared|data|vendor|brand)\//.test(path) || path === '/favicon.svg' || path === '/index.html' || path === '/classic.html' || path === '/model.html') {
       const isPublic = path.startsWith('/brand/') || path.startsWith('/vendor/') || path === '/model.html' || path.startsWith('/data/') || path === '/favicon.svg';
       filePath = resolve(base, process.argv.includes('--dist') || !isPublic ? `.${path}` : `public${path}`);
     } else { res.writeHead(404); res.end('Not found'); return; }

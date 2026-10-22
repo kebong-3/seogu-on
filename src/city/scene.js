@@ -75,7 +75,6 @@ function toggleRaster(id,visible){const existing=imagery.get(id);if(!visible){if
  if(existing||!scope)return;try{const layer=LAYER_BY_ID[id];const p=maskedProvider(C,layer,scope,dong,(id,state)=>tell('raster-state',{id,state}));const imageryLayer=viewer.imageryLayers.addImageryProvider(p);imageryLayer.alpha=.65;imagery.set(id,imageryLayer);tell('raster-state',{id,state:'requesting'});}catch{tell('raster-state',{id,state:'unsupported'});}}
 function groundPoint(position){const ray=viewer.camera.getPickRay(position),p=ray&&viewer.scene.globe.pick(ray,viewer.scene);if(!p)return null;const cart=C.Cartographic.fromCartesian(p);return [C.Math.toDegrees(cart.longitude),C.Math.toDegrees(cart.latitude)];}
 async function click(event){const hits=viewer.scene.drillPick?.(event.position,12)||[viewer.scene.pick(event.position)];const point=groundPoint(event.position);
- const cleanHit=hits.find(h=>h?.id?.cleanBuilding);if(cleanHit&&!selectionMode){tell('model-building',{building:cleanHit.id.cleanBuilding});return;}
  if(selectionMode==='hide-building'){const feature=hits.find(f=>C.Cesium3DTileFeature&&f instanceof C.Cesium3DTileFeature);if(feature){if(!hiddenFeatures.has(feature))hiddenFeatures.set(feature,feature.show);feature.show=false;tell('tool-result',{kind:'hide-building',count:hiddenFeatures.size,note:'현재 로드된 건물 객체만 숨김. 실제 건물자료 삭제가 아닙니다.'});requestRender();}else tell('tool-result',{kind:'hide-building',error:'이 건물은 공개 개별 선택 기능을 제공하지 않습니다.'});return;}
  if(selectionMode==='operation-point'||selectionMode==='operation-route'){if(!point||!scope||!inside(point,scope)){tell('map-warning',{message:'선택 구역 안에서 클릭하세요.'});return;}const tool=selectionMode;if(tool==='operation-point')selectionMode=null;tell('point',{point,tool});return;}
  if(selectionMode){if(!point||!inside(point,scope)){tell('tool-result',{kind:selectionMode,error:'선택한 서구 구역 안에서 지점을 선택하세요.'});return;}
@@ -83,6 +82,7 @@ async function click(event){const hits=viewer.scene.drillPick?.(event.position,1
   selectionMode=null;mark(point,'선택 지점');tell('point',{point,tool:mode});if(mode==='slope')await terrainSlope(point);if(mode==='place-model')await placeModel(point);return;
  }
  for(const hit of hits){const e=hit?.id;if(!e)continue;const layer=property(e,'layerId'),id=property(e,'facilityId');if(layer&&layer!=='dong'&&layer!=='mask'&&id){tell('select',{id,layer});return;}}
+ const cleanHit=hits.find(h=>h?.id?.cleanBuilding);if(cleanHit&&!selectionMode){tell('model-building',{building:cleanHit.id.cleanBuilding});return;}
  for(const hit of hits){const e=hit?.id;if(property(e,'layerId')==='dong'){const id=property(e,'dongId');if(id){tell('dong',{id});return;}}}
  if(point&&admin&&inside(point,admin))tell('point',{point,tool:null});
 }

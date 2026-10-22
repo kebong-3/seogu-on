@@ -1,7 +1,9 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 import { allowRead, queryValue, respond, upstreamMessage } from '../server/http.js';
 import { sourcesFromEnv, publicCatalog } from '../server/catalog.js';
 import { readLayerPage } from '../server/layer-service.js';
 export default async function handler(req,res){
+ if(!allowLegacyRegion(req,res))return;
   if(!allowRead(req,res))return;
   const id=queryValue(req,'id');
   try {

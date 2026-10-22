@@ -8,10 +8,10 @@ export function normalizeAppearance(v={}){return {finish:FINISHES.includes(v.fin
 export function createExperience(api){
  const s=api.state,safety=createSafetyHub(api);let prefs=normalizeAppearance(),brands=[],sources=[],lastDong=null;
  try{prefs=normalizeAppearance(JSON.parse(localStorage.getItem('seoon:appearance:v06')||'{}'));}catch{}
- function apply(save=true){document.documentElement.dataset.uiTheme=prefs.theme;document.documentElement.dataset.uiFinish=prefs.finish;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',prefs.theme==='night'?'#11233e':'#063b88');document.documentElement.dataset.biVisible=String(prefs.brands);const chosen=$('selected-bi');if(chosen)chosen.hidden=!prefs.brands;
+ function apply(save=true){document.documentElement.dataset.uiTheme=prefs.theme;document.documentElement.dataset.uiFinish=prefs.finish;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',prefs.theme==='night'?'#11233e':'#063b88');document.documentElement.dataset.biVisible=String(prefs.brands);const chosen=$('selected-bi');if(chosen)chosen.hidden=!prefs.brands||s.regionProfile?.capabilities.legacySeoguServices===false;
   api.send({type:'appearance',options:prefs});if(save)try{localStorage.setItem('seoon:appearance:v06',JSON.stringify(prefs));}catch{api.toast('이 브라우저는 화면 설정 저장을 허용하지 않습니다. 현재 화면에는 적용했습니다.');}}
  function tab(id){if(!['regions','layers'].includes(id))return;for(const name of ['regions','layers']){$('sidebar-'+name).hidden=name!==id;$('tab-'+name).setAttribute('aria-selected',String(name===id));}$('sidebar-scroll').scrollTop=0;}
- function brand(){if(!brands.length)return;const b=brands.find(b=>b.id===s.dong),box=$('selected-bi');if(!box)return;
+ function brand(){if(s.regionProfile?.capabilities.legacySeoguServices===false){const box=$('selected-bi');if(box)box.hidden=true;return;}if(!brands.length)return;const b=brands.find(b=>b.id===s.dong),box=$('selected-bi');if(!box)return;
   box.innerHTML=b?`<img src="${esc(b.asset)}" alt="${esc(b.title)}"><span>${esc(b.title)}</span>`:'<img src="/brand/seogu-slogan.png" alt="함께서구 우뚝서구"><span>18개 동, 서로 다른 마을의 개성</span>';
   box.hidden=!prefs.brands;document.querySelector('.scene-caption')?.style.setProperty('--scope-color',s.dongs.find(f=>f.properties.dongId===s.dong)?.properties.color||'#00a88b');for(const b of brands){const button=document.querySelector(`.dong-button[data-id="${b.id}"]`);if(button)button.title=b.title;}
   lastDong=s.dong;}

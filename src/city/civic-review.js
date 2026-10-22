@@ -27,7 +27,7 @@ const localNotice = '<p class="small civic-local-note">이 브라우저에만 �
 export function reviewFormHtml(draft, scope) {
   const theme = themeById(draft.theme);
   return `<div class="civic-panel"><div class="civic-lead"><strong>우리 동네의 의견을, 검토할 안건으로.</strong><p>주민 의견이나 사업 구상을 적으면 지도 자료를 확인하고 대안·협의 질문을 함께 정리합니다.</p></div>`
-    + '<div class="civic-inline-links"><button class="text-button" data-action="civic-notes">저장한 검토노트</button><button class="text-button" data-action="ask-ai">짧게 지도에게 묻기</button></div>'
+    + '<div class="civic-inline-links"><button class="text-button" data-action="space-twin">공공공간 운영 대안 비교</button><button class="text-button" data-action="civic-notes">저장한 검토노트</button><button class="text-button" data-action="ask-ai">짧게 지도에게 묻기</button></div>'
     + `<form id="civic-review-form"><fieldset class="civic-theme-picker"><legend>어떤 검토를 할까요?</legend><div>${REVIEW_THEMES.map(item => `<label><input type="radio" name="civic-theme" value="${item.id}"${theme.id === item.id ? ' checked' : ''}><span>${item.title}</span></label>`).join('')}</div></fieldset>`
     + `<p id="civic-theme-hint" class="civic-theme-hint">${esc(theme.hint)}</p><p class="civic-scope">선택 구역 <strong id="civic-scope-name">${esc(scope)}</strong><span>선택 구역의 수록 시설을 참고합니다.</span></p>`
     + `<label class="civic-label" for="civic-review-text">검토할 내용 <small>필수</small></label><textarea id="civic-review-text" maxlength="1200" rows="6" required placeholder="어디에서, 누구에게 필요한 일인가요? 주민 의견·현황·검토 이유를 적어 주세요. 개인정보는 제외해 주세요.">${esc(draft.text || '')}</textarea>`

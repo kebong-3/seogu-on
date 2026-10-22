@@ -1,6 +1,8 @@
+import {allowLegacyRegion} from '../server/region-compat.js';
 import { respond, allowRead, fetchJsonLimited, upstreamMessage } from '../server/http.js';
 import { extractRows, normalizeRows, validateMappingConfig } from '../server/normalize.js';
 export default async function handler(req, res) {
+ if(!allowLegacyRegion(req,res))return;
   if (!allowRead(req, res)) return;
   const settings = validateMappingConfig(process.env);
   if (settings.error) { respond(res, 503, { ok: false, error: settings.error }); return; }
