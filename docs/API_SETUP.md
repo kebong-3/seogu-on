@@ -156,3 +156,8 @@ Vercel의 서버 전용 환경변수에 서비스별로 저장합니다. 이 값
 ### 0.8.1 운영 서버 확인 결과 (2026-10-05)
 
 `seogu-on.vercel.app`의 `/api/city-config`에서 `sd-icing.configured=true`를 확인했습니다. 운영 `/api/city-data?kind=sd-icing&dong=all&page=1`은 HTTP 403과 `SAFETYDATA_32`를 반환했습니다. 웹 수신 현황에도 동일한 등록 IP 오류가 표시됩니다. 키를 저장하고 배포한 것과 제공기관에서 실제 자료를 받은 것을 구분해야 합니다. 등록 IP 조건은 변경하지 않았으며, 직접 수집한 공식 공개본 23개 관리지점은 별도로 표시됩니다.
+
+
+## 0.12 생활시설 자료 연결
+
+생활지도 수록본은 추가 키 없이 작동합니다. 어린이집 상시갱신은 `docs/CARE_DATA_SOURCES.md`, 공개 안심지킴이집 API 및 비상벨·CCTV 공개파일은 `docs/SAFETY_LIFE_SOURCES.md`를 확인하세요. 어린이집은 정보공개포털의 별도 신청·키, 안심지킴이집은 DATA_GO_KR_SERVICE_KEY와 해당 서비스 승인이 필요합니다. 여성안전 주제도는 별도 개발·승인 확인이 필요하며 기존 SAFEMAP 키 설정만으로 구현 완료가 아닙니다.

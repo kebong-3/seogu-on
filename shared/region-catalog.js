@@ -1,7 +1,7 @@
 /** Publicly selectable, reviewed deployments. Requests never supply file paths. */
 export const REGION_CATALOG = Object.freeze([
-  Object.freeze({id:'seogu',name:'서구',fullName:'전남광주통합특별시 서구',label:'서구온',scope:'공공공간 검토 · 마을의제 · 환경·재난 자료'}),
-  Object.freeze({id:'suncheon',name:'순천',fullName:'전남광주통합특별시 순천시',label:'순천 적용해보기',scope:'공공공간 조회 · 현장 확인 · 운영 대안 비교'}),
+  Object.freeze({id:'seogu',name:'서구',fullName:'전남광주통합특별시 서구',label:'서구온',scope:'정류장 그늘막 배치 · 현장점검 · 사업 후보지 비교'}),
+  Object.freeze({id:'suncheon',name:'순천',fullName:'전남광주통합특별시 순천시',label:'순천 적용해보기',scope:'횡단보도 그늘막 배치 · 학교 주변 · 사업 후보지 비교'}),
 ]);
 
 export function registeredRegionId(value) {

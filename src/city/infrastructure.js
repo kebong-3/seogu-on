@@ -38,7 +38,7 @@ const official=[
  ['pharmacy-official','약국 (공식 공개본)','건강·복지','cross','#b2d68a','official/pharmacy-official'],
  ['security-light','보안등 설치위치','생활편의','sun','#d5b473','official/security-light']
 ];
-export const OFFICIAL_LAYERS=official.map(([name,title,categoryGroup,icon,color,file])=>({id:'official-'+name,name,title,group:'공식 공개자료',categoryGroup,icon,color,kind:'point',url:`/data/city/${file}.geojson`,official:true,note:'공식 공개자료 중 서구 경계 안의 검증 좌표 · 출처·기준일·현재 운영 여부는 상세 확인'}));
+export const OFFICIAL_LAYERS=official.map(([name,title,categoryGroup,icon,color,file])=>({id:'official-'+name,name,title:name==='childcare'?'어린이집 (공식 공개현황)':title,group:'공식 공개자료',categoryGroup,icon,color,kind:'point',url:name==='childcare'?'/data/decision/seogu/childcare.geojson':`/data/city/${file}.geojson`,official:true,note:'공식 공개자료 중 서구 경계 안의 검증 좌표 · 출처·기준일·현재 운영 여부는 상세 확인'}));
 export const INFRA_CATEGORIES=[
  {id:'park',title:'공원',group:'공원·생활',icon:'tree',layers:['parks','park-areas']},
  {id:'library',title:'도서관',group:'문화·체육',icon:'book',layers:['libraries','infra-library']},

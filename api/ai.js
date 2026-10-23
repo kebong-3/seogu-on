@@ -13,12 +13,14 @@ import { handleAsk } from '../server/ai/ask.js';
 import { handleMcp } from '../server/spatial/mcp.js';
 import {handleSpaceReview} from '../server/ai/space-review.js';
 import {handleRegionProfile} from '../server/region-profile.js';
+import {handleDecisionTwin} from '../server/ai/decision-twin.js';
 
 const ROUTES = {
   mcp: handleMcp,
   ask: handleAsk,
   'space-review': handleSpaceReview,
   'region-profile': handleRegionProfile,
+  'decision-twin': handleDecisionTwin,
 };
 
 /** rewrite 를 거친 요청(?route=)과 원래 경로(/api/mcp) 어느 쪽으로 와도 같은 경로를 고른다. */

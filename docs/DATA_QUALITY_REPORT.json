@@ -1126,9 +1126,9 @@
     "boundary": "public/data/admin-dongs.geojson (기준일 2026-07-01) 18개 행정동 합집합",
     "meaning": "자동 점검 결과입니다. 찾아낸 항목을 고치거나 지우지 않았고, 현장 확인을 뜻하지 않습니다. 면 도형이 경계에 걸치는 것(partlyOutsideDistrict)은 오류가 아닐 수 있습니다.",
     "totals": {
-      "files": 66,
-      "features": 11827,
-      "coincidentPointGroups": 640,
+      "files": 68,
+      "features": 11940,
+      "coincidentPointGroups": 650,
       "duplicateIds": 0,
       "sameNameWithin30m": 231,
       "outsideDistrict": 0,
@@ -4730,6 +4730,205 @@
               "name": "이름 미등록 공원 도형"
             }
           ]
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/safety-cctv.geojson": {
+        "state": "has-data",
+        "features": 51,
+        "points": 51,
+        "sourceDate": "2023-06-21",
+        "sourceDateRange": [
+          "2023-06-21",
+          "2023-06-21"
+        ],
+        "collectedAt": "2026-10-23T17:34:18.820295+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/city/safety-emergency-bell.geojson": {
+        "state": "has-data",
+        "features": 62,
+        "points": 62,
+        "sourceDate": "2023-06-21",
+        "sourceDateRange": [
+          "2023-06-21",
+          "2023-06-21"
+        ],
+        "collectedAt": "2026-10-23T17:34:18.819115+00:00",
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 10,
+          "groupsWithSameName": 0,
+          "examples": [
+            {
+              "coordinates": [
+                126.8866743,
+                35.12875344
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900003",
+                "seogu-emergency-bell-202358100000900004"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8839229,
+                35.12937717
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900007",
+                "seogu-emergency-bell-202358100000900008"
+              ]
+            },
+            {
+              "coordinates": [
+                126.871442,
+                35.16879657
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900016",
+                "seogu-emergency-bell-202358100000900017"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8573882,
+                35.16822331
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900018",
+                "seogu-emergency-bell-202358100000900019"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8667338,
+                35.14653353
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900025",
+                "seogu-emergency-bell-202358100000900026"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8470679,
+                35.11692697
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900032",
+                "seogu-emergency-bell-202358100000900033"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8562225,
+                35.14717402
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900035",
+                "seogu-emergency-bell-202358100000900036"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8395171,
+                35.15354139
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900051",
+                "seogu-emergency-bell-202358100000900055"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8422248,
+                35.15221519
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900052",
+                "seogu-emergency-bell-202358100000900056"
+              ]
+            },
+            {
+              "coordinates": [
+                126.8398331,
+                35.15215629
+              ],
+              "ids": [
+                "seogu-emergency-bell-202358100000900053",
+                "seogu-emergency-bell-202358100000900057"
+              ]
+            }
+          ]
+        },
+        "sameNameWithin30m": {
+          "count": 0,
+          "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
         },
         "missingSourceName": {
           "count": 0,

@@ -1,0 +1,100 @@
+{
+  "regionId": "suncheon",
+  "sourceName": "한국사회보장정보원 · 어린이집정보공개포털 어린이집 기본정보",
+  "sourceUrl": "https://info.childcare.go.kr/info_html5/oais/openapi/OpenApiSlL.jsp",
+  "queryUrl": "https://info.childcare.go.kr/info_html5/stat/sheet/StatCrInfoResult.jsp",
+  "queryMethod": "POST",
+  "queryBody": "flag=crInfo&std_condi=N&sido=12&sigun=&exlChk=&offset=0&limit=2000",
+  "queryMeaning": "비정기(수시), 포털 시도 선택값 12. 코드와 원문 시군구명·주소·해당 지역 경계를 함께 확인.",
+  "sourceDate": null,
+  "sourceDateMeaning": "수시조회 화면에 자료 기준일이 따로 제공되지 않음. 수집시각을 원자료 기준일로 대체하지 않음.",
+  "collectedAt": "2026-10-23T17:32:48.964Z",
+  "rawSha256": "fe8a9613e873d73b82ecb965469b66eff9010c5508e51b50e42b244d5447e19c",
+  "receivedRows": 1639,
+  "regionRows": 159,
+  "mappedRows": 151,
+  "exclusions": [
+    {
+      "name": "가곡대광어린이집",
+      "address": "전남광주통합특별시 순천시 중앙로 530 가곡 대광로제비앙 리버팰리스 공동주택 104동 1층",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "126.977963",
+        "37.566470"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "남순천어린이집",
+      "address": "전남광주통합특별시 순천시 산행길 13 (옥천동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "127.4755253",
+        "34.95187254"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "내친구어린이집",
+      "address": "전남광주통합특별시 순천시 해룡면 평화길 85 (조례동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "127.54671149608897",
+        "34.943229602652465"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "보배어린이집",
+      "address": "전남광주통합특별시 순천시 연향2로 55 (연향동, 대우아파트) 관리동",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "127.5212858",
+        "34.94881714"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "연향삐아제어린이집",
+      "address": "전남광주통합특별시 순천시 율산길 37-13 (연향동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "127.5265402",
+        "34.94190099"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "오네뜨어린이집",
+      "address": "전남광주통합특별시 순천시 우명새길 25 (조례동, 순천오네뜨센트럴)",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "126.977963",
+        "37.566470"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "트리마제2단지어린이집",
+      "address": "전남광주통합특별시 순천시 왕조로 77 (조례동, 트리마제순천2단지)",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "126.977963",
+        "37.566470"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "포레나어린이집",
+      "address": "전남광주통합특별시 순천시 선평동선길 12",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "127.07795006268397",
+        "35.13744442196833"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    }
+  ],
+  "license": "공공누리 제1유형 · 출처표시",
+  "licenseSourceUrl": "https://www.data.go.kr/data/15013108/standard.do"
+}

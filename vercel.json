@@ -66,6 +66,10 @@
     {
       "source": "/api/region-profile",
       "destination": "/api/ai?route=region-profile"
+    },
+    {
+      "source": "/api/decision-twin",
+      "destination": "/api/ai?route=decision-twin"
     }
   ],
   "headers": [

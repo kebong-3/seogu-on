@@ -12,6 +12,7 @@
  */
 import {registerAction} from './actions.js';
 import {ASK_EXAMPLES} from './ask-examples.js';
+import {isDecisionQuestion,livingMapIntent} from '../../shared/decision-intent.js';
 import {frameFor} from './camera.js';
 import {esc} from './catalog.js';
 import {inside} from './geometry.js';
@@ -315,7 +316,7 @@ export function installAskAi(api) {
     const scope = api.label();
     const hint = document.getElementById('ask-quick-hint');
     if (hint) hint.textContent = `${scope}의 수록 자료를 기준으로 답합니다. 질문에 동 이름을 쓰면 해당 동을 조회합니다.`;
-    if (quickInput) quickInput.placeholder = state.dong === 'all' ? `${view.regionName || '선택 지역'}에서 토요일 10~12시 모임 공간 검토해줘` : `${scope}, 무엇을 살펴볼까요?`;
+    if (quickInput) quickInput.placeholder = state.dong === 'all' ? `${view.regionName || '선택 지역'}에 그늘막 3곳을 추가하면?` : `${scope}, 무엇을 살펴볼까요?`;
   }
 
   function render({scroll = true} = {}) {
@@ -401,6 +402,14 @@ export function installAskAi(api) {
     const text = String(question || '').replace(/\s+/g, ' ').trim();
     if (!text) { api.toast('질문을 입력하세요.'); input()?.focus(); return; }
     if (text.length > MAX_QUESTION) { api.toast(`질문은 ${MAX_QUESTION}자 이하로 적어 주세요.`); return; }
+    const livingIntent=!reviewContext?livingMapIntent(text,{boundaries:{features:api.state.dongs||[]}}):null;
+    if(livingIntent){
+      const currentRegion=state.regionProfile.id;
+      if((currentRegion==='seogu'&&/순천/.test(text))||(currentRegion==='suncheon'&&/서구|풍암동|치평동/.test(text))){api.toast('질문의 지역과 선택한 지역이 다릅니다. 상단에서 지역을 바꾼 뒤 조회하세요.');return;}
+      if((api.state.dongs||[]).filter(f=>text.includes(f.properties?.dongName)).length>1){api.toast('생활지도는 한 구역씩 조회합니다. 읍·면·동 하나 또는 지역 전체를 선택하세요.');return;}
+      if(quickInput)quickInput.value=text;await api.run('decision-living-map',{...livingIntent,question:text});return;
+    }
+    if (!reviewContext && isDecisionQuestion(text)) { if (quickInput) quickInput.value=text; await api.run('decision-from-question',{question:text}); return; }
     if (view.status === 'loading') { if (!open()) show({focus: false}); return; }
     const token = ++sequence;
     const requestScope = state.dong;

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko" data-ui-theme="day" data-ui-finish="depth">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#063b88"><meta name="description" content="서구의 오늘을 한눈에. 18개 행정동의 공간자료와 AI를 연결해 마을의제·공간 활용·행정 검토를 돕는 서구:온 디지털트윈"><title>서구:온 · 서구의 오늘을 한눈에</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/city/style.css"><link rel="stylesheet" href="/src/city/appearance.css"><link rel="stylesheet" href="/src/city/identity.css"><link rel="stylesheet" href="/src/city/layout.css"><link rel="stylesheet" href="/src/city/ask-ai.css"><link rel="stylesheet" href="/src/city/heat-plan.css"><link rel="stylesheet" href="/src/city/civic-review.css"><link rel="stylesheet" href="/src/city/space-twin.css"><link rel="stylesheet" href="/src/city/pilot-measure.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#063b88"><meta name="description" content="서구의 오늘을 한눈에. 18개 행정동의 공간자료와 AI를 연결해 마을의제·공간 활용·행정 검토를 돕는 서구:온 디지털트윈"><title>서구:온 · 서구의 오늘을 한눈에</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/city/style.css"><link rel="stylesheet" href="/src/city/appearance.css"><link rel="stylesheet" href="/src/city/identity.css"><link rel="stylesheet" href="/src/city/layout.css"><link rel="stylesheet" href="/src/city/ask-ai.css"><link rel="stylesheet" href="/src/city/heat-plan.css"><link rel="stylesheet" href="/src/city/civic-review.css"><link rel="stylesheet" href="/src/city/space-twin.css"><link rel="stylesheet" href="/src/city/pilot-measure.css"><link rel="stylesheet" href="/src/city/decision-twin.css"><link rel="stylesheet" href="/src/city/life-admin.css"></head>
 <body>
 <a class="skip-link" href="#district-panel">지역 선택으로 이동</a>
 <div id="app">
@@ -21,7 +21,7 @@
   </div>
   <form id="ask-quick-form" class="ask-quick" role="search" aria-label="지도에게 바로 묻기">
    <label for="ask-quick-question" class="ask-quick-label"><span aria-hidden="true">✦</span> 지도에게 묻기</label>
-   <input id="ask-quick-question" type="text" maxlength="300" autocomplete="off" enterkeyhint="search" aria-label="지도에게 바로 질문" placeholder="어디를 먼저 살펴볼까요?" aria-describedby="ask-quick-hint">
+   <input id="ask-quick-question" type="text" maxlength="300" autocomplete="off" enterkeyhint="search" aria-label="지도에게 바로 질문" placeholder="풍암동 육아시설을 보여줘 · 야간 보안등 점검할 곳은?" aria-describedby="ask-quick-hint">
    <button id="ask-quick-submit" type="submit">묻기 <span aria-hidden="true">↗</span></button>
    <span id="ask-quick-hint" class="ask-sr-only">현재 선택 구역의 자료를 찾아 답변과 지도 결과로 보여줍니다.</span>
   </form>
@@ -31,7 +31,14 @@
 <div class="sidebar-tabs" role="tablist" aria-label="지역 및 지도 정보"><button id="tab-regions" role="tab" aria-selected="true" aria-controls="sidebar-regions" data-action="sidebar-tab" data-id="regions">업무·지역</button><button id="tab-layers" role="tab" aria-selected="false" aria-controls="sidebar-layers" data-action="sidebar-tab" data-id="layers">표시 정보</button></div></header>
   <div id="sidebar-scroll" class="sidebar-scroll" tabindex="0" aria-label="업무 및 지역 선택 메뉴">
    <section id="sidebar-regions" role="tabpanel" aria-labelledby="tab-regions">
-    <div class="workspace-start"><span class="eyebrow">지금 시작할 업무</span><button class="home-card home-hero" data-action="space-twin"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>공공공간 운영안 검토</strong><small>공간 찾기 · 현장 확인 · 대안 비교</small></span><span aria-hidden="true">↗</span></button><p>상단에 목적·요일·시간을 질문해도 시작할 수 있어요.</p></div>
+    <div class="workspace-start decision-start"><span class="eyebrow">지도로 바꿔 보고, 근거로 판단하기</span>
+      <button class="home-card home-hero" data-action="decision-living-map" data-topic="care"><span class="home-card-text"><strong>우리 동네 돌봄·안심<br>어디부터 살펴볼까요?</strong><small>시설을 찾고, 점검할 곳과 보완안을 정리합니다.</small></span><span class="decision-start-arrow" aria-hidden="true">↗</span></button>
+      <div class="decision-life-shortcuts" role="group" aria-label="생활행정 업무 시작"><button data-action="decision-living-map" data-topic="care"><span aria-hidden="true">◎</span><strong>돌봄·육아시설 지도</strong><small>어린이집 · 돌봄 관련 수록자료</small></button><button data-action="decision-living-map" data-topic="safety"><span aria-hidden="true">◈</span><strong>여성안심·생활안전 지도</strong><small>보안등 · 경찰 · 비상벨 자료 확인</small></button></div>
+      <button id="decision-home-result" class="decision-home-result" data-action="decision-twin" aria-label="현재 자료로 계산한 시설 배치안 열기">현재 자료로 배치안을 계산합니다.</button>
+      <button class="decision-community-link" data-action="decision-preset" data-id="night-safety">야간 생활시설 주변 보안등 점검하기 ↗</button>
+      <div class="decision-start-links"><button data-action="decision-preset" data-id="night-safety" data-workflow="inspection"><strong>야간 현장점검 준비</strong><span>정류장 주변 보안등부터 확인</span></button><button data-action="decision-site-review"><strong>시설 보완안 비교</strong><span>같은 반경으로 두 후보 비교</span></button></div>
+      <button class="decision-community-link" data-action="decision-api-guide">추가 연결할 생활정보 API 확인 ↗</button>
+    </div>
     <button class="overview-card active" data-action="overview"><span id="overview-icon"></span><span><strong>서구 전체</strong><small>18개 행정동 한눈에</small></span><b>↗</b></button>
     <div id="dong-grid" class="dong-grid"></div>
     <div class="dong-context">선택한 동의 경계와 수록 자료를 지도에서 확인합니다. <button class="text-button" data-action="bi-gallery">동 브랜드 보기</button></div>
@@ -51,7 +58,7 @@
       </div>
       <div class="home-more" id="home-more"><button type="button" class="home-more-toggle" id="home-more-toggle" aria-expanded="false" aria-controls="home-more-list"><span>기타 자료·도구</span></button><div class="home-more-list" id="home-more-list">
         <div class="sidebar-tools"><button class="home-moved" data-action="resilience">재난 자료</button><button data-action="native-sun">5분 그림자</button><button data-action="official-data">공식 수집자료</button><button data-action="safety-hub">재난안전 API</button><button data-action="themes">공식 주제도</button><button data-action="city-questions">생활·정책 검토</button></div>
-        <div class="sidebar-secondary"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="civic-notes">저장한 검토노트</button><button data-action="report">지도 검토기록</button><button data-action="region-chooser">다른 지역도 적용해보기</button><button data-action="region-info">지역·자료 구성</button><button data-action="pilot-measure">업무효과 측정</button><button data-action="settings">연결 설정</button></div>
+        <div class="sidebar-secondary"><button data-action="space-twin">공공공간 운영시간 검토</button><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="civic-notes">저장한 검토노트</button><button data-action="report">지도 검토기록</button><button data-action="region-chooser">다른 지역도 적용해보기</button><button data-action="region-info">지역·자료 구성</button><button data-action="pilot-measure">업무효과 측정</button><button data-action="settings">연결 설정</button></div>
       </div></div>
     </div>
     <button class="secondary full" id="dong-tour" data-action="dong-tour" aria-pressed="false">18개 동 자동 둘러보기</button>
@@ -70,7 +77,7 @@
  <footer class="bottom-status">
   <div class="local-brand-strip"><img src="/brand/seogu-slogan.png" alt="함께서구 우뚝서구"><img src="/brand/seogu-ci.png" alt="전남광주통합특별시 서구"></div>
   <span id="map-disclosure">공개자료 기반 행정 검토용</span>
-  <div class="source-footer"><a class="osm-minicredit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a><details id="map-credits" class="map-credits"><summary>지도 출처 <span aria-hidden="true">ⓘ</span></summary><div class="credit-popover"><strong>지도·자료 출처</strong><p id="base-provider-credit"><a href="https://www.vworld.kr/" target="_blank" rel="noopener noreferrer">국토교통부·브이월드</a><br>배경 지형·건물·영상. 실제 수신 범위에 따릅니다.</p><p>도형: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a></p><p>행정경계: SGIS · 가공 vuski/admdongkor<br>공공누리 제1유형 · CC BY 4.0</p><button class="credit-more" data-action="credits">전체 출처·이용조건 보기</button></div></details><span class="release-credit">펀온워크 에이블 <b>· v0.10.0</b></span></div>
+  <div class="source-footer"><a class="osm-minicredit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a><details id="map-credits" class="map-credits"><summary>지도 출처 <span aria-hidden="true">ⓘ</span></summary><div class="credit-popover"><strong>지도·자료 출처</strong><p id="base-provider-credit"><a href="https://www.vworld.kr/" target="_blank" rel="noopener noreferrer">국토교통부·브이월드</a><br>배경 지형·건물·영상. 실제 수신 범위에 따릅니다.</p><p>도형: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a></p><p>행정경계: SGIS · 가공 vuski/admdongkor<br>공공누리 제1유형 · CC BY 4.0</p><button class="credit-more" data-action="credits">전체 출처·이용조건 보기</button></div></details><span class="release-credit">펀온워크 에이블 <b>· v0.12.0</b></span></div>
  </footer>
  <div id="toast" role="status" aria-live="polite" hidden></div>
  <input id="import-file" type="file" accept=".geojson,.json,.csv" hidden><input id="glb-file" type="file" accept=".glb" hidden>

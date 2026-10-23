@@ -1,0 +1,330 @@
+{
+  "version": 1,
+  "regionId": "seogu",
+  "name": "서구 업무 검토자료",
+  "defaultPreset": "shade",
+  "datasets": [
+    {
+      "id": "schools",
+      "title": "운영학교 대표위치",
+      "path": "/data/decision/seogu/schools.geojson",
+      "unit": "학교 대표점",
+      "complete": false,
+      "sha256": "cf771c02ed3bef480c898108ef315f4085ad93bd72dd1261220f119041bb0619",
+      "sourceName": "공공데이터포털 · 전국초중등학교위치표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15021148/standard.do",
+      "sourceDate": "2026-10-01",
+      "sourceDateRange": [
+        "2026-10-01",
+        "2026-10-01"
+      ],
+      "collectedAt": "2026-10-23T06:55:11.496625+00:00",
+      "coverage": "공식 공개 수록자료 기준. 미수록은 시설 부재를 뜻하지 않으며 현장 운영·접근성·실시간 신호를 보장하지 않음.",
+      "license": "이용허락범위 제한 없음"
+    },
+    {
+      "id": "public-spaces",
+      "title": "개방 공공공간",
+      "path": "/data/layers/public-facilities.geojson",
+      "unit": "개방 공간",
+      "complete": false,
+      "sha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439",
+      "sourceName": "전국공공시설개방정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+      "sourceDateRange": [
+        "2026-04-30",
+        "2026-08-06"
+      ],
+      "coverage": "공공데이터포털 공개본 중 서구 행정동 경계 안 58개. 전국 제공행 7334행 순회 후 주소 검색·좌표 대조. 최신성·완전성·현장 위치 미검수."
+    },
+    {
+      "id": "bus",
+      "title": "수록 버스정류장",
+      "path": "/data/city/infra/bus.geojson",
+      "unit": "정류장 지점",
+      "complete": false,
+      "sha256": "1bd5fd1c4ab29f7966920f0012b2980654064d389f5fd33673e4dc52fa961044",
+      "sourceName": "OpenStreetMap contributors",
+      "collectedAt": "2026-09-27T02:33:08Z",
+      "coverage": "부분 확보 · 누락은 시설 부재가 아님",
+      "license": "ODbL-1.0 (OSM parts)",
+      "sourceUrl": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "id": "shade",
+      "title": "그늘막",
+      "path": "/data/city/local-shade.geojson",
+      "unit": "그늘막 위치",
+      "complete": false,
+      "sha256": "7d097dd5124387159a3de1795bb70bfe0d599c11509a13b260f6db3fc4561f9d",
+      "sourceName": "서구청 서구 그늘막",
+      "sourceUrl": "https://www.data.go.kr/data/15140461/fileData.do",
+      "sourceDate": "2026-01-06",
+      "collectedAt": "2026-09-28T15:22:13Z"
+    },
+    {
+      "id": "child-protection",
+      "title": "어린이보호구역 대상시설",
+      "path": "/data/city/official/child-protection-zone.geojson",
+      "unit": "대상시설 대표점",
+      "complete": false,
+      "sha256": "c8eeab77806dfe69b87dae4f2158108b6dfc8eebf70474247029d5466ea962ec",
+      "sourceName": "공공데이터포털 / 어린이보호구역 대상시설",
+      "sourceUrl": "https://www.data.go.kr/data/15012891/standard.do",
+      "sourceDate": "2026-07-10",
+      "collectedAt": "2026-10-05T13:31:53Z",
+      "coverage": "광주 서구 공식 공개자료 수집본 · 자료별 누락·시차 가능. 시설 전수 또는 현재 운영을 보장하지 않음."
+    },
+    {
+      "id": "heat-shelters",
+      "title": "무더위쉼터",
+      "path": "/data/city/official/heat-shelter.geojson",
+      "unit": "쉼터 수록점",
+      "complete": false,
+      "sha256": "a17b2db78a3e28bf20719bdfe92febed5fc1110c5795ed4a018709b815199ad7",
+      "sourceName": "행정안전부 국민안전24 무더위쉼터",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "collectedAt": "2026-10-05T22:34:49+09:00",
+      "coverage": "광주광역시 서구 공개 조회 298건 중 위치·주소 확인 297건 · 전체 시설/현재 운영 여부 보장 없음."
+    },
+    {
+      "id": "flood-history",
+      "title": "과거 침수피해 기록",
+      "path": "/data/city/local-flood-history.geojson",
+      "unit": "과거 원문 행",
+      "complete": false,
+      "sha256": "f573e191246a8c9013007dcba8c132d6c5ad7bf32566f2352db5315b1a21ed77",
+      "sourceName": "서구청 서구 과거 침수피해 기록",
+      "sourceUrl": "https://www.data.go.kr/data/15124509/fileData.do",
+      "sourceDate": "2025-11-24",
+      "collectedAt": "2026-09-28T15:22:13Z"
+    },
+    {
+      "id": "icing",
+      "title": "상습결빙 관리지점",
+      "path": "/data/city/local-icing.geojson",
+      "unit": "구간 시작·종료점",
+      "complete": false,
+      "sha256": "0fc18d78b4f28cb91947d421d4f8a698374ee4c660d69606dcc0f6f7ac06fb6b",
+      "sourceName": "행정안전부 생활안전지도 / 상습결빙구간",
+      "sourceUrl": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=221",
+      "collectedAt": "2026-10-05T13:35:06.441Z",
+      "coverage": "공식 광주 서구 분류 26개 시작·종료 지점 중 현재 행정경계 안 23개만 수록 · 기준연도 2025년 · 현재 결빙 관측 아님"
+    },
+    {
+      "id": "childcare",
+      "title": "운영 어린이집 공개위치",
+      "path": "/data/decision/seogu/childcare.geojson",
+      "unit": "어린이집 대표점",
+      "complete": false,
+      "topic": "care",
+      "sha256": "ee06fe4b529835b8d047f241425883dff3c5b574e7e97f5339c81c067ee0872c",
+      "sourceName": "한국사회보장정보원 · 어린이집정보공개포털 어린이집 기본정보",
+      "sourceUrl": "https://info.childcare.go.kr/info_html5/oais/openapi/OpenApiSlL.jsp",
+      "sourceDate": null,
+      "collectedAt": "2026-10-23T17:32:48.964Z",
+      "coverage": "서구 공개 SHEET 134행 중 운영현황 정상·재개 및 지역 경계 안 좌표 123행. 원자료 기준일 미제공, 현재 운영과 입소 가능 여부 미검수.",
+      "license": "공공누리 제1유형 · 출처표시"
+    },
+    {
+      "id": "security-light",
+      "title": "보안등 공개 설치위치",
+      "path": "/data/city/official/security-light.geojson",
+      "unit": "보안등 수록점",
+      "topic": "safety",
+      "complete": false,
+      "sha256": "1734ae51412363d62551d2551ccce0898676469b70a0eb26e28840526f2399fa",
+      "sourceName": "서구청 / 전국보안등정보표준데이터",
+      "sourceUrl": "https://www.data.go.kr/data/15017320/standard.do",
+      "sourceDate": "2026-08-06",
+      "collectedAt": "2026-10-05T13:34:34Z",
+      "coverage": "광주 서구 공식 공개자료 수집본 · 자료별 누락·시차 가능. 시설 전수 또는 현재 운영을 보장하지 않음.",
+      "license": null
+    },
+    {
+      "id": "police",
+      "title": "경찰서·지구대·파출소",
+      "path": "/data/city/official/police-official.geojson",
+      "unit": "경찰시설 대표점",
+      "topic": "safety",
+      "complete": false,
+      "sha256": "08bb41520e2efbaa1407adf4635715dbc29db5e9524e07ab7500fc0ff9084fee",
+      "sourceName": "행정안전부 국민안전24 / 경찰서·지구대·파출소",
+      "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+      "sourceDate": null,
+      "collectedAt": "2026-10-05T13:33:50Z",
+      "coverage": "광주 서구 공식 공개자료 수집본 · 자료별 누락·시차 가능. 시설 전수 또는 현재 운영을 보장하지 않음.",
+      "license": null
+    },
+    {
+      "id": "emergency-bell",
+      "title": "비상벨 공개 수록위치 (2023 기준)",
+      "path": "/data/city/safety-emergency-bell.geojson",
+      "unit": "비상벨 수록점",
+      "topic": "safety",
+      "complete": false,
+      "sha256": "e05b142ef5d449c0912d88f573b2d510c094a198a92afd2def90ba71e06e6e19",
+      "sourceName": "행정안전부 지방행정인허가데이터개방 · 안전비상벨 공개 수록정보",
+      "sourceUrl": "https://www.data.go.kr/data/15028206/standard.do",
+      "sourceDate": "2023-06-21",
+      "collectedAt": "2026-10-23T17:34:18.819115+00:00",
+      "coverage": "2023-06-21 기준 공식 공개 수록본. 현재 시설 전수·작동·범죄예방 효과를 뜻하지 않습니다. 기준일 이후의 변경과 누락을 현장 확인하세요.",
+      "license": "이용허락범위 제한 없음"
+    },
+    {
+      "id": "cctv",
+      "title": "교통단속 CCTV 참고위치 (2023 기준)",
+      "path": "/data/city/safety-cctv.geojson",
+      "unit": "교통단속 CCTV 수록점",
+      "topic": "safety",
+      "complete": false,
+      "sha256": "9354ed9403770c4b95d3d1fabc502b25d53deeff93d32ac936c3bfedd8264d9d",
+      "sourceName": "행정안전부 지방행정인허가데이터개방 · CCTV 공개 설치정보",
+      "sourceUrl": "https://www.data.go.kr/data/15013094/standard.do",
+      "sourceDate": "2023-06-21",
+      "collectedAt": "2026-10-23T17:34:18.820295+00:00",
+      "coverage": "2023-06-21 기준 공식 공개 수록본. 현재 시설 전수·작동·범죄예방 효과를 뜻하지 않습니다. 기준일 이후의 변경과 누락을 현장 확인하세요.",
+      "license": "이용허락범위 제한 없음"
+    }
+  ],
+  "presets": [
+    {
+      "id": "shade",
+      "title": "정류장 주변 그늘막",
+      "target": "bus",
+      "service": "shade",
+      "radiusM": 150,
+      "description": "기존 그늘막과의 거리조건 밖 지점을 찾고, 추가 위치를 바꿔 연결되는 지점 수를 비교합니다.",
+      "keywords": [
+        "그늘막",
+        "보행",
+        "정류장",
+        "횡단보도"
+      ],
+      "candidateLabel": "그늘막 추가 검토 위치"
+    },
+    {
+      "id": "school-shade",
+      "title": "학교 주변 그늘막",
+      "target": "schools",
+      "service": "shade",
+      "radiusM": 150,
+      "description": "학교 대표위치와 그늘막 간 직선거리로 통학환경 사전조사 대상을 비교합니다. 실제 통학로·그늘은 별도 확인합니다.",
+      "keywords": [
+        "학교 주변 그늘막",
+        "학교 그늘막",
+        "통학",
+        "학교 주변"
+      ],
+      "candidateLabel": "학교 주변 추가 검토 위치"
+    },
+    {
+      "id": "community",
+      "title": "학교 주변 활동공간",
+      "target": "schools",
+      "service": "public-spaces",
+      "radiusM": 500,
+      "description": "학교 주변의 공개 개방공간 분포를 살펴 주민활동·학습 거점 후보를 비교합니다. 공개 공간의 실제 이용 가능 여부와 수요는 별도 확인합니다.",
+      "keywords": [
+        "활동공간",
+        "활동 공간",
+        "주민활동",
+        "학습",
+        "문화",
+        "마을거점",
+        "마을 거점",
+        "공공공간 추가",
+        "공공 공간 추가"
+      ],
+      "candidateLabel": "활동공간 거점 검토 위치"
+    },
+    {
+      "id": "school-shelter",
+      "title": "학교 주변 무더위쉼터",
+      "target": "schools",
+      "service": "heat-shelters",
+      "radiusM": 300,
+      "description": "수록 학교 대표점과 쉼터 위치의 거리조건을 비교합니다. 학교가 쉼터 수요 전체를 대표하지 않으며 개방·수용능력 확인이 필요합니다.",
+      "keywords": [
+        "쉼터",
+        "무더위쉼터"
+      ],
+      "candidateLabel": "쉼터 추가 검토 위치"
+    },
+    {
+      "id": "childcare",
+      "title": "돌봄시설 주변 활동공간 검토",
+      "target": "childcare",
+      "service": "public-spaces",
+      "radiusM": 500,
+      "topic": "care",
+      "description": "공개 어린이집 대표위치와 개방공간의 직선거리를 비교해 프로그램 연계·현장협의 대상을 찾습니다. 실제 이용대상·예약·인솔·수요와 입소 가능 인원은 별도 확인합니다.",
+      "keywords": [
+        "육아시설",
+        "돌봄시설",
+        "어린이집",
+        "육아",
+        "돌봄",
+        "보육",
+        "프로그램 연계"
+      ],
+      "candidateLabel": "돌봄 프로그램 연계공간 검토 위치"
+    },
+    {
+      "id": "women-safety",
+      "title": "돌봄시설 주변 비상벨 수록위치 점검",
+      "target": "childcare",
+      "service": "emergency-bell",
+      "radiusM": 300,
+      "topic": "safety",
+      "description": "어린이집 대표위치 주변의 비상벨 공개 수록점(2023-06-21 기준)을 확인해 현장점검 대상을 준비합니다. 시설 수나 거리로 안전도를 판단하지 않으며 현재 작동·신고 연결·접근 동선은 별도 확인합니다.",
+      "keywords": [
+        "여성안심",
+        "여성 안심",
+        "여성안전",
+        "여성 안전",
+        "안심시설",
+        "비상벨",
+        "안심벨",
+        "안심지킴",
+        "안전시설"
+      ],
+      "candidateLabel": "비상벨 추가 점검 가정 위치"
+    },
+    {
+      "id": "night-safety",
+      "title": "야간 정류장 주변 보안등 점검",
+      "target": "bus",
+      "service": "security-light",
+      "radiusM": 100,
+      "topic": "safety",
+      "description": "수록 정류장과 보안등 공개 설치위치(2026-08-06 기준)의 직선거리로 야간 현장점검 후보를 찾습니다. 현재 점등·조도·가시성·보행로·범죄위험을 산정하지 않습니다.",
+      "keywords": [
+        "보안등",
+        "야간",
+        "가로등",
+        "밤길",
+        "야간 정류장"
+      ],
+      "candidateLabel": "보안등 추가 점검 가정 위치"
+    }
+  ],
+  "contextDatasetIds": [
+    "schools",
+    "public-spaces",
+    "bus",
+    "shade",
+    "child-protection",
+    "heat-shelters",
+    "flood-history",
+    "icing",
+    "childcare",
+    "security-light",
+    "police",
+    "emergency-bell",
+    "cctv"
+  ],
+  "comparisonMeaning": "수록 대표지점과 시설의 직선거리 조건을 같은 기준으로 비교합니다. 이용인원·실제 보행거리·사업 효과가 아닙니다.",
+  "dataMode": "공식 공개본·공개지도 스냅샷, 자료별 기준일 확인",
+  "updatedAt": "2026-10-24"
+}

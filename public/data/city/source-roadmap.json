@@ -384,9 +384,12 @@
       "use": "외부 API",
       "note": "보육시설 유형·정원·현원·운영상태와 인구 결합.",
       "snapshot": {
-        "state": "not-collected",
-        "file": "/data/city/infra/childcare-official.geojson",
-        "howTo": "docs/DATA_INBOX.md"
+        "state": "published",
+        "file": "/data/decision/seogu/childcare.geojson",
+        "features": 123,
+        "sourceDate": null,
+        "sourceDateRange": null,
+        "collectedAt": "2026-10-23T17:32:48.964Z"
       }
     },
     {
@@ -613,7 +616,8 @@
     "S10",
     "S13",
     "S16",
-    "S17"
+    "S17",
+    "S18"
   ],
   "rawDataCollectedMeaning": "rawDataCollected=false 는 60개 링크 전체를 수집하지 않았다는 뜻입니다. 실제로 공개본이 들어온 항목은 collectedItemIds 와 각 항목의 snapshot 을 보세요."
 }

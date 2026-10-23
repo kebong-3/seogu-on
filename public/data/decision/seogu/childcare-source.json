@@ -1,0 +1,130 @@
+{
+  "regionId": "seogu",
+  "sourceName": "한국사회보장정보원 · 어린이집정보공개포털 어린이집 기본정보",
+  "sourceUrl": "https://info.childcare.go.kr/info_html5/oais/openapi/OpenApiSlL.jsp",
+  "queryUrl": "https://info.childcare.go.kr/info_html5/stat/sheet/StatCrInfoResult.jsp",
+  "queryMethod": "POST",
+  "queryBody": "flag=crInfo&std_condi=N&sido=12&sigun=&exlChk=&offset=0&limit=2000",
+  "queryMeaning": "비정기(수시), 포털 시도 선택값 12. 코드와 원문 시군구명·주소·해당 지역 경계를 함께 확인.",
+  "sourceDate": null,
+  "sourceDateMeaning": "수시조회 화면에 자료 기준일이 따로 제공되지 않음. 수집시각을 원자료 기준일로 대체하지 않음.",
+  "collectedAt": "2026-10-23T17:32:48.964Z",
+  "rawSha256": "fe8a9613e873d73b82ecb965469b66eff9010c5508e51b50e42b244d5447e19c",
+  "receivedRows": 1639,
+  "regionRows": 134,
+  "mappedRows": 123,
+  "exclusions": [
+    {
+      "name": "The#염주센트럴어린이집",
+      "address": "전남광주통합특별시 서구 월드컵4강로 27 더샵염주센트럴파크",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "127.3680238119629",
+        "35.06368176631195"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "광주어린이집",
+      "address": "전남광주통합특별시 서구 월드컵4강로198번길 11 (내방동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8707281",
+        "35.15392724"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "광주지방국세청우리누리어린이집",
+      "address": "전남광주통합특별시 서구 월드컵4강로 101",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "127.10207408688897",
+        "35.010215874925414"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "금호어린이집",
+      "address": "전남광주통합특별시 서구 운천로92번길 17 (쌍촌동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8607018",
+        "35.1410545"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "꿈나무어린이집",
+      "address": "전남광주통합특별시 서구 풍암순환로 54 새한센시빌 관리동 2층",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8771488",
+        "35.12123065"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "베이비월드어린이집",
+      "address": "전남광주통합특별시 서구 월드컵4강로28번길 43-3",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8807165",
+        "35.14094988"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "신애어린이집",
+      "address": "전남광주통합특별시 서구 북촌길 42 (마륵동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8500262",
+        "35.14320621"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "우정어린이집",
+      "address": "전남광주통합특별시 서구 화정로179번길 45-15",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.876104",
+        "35.14983988"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "위파크마륵어린이집",
+      "address": "전남광주통합특별시 서구 서광주로106번길 39",
+      "registeredStatus": "정상",
+      "sourceCoordinates": [
+        "126.977963",
+        "37.566470"
+      ],
+      "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "name": "참샘어린이집",
+      "address": "전남광주통합특별시 서구 내방로240번길 13 (쌍촌동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8673682",
+        "35.15712371"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    },
+    {
+      "name": "청아어린이집",
+      "address": "전남광주통합특별시 서구 금호만호길 88 (금호동)",
+      "registeredStatus": "휴지",
+      "sourceCoordinates": [
+        "126.8544596",
+        "35.13341053"
+      ],
+      "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
+    }
+  ],
+  "license": "공공누리 제1유형 · 출처표시",
+  "licenseSourceUrl": "https://www.data.go.kr/data/15013108/standard.do"
+}

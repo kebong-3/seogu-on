@@ -15,7 +15,7 @@ const server = createServer(async (req, res) => {
     if (path.startsWith('/api/')) {
       let name = path.slice(5);
       // vercel.json 의 rewrites 와 같은 규칙: /api/mcp, /api/ask → api/ai.js?route=...
-      if (['mcp', 'ask', 'space-review', 'region-profile'].includes(name)) {
+      if (['mcp', 'ask', 'space-review', 'region-profile', 'decision-twin'].includes(name)) {
         req.url = `/api/ai?route=${name}${url.search ? `&${url.search.slice(1)}` : ''}`;
         name = 'ai';
       }

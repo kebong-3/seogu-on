@@ -254,7 +254,7 @@ export const SOURCES = [
     priority: 2,
     sourceName: '전국어린이집표준데이터',
     sourceUrl: `${PORTAL}/15013108/standard.do`,
-    target: 'public/data/city/infra/childcare-official.geojson',
+    target: 'public/data/decision/seogu/childcare.geojson',
     layerId: 'official-childcare',
     category: 'childcare',
     idPrefix: 'childcare:',

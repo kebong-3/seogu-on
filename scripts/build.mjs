@@ -7,6 +7,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {REGION_CATALOG} from '../shared/region-catalog.js';
 import {loadRegionData} from '../server/region-profile.js';
+import {validateDecisionPacks} from './validate-decision-data.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'dist');
 await rm(out, { recursive: true, force: true });
@@ -22,9 +23,10 @@ const digest=createHash('sha256');
 async function hashFiles(dir){for(const entry of (await readdir(dir,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){const path=resolve(dir,entry.name);if(entry.isDirectory())await hashFiles(path);else{digest.update(path.slice(root.length));digest.update(await readFile(path));}}}
 for(const dir of ['src','shared','server','api'])await hashFiles(resolve(root,dir));
 const official=JSON.parse(await readFile(resolve(root,'public/data/city/official-collection.json'),'utf8'));
+const decisionTwin=await validateDecisionPacks();
 const regions=[];
 for(const region of REGION_CATALOG){const pack=await loadRegionData({regionId:region.id});regions.push({id:region.id,name:pack.profile.fullName,districts:pack.report.counts.districts,spaces:pack.report.counts.facilities,boundaryDate:pack.profile.source.asOf,spaceSourceDate:pack.facilities.metadata.sourceDate||null,coveredDistricts:new Set(pack.facilities.features.map(f=>f.properties.dongId).filter(Boolean)).size,verifiedDataPack:true,sample:pack.profile.sample});}
-await writeFile(resolve(out,'data/release.json'),JSON.stringify({version:pkg.version,builtAt:new Date().toISOString(),codeSha256:digest.digest('hex'),regions,datasetVersion:`Seo-gu and Suncheon public data packs. Seo-gu official public snapshots: ${official.datasetCount} datasets / ${official.recordCount} map records; existing local records retained. API catalogues are not received API data.`,officialCollection:{datasetCount:official.datasetCount,recordCount:official.recordCount,collectedAt:official.collectedAt,manifestSha256:createHash('sha256').update(await readFile(resolve(root,'public/data/city/official-collection.json'))).digest('hex')},meaning:'Build identifier and included public snapshot counts only. Not proof of deployed API authentication, current facility operation or source data freshness.'},null,2));
+await writeFile(resolve(out,'data/release.json'),JSON.stringify({version:pkg.version,builtAt:new Date().toISOString(),codeSha256:digest.digest('hex'),regions,decisionTwin,datasetVersion:`Seo-gu and Suncheon public data packs. Seo-gu official public snapshots: ${official.datasetCount} datasets / ${official.recordCount} map records; existing local records retained. API catalogues are not received API data.`,officialCollection:{datasetCount:official.datasetCount,recordCount:official.recordCount,collectedAt:official.collectedAt,manifestSha256:createHash('sha256').update(await readFile(resolve(root,'public/data/city/official-collection.json'))).digest('hex')},meaning:'Build identifier and included public snapshot counts only. Not proof of deployed API authentication, current facility operation or source data freshness.'},null,2));
 // Never copy .env, server source, test fixtures or development files to the public bundle.
 console.log('SEO:ON static build complete: dist/ (zero build dependencies).');
 console.log('Vercel handles root api/*.js separately. Map rendering requires external map/CDN access.');
