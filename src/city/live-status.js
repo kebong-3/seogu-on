@@ -21,6 +21,8 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   const weatherCache = new Map(); // 구역별 마지막 정상값
   const failures = new Map(); // 구역별 weather 실패 이유
   let lastCheckedAt = null;
+  const regionId = () => state.regionProfile?.id || 'seogu';
+  const scopeKey = () => `${regionId()}:${state.dong}`;
 
   const place = () => state.dong === 'all'
     ? representative(state.district)
@@ -55,10 +57,11 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
     if (state.view === 'live-detail') detail();
   }
 
-  async function refreshWeather(key, point) {
+  async function refreshWeather(key, point, selectedRegion) {
     try {
-      const body = await fetchJSON(`/api/weather?lon=${point[0]}&lat=${point[1]}`);
+      const body = await fetchJSON(`/api/weather?lon=${point[0]}&lat=${point[1]}&regionId=${encodeURIComponent(selectedRegion)}`);
       if (!body?.base || !body.values) throw Object.assign(Error('기상 응답 형식 오류'), {code: 'BAD_SHAPE', stage: 'weather'});
+      if (body.regionId !== undefined && body.regionId !== selectedRegion) throw Object.assign(Error('다른 지역의 기상 응답'), {code:'BAD_SHAPE',stage:'weather'});
       weatherCache.set(key, {data: body, stale: false});
       setFailure(key, 'weather', null);
     } catch (error) {
@@ -68,11 +71,11 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   }
 
   async function refresh() {
-    const id = ++sequence, key = state.dong, point = place();
+    const id = ++sequence, key = scopeKey(), point = place(), selectedRegion = regionId();
     if (!point) return;
     render(key);
     await Promise.all([
-      refreshWeather(key, point).then(() => { if (id === sequence) render(key); })
+      refreshWeather(key, point, selectedRegion).then(() => { if (id === sequence) render(key); })
     ]);
     lastCheckedAt = new Date();
     if (id === sequence) render(key);
@@ -81,7 +84,7 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   /** 상세 패널: 자료별 수신 상태와 운영자 확인 사항 */
   function detail() {
     if (!show) return;
-    const key = state.dong, failed = failureOf(key), weather = weatherCache.get(key);
+    const key = scopeKey(), failed = failureOf(key), weather = weatherCache.get(key);
     const row = (title, ok, okText, info) => `<div class="result-box live-diagnostic-row"><strong>${esc(title)}</strong>` + (ok
       ? `<p class="small">${esc(okText)}</p>${info ? `<p class="note warning">최근 갱신 실패: ${esc(info.reason)} <code>${esc(info.code)}</code><br>${esc(info.hint)}</p>` : ''}`
       : info
@@ -102,8 +105,8 @@ export function createLiveStatus({state, fetchJSON, label, show}) {
   return {
     refresh,
     scopeChanged: refresh,
-    render: () => render(state.dong),
-    failures: () => failureOf(state.dong),
+    render: () => render(scopeKey()),
+    failures: () => failureOf(scopeKey()),
     destroy() { sequence++; clearInterval(timer); unregister.forEach(off => off()); }
   };
 }

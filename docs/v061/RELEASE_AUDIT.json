@@ -1,7 +1,7 @@
 {
   "scope": "local built files",
-  "version": "0.8.0",
-  "webBundleSha256": "c79de60fd2fd3b65a88a8ada5063d78710844aebb9d2e1aa1fb88fd0ce435921",
+  "version": "0.10.0",
+  "webBundleSha256": "b6256488172f1f78ef58f5e5c222c3faa03d215c8ba81456cafe82597d540ee5",
   "results": [
     {
       "name": "Release identifier equals application version",
@@ -29,6 +29,54 @@
     },
     {
       "name": "Built classic.html",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/space-twin.js",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/space-twin.css",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/pilot-measure.js",
+      "passed": true
+    },
+    {
+      "name": "Built shared/space-twin-model.js",
+      "passed": true
+    },
+    {
+      "name": "Built shared/region-profile.js",
+      "passed": true
+    },
+    {
+      "name": "Built shared/pilot-measure.js",
+      "passed": true
+    },
+    {
+      "name": "Built data/regions/seogu.json",
+      "passed": true
+    },
+    {
+      "name": "Built data/regions/suncheon.json",
+      "passed": true
+    },
+    {
+      "name": "Built data/regions/suncheon/facilities.geojson",
+      "passed": true
+    },
+    {
+      "name": "Built shared/region-catalog.js",
+      "passed": true
+    },
+    {
+      "name": "Built shared/space-query-intent.js",
+      "passed": true
+    },
+    {
+      "name": "Built shared/space-review-evidence.js",
       "passed": true
     },
     {

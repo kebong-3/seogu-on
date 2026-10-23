@@ -32,7 +32,7 @@ function routeOf(req) {
 
 export default async function handler(req, res) {
   const route = routeOf(req);
-  if(['ask','mcp'].includes(route)&&!allowLegacyRegion(req,res))return;
+  if(route==='mcp'&&!allowLegacyRegion(req,res))return;
   const handle = Object.hasOwn(ROUTES, route) ? ROUTES[route] : null;
   if (!handle) {
     res.statusCode = 404;

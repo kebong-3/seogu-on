@@ -7,7 +7,7 @@ const results=[];const check=(name,passed)=>results.push({name,passed:!!passed})
 const pkg=JSON.parse(await readFile('package.json','utf8'));
 const release=JSON.parse(await readFile('dist/data/release.json','utf8'));
 check('Release identifier equals application version',release.version===pkg.version);
-for(const p of ['src/city/finish-tools.js','src/city/layer-sync.js','src/city/local-records.js','data/city/civic-index.json','model.html','classic.html','src/city/space-twin.js','src/city/space-twin.css','src/city/pilot-measure.js','shared/space-twin-model.js','shared/region-profile.js','shared/pilot-measure.js','data/regions/seogu.json']){try{check('Built '+p,(await stat('dist/'+p)).size>0);}catch{check('Built '+p,false);}}
+for(const p of ['src/city/finish-tools.js','src/city/layer-sync.js','src/city/local-records.js','data/city/civic-index.json','model.html','classic.html','src/city/space-twin.js','src/city/space-twin.css','src/city/pilot-measure.js','shared/space-twin-model.js','shared/region-profile.js','shared/pilot-measure.js','data/regions/seogu.json','data/regions/suncheon.json','data/regions/suncheon/facilities.geojson','shared/region-catalog.js','shared/space-query-intent.js','shared/space-review-evidence.js']){try{check('Built '+p,(await stat('dist/'+p)).size>0);}catch{check('Built '+p,false);}}
 const config=JSON.parse(await readFile('vercel.json','utf8'));
 check('Vercel preserves data file for geocode server',config.functions['api/geocode.js'].includeFiles==='public/data/address-records.json');
 const data=JSON.parse(await readFile('public/data/city/civic-index.json','utf8'));

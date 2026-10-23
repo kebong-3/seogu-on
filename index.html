@@ -9,7 +9,7 @@
  <header class="topbar">
   <button class="brand" data-action="overview" aria-label="서구 전체로 이동"><img class="brand-emblem" src="/brand/seogu-on-symbol.svg" width="48" height="48" alt=""><span class="brand-lockup"><strong class="brand-name" aria-label="서구:온">서구<span class="brand-colon">:</span><span class="brand-on">온</span></strong><small class="brand-tagline">서구의 오늘을 한눈에 <span class="tagline-divider">·</span> <span>AI 행정 디지털트윈</span></small></span></button>
   <nav class="breadcrumbs" aria-label="현재 위치"><button data-action="overview">서구 전체</button><span>›</span><button id="crumb-dong" data-action="dong-frame">18개 행정동</button><span id="crumb-facility"></span></nav>
-  <div class="top-actions"><button class="appearance-open" data-action="appearance" title="테마·밝기·화면 배치">화면 설정</button><span id="engine-state" class="status-badge">지도 준비</span><button class="icon-button" data-action="fullscreen" title="화면 크게 보기" aria-label="화면 크게 보기" id="fullscreen-button"></button><button class="icon-button" data-action="settings" title="연결 설정" aria-label="연결 설정" id="settings-button"></button></div>
+  <div class="top-actions"><button class="region-menu-button" data-action="region-chooser" aria-label="다른 지역도 적용해보기"><span id="region-menu-current">서구</span><span class="region-menu-label">다른 지역도 적용해보기</span><span aria-hidden="true">↗</span></button><button class="appearance-open" data-action="appearance" title="테마·밝기·화면 배치">화면 설정</button><span id="engine-state" class="status-badge">지도 준비</span><button class="icon-button" data-action="fullscreen" title="화면 크게 보기" aria-label="화면 크게 보기" id="fullscreen-button"></button><button class="icon-button" data-action="settings" title="연결 설정" aria-label="연결 설정" id="settings-button"></button></div>
  </header>
  <section class="live-ribbon" aria-label="현재 환경 및 자료 상태">
   <div class="live-weather">
@@ -28,15 +28,15 @@
  </section>
  <aside id="district-panel" class="district-panel glass" aria-label="행정동 선택 및 정보">
   <header class="sidebar-heading"><div class="panel-title"><span class="eyebrow">공간행정 워크스페이스</span><button class="text-button" data-action="panels">지도 집중</button></div><h1>서구 · 동 선택</h1>
-<div class="sidebar-tabs" role="tablist" aria-label="지역 및 지도 정보"><button id="tab-regions" role="tab" aria-selected="true" aria-controls="sidebar-regions" data-action="sidebar-tab" data-id="regions">동 선택</button><button id="tab-layers" role="tab" aria-selected="false" aria-controls="sidebar-layers" data-action="sidebar-tab" data-id="layers">표시 정보</button></div></header>
-  <div id="sidebar-scroll" class="sidebar-scroll" tabindex="0" aria-label="동 선택 및 메뉴 스크롤 영역">
+<div class="sidebar-tabs" role="tablist" aria-label="지역 및 지도 정보"><button id="tab-regions" role="tab" aria-selected="true" aria-controls="sidebar-regions" data-action="sidebar-tab" data-id="regions">업무·지역</button><button id="tab-layers" role="tab" aria-selected="false" aria-controls="sidebar-layers" data-action="sidebar-tab" data-id="layers">표시 정보</button></div></header>
+  <div id="sidebar-scroll" class="sidebar-scroll" tabindex="0" aria-label="업무 및 지역 선택 메뉴">
    <section id="sidebar-regions" role="tabpanel" aria-labelledby="tab-regions">
+    <div class="workspace-start"><span class="eyebrow">지금 시작할 업무</span><button class="home-card home-hero" data-action="space-twin"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>공공공간 운영안 검토</strong><small>공간 찾기 · 현장 확인 · 대안 비교</small></span><span aria-hidden="true">↗</span></button><p>상단에 목적·요일·시간을 질문해도 시작할 수 있어요.</p></div>
     <button class="overview-card active" data-action="overview"><span id="overview-icon"></span><span><strong>서구 전체</strong><small>18개 행정동 한눈에</small></span><b>↗</b></button>
     <div id="dong-grid" class="dong-grid"></div>
     <div class="dong-context">선택한 동의 경계와 수록 자료를 지도에서 확인합니다. <button class="text-button" data-action="bi-gallery">동 브랜드 보기</button></div>
     <div class="home-actions"><h2>선택한 지역 살펴보기</h2>
       <div class="home-primary" role="group" aria-label="선택 지역 기능">
-        <button class="home-card home-hero" data-action="space-twin"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>공공공간 활용</strong><small>현장 확인 → 운영 대안 비교 → AI 검토</small></span></button>
         <button class="home-card" data-action="civic-review"><span class="home-card-icon" data-icon="layers" aria-hidden="true"></span><span class="home-card-text"><strong>마을·공간 검토</strong><small>주민 의견 · 공간 활용 · 대안과 협의 준비</small></span></button>
         <button class="home-card home-ai" data-action="ask-ai"><span class="home-card-icon" data-icon="search" aria-hidden="true"></span><span class="home-card-text"><strong>지도에게 묻기</strong><small>자료를 근거로 질문하기</small></span></button>
         <button class="home-card" data-action="infra"><span class="home-card-icon" data-icon="building" aria-hidden="true"></span><span class="home-card-text"><strong>생활시설</strong><small>학교·공원·복지</small></span></button>
@@ -51,7 +51,7 @@
       </div>
       <div class="home-more" id="home-more"><button type="button" class="home-more-toggle" id="home-more-toggle" aria-expanded="false" aria-controls="home-more-list"><span>기타 자료·도구</span></button><div class="home-more-list" id="home-more-list">
         <div class="sidebar-tools"><button class="home-moved" data-action="resilience">재난 자료</button><button data-action="native-sun">5분 그림자</button><button data-action="official-data">공식 수집자료</button><button data-action="safety-hub">재난안전 API</button><button data-action="themes">공식 주제도</button><button data-action="city-questions">생활·정책 검토</button></div>
-        <div class="sidebar-secondary"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="civic-notes">저장한 검토노트</button><button data-action="report">지도 검토기록</button><button data-action="region-info">지역·자료 구성</button><button data-action="pilot-measure">업무효과 측정</button><button data-action="settings">연결 설정</button></div>
+        <div class="sidebar-secondary"><button data-action="list">자료 목록</button><button data-action="tools">분석 도구</button><button data-action="civic-notes">저장한 검토노트</button><button data-action="report">지도 검토기록</button><button data-action="region-chooser">다른 지역도 적용해보기</button><button data-action="region-info">지역·자료 구성</button><button data-action="pilot-measure">업무효과 측정</button><button data-action="settings">연결 설정</button></div>
       </div></div>
     </div>
     <button class="secondary full" id="dong-tour" data-action="dong-tour" aria-pressed="false">18개 동 자동 둘러보기</button>
@@ -70,7 +70,7 @@
  <footer class="bottom-status">
   <div class="local-brand-strip"><img src="/brand/seogu-slogan.png" alt="함께서구 우뚝서구"><img src="/brand/seogu-ci.png" alt="전남광주통합특별시 서구"></div>
   <span id="map-disclosure">공개자료 기반 행정 검토용</span>
-  <div class="source-footer"><a class="osm-minicredit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a><details id="map-credits" class="map-credits"><summary>지도 출처 <span aria-hidden="true">ⓘ</span></summary><div class="credit-popover"><strong>지도·자료 출처</strong><p id="base-provider-credit"><a href="https://www.vworld.kr/" target="_blank" rel="noopener noreferrer">국토교통부·브이월드</a><br>배경 지형·건물·영상. 실제 수신 범위에 따릅니다.</p><p>도형: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a></p><p>행정경계: SGIS · 가공 vuski/admdongkor<br>공공누리 제1유형 · CC BY 4.0</p><button class="credit-more" data-action="credits">전체 출처·이용조건 보기</button></div></details><span class="release-credit">펀온워크 에이블 <b>· v0.9.0</b></span></div>
+  <div class="source-footer"><a class="osm-minicredit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a><details id="map-credits" class="map-credits"><summary>지도 출처 <span aria-hidden="true">ⓘ</span></summary><div class="credit-popover"><strong>지도·자료 출처</strong><p id="base-provider-credit"><a href="https://www.vworld.kr/" target="_blank" rel="noopener noreferrer">국토교통부·브이월드</a><br>배경 지형·건물·영상. 실제 수신 범위에 따릅니다.</p><p>도형: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a></p><p>행정경계: SGIS · 가공 vuski/admdongkor<br>공공누리 제1유형 · CC BY 4.0</p><button class="credit-more" data-action="credits">전체 출처·이용조건 보기</button></div></details><span class="release-credit">펀온워크 에이블 <b>· v0.10.0</b></span></div>
  </footer>
  <div id="toast" role="status" aria-live="polite" hidden></div>
  <input id="import-file" type="file" accept=".geojson,.json,.csv" hidden><input id="glb-file" type="file" accept=".glb" hidden>

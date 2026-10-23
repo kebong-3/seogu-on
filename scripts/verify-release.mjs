@@ -52,6 +52,12 @@ try{
  await route('/src/city/space-twin.js',200);
  await route('/src/city/pilot-measure.js',200);
  await route('/api/region-profile',200,b=>JSON.parse(b).profile.id==='seogu');
+ await route('/api/region-profile?region=suncheon',200,b=>JSON.parse(b).profile.id==='suncheon'&&JSON.parse(b).profile.districtCount===24);
+ await route('/api/region-profile?region=adoption-template',400,b=>JSON.parse(b).code==='REGION_NOT_REGISTERED');
+ await route('/data/regions/suncheon/facilities.geojson',200,b=>JSON.parse(b).features.length===67);
+ await route('/data/regions/suncheon/admin-boundaries.geojson',200,b=>JSON.parse(b).features.length===24);
+ const sunAsk=await fetch(url+'/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({regionId:'suncheon',question:'순천 수영장을 찾아줘'})});
+ const sunAnswer=await sunAsk.json();check('Suncheon question uses its actual public spaces',sunAsk.status===200&&sunAnswer.regionId==='suncheon'&&sunAnswer.structured?.candidateCount===2&&sunAnswer.map.highlight.features.every(f=>f.properties.name.includes('수영')));
  await route('/api/space-review',405);
  const facilities=JSON.parse(await readFile(resolve(root,'public/data/layers/public-facilities.geojson'),'utf8'));
  const assetId=`public-facilities::${facilities.features[0].properties.id}`;

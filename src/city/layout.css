@@ -281,3 +281,42 @@ button.live-reading:hover:not(:disabled) { background: var(--control); filter: n
 .home-actions .home-more { margin-bottom: 8px; }
 .home-actions .home-more .home-moved { display: none; }
 @media (max-width: 380px) { #sidebar-regions .dong-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Primary task stays above the district list; readable controls in every theme. */
+.workspace-start { margin-bottom: 14px; }
+.workspace-start .eyebrow { display: block; margin: 0 0 7px; color: var(--muted); font-size: 12px; }
+.workspace-start .home-hero { display: flex; width: 100%; min-height: 82px; padding: 12px; gap: 10px; text-align: left; color: #fff; background: #0754a5; border: 1px solid #0754a5; }
+.workspace-start .home-hero .home-card-text { flex: 1; }
+.workspace-start .home-hero strong { font-size: 17px; line-height: 1.45; }
+.workspace-start .home-hero small { color: #fff; font-size: 14px; line-height: 1.5; }
+.workspace-start p { margin: 7px 1px 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+#sidebar-regions .dong-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+#sidebar-regions .dong-button, #sidebar-regions .dong-button.active { min-height: 70px; padding: 6px 3px; font-size: 14px; line-height: 1.35; }
+.dong-context, .dong-context .text-button { font-size: 14px; line-height: 1.55; }
+.home-actions h2 { font-size: 15px; }
+.home-actions .home-primary { grid-template-columns: 1fr; }
+.home-actions .home-card { min-height: 68px; padding: 10px; gap: 9px; }
+.home-actions .home-card strong { font-size: 15px; line-height: 1.45; }
+.home-actions .home-card small { font-size: 14px; line-height: 1.5; }
+.home-more-toggle, .home-more .sidebar-tools button, .home-more .sidebar-secondary button { min-height: 44px; font-size: 14px; }
+.region-menu-button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--surface); font-size: 14px; white-space: nowrap; }
+#region-menu-current { color: var(--mint); font-weight: 800; }
+.region-intro, .region-method { font-size: 15px; line-height: 1.75; color: var(--text); }
+.region-choices { display: grid; gap: 12px; margin: 14px 0; }
+.region-choice { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); color: var(--text); }
+.region-choice.is-current { border: 2px solid var(--mint); }
+.region-choice h3 { font-size: 18px; margin: 5px 0 10px; line-height: 1.5; }
+.region-choice p { font-size: 14px; line-height: 1.7; }
+.region-choice-state { color: var(--mint); font-size: 13px; font-weight: 800; }
+.region-choice .primary { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; min-height: 46px; padding: 10px 12px; text-decoration: none; box-sizing: border-box; }
+.region-method summary { min-height: 44px; cursor: pointer; font-weight: 700; }
+.region-method ol { padding-left: 22px; }
+.region-method li { margin-bottom: 8px; }
+.region-method .note { font-size: 14px; line-height: 1.65; }
+.detail-panel .region-method .note, .detail-panel .region-coverage { font-size: 14px !important; line-height: 1.7; }
+#sidebar-regions .overview-card strong { font-size: 15px; }
+#sidebar-regions .overview-card small { font-size: 14px; }
+[data-region="suncheon"] .region-dong-dot { font-size: 15px; color: var(--dong); }
+[data-region="suncheon"] .bottom-dock { display: none; }
+@media (max-width: 1160px) { .region-menu-label { display: none; } }
+@media (max-width: 600px) { .region-menu-button { min-width: 52px; padding: 6px 8px; gap: 3px; } .topbar .brand { max-width: calc(100% - 152px); } .workspace-start .home-hero strong { font-size: 16px; } }

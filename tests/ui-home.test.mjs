@@ -12,7 +12,8 @@ const regions = html.slice(html.indexOf('<section id="sidebar-regions"'), html.i
 const primary = regions.slice(regions.indexOf('<div class="home-primary"'), regions.indexOf('<div class="home-workflows"'));
 const more = regions.slice(regions.indexOf('<div class="home-more-list"'), regions.indexOf('id="dong-tour"'));
 
-test('dong navigation: all 18 dong are before scenario actions, with compact brand tiles', () => {
+test('home navigation: primary public-space task is visible before the district list', () => {
+  assert.ok(html.indexOf('class="workspace-start"') < html.indexOf('id="dong-grid"'));
   assert.ok(html.indexOf('id="dong-grid"') < html.indexOf('class="home-primary"'));
   const css = read('src/city/layout.css');
   assert.ok(css.includes('#sidebar-regions .dong-grid { grid-template-columns: repeat(4,'));
@@ -21,7 +22,7 @@ test('dong navigation: all 18 dong are before scenario actions, with compact bra
 });
 
 test('home panel: civic review and quick questions follow the dong choice; seasonal plans remain reachable', () => {
-  assert.deepEqual(actionsIn(primary).map(b => b.action), ['space-twin', 'civic-review', 'ask-ai', 'infra', 'resilience']);
+  assert.deepEqual(actionsIn(primary).map(b => b.action), ['civic-review', 'ask-ai', 'infra', 'resilience']);
   assert.ok(primary.includes('마을·공간 검토'));
   assert.ok(primary.includes('지도에게 묻기'));
   const workflows = regions.slice(regions.indexOf('<div class="home-workflows"'), regions.indexOf('<div class="home-more"'));

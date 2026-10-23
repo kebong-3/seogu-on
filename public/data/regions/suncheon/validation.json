@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "regionId": "suncheon",
+  "sample": false,
+  "counts": {
+    "districts": 24,
+    "facilities": 67,
+    "boundaryCoordinates": 5587
+  },
+  "warnings": [],
+  "meaning": "자료 구조·식별자·좌표 범위 검사 결과입니다. 최신 운영상태·출처의 진위·현장 정확성을 인증하지 않습니다.",
+  "checkedAt": "2026-10-23T02:38:54.086Z",
+  "sourceEvidence": {
+    "retrievedAt": "2026-10-23T02:35:55.026Z",
+    "boundarySha256": "c01ef44a0eb00978662ba7a6240ccb1da287fb52abd85104a1758969d391132f",
+    "facilitiesSha256": "f645854d9af709c6cdd257343f76d0e939557d42b6a4318181c799f9509098f3",
+    "columnsSha256": "c9c144f715604c73c7a166f7e78e0a68eb60587be62019cb127de44fce76fe3a",
+    "licensePageSha256": "9460b7e877af53c0026fc37e8a4dff0c8f5d488ce5c5b91fda26829336a40c3a"
+  },
+  "checks": {
+    "nationalRows": 7342,
+    "suncheonTextRows": 78,
+    "insideRows": 78,
+    "rejectedTextMatches": 0,
+    "addedOnlyByGeometry": 0,
+    "uniqueSpaces": 67,
+    "distinctPublishedCoordinates": 20,
+    "coveredDistricts": 8,
+    "allLabelPointsInsideOwnBoundary": true,
+    "allSpacePointsInsideAssignedBoundary": true,
+    "originalGeometriesUnchanged": true,
+    "originalFacilityCoordinatesUnchanged": true,
+    "initialFieldObservationsCreated": 0
+  },
+  "sourceLimits": [
+    "공개 다운로드 수록 범위이며 순천 전체 자산 목록의 완전성을 보증하지 않음",
+    "같은 좌표를 가진 여러 공간은 건물 대표좌표일 수 있음",
+    "시간·요금별 다중 원문을 임의의 단일 운영조건으로 확정하지 않음",
+    "담당자 현장확인·업무 실증은 별도 필요"
+  ],
+  "rejectedRecords": [],
+  "identityChanges": {
+    "new": [],
+    "absentFromCurrentDownload": []
+  }
+}

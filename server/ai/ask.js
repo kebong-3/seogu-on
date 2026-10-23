@@ -12,6 +12,8 @@ import {modelConfig} from './model-config.js';
 import { RULES_NOTICE, answerByRules } from './rules.js';
 import {attachWeatherEvidence, briefFromResults} from './work-evidence.js';
 import {attachCivicReview, normalizeReviewContext, ReviewInputError} from './civic-review.js';
+import {registeredRegionId} from '../../shared/region-catalog.js';
+import {answerRegionQuestion} from './region-ask.js';
 
 export const ASK_LIMITS = {
   bodyBytes: 16 * 1024,
@@ -280,10 +282,13 @@ export async function handleAsk(req, res, ctx = {}) {
     return fail(res, 429, 'RATE_LIMITED', '질문이 많습니다. 1분 뒤에 다시 시도하세요.');
   }
   try {
-    const input = readInput(await readBody(req), getStore(ctx.dataDir));
+    const body=await readBody(req);
+    const regionId=body?.regionId === undefined ? ((ctx.env||process.env).REGION_PROFILE||'seogu') : registeredRegionId(body.regionId);
+    if (regionId!=='seogu') return send(res,200,await answerRegionQuestion(body,{...ctx,allowModel:()=>takeDaily(ctx.env||process.env,ctx.now??Date.now())}));
+    const input = readInput(body, getStore(ctx.dataDir));
     return send(res, 200, await answerQuestion(input, ctx));
   } catch (error) {
-    if (error instanceof RequestError || error instanceof ReviewInputError) return fail(res, error.status, error.code, error.message);
+    if (error instanceof RequestError || error instanceof ReviewInputError || error.status===400) return fail(res, error.status, error.code, error.message);
     console.error('[ask] failure', error?.name || 'Error');
     return fail(res, 500, 'ASK_FAILED', '답을 만드는 중 오류가 났습니다. 잠시 후 다시 시도하세요.');
   }

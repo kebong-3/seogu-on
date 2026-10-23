@@ -3,8 +3,9 @@ import {registerAction} from './actions.js';
 import {esc} from './catalog.js';
 import {inside} from './geometry.js';
 import {frameFor} from './camera.js';
+import {parseSpaceQueryIntent, queryFromIntent} from '../../shared/space-query-intent.js';
 import {seedAssets, createWorkspace, recordObservation, upsertScenario, compareWorkspace,
-  serializeWorkspace, parseWorkspace, saveSnapshot, diffSnapshots, mergeWorkspaces, dataFingerprint} from '../../shared/space-twin-model.js';
+  serializeWorkspace, parseWorkspace, saveSnapshot, diffSnapshots, mergeWorkspaces, dataFingerprint, assetSourceFingerprint} from '../../shared/space-twin-model.js';
 
 const VIEW = 'space-twin';
 const MAP_LAYER = 'space-twin-candidates';
@@ -78,18 +79,20 @@ export function spaceReportHtml({profile, comparison, ai = null}) {
     return `<tr><td>${esc(row.name)}<br><small>${esc(row.assetId)}</small></td><td>${esc(PROVENANCE[row.provenance])}<br>${esc(scheduleText(row))}<br>${esc(row.observedOn || '확인일 미기록')}<br>${esc(row.reason)}</td><td>${esc(row.evidence || '현장 근거 미기록')}</td><td>${esc(source.name || '출처 미제공')}<br>${esc(source.date || '기준일 미제공')}<br>${sourceLink({source})}</td></tr>`;
   }).join('');
   const alternatives = (comparison?.alternatives || []).map(metric => `<h3>${esc(metric.name)}</h3><p>추가 연간 운영비 가정 합계: ${amount(metric.additionalAnnualCost)}${metric.costComplete ? '' : ' · 일부 또는 전체 공간의 비용 미입력'}</p><ul>${metric.rows.filter(row => row.provenance === 'user-assumption').map(row => `<li>${esc(row.name)} · ${esc(scheduleText(row))} · ${esc(row.reason)}</li>`).join('')}</ul><p>${esc(metric.note || '')}</p>`).join('') || '<p>비교에 포함한 변경안 없음</p>';
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'none'"><title>공공공간 활용 검토보고서</title><style>body{max-width:1000px;margin:40px auto;padding:0 24px;color:#16324b;background:white;font:15px/1.7 system-ui,sans-serif}h1{font-size:26px}h2{font-size:19px;margin-top:30px}p,li,td,th{overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #b9c9d7;padding:9px;text-align:left;vertical-align:top}th{background:#eef4fa}small{display:block;font-size:11px}caption{text-align:left;font-weight:bold;margin-bottom:8px}.space-hint,.note{color:#4a6175;font-size:13px}.space-result-note{border-left:3px solid #1768c5;padding:8px 12px}.print-help{padding:12px;background:#eef4fa}pre{white-space:pre-wrap;font:inherit}@media print{body{margin:0;padding:0;max-width:none}.print-help{display:none}tr{break-inside:avoid}h2{break-after:avoid}@page{size:A4;margin:16mm}}</style></head><body><p>${esc(profile?.name || comparison?.regionId || '선택 지역')} · 서구온 공공공간 활용</p><h1>공공공간 활용 검토보고서</h1><p class="print-help">브라우저 인쇄에서 종이 또는 PDF로 저장할 수 있습니다.</p><p>계산 시각: ${esc(timeText(comparison?.generatedAt))} (한국시간)<br>검토 조건: ${esc(DAYS[query.dayOfWeek - 1] || '선택 요일')}요일 ${esc(query.start || '')}–${esc(query.end || '')} · 선택 공간 ${rows.length}개</p><p class="note">계산 당시의 공개자료·담당자 확인 기록·변경 가정을 담은 행정 검토자료입니다. 공식 원자료를 변경하지 않으며 수요·수혜 인원·최적 입지·사업효과를 예측하지 않습니다.</p><h2>1. 현재 현황과 변경안</h2>${spaceComparisonHtml(comparison)}<h2>2. 선택 공간·현장 확인·원자료</h2><table><thead><tr><th>공간</th><th>계산 당시 확인 상태</th><th>확인 근거</th><th>공개 원자료</th></tr></thead><tbody>${sourceRows}</tbody></table><h2>3. 변경안의 가정</h2>${alternatives}${ai?.answer ? `<h2>4. ${ai.mode === 'llm' ? 'AI 설명' : '계산 근거 요약'}</h2><pre>${esc(ai.answer)}</pre><p class="note">${esc(ai.model || '')} ${esc(ai.notice || '')}</p>` : ''}<h2>확인할 사항</h2><ul><li>현장 확인의 유효기간·실제 이용 조건·휴관 및 예약 여부</li><li>개방에 필요한 인력·보안·관리 책임과 실제 소관 업무</li><li>입력 비용의 산정 근거와 주민 이용 수요</li><li>원자료 기준일과 누락 가능성, 대표좌표와 실제 출입구의 차이</li></ul><h2>계산의 범위</h2><ul>${(comparison?.limitations || []).map(value => `<li>${esc(value)}</li>`).join('')}</ul><p class="note">계산 자료 식별값: ${esc(comparison?.fingerprint || '미기록')} · 현황 기록 버전 ${esc(comparison?.workspaceRevision ?? '미기록')}</p></body></html>`;
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'none'"><title>공공공간 활용 검토보고서</title><style>body{max-width:1000px;margin:40px auto;padding:0 24px;color:#16324b;background:white;font:15px/1.7 system-ui,sans-serif}h1{font-size:26px}h2{font-size:19px;margin-top:30px}p,li,td,th{overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #b9c9d7;padding:9px;text-align:left;vertical-align:top}th{background:#eef4fa}small{display:block;font-size:11px}caption{text-align:left;font-weight:bold;margin-bottom:8px}.space-hint,.note{color:#4a6175;font-size:13px}.space-result-note{border-left:3px solid #1768c5;padding:8px 12px}.print-help{padding:12px;background:#eef4fa}pre{white-space:pre-wrap;font:inherit}@media print{body{margin:0;padding:0;max-width:none}.print-help{display:none}tr{break-inside:avoid}h2{break-after:avoid}@page{size:A4;margin:16mm}}</style></head><body><p>${esc(profile?.name || comparison?.regionId || '선택 지역')} · 서구온 공공공간 활용</p><h1>공공공간 활용 검토보고서</h1><p class="print-help">브라우저 인쇄에서 종이 또는 PDF로 저장할 수 있습니다.</p><p>계산 시각: ${esc(timeText(comparison?.generatedAt))} (한국시간)<br>검토 조건: ${esc(DAYS[query.dayOfWeek - 1] || '선택 요일')}요일 ${esc(query.start || '')}–${esc(query.end || '')} · 선택 공간 ${rows.length}개</p><p class="note">계산 당시의 공개자료·담당자 확인 기록·변경 가정을 담은 행정 검토자료입니다. 공식 원자료를 변경하지 않으며 수요·수혜 인원·최적 입지·사업효과를 예측하지 않습니다.</p><h2>1. 현재 현황과 변경안</h2>${spaceComparisonHtml(comparison)}<h2>2. 선택 공간·현장 확인·원자료</h2><table><thead><tr><th>공간</th><th>계산 당시 확인 상태</th><th>확인 근거</th><th>공개 원자료</th></tr></thead><tbody>${sourceRows}</tbody></table><h2>3. 변경안의 가정</h2>${alternatives}${ai?.answer ? `<h2>4. ${ai.mode === 'llm' ? 'AI 설명' : '계산 근거 요약'}</h2><pre>${esc(ai.answer)}</pre><p class="note">응답 모델: ${esc(ai.model || '미기록')}<br>설명 생성: ${esc(timeText(ai.computedAt || ai.generatedAt))}<br>설명 근거 식별값: ${esc(ai.evidenceId || ai.comparisonFingerprint || '미기록')}<br>${esc(ai.notice || '')}</p>` : ''}<h2>확인할 사항</h2><ul><li>현장 확인의 유효기간·실제 이용 조건·휴관 및 예약 여부</li><li>개방에 필요한 인력·보안·관리 책임과 실제 소관 업무</li><li>입력 비용의 산정 근거와 주민 이용 수요</li><li>원자료 기준일과 누락 가능성, 대표좌표와 실제 출입구의 차이</li></ul><h2>계산의 범위</h2><ul>${(comparison?.limitations || []).map(value => `<li>${esc(value)}</li>`).join('')}</ul><p class="note">계산 자료 식별값: ${esc(comparison?.fingerprint || '미기록')} · 현황 기록 버전 ${esc(comparison?.workspaceRevision ?? '미기록')}</p></body></html>`;
 }
 
 export function installSpaceTwin(api, options = {}) {
   const root = document.getElementById('app');
   let profile = null, assets = [], workspace = null, loading = null, storageError = '', destroyed = false;
   let selected = [], step = 'select', search = '', activeAssetId = '', editingScenarioId = '', lastComparison = null, restoredSnapshot = null, aiResult = null, aiLoading = false, controller = null, requestSequence = 0, importPreview = null, observationChange = null;
-  let query = {dayOfWeek: 1, start: '18:00', end: '21:00'};
+  let query = {dayOfWeek: null, start: '', end: ''}, queryDraft = null, queryContext = null;
+  let draftStorageNotice = '', draftRestored = false, draftPersistenceFailed = false;
   const observationDrafts = new Map(), scenarioDrafts = new Map();
   let includedScenarios = new Set();
 
   const storageKey = () => `seoon.space-twin.v1.${profile.id}`;
+  const draftStorageKey = () => `seoon.space-twin.draft.v1.${profile.id}`;
   const getProfile = () => options.getRegion?.() || api.state.regionProfile || {id: 'seogu', name: '서구', facilitiesUrl: '/data/layers/public-facilities.geojson'};
   const openNow = () => api.state.view === VIEW;
   const findAsset = id => assets.find(asset => asset.id === id);
@@ -102,8 +105,57 @@ export function installSpaceTwin(api, options = {}) {
   function persist(next) {
     if (storageError) throw Error('기존 저장 기록을 읽지 못해 덮어쓰지 않았습니다. 먼저 원본 백업을 보관하세요.');
     const serialized = serializeWorkspace(next);
-    try { localStorage.setItem(storageKey(), serialized); } catch { throw Error('이 브라우저에 저장하지 못했습니다. 저장공간·브라우저 설정을 확인하세요. 기존 기록은 유지합니다.'); }
+    try {
+      localStorage.setItem(storageKey(), serialized);
+      if (localStorage.getItem(storageKey()) !== serialized) throw Error('저장 확인 실패');
+    } catch { throw Error(`확인 기록의 저장 완료를 확인하지 못했습니다. 입력 초안은 ${draftPersistenceFailed ? '현재 화면에 남아 있으니 새로고침 전에 복사하세요.' : '이 탭의 복구용 초안에 남겨 두었습니다.'} 저장공간·브라우저 설정을 확인하세요.`); }
     workspace = next;
+  }
+  function persistDraftSession() {
+    if (!profile || !workspace) return;
+    const serialized = JSON.stringify({version: 1, regionId: profile.id, query, queryDraft, queryContext,
+      selected, activeAssetId, editingScenarioId, step, includedScenarios: [...includedScenarios],
+      observations: [...observationDrafts], scenarios: [...scenarioDrafts]});
+    try {
+      globalThis.sessionStorage.setItem(draftStorageKey(), serialized);
+      if (globalThis.sessionStorage.getItem(draftStorageKey()) !== serialized) throw Error('초안 복구 확인 실패');
+      draftPersistenceFailed = false;
+      draftStorageNotice = draftRestored ? '이 탭에서 작성하던 입력 초안을 복구했습니다. 현황·변경안 저장 버튼을 누르기 전에는 확인 기록으로 사용하지 않습니다.' : '';
+    } catch {
+      draftPersistenceFailed = true;
+      draftStorageNotice = '초안 자동 복구를 사용할 수 없습니다. 입력은 현재 화면에 남아 있으니 새로고침·탭 닫기 전에 저장하거나 복사하세요.';
+    }
+  }
+  function restoreDraftSession() {
+    try {
+      const raw = globalThis.sessionStorage?.getItem(draftStorageKey());
+      if (!raw) return;
+      if (raw.length > 1024 * 1024) throw Error('초안 크기 확인 필요');
+      const saved = JSON.parse(raw);
+      if (saved?.version !== 1 || saved.regionId !== profile.id || !Array.isArray(saved.selected)) throw Error('초안 지역 확인 필요');
+      query = queryFromIntent(saved.query);
+      selected = [...new Set(saved.selected.filter(id => typeof id === 'string' && findAsset(id)))].slice(0, MAX_SELECTED);
+      activeAssetId = selected.includes(saved.activeAssetId) ? saved.activeAssetId : selected[0] || '';
+      editingScenarioId = workspace.scenarios.some(item => item.id === saved.editingScenarioId) ? saved.editingScenarioId : '';
+      step = ['select', 'state', 'compare'].includes(saved.step) ? saved.step : 'select';
+      includedScenarios = new Set((saved.includedScenarios || []).filter(id => workspace.scenarios.some(item => item.id === id)));
+      const restoreEntries = (values, target, predicate) => {
+        if (!Array.isArray(values)) return;
+        for (const entry of values.slice(0, 100)) {
+          if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== 'string' || !entry[1] || typeof entry[1] !== 'object' || !predicate(entry)) continue;
+          const value = {...entry[1]};
+          value.daysOfWeek = Array.isArray(value.daysOfWeek) ? value.daysOfWeek.filter(day => Number.isInteger(day) && day >= 1 && day <= 7) : [];
+          target.set(entry[0], value);
+        }
+      };
+      restoreEntries(saved.observations, observationDrafts, ([id]) => !!findAsset(id));
+      restoreEntries(saved.scenarios, scenarioDrafts, ([, value]) => !!findAsset(value.assetId));
+      queryDraft = saved.queryDraft?.regionId === profile.id ? {...parseSpaceQueryIntent(saved.queryDraft.sourceQuestion, saved.queryDraft), ...queryFromIntent(saved.queryDraft)} : null;
+      queryContext = saved.queryContext?.regionId === profile.id ? parseSpaceQueryIntent(saved.queryContext.sourceQuestion, saved.queryContext) : null;
+      draftRestored = !!(queryDraft || queryContext || observationDrafts.size || scenarioDrafts.size || selected.length);
+    } catch {
+      draftStorageNotice = '이전 입력 초안을 읽지 못했습니다. 저장한 현황·변경안은 별도로 불러왔습니다.';
+    }
   }
   async function ensureLoaded() {
     const current = getProfile();
@@ -115,7 +167,8 @@ export function installSpaceTwin(api, options = {}) {
       assets = seedAssets(collection, {regionId: profile.id, datasetId: profile.facilityLayerId || 'public-facilities'});
       workspace = createWorkspace(profile.id); storageError = '';
       try { const saved = localStorage.getItem(storageKey()); if (saved) workspace = parseWorkspace(saved, {regionId: profile.id}); } catch (error) { storageError = error.message || '저장한 기록을 읽지 못했습니다.'; }
-      selected = []; activeAssetId = ''; observationDrafts.clear(); scenarioDrafts.clear(); editingScenarioId = ''; includedScenarios = new Set(workspace.scenarios.map(item => item.id)); invalidate();
+      selected = []; activeAssetId = ''; observationDrafts.clear(); scenarioDrafts.clear(); editingScenarioId = ''; includedScenarios = new Set(workspace.scenarios.map(item => item.id));
+      query = {dayOfWeek: null, start: '', end: ''}; queryDraft = null; queryContext = null; draftStorageNotice = ''; draftRestored = false; invalidate(); restoreDraftSession();
     })();
     try { await loading; } finally { loading = null; }
   }
@@ -134,6 +187,11 @@ export function installSpaceTwin(api, options = {}) {
     const scopeIds = new Set(scopedAssets().map(asset => asset.id)), outside = selected.filter(id => !scopeIds.has(id)).length;
     return `<div class="space-selected" aria-label="선택한 검토 공간">${selected.map(id => { const asset = findAsset(id); return `<span>${esc(asset?.name || id)}${button('space-remove', '×', `data-id="${esc(id)}" aria-label="${esc(asset?.name || id)} 검토 선택 해제"`, 'space-chip-remove')}</span>`; }).join('')}</div>${outside ? `<p class="space-hint">선택 목록에 현재 지도 구역 밖의 공간 ${outside}개이 포함되어 있습니다. 비교는 이 선택 목록을 기준으로 합니다.</p>` : ''}`;
   }
+  function queryDraftHtml() {
+    if (restoredSnapshot) return '';
+    if (!queryDraft) return queryContext ? `<details class="space-details space-query-context"><summary>질문에서 이어온 검토</summary><p>${esc(queryContext.sourceQuestion)}</p><p class="space-hint">질문은 검토 맥락입니다. 계산에는 아래에서 선택한 실제 공간·요일·시간만 사용합니다.${queryContext.participantCount ? ` 요청 인원 ${queryContext.participantCount}명은 공간 정원·예약 가능 여부로 검증되지 않았습니다.` : ''}</p></details>` : '';
+    return `<section class="space-query-draft" aria-label="질문에서 가져온 검토조건 초안"><span class="space-badge">확인 전 초안</span><h3>질문에서 가져온 검토조건</h3><details class="space-draft-source"><summary>입력한 질문·적용 범위</summary><p>${esc(queryDraft.sourceQuestion)}</p><p class="space-hint">${esc(queryDraft.scopeLabel || profile.name)}의 선택 공간에 적용할 이용시간입니다. 실제 시설 운영조건을 확인한 것은 아닙니다.</p></details><label for="space-draft-day">검토 요일</label><select id="space-draft-day"><option value=""${queryDraft.dayOfWeek ? '' : ' selected'}>요일을 선택하세요</option>${DAYS.map((day, index) => `<option value="${index + 1}"${queryDraft.dayOfWeek === index + 1 ? ' selected' : ''}>${day}요일</option>`).join('')}</select><div class="space-two-fields"><div><label for="space-draft-start">이용 시작</label><input id="space-draft-start" type="time" value="${esc(queryDraft.start)}"></div><div><label for="space-draft-end">이용 종료</label><input id="space-draft-end" type="time" value="${esc(queryDraft.end)}"></div></div>${queryDraft.notices.map(value => `<p class="space-hint">${esc(value)}</p>`).join('')}${queryDraft.participantCount ? `<p class="space-hint">요청 인원 ${queryDraft.participantCount}명 · 정원·예약·공간 적합성은 별도 확인합니다.</p>` : ''}<div class="space-actions">${button('space-apply-query-draft', '조건 확인·적용', '', 'primary')}${button('space-dismiss-query-draft', '직접 조건 입력')}</div></section>`;
+  }
   function candidatesHtml() {
     const candidates = shownAssets();
     return `<p class="space-scope">${esc(api.label())} · 수록 공간 ${scopedAssets().length}개 · 선택 ${selected.length}/${MAX_SELECTED}개</p><p class="space-hint">지도의 지점이나 목록에서 실제 검토할 공간을 고르세요. 공개자료는 회의실·강당 등 개방 공간 단위이며 현재 운영은 별도 확인합니다.</p><label for="space-search">공간 찾기</label><input id="space-search" type="search" maxlength="120" value="${esc(search)}" placeholder="공간명·주소 검색"><div id="space-candidate-list"><ul class="space-candidate-list">${candidates.map(asset => `<li><button type="button" class="space-candidate ${selected.includes(asset.id) ? 'is-selected' : ''}" data-action="space-toggle" data-id="${esc(asset.id)}" aria-pressed="${selected.includes(asset.id)}"><strong>${esc(asset.name)}</strong><span>${esc(asset.dongName || '')} ${esc(asset.address || '주소 미제공')}</span><small>${selected.includes(asset.id) ? '선택됨' : '검토할 공간으로 선택'}</small></button>${button('space-focus', '지도에서 보기', `data-id="${esc(asset.id)}"`, 'space-text-button')}</li>`).join('') || '<li class="space-empty">이 조건에서 수록 공간을 찾지 못했습니다. 실제 시설이 없다는 뜻은 아닙니다. 다른 동이나 검색어를 확인하세요.</li>'}</ul></div>${selectedChips()}${button('space-step', '선택한 공간의 현황·변경안 확인 →', `data-step="state"${selected.length ? '' : ' disabled'}`, 'primary full')}`;
@@ -146,7 +204,7 @@ export function installSpaceTwin(api, options = {}) {
     const existing = workspace.scenarios.find(item => item.id === editingScenarioId);
     const scenarioDraft = scenarioDrafts.get(draftKey());
     const change = scenarioDraft?.assetId === asset.id ? scenarioDraft : existing?.changes.find(item => item.assetId === asset.id) || {};
-    const value = {...change, operatingStatus: change.operatingStatus ?? 'open', daysOfWeek: change.daysOfWeek ?? [query.dayOfWeek], opens: change.opens === undefined ? query.start : change.opens, closes: change.closes === undefined ? query.end : change.closes};
+    const value = {...change, operatingStatus: change.operatingStatus ?? 'open', daysOfWeek: change.daysOfWeek ?? (query.dayOfWeek ? [query.dayOfWeek] : []), opens: change.opens === undefined ? query.start : change.opens, closes: change.closes === undefined ? query.end : change.closes};
     return `<details class="space-details space-scenario-details" open><summary>변경안 작성 <span class="space-badge">사용자 가정</span></summary><p class="space-hint">선택한 공간의 운영조건을 바꾼다면 어떻게 달라질지 계산합니다. 실제 적용이나 운영 승인을 뜻하지 않습니다.</p><form id="space-scenario-form"><label for="space-scenario-name">변경안 이름</label><input id="space-scenario-name" maxlength="80" required value="${esc(scenarioDraft?.name ?? existing?.name ?? `대안 ${workspace.scenarios.length + 1}`)}"><p class="space-scope">변경할 공간 <strong>${esc(asset.name)}</strong></p>${scheduleFields('space-scenario', value, true)}<label for="space-scenario-cost">이 공간의 추가 연간 운영비 <small>만원 · 모르면 비워 두기</small></label><input id="space-scenario-cost" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" value="${change.additionalAnnualCost === null || change.additionalAnnualCost === undefined ? '' : esc(change.additionalAnnualCost)}" placeholder="미입력은 미산정"><label for="space-scenario-note">변경 이유·확인할 조건 <small>선택</small></label><textarea id="space-scenario-note" rows="2" maxlength="1000" placeholder="운영 인력·보안·예약 등의 협의 조건">${esc(scenarioDraft?.note ?? existing?.note ?? '')}</textarea><button class="primary full" type="submit"${storageError || !existing && workspace.scenarios.length >= 3 ? ' disabled' : ''}>${existing ? '이 대안에 공간 변경 반영' : '변경안 저장'}</button></form>${existing ? button('space-new-scenario', '별도 대안 작성', workspace.scenarios.length >= 3 ? 'disabled' : '', 'space-text-button') : ''}</details>`;
   }
   function scenarioList() {
@@ -162,10 +220,15 @@ export function installSpaceTwin(api, options = {}) {
     const missing = missingScenarioAssets();
     const scenarios = workspace.scenarios.length ? `<fieldset class="space-scenario-choice"><legend>비교할 변경안</legend>${workspace.scenarios.map(item => `<label><input type="checkbox" name="space-included-scenario" value="${esc(item.id)}"${includedScenarios.has(item.id) ? ' checked' : ''}><span>${esc(item.name)}<small>${item.changes.length}개 공간 변경</small></span></label>`).join('')}<p class="space-hint">체크를 해제해도 저장한 변경안은 유지됩니다.</p></fieldset>` : '';
     const warning = missing.length ? `<div class="space-result-note"><p>비교할 변경안의 공간 ${missing.length}개이 선택 목록에 없습니다. 해당 공간을 함께 선택하거나 변경안의 체크를 해제하세요.</p>${button('space-include-scenario-assets', '변경안의 공간도 선택')}</div>` : '';
-    return `<form id="space-query-form"><h3>언제 이용할 공간을 검토하나요?</h3><label for="space-query-day">검토 요일</label><select id="space-query-day">${DAYS.map((name, index) => `<option value="${index + 1}"${query.dayOfWeek === index + 1 ? ' selected' : ''}>${name}요일</option>`).join('')}</select><div class="space-two-fields"><div><label for="space-query-start">이용 시작</label><input id="space-query-start" type="time" required value="${esc(query.start)}"></div><div><label for="space-query-end">이용 종료</label><input id="space-query-end" type="time" required value="${esc(query.end)}"></div></div>${scenarios}${warning}<p class="space-hint">선택한 ${selected.length}개 공간에 같은 조건을 적용합니다. 법정공휴일·예약·접근 제약은 추가 확인사항입니다.</p><button type="submit" class="primary full"${selected.length && !missing.length ? '' : ' disabled'}>현재 현황과 변경안 계산</button></form>`;
+    return `<form id="space-query-form"><h3>언제 이용할 공간을 검토하나요?</h3><label for="space-query-day">검토 요일</label><select id="space-query-day" required><option value=""${query.dayOfWeek ? '' : ' selected'}>요일을 선택하세요</option>${DAYS.map((name, index) => `<option value="${index + 1}"${query.dayOfWeek === index + 1 ? ' selected' : ''}>${name}요일</option>`).join('')}</select><div class="space-two-fields"><div><label for="space-query-start">이용 시작</label><input id="space-query-start" type="time" required value="${esc(query.start)}"></div><div><label for="space-query-end">이용 종료</label><input id="space-query-end" type="time" required value="${esc(query.end)}"></div></div>${scenarios}${warning}<p class="space-hint">선택한 ${selected.length}개 공간에 같은 조건을 적용합니다. 법정공휴일·예약·정원·접근 제약은 추가 확인사항입니다.</p>${queryDraft ? '<p class="space-hint">위 질문 초안을 먼저 확인하거나 ‘직접 조건 입력’을 선택하세요.</p>' : ''}<button type="submit" class="primary full"${selected.length && !missing.length && !queryDraft ? '' : ' disabled'}>현재 현황과 변경안 계산</button></form>`;
   }
   function aiHtml() {
-    return `<section class="space-ai"><h3>계산 결과를 행정 검토로 연결</h3><p class="space-hint">선택 공간·확인한 운영조건·변경안과 계산결과를 AI로 설명합니다. 계산표를 근거로 삼고 AI 설명은 검토 보조로 활용하세요. ${profile.capabilities?.legacySeoguServices === false ? '현재 지역의 자료만 사용합니다.' : ''}</p>${button('space-explain', aiLoading ? '근거를 설명하고 있습니다…' : 'AI로 차이·협의사항 설명', `${!lastComparison || restoredSnapshot || aiLoading ? 'disabled' : ''}`, 'primary full')}${aiResult ? `<article class="space-ai-result"><span class="space-badge">${aiResult.mode === 'llm' ? 'AI 설명' : aiResult.mode === 'error' ? '설명 요청 확인 필요' : '계산 근거 요약'}</span><p>${esc(aiResult.answer || aiResult.error || '')}</p>${aiResult.model ? `<small>응답 모델: ${esc(aiResult.model)}</small>` : ''}${aiResult.notice ? `<small>${esc(aiResult.notice)}</small>` : ''}</article>` : ''}</section>`;
+    return `<section class="space-ai"><h3>${restoredSnapshot ? '저장 당시 설명' : '계산 결과를 행정 검토로 연결'}</h3>${restoredSnapshot ? '<p class="space-hint">저장한 계산에 연결된 당시 설명을 그대로 보여 줍니다. 최신 AI를 다시 호출하지 않습니다.</p>' : `<p class="space-hint">${esc(profile.name)}의 선택 공간·확인 조건·변경안과 계산결과를 근거로 설명합니다.</p>${button('space-explain', aiLoading ? '계산 검증·AI 응답을 기다리는 중…' : aiResult?.mode === 'error' ? '같은 계산으로 설명 다시 요청' : 'AI로 차이·협의사항 설명', `${!lastComparison || aiLoading ? 'disabled' : ''}`, 'primary full')}`}${aiResult ? `<article class="space-ai-result"><span class="space-badge">${aiResult.mode === 'llm' ? 'AI 설명' : aiResult.mode === 'error' ? '설명 요청 확인 필요' : '계산 근거 요약'}</span><p${aiResult.mode === 'error' ? ' role="alert"' : ''}>${esc(aiResult.answer || aiResult.error || '')}</p>${aiResult.model ? `<small>응답 모델: ${esc(aiResult.model)}</small>` : ''}${aiResult.computedAt || aiResult.generatedAt ? `<small>설명 생성: ${esc(timeText(aiResult.computedAt || aiResult.generatedAt))}</small>` : ''}${aiResult.evidenceId ? `<small>근거 식별값: ${esc(aiResult.evidenceId)}</small>` : ''}${aiResult.notice ? `<small>${esc(aiResult.notice)}</small>` : ''}</article>` : restoredSnapshot ? '<p class="space-hint">이 저장본에는 설명이 포함되지 않았습니다. 계산표와 당시 근거로 보고서를 재발행합니다.</p>' : ''}</section>`;
+  }
+  function comparisonSummaryHtml(comparison) {
+    const base = comparison.baseline;
+    const sources = [...new Map((comparison.sources || []).map(source => [`${source.name}/${source.date}`, source])).values()];
+    return `<section class="space-decision-summary" aria-label="비교 핵심 확인"><div><h3>확인된 계산</h3><p>선택 ${comparison.selectedCount}개 중 개방 조건 충족 ${number(base.eligibleCount)}개 · 미확인 ${number(base.unknownCount)}개.</p></div><div><h3>핵심 미확인</h3><p>${base.unknownCount ? '미확인 공간의 실제 운영 요일·시간부터 확인하세요. ' : ''}예약·법정공휴일·정원은 이 계산으로 확정하지 않습니다.</p></div><div><h3>다음 행동</h3><p>${base.unknownCount ? '현재 현황을 확인해 기록한 뒤 같은 조건으로 다시 계산하세요.' : '변경안의 인력·관리 책임·추가 비용 근거를 담당부서와 확인하세요.'}</p>${button('space-step', '현황·변경안 확인', 'data-step="state"', 'space-text-button')}</div><p class="space-summary-sources">출처·기준일: ${sources.map(source => `${esc(source.name || '미제공')} · ${esc(source.date || '미제공')}`).join(' / ') || '미제공'}</p></section>`;
   }
   function historyHtml() {
     const records = (workspace.history || []).slice(-15).reverse();
@@ -184,9 +247,9 @@ export function installSpaceTwin(api, options = {}) {
   }
   function compareHtml() {
     const changed = observationChange ? `<p class="space-result-note">현황 확인을 반영해 같은 조건으로 다시 계산했습니다.<br>개방 조건 충족 ${number(observationChange.before.eligibleCount)} → ${number(observationChange.after.eligibleCount)}개 / 미확인 ${number(observationChange.before.unknownCount)} → ${number(observationChange.after.unknownCount)}개. 정보 확인에 따른 변화이며 실제 사업효과로 해석하지 않습니다.</p>` : '';
-    const historicalNote = restoredSnapshot ? `<p class="space-result-note">아래는 ‘${esc(restoredSnapshot.name)}’의 저장 당시 결과입니다. 계산 버튼을 누르면 위 조건과 최신 현황으로 새 결과를 만듭니다.</p>` : '';
-    const result = lastComparison ? `<div class="space-result-heading"><h3>비교 결과</h3><span class="space-badge">${restoredSnapshot ? '저장 당시 결과' : '조건별 계산'}</span></div><p class="space-hint">${esc(DAYS[lastComparison.query?.dayOfWeek - 1] || '')}요일 ${esc(lastComparison.query?.start || '')}–${esc(lastComparison.query?.end || '')} · ${lastComparison.selectedCount}개 공간 · ${esc(timeText(lastComparison.generatedAt))}</p>${historicalNote}${changed}${spaceComparisonHtml(lastComparison)}${rowsHtml(lastComparison)}${restoredSnapshot ? '' : aiHtml()}<div class="space-actions">${button('space-save-snapshot', '비교 결과 보관', restoredSnapshot || workspace.snapshots.length >= 20 || storageError ? 'disabled' : '')}${button('space-report', '검토보고서 HTML')}</div>` : '<p class="space-empty">‘계산’을 누르면 현재 확인된 값과 변경 가정을 구분해 보여 줍니다. 현재 운영조건이 없어도 미확인으로 남기고 변경안부터 검토할 수 있습니다.</p>';
-    return `${selectedChips()}${queryForm()}<div id="space-current-result">${result}</div>${snapshotsHtml()}${historyHtml()}`;
+    const historicalNote = restoredSnapshot ? `<p class="space-result-note">아래는 ‘${esc(restoredSnapshot.name)}’의 저장 당시 결과와 설명입니다. 현재 작성 중인 입력은 별도로 유지했습니다.</p>` : '';
+    const result = lastComparison ? `<div class="space-result-heading"><h3>비교 결과</h3><span class="space-badge">${restoredSnapshot ? '저장 당시 결과' : '조건별 계산'}</span></div><p class="space-hint">${esc(DAYS[lastComparison.query?.dayOfWeek - 1] || '')}요일 ${esc(lastComparison.query?.start || '')}–${esc(lastComparison.query?.end || '')} · ${lastComparison.selectedCount}개 공간 · ${esc(timeText(lastComparison.generatedAt))}</p>${historicalNote}${changed}${comparisonSummaryHtml(lastComparison)}${spaceComparisonHtml(lastComparison)}${rowsHtml(lastComparison)}${aiHtml()}<div class="space-actions">${button('space-save-snapshot', '비교 결과 보관', restoredSnapshot || aiLoading || workspace.snapshots.length >= 20 || storageError ? 'disabled' : '')}${button('space-report', '검토보고서 HTML')}</div>` : '<p class="space-empty">‘계산’을 누르면 현재 확인된 값과 변경 가정을 구분해 보여 줍니다. 현재 운영조건이 없어도 미확인으로 남기고 변경안부터 검토할 수 있습니다.</p>';
+    return restoredSnapshot ? `<div id="space-current-result">${result}</div>${button('space-resume-current', '현재 작성 중인 검토로 돌아가기', '', 'primary full')}${snapshotsHtml()}${historyHtml()}` : `${selectedChips()}${queryForm()}<div id="space-current-result">${result}</div>${snapshotsHtml()}${historyHtml()}`;
   }
   function toolsHtml() {
     let preview = '';
@@ -200,7 +263,8 @@ export function installSpaceTwin(api, options = {}) {
   }
   function render() {
     if (destroyed || !workspace) return;
-    const html = `<div class="space-twin"><div class="space-lead"><strong>같은 공간, 다른 운영안.</strong><p>현장에서 확인한 상태와 변경안을 비교하고, 다음 판단에 이어갑니다.</p><span class="space-badge">기록은 이 브라우저에 보관</span></div><nav class="space-steps" aria-label="공공공간 활용 단계">${[['select','1 공간 선택'],['state','2 현황·변경안'],['compare','3 비교·기록']].map(([id, name]) => button('space-step', name, `data-step="${id}" aria-current="${step === id ? 'step' : 'false'}"`, step === id ? 'is-current' : '')).join('')}</nav>${storageError ? `<p class="space-error" role="alert">저장 기록 확인 필요: ${esc(storageError)} 기존 기록을 덮어쓰지 않습니다.</p>` : ''}${step === 'select' ? candidatesHtml() : step === 'state' ? stateHtml() : compareHtml()}${toolsHtml()}</div>`;
+    persistDraftSession();
+    const html = `<div class="space-twin">${queryDraft ? '' : '<div class="space-lead"><strong>같은 공간, 다른 운영안.</strong><p>현장에서 확인한 상태와 변경안을 비교하고, 다음 판단에 이어갑니다.</p><span class="space-badge">기록은 이 브라우저에 보관</span></div>'}${queryDraftHtml()}<nav class="space-steps" aria-label="공공공간 활용 단계">${[['select','1 공간 선택'],['state','2 현황·변경안'],['compare','3 비교·기록']].map(([id, name]) => button('space-step', name, `data-step="${id}" aria-current="${step === id ? 'step' : 'false'}"`, step === id ? 'is-current' : '')).join('')}</nav>${storageError ? `<p class="space-error" role="alert">저장 기록 확인 필요: ${esc(storageError)} 기존 기록을 덮어쓰지 않습니다.</p>` : ''}${draftStorageNotice ? `<p class="space-local-note" role="status">${esc(draftStorageNotice)}</p>` : ''}${step === 'select' ? candidatesHtml() : step === 'state' ? stateHtml() : compareHtml()}${toolsHtml()}</div>`;
     api.show('공공공간 활용', html, VIEW);
     const eyebrow = document.getElementById('detail-eyebrow'); if (eyebrow) eyebrow.textContent = `${profile.name} · 현황 → 변경안 → 다시 확인`;
   }
@@ -208,9 +272,28 @@ export function installSpaceTwin(api, options = {}) {
     api.show('공공공간 활용', '<p>선택 지역의 공공공간 자료를 확인하고 있습니다.</p>', VIEW);
     try { await ensureLoaded(); if (destroyed || !openNow()) return; drawCandidates(); render(); } catch (error) { if (destroyed || !openNow()) return; api.show('공공공간 활용', `<div class="space-twin"><p class="space-error">${esc(error.message)}</p><p>자료가 연결되어야 실제 공간을 선택할 수 있습니다.</p>${button('space-twin', '다시 확인')}</div>`, VIEW); }
   }
+  async function openFromQuestion(action) {
+    const data = action?.dataset || action || {};
+    if (data.regionId && data.regionId !== getProfile().id) throw Error('질문한 지역과 현재 선택 지역이 다릅니다. 해당 지역에서 다시 질문하세요.');
+    await open();
+    if (!workspace || !openNow()) return;
+    collectDrafts();
+    queryDraft = parseSpaceQueryIntent(data.question, {regionId: profile.id, regionName: profile.name,
+      dongId: api.state.dong, scopeLabel: api.label()});
+    invalidate(); step = 'select'; render();
+  }
+  function applyQueryDraft() {
+    if (!queryDraft) return;
+    const day = document.getElementById('space-draft-day'), start = document.getElementById('space-draft-start'), end = document.getElementById('space-draft-end');
+    const next = {dayOfWeek: day ? Number(day.value) || null : queryDraft.dayOfWeek, start: start ? start.value : queryDraft.start, end: end ? end.value : queryDraft.end};
+    if (!next.dayOfWeek || !/^\d{2}:\d{2}$/.test(next.start) || !/^\d{2}:\d{2}$/.test(next.end) || next.start >= next.end) throw Error('비교할 요일과 같은 날의 시작·종료 시각을 확인하세요.');
+    query = next; queryContext = {...queryDraft, ...next}; queryDraft = null; invalidate(); step = 'select'; render();
+    api.toast(`${DAYS[query.dayOfWeek - 1]}요일 ${query.start}–${query.end} 조건을 반영했습니다. 검토할 공간을 선택하세요.`);
+  }
   function collectQuery() {
     const day = document.getElementById('space-query-day');
-    if (day) query = {...query, dayOfWeek: Number(day.value), start: document.getElementById('space-query-start').value, end: document.getElementById('space-query-end').value};
+    if (day) query = {...query, dayOfWeek: Number(day.value) || null, start: document.getElementById('space-query-start').value, end: document.getElementById('space-query-end').value};
+    persistDraftSession();
     return {...query, assetIds: [...selected]};
   }
   function readSchedule(prefix) {
@@ -219,8 +302,10 @@ export function installSpaceTwin(api, options = {}) {
   function collectDrafts() {
     if (document.getElementById('space-observation-form')) observationDrafts.set(activeAssetId, {...readSchedule('space-observation'), observedOn: document.getElementById('space-observation-date').value, validUntil: document.getElementById('space-observation-valid').value || null, evidence: document.getElementById('space-observation-evidence').value});
     if (document.getElementById('space-scenario-form')) { const cost = document.getElementById('space-scenario-cost').value; scenarioDrafts.set(draftKey(), {...readSchedule('space-scenario'), assetId: activeAssetId, name: document.getElementById('space-scenario-name').value, note: document.getElementById('space-scenario-note').value, additionalAnnualCost: cost === '' ? null : Number(cost)}); }
+    persistDraftSession();
   }
   function calculate() {
+    if (queryDraft) throw Error('질문에서 가져온 초안을 먼저 확인하세요.');
     if (!selected.length) throw Error('검토할 공간을 선택하세요.');
     const effectiveQuery = collectQuery();
     const comparison = compareWorkspace({assets, workspace: calculationWorkspace(), query: effectiveQuery});
@@ -232,7 +317,7 @@ export function installSpaceTwin(api, options = {}) {
     const effectiveQuery = {...query, assetIds: [...selected]};
     let before = null;
     try { if (selected.length) before = compareWorkspace({assets, workspace: calculationWorkspace(), query: effectiveQuery}); } catch { /* Recording field evidence does not require a valid scenario scope. */ }
-    persist(recordObservation(workspace, activeAssetId, observationDrafts.get(activeAssetId)));
+    persist(recordObservation(workspace, activeAssetId, {...observationDrafts.get(activeAssetId), assetFingerprint: assetSourceFingerprint(findAsset(activeAssetId))}));
     observationDrafts.delete(activeAssetId); invalidate();
     if (before) { lastComparison = compareWorkspace({assets, workspace: calculationWorkspace(), query: effectiveQuery}); observationChange = {before: before.baseline, after: lastComparison.baseline}; }
     api.toast('현황과 변경 이력을 저장했습니다. 다음 비교에 반영됩니다.'); render();
@@ -279,6 +364,9 @@ export function installSpaceTwin(api, options = {}) {
   }
   const off = [
     registerAction('space-twin', open),
+    registerAction('space-from-question', openFromQuestion),
+    registerAction('space-apply-query-draft', applyQueryDraft),
+    registerAction('space-dismiss-query-draft', () => { queryDraft = null; queryContext = null; query = {dayOfWeek: null, start: '', end: ''}; invalidate(); render(); }),
     registerAction('space-step', button => { collectDrafts(); collectQuery(); step = ['select','state','compare'].includes(button.dataset.step) ? button.dataset.step : 'select'; render(); }),
     registerAction('space-toggle', button => toggle(button.dataset.id)),
     registerAction('space-remove', button => toggle(button.dataset.id)),
@@ -294,14 +382,17 @@ export function installSpaceTwin(api, options = {}) {
     registerAction('space-explain', explain),
     registerAction('space-save-snapshot', () => {
       if (!lastComparison || restoredSnapshot) return;
+      if (aiLoading) throw Error('설명 응답이 끝난 뒤 비교 결과를 보관하세요.');
       const previousComparison = lastComparison, previousAi = aiResult;
       const comparison = calculate();
-      persist(saveSnapshot(workspace, comparison, {name: `${DAYS[comparison.query.dayOfWeek - 1]}요일 ${comparison.query.start}–${comparison.query.end} · ${comparison.selectedCount}개`}));
-      // Keep the current explanation only when the refreshed facts still match; snapshots store calculations alone.
-      if (previousAi?.answer && sameSpaceComparison(previousComparison, comparison)) aiResult = previousAi;
-      api.toast('현재 비교 결과를 저장했습니다. 이후 현황이 바뀌어도 당시 결과는 보존됩니다.'); render();
+      const originalAi = previousAi?.answer && previousAi.mode !== 'error' && sameSpaceComparison(previousComparison, comparison) ? previousAi : null;
+      aiResult = originalAi;
+      try { persist(saveSnapshot(workspace, comparison, {name: `${DAYS[comparison.query.dayOfWeek - 1]}요일 ${comparison.query.start}–${comparison.query.end} · ${comparison.selectedCount}개`, ...(originalAi ? {ai: originalAi} : {})})); }
+      catch (error) { render(); throw error; }
+      api.toast(`현재 비교 결과${originalAi ? '와 당시 설명을' : '를'} 저장했습니다. 이후 현황이 바뀌어도 당시 결과는 보존됩니다.`); render();
     }),
-    registerAction('space-restore-snapshot', button => { const snapshot = workspace.snapshots.find(item => item.id === button.dataset.id); if (!snapshot) return; collectQuery(); invalidate(); lastComparison = snapshot.comparison; restoredSnapshot = snapshot; step = 'compare'; render(); }),
+    registerAction('space-restore-snapshot', button => { const snapshot = workspace.snapshots.find(item => item.id === button.dataset.id); if (!snapshot) return; collectQuery(); invalidate(); lastComparison = snapshot.comparison; restoredSnapshot = snapshot; aiResult = snapshot.ai || null; step = 'compare'; render(); }),
+    registerAction('space-resume-current', () => { invalidate(); step = 'compare'; render(); }),
     registerAction('space-report', () => { if (!lastComparison) return; download(`서구온_공공공간_검토보고서_${dateNow()}.html`, spaceReportHtml({profile, comparison: lastComparison, ai: aiResult}), 'text/html;charset=utf-8'); }),
     registerAction('space-backup', backup),
     registerAction('space-raw-backup', () => { let raw; try { raw = localStorage.getItem(storageKey()); } catch { throw Error('브라우저 저장소를 읽을 수 없습니다.'); } if (raw) download(`서구온_공공공간_원본보관_${dateNow()}.txt`, raw, 'text/plain;charset=utf-8'); }),
@@ -322,6 +413,11 @@ export function installSpaceTwin(api, options = {}) {
   const input = event => {
     if (event.target.id === 'space-search') { search = event.target.value; const list = document.getElementById('space-candidate-list'); if (list) { const temp = document.createElement('div'); temp.innerHTML = candidatesHtml(); list.replaceChildren(...temp.querySelector('#space-candidate-list').childNodes); } }
     if (event.target.closest?.('#space-observation-form, #space-scenario-form')) collectDrafts();
+    if (queryDraft && ['space-draft-day', 'space-draft-start', 'space-draft-end'].includes(event.target.id)) {
+      const key = {'space-draft-day': 'dayOfWeek', 'space-draft-start': 'start', 'space-draft-end': 'end'}[event.target.id];
+      queryDraft[key] = key === 'dayOfWeek' ? Number(event.target.value) || null : event.target.value;
+      persistDraftSession();
+    }
     if (['space-query-day','space-query-start','space-query-end'].includes(event.target.id)) {
       collectQuery(); invalidate(); const output = document.getElementById('space-current-result');
       if (output) output.innerHTML = '<p class="space-empty" role="status">검토 시간이 바뀌었습니다. 계산 버튼을 눌러 새 조건을 반영하세요.</p>';
@@ -336,11 +432,17 @@ export function installSpaceTwin(api, options = {}) {
       catch (error) { api.toast(error.message || '백업 파일을 읽지 못했습니다.'); }
     }
   };
+  const beforeUnload = event => {
+    if (!draftPersistenceFailed || !(observationDrafts.size || scenarioDrafts.size || queryDraft)) return;
+    event.preventDefault(); event.returnValue = '';
+  };
   root?.addEventListener('submit', submit); root?.addEventListener('input', input); root?.addEventListener('change', change);
+  globalThis.addEventListener?.('beforeunload', beforeUnload);
   return {
     open,
+    openFromQuestion,
     scopeChanged() { if (!workspace) return; if (openNow()) { collectDrafts(); drawCandidates(); render(); } else if (api.state.enabled.has(MAP_LAYER)) drawCandidates(); },
     onEvent(message) { if (message.type === 'select' && message.layer === MAP_LAYER && workspace) { try { toggle(message.id, true); } catch (error) { api.toast(error.message); } return true; } return false; },
-    destroy() { destroyed = true; requestSequence++; controller?.abort(); off.forEach(fn => fn()); root?.removeEventListener('submit', submit); root?.removeEventListener('input', input); root?.removeEventListener('change', change); api.state.enabled.delete(MAP_LAYER); api.state.entries.delete(MAP_LAYER); },
+    destroy() { destroyed = true; requestSequence++; controller?.abort(); off.forEach(fn => fn()); root?.removeEventListener('submit', submit); root?.removeEventListener('input', input); root?.removeEventListener('change', change); globalThis.removeEventListener?.('beforeunload', beforeUnload); api.state.enabled.delete(MAP_LAYER); api.state.entries.delete(MAP_LAYER); },
   };
 }

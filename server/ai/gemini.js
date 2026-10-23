@@ -187,28 +187,73 @@ export function readCandidate(payload) {
 
 /* ───────────────────────── 근거 검사 ───────────────────────── */
 
-const numbersIn = text => (String(text).replace(/(\d),(?=\d{3})/g, '$1').match(/\d+(?:\.\d+)?/g) || []).map(Number);
+const numberText = text => String(text).replace(/(\d),(?=\d{3})/g, '$1');
+const numbersIn = text => (numberText(text).match(/\d+(?:\.\d+)?/g) || []).map(Number);
+
+/** Separate echoed proposals/questions from executed-tool evidence before checking numbers. */
+function numericalEvidence(texts, intentTexts) {
+  const actual = [], inputs = [...intentTexts], distancesM = [];
+  function visit(value, key = '') {
+    if (value && typeof value === 'object') {
+      if (value.origin === 'user') { inputs.push(JSON.stringify(value)); return; }
+      if (Array.isArray(value)) { for (const item of value) visit(item, key); return; }
+      for (const [name, item] of Object.entries(value)) {
+        if (['review','reviewContext','inputText','question','previousQuestions'].includes(name)) inputs.push(JSON.stringify(item));
+        else visit(item, name);
+      }
+    } else if (typeof value === 'number') {
+      actual.push(String(value));
+      if (/^(?:d|radiusM|maxDistanceM|distanceM|nearestServiceM|nearestM|distanceMeters)$/i.test(key) || /(?:distance|radius).*M$/.test(key)) distancesM.push(value);
+      if (/(?:distance|radius).*Km$/i.test(key)) distancesM.push(value * 1000);
+    } else if (typeof value === 'string') {
+      if (/[?？]\s*$/.test(value) || /(?:입력한?|요청한?|가정한?)\s*(?:예산|조건)/.test(value)) inputs.push(value);
+      else {
+        actual.push(value);
+        for (const m of numberText(value).matchAll(/(\d+(?:\.\d+)?)\s*(km|㎞|킬로미터|m|미터)(?![A-Za-z²2])/gi)) distancesM.push(Number(m[1]) * (/^(km|㎞|킬로미터)$/i.test(m[2]) ? 1000 : 1));
+      }
+    }
+  }
+  for (const text of texts) { try { visit(JSON.parse(text)); } catch { visit(String(text)); } }
+  return {actual, inputs, distancesM};
+}
 
 /**
- * 답에 나온 숫자가 도구 결과(또는 질문)에 있는지 확인한다.
- * 한 자리 수는 문장 표현("두 곳" 대신 "2곳" 등)에 흔해 검사하지 않는다. 비율·km 환산은 허용한다.
+ * 한 자리 수도 검사하되 줄 첫머리 목록 번호는 제외한다. 단위 환산은 해당 단위에서만 허용한다.
+ * 질문·제안의 값은 출처를 밝힌 조건부 인용으로만 허용한다. 자유 문장의 모든 의미관계를 검증하는 도구는 아니다.
  * @returns {number[]} 근거를 찾지 못한 숫자
  */
-export function ungroundedNumbers(answer, evidenceTexts) {
-  const known = new Set();
-  for (const value of numbersIn(evidenceTexts.join('\n'))) {
+export function ungroundedNumbers(answer, evidenceTexts, {intentTexts = []} = {}) {
+  const {actual, inputs, distancesM} = numericalEvidence(evidenceTexts, intentTexts);
+  const known = new Set(), percentages = new Set(), kilometers = new Set();
+  for (const value of numbersIn(actual.join('\n'))) {
     known.add(value);
     known.add(Math.round(value));
     if (value > 0 && value < 1) {
-      known.add(Math.round(value * 100));
-      known.add(Math.round(value * 1000) / 10);
-    }
-    if (value >= 1000) {
-      known.add(Math.round(value / 100) / 10);
-      known.add(Math.round(value / 10) / 100);
+      percentages.add(Math.round(value * 100));
+      percentages.add(Math.round(value * 1000) / 10);
     }
   }
-  return numbersIn(answer).filter(value => value >= 10 && !known.has(value));
+  for (const value of distancesM) {
+    kilometers.add(value / 1000);
+    kilometers.add(Math.round(value / 100) / 10);
+    kilometers.add(Math.round(value / 10) / 100);
+  }
+  const inputNumbers = new Set(numbersIn(inputs.join('\n'))), unsupported = [];
+  const prose = numberText(answer).replace(/^\s*(?:[-*]\s*)?\d{1,2}[.)]\s+/gm, '');
+  for (const sentence of prose.split(/(?:[.!?。](?=\s|$)|\n)+/)) {
+    const attributedInput = /입력|요청|제시|가정|조건|라면|이면|인 경우/.test(sentence);
+    const assertedAuthority = /확정|검증된|검증한|공식|실제|확인된/.test(sentence) && !/아닙|아닌|확인할 수 없|검증되지|미확인|미검증/.test(sentence);
+    for (const match of sentence.matchAll(/\d+(?:\.\d+)?/g)) {
+      const value = Number(match[0]), after = sentence.slice(match.index + match[0].length);
+      if (known.has(value)) continue;
+      if (/^\s*(%|퍼센트)/.test(after) && percentages.has(value)) continue;
+      if (/^\s*(km|㎞|킬로미터)/i.test(after) && kilometers.has(value)) continue;
+      if (/^\s*(m|미터)(?![A-Za-z²2])/i.test(after) && distancesM.some(v => Math.abs(v - value) < 1e-8)) continue;
+      if (inputNumbers.has(value) && attributedInput && !assertedAuthority) continue;
+      unsupported.push(value);
+    }
+  }
+  return [...new Set(unsupported)];
 }
 
 /* ───────────────────────── 도구 반복 ───────────────────────── */
@@ -303,8 +348,9 @@ export async function answerByLlm(question, context, ctx) {
     if (!calls.length || textOnly) {
       if (!text) throw new LlmError('LLM_BAD_RESPONSE', 'AI 가 답을 쓰지 않았습니다.');
       const answer = text.slice(0, LIMITS.answerChars);
-      const evidence = [question, ...(context.previousQuestions || []), ...(context.reviewContext ? [JSON.stringify(context.reviewContext)] : []), ...state.results.map(r => JSON.stringify(r.result))];
-      if (ungroundedNumbers(answer, evidence).length) {
+      const evidence = state.results.map(r => JSON.stringify(r.result));
+      const intentTexts = [question, ...(context.previousQuestions || []), ...(context.reviewContext ? [JSON.stringify(context.reviewContext)] : [])];
+      if (ungroundedNumbers(answer, evidence, {intentTexts}).length) {
         throw new LlmError('LLM_UNGROUNDED', 'AI 답에 도구 결과에 없는 숫자가 있어 쓰지 않았습니다.');
       }
       return { answer, steps: state.steps, results: state.results, model, modelRecovered: model !== ctx.model, analysisPath: prepared ? 'grounded-summary' : 'tool-selection' };

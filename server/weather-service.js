@@ -1,8 +1,9 @@
 import {fetchJsonLimited} from './http.js';
 import {keyCandidates,diagnose} from './diagnostics.js';
 // KMA published Lambert conformal grid conversion; 5 km grid, not point observations.
+// This mathematical transform is separate from allowed-region checks in api/weather.js.
 export function kmaGrid(lon,lat){
-  if(!Number.isFinite(lon)||!Number.isFinite(lat)||lon<126.7||lon>127.05||lat<34.98||lat>35.35)throw Error('지역 좌표 범위를 확인하세요.');
+  if(!Number.isFinite(lon)||!Number.isFinite(lat)||Math.abs(lon)>180||lat<=-90||lat>=90)throw Error('격자로 변환할 유효한 경도·위도를 확인하세요.');
   const rad=Math.PI/180,re=6371.00877/5,slat1=30*rad,slat2=60*rad,olon=126*rad,olat=38*rad;
   let sn=Math.log(Math.cos(slat1)/Math.cos(slat2))/Math.log(Math.tan(Math.PI/4+slat2/2)/Math.tan(Math.PI/4+slat1/2));
   const sf=Math.pow(Math.tan(Math.PI/4+slat1/2),sn)*Math.cos(slat1)/sn,ro=re*sf/Math.pow(Math.tan(Math.PI/4+olat/2),sn);
@@ -28,7 +29,7 @@ export async function readWeather(lon,lat,{fetcher=fetch,now=new Date(),env=proc
   }
   if(!raw)throw lastError;
   const items=raw.response?.body?.items?.item;if(!Array.isArray(items)||!items.length)throw Error('NO_OBSERVATIONS');
-  const accepted=['T1H','RN1','REH','WSD','VEC','PTY'];const values={};for(const r of items){if(r.baseDate!==base.base_date||r.baseTime!==base.base_time)throw Error('OBSERVATION_TIME_MISMATCH');if(accepted.includes(r.category)&&r.obsrValue!==null&&r.obsrValue!==undefined&&String(r.obsrValue).trim()!==''&&Number.isFinite(Number(r.obsrValue))&&Number(r.obsrValue)>-100&&Number(r.obsrValue)<1000)values[r.category]=Number(r.obsrValue);}
+  const accepted=['T1H','RN1','REH','WSD','VEC','PTY'];const values={};for(const r of items){if(r.baseDate!==base.base_date||r.baseTime!==base.base_time)throw Error('OBSERVATION_TIME_MISMATCH');if((r.nx!==undefined&&Number(r.nx)!==grid.nx)||(r.ny!==undefined&&Number(r.ny)!==grid.ny))throw Object.assign(Error('OBSERVATION_GRID_MISMATCH'),{code:'SCHEMA_CHANGED'});if(accepted.includes(r.category)&&r.obsrValue!==null&&r.obsrValue!==undefined&&String(r.obsrValue).trim()!==''&&Number.isFinite(Number(r.obsrValue))&&Number(r.obsrValue)>-100&&Number(r.obsrValue)<1000)values[r.category]=Number(r.obsrValue);}
   if(!Object.keys(values).length)throw Error('NO_OBSERVATIONS');
   const result={ok:true,grid,base,values,sourceName:'기상청 초단기실황',sourceUrl:'https://www.data.go.kr/data/15084084/openapi.do',fetchedAt:now.toISOString(),note:'5km 격자 실황. 선택한 동 전체의 실측값이나 재난 예측이 아닙니다.'};
   if(cache.size>40)cache.clear();cache.set(id,result);return result;

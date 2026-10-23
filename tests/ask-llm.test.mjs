@@ -179,8 +179,34 @@ test('llm: 도구 결과에 없는 숫자를 쓴 답은 버리고 규칙 기반�
   assert.match(result.answer, /수록된 지점은 2곳/);
 
   assert.deepEqual(ungroundedNumbers('230곳(53%)이고 약 1.2km, 12곳', ['{"n":230,"share":0.531,"d":1234}']), [12]);
-  assert.deepEqual(ungroundedNumbers('2026년 8월 1일 14시에 3곳', ['2026-08-01T14:00']), []);
+  assert.deepEqual(ungroundedNumbers('2026년 8월 1일 14시에 3곳', ['2026-08-01T14:00']), [3]);
   assert.deepEqual(ungroundedNumbers('1,220m 떨어져 있습니다', ['{"nearestServiceM":1220}']), []);
+});
+
+test('grounding: single-digit quantities are checked while list numbering and valid unit conversion are allowed',()=>{
+ assert.deepEqual(ungroundedNumbers('해당 공간은 7곳입니다.',['수록 공간은 2곳입니다.']),[7]);
+ assert.deepEqual(ungroundedNumbers('1. 조건을 확인하세요.\n2. 수록 공간은 2곳입니다.\n3) 담당자와 협의하세요.',['수록 공간은 2곳입니다.']),[]);
+ assert.deepEqual(ungroundedNumbers('수록 공간은 1.2곳입니다.',['{"distanceM":1234}']),[1.2]);
+ assert.deepEqual(ungroundedNumbers('2026년 자료이므로 거리는 2km입니다.',['2026년 자료']),[2]);
+ assert.deepEqual(ungroundedNumbers('비율은 53.1%이고 거리는 약 1.23km입니다.',['{"share":0.531,"nearestServiceM":1234}']),[]);
+});
+
+test('grounding: a requested budget cannot become confirmed evidence, including echoed tool review input',()=>{
+ assert.deepEqual(ungroundedNumbers('검증된 확정 예산은 300만원입니다.',['예산 300만원이면?']),[300]);
+ assert.deepEqual(ungroundedNumbers('입력하신 300만원 예산을 가정한 검토입니다.',[],{intentTexts:['예산 300만원이면?']}),[]);
+ assert.deepEqual(ungroundedNumbers('입력하신 300만원은 검증된 확정 예산입니다.',[],{intentTexts:['예산 300만원이면?']}),[300]);
+ const echoed=JSON.stringify({data:{review:{inputText:'예산 300만원',alternatives:[{origin:'user',title:'7개 공간 개방'}]},rows:[{count:2}]}});
+ assert.deepEqual(ungroundedNumbers('공식 예산 300만원으로 7개 공간이 개방됩니다.',[echoed]),[300,7]);
+ assert.deepEqual(ungroundedNumbers('제시하신 7개 공간과 입력 예산 300만원은 검토 조건입니다. 수록 지점은 2곳입니다.',[echoed]),[]);
+});
+
+test('llm: a question-only numeric budget assertion falls back while explicit input attribution remains usable',async t=>{
+ quiet(t);
+ const invalid=await run('예산 300만원으로 공간을 만들면?',[modelSays(text('검증된 확정 예산은 300만원입니다.'))]);
+ assert.equal(invalid.result.mode,'rules');assert.equal(invalid.result.code,'LLM_UNGROUNDED');
+ resetAskLimits();
+ const valid=await run('예산 300만원으로 공간을 만들면?',[modelSays(text('입력하신 300만원 예산은 가정입니다. 실제 비용과 대상지 사용 승인을 담당 부서에 확인하세요.'))]);
+ assert.equal(valid.result.mode,'llm');
 });
 
 test('llm: 도구를 한 번도 쓰지 않고 숫자를 말한 답도 버린다', async t => {

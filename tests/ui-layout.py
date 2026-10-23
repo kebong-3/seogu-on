@@ -76,7 +76,7 @@ def run(page, base, width, height):
         m = page.evaluate(MEASURE)
         check(f'{tag}: open drawer hides dock and camera buttons instead of overlapping', m['panel'] and m['dock'] is None and m['camera'] is None, [m['dock'], m['camera']])
         check(f'{tag}: drawer fits the viewport', m['panel'][0] >= 0 and m['panel'][2] <= width, m['panel'])
-    check(f'{tag}: four primary entry points, public spaces and civic review first', m['primary'] == ['space-twin', 'civic-review', 'ask-ai', 'infra'], m['primary'])
+    check(f'{tag}: secondary work entry points remain reachable below the primary task', m['primary'] == ['civic-review', 'ask-ai', 'infra'], m['primary'])
     check(f'{tag}: seasonal response and field checks remain in their own menu', m['workflows'] == ['heat-plan', 'cold-plan', 'icing-plan', 'flood-plan', 'school-plan'], m['workflows'])
     check(f'{tag}: side panel list scrolls independently', page.evaluate("(() => { const e = document.getElementById('sidebar-scroll'); return getComputedStyle(e).overflowY === 'auto' && e.scrollHeight > e.clientHeight; })()"))
 

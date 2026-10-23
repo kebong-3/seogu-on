@@ -1,12 +1,12 @@
 {
   "mode": "Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel",
-  "checks": 48,
-  "passed": 48,
+  "checks": 61,
+  "passed": 61,
   "results": [
     {
       "name": "All public JSON/GeoJSON parse",
       "passed": true,
-      "detail": "98 files; invalid=0"
+      "detail": "120 files; invalid=0"
     },
     {
       "name": "No font files bundled",
@@ -137,6 +137,71 @@
       "name": "/src/city/appearance.css",
       "passed": true,
       "detail": "HTTP 200"
+    },
+    {
+      "name": "/shared/space-twin-model.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/shared/region-profile.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/shared/pilot-measure.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/space-twin.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/pilot-measure.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/region-profile",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/region-profile?region=suncheon",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/region-profile?region=adoption-template",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "/data/regions/suncheon/facilities.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/regions/suncheon/admin-boundaries.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Suncheon question uses its actual public spaces",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "/api/space-review",
+      "passed": true,
+      "detail": "HTTP 405"
+    },
+    {
+      "name": "Public-space POST recomputes unknown current state",
+      "passed": true,
+      "detail": ""
     },
     {
       "name": "/src/city/identity.css",

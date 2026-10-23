@@ -7,8 +7,8 @@ test('portable layer menu contains only the selected region data path',()=>{
  const ls=regionLayers(profile,[{id:'parks',url:'/data/seogu.json'}]);assert.equal(ls.length,1);assert.equal(ls[0].url,profile.facilitiesUrl);
 });
 test('legacy geography and model actions cannot run in another region',()=>{
- for(const a of ['civic-review','ask-ai','heat-plan','official-data','shade-calc','preset','tools'])assert.equal(supportsAction(profile,a),false);
- for(const a of ['space-twin','space-explain','pilot-measure','overview','list'])assert.equal(supportsAction(profile,a),true);
+ for(const a of ['civic-review','heat-plan','official-data','shade-calc','preset','tools'])assert.equal(supportsAction(profile,a),false);
+ for(const a of ['space-twin','space-explain','space-from-question','ask-ai','ask-retry','ask-prepare-space','region-chooser','pilot-measure','overview','list'])assert.equal(supportsAction(profile,a),true);
  assert.equal(supportsAction(profile,'engine',{engine:'clean'}),false);assert.equal(supportsAction(profile,'engine',{engine:'libre'}),true);
 });
 test('server legacy adapter stops before returning another region data',()=>{

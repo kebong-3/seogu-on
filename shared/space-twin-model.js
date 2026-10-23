@@ -3,6 +3,8 @@
  * Source publication, user-recorded field checks and proposed changes stay distinct.
  * Counts describe mapped spaces, not buildings, visitors, demand or welfare effects.
  */
+import {renderSpaceExplanation, validateSpaceExplanation, spaceRulesSummary} from './space-review-evidence.js';
+
 export const TWIN_VERSION = 1;
 export const TWIN_FORMAT = 'seoon-space-twin';
 export const MAX_WORKSPACE_BYTES = 2 * 1024 * 1024;
@@ -121,6 +123,17 @@ export function dataFingerprint(value) {
   for (const byte of raw) h = BigInt.asUintN(64, (h ^ BigInt(byte)) * 1099511628211n);
   return `fnv1a64:${h.toString(16).padStart(16, '0')}`;
 }
+function fingerprint(value, label = '자료 지문') {
+  const s = string(value, label, 80);
+  if (!/^fnv1a64:[0-9a-f]{16}$/.test(s)) fail(`${label} 형식을 확인하세요.`);
+  return s;
+}
+/** Bind a field check to identity, location, published hours and source metadata, not cosmetic notes. */
+export function assetSourceFingerprint(value) {
+  const a = jsonCopy(value);
+  return dataFingerprint({id:a.id,regionId:a.regionId,datasetId:a.datasetId || '',name:a.name,coordinates:a.coordinates,
+    address:a.address || '',dongId:a.dongId || '',dongName:a.dongName || '',rawHours:a.rawHours || '',source:a.source});
+}
 
 export function seedAssets(collection, options = {}) {
   const region = regionId(options.regionId), datasetId = id(options.datasetId || 'public-facilities', '자료 ID');
@@ -154,23 +167,26 @@ export function createWorkspace(value, {now} = {}) {
 
 export function normalizeObservation(value, {now} = {}) {
   const input = jsonCopy(value);
-  keys(input, ['operatingStatus', 'daysOfWeek', 'opens', 'closes', 'observedOn', 'validUntil', 'evidence', 'recordedAt', 'revision'], '현장 확인');
+  keys(input, ['operatingStatus', 'daysOfWeek', 'opens', 'closes', 'observedOn', 'validUntil', 'evidence', 'recordedAt', 'revision', 'assetFingerprint'], '현장 확인');
   const observedOn = date(input.observedOn, '확인일');
   if (observedOn > kstToday(now)) fail('현장 확인일은 오늘(한국시간) 이후로 입력할 수 없습니다.');
   const validUntil = date(input.validUntil, '재확인 기한', true);
   if (validUntil && validUntil < observedOn) fail('재확인 기한은 확인일보다 빠를 수 없습니다.');
   return {...schedule(input), observedOn, validUntil, evidence: string(input.evidence, '확인 근거', 1200),
+    ...(input.assetFingerprint !== undefined ? {assetFingerprint:fingerprint(input.assetFingerprint, '확인 당시 원자료 지문')} : {}),
     ...(input.recordedAt !== undefined ? {recordedAt: instant(input.recordedAt, '기록시각')} : {}),
     ...(input.revision !== undefined ? {revision: integer(input.revision, '기록 버전', 1, 1000000)} : {}),
   };
 }
-export function observationState(observation, {now} = {}) {
+export function observationState(observation, {now, asset} = {}) {
   if (!observation) return {state: 'unknown', reason: '현장 확인 없음'};
   const o = normalizeObservation(observation, {now});
   const today = kstToday(now), ageDays = daysBetween(o.observedOn, today);
+  if (o.assetFingerprint && asset && o.assetFingerprint !== assetSourceFingerprint(asset)) return {state:'stale',reason:'원자료 변경 · 재확인 필요',ageDays,sourceBinding:'changed'};
   if (ageDays > FRESHNESS_DAYS || (o.validUntil && today > o.validUntil)) return {state: 'stale', reason: '재확인 필요', ageDays};
   if (o.operatingStatus === 'unknown') return {state: 'unknown', reason: '확인 기록에서도 운영 여부 미확인', ageDays};
-  return {state: 'recorded', reason: '사용자 현장확인 기록', ageDays};
+  return {state: 'recorded', reason: o.assetFingerprint ? '사용자 현장확인 기록' : '사용자 현장확인 기록 · 이전 기록의 원자료 변경 추적 불가', ageDays,
+    sourceBinding:o.assetFingerprint ? (asset ? 'matched' : 'unchecked') : 'missing'};
 }
 
 function normalizeChange(value) {
@@ -247,9 +263,41 @@ function validateComparison(value) {
   for (const s of c.limitations) string(s, '자료 한계', 1600);
   return c;
 }
+/** Stable binding to calculation facts; server/browser bookkeeping timestamps and revisions can differ. */
+export function spaceComparisonFingerprint(comparison) {
+  const {generatedAt, workspaceRevision, fingerprint: inputFingerprint, ...facts} = validateComparison(jsonCopy(comparison));
+  return dataFingerprint(facts);
+}
+function normalizeSnapshotAi(value, comparison, {saving = false} = {}) {
+  const a = jsonCopy(value);
+  const fields = ['mode','answer','model','modelRecovered','computedAt','evidenceId','comparisonFingerprint','structured','code','notice','analysisPath','contentFingerprint'];
+  keys(a, saving ? [...fields, 'ok', 'comparison'] : fields, '저장할 AI 설명');
+  if (!['llm','rules'].includes(a.mode)) fail('완료된 AI 설명 또는 계산 요약만 보관할 수 있습니다.');
+  if (fingerprint(a.comparisonFingerprint, 'AI 계산 지문') !== spaceComparisonFingerprint(comparison)) fail('AI 설명의 근거가 저장할 계산 결과와 다릅니다. 다시 설명을 요청하세요.');
+  if (saving && a.comparison && spaceComparisonFingerprint(a.comparison) !== a.comparisonFingerprint) fail('AI 응답 내부의 계산 지문이 일치하지 않습니다.');
+  const result = {mode:a.mode,answer:string(a.answer,'AI 설명',15000),computedAt:instant(a.computedAt,'AI 계산시각'),
+    evidenceId:string(a.evidenceId,'AI 근거 식별자',80),comparisonFingerprint:a.comparisonFingerprint};
+  if (!/^space-[a-f0-9]{20}$/.test(result.evidenceId)) fail('AI 근거 식별자 형식을 확인하세요.');
+  if (a.mode === 'llm') {
+    result.model = string(a.model,'응답 모델',160);
+    result.structured = validateSpaceExplanation(a.structured, comparison);
+    if (result.answer !== renderSpaceExplanation(result.structured, comparison)) fail('AI 설명 문장이 저장된 계산 근거와 일치하지 않습니다.');
+  } else {
+    if (a.structured !== undefined) fail('계산 요약에는 AI가 선택한 근거를 넣을 수 없습니다.');
+    if (result.answer !== spaceRulesSummary(comparison)) fail('계산 요약 문장이 저장된 근거와 일치하지 않습니다.');
+  }
+  if (a.modelRecovered !== undefined) { if (typeof a.modelRecovered !== 'boolean') fail('응답 모델 복구 표시를 확인하세요.'); result.modelRecovered = a.modelRecovered; }
+  for (const field of ['notice','code','analysisPath']) if (a[field] !== undefined) result[field] = string(a[field],`AI ${field}`,field === 'notice' ? 1200 : 120);
+  const contentFingerprint = dataFingerprint(result);
+  if ((!saving || a.contentFingerprint !== undefined) && fingerprint(a.contentFingerprint,'AI 설명 내용 지문') !== contentFingerprint) fail('저장한 AI 설명의 내용 지문이 일치하지 않습니다.');
+  // A reproducibility checksum, not an authenticated signature or proof of official approval.
+  return {...result, contentFingerprint};
+}
 function normalizeSnapshot(s) {
-  keys(s, ['id', 'name', 'createdAt', 'comparison'], '검토 스냅샷');
-  return {id: id(s.id), name: string(s.name, '저장 이름', 120), createdAt: instant(s.createdAt, '저장시각'), comparison: validateComparison(s.comparison)};
+  keys(s, ['id', 'name', 'createdAt', 'comparison', 'ai'], '검토 스냅샷');
+  const comparison = validateComparison(s.comparison);
+  return {id: id(s.id), name: string(s.name, '저장 이름', 120), createdAt: instant(s.createdAt, '저장시각'), comparison,
+    ...(s.ai !== undefined ? {ai:normalizeSnapshotAi(s.ai, comparison)} : {})};
 }
 
 export function validateWorkspace(value, {regionId: expected, now} = {}) {
@@ -334,12 +382,12 @@ function scheduleResult(state, query) {
   return {availability,overlapMinutes,reason:availability === 'eligible' ? '요청 시간 전체에 개방 조건 충족' : overlapMinutes ? '요청 시간 일부만 개방' : '요청 시간 미개방'};
 }
 function evaluateAsset(asset, observation, change, query, now) {
-  const freshness = observationState(observation, {now});
+  const freshness = observationState(observation, {now, asset});
   const hasRecord = freshness.state === 'recorded', state = change || (hasRecord ? observation : {operatingStatus: 'unknown', daysOfWeek: [], opens: null, closes: null});
   const provenance = change ? 'user-assumption' : hasRecord ? 'field-record' : freshness.state === 'stale' ? 'stale-record' : 'unverified-source';
   const result = scheduleResult(state, query);
   const {availability, overlapMinutes} = result;
-  const reason = availability === 'unknown' ? (change ? '변경안에서도 운영 조건 미입력' : freshness.reason) : result.reason;
+  const reason = availability === 'unknown' ? (change ? '변경안에서도 운영 조건 미입력' : freshness.reason) : result.reason + (!change && freshness.sourceBinding === 'missing' ? ' · 이전 기록의 원자료 변경 추적 불가' : '');
   return {assetId: asset.id, name: asset.name, availability, provenance, reason,
     observedOn: observation?.observedOn || null, evidence: change ? '' : (observation?.evidence || ''),
     operatingStatus: state.operatingStatus, daysOfWeek: state.daysOfWeek, opens: state.opens, closes: state.closes,
@@ -367,6 +415,7 @@ export const TWIN_LIMITATIONS = Object.freeze([
   '기준점 거리는 좌표 간 직선거리입니다. 실제 보행거리·이동시간·접근성 인증이 아닙니다.',
   '추가 연간 운영비는 변경 공간별 사용자 가정을 만원 단위로 합한 값입니다. 미입력은 미산정이고 기존 전체 운영비·견적·사업 효과를 뜻하지 않습니다.',
   '미확인 공간이 있으면 전체 공간 수 변화량은 산정하지 않습니다. 현장확인 기록은 90일 또는 지정 재확인 기한이 지나면 재확인 대상으로 처리합니다.',
+  '원자료 지문이 연결된 확인 기록은 공간 이름·주소·좌표·원자료 운영시간·출처 등이 달라지면 재확인 대상으로 처리합니다. 지문이 없는 이전 기록은 호환하여 읽지만 과거 원자료 변경 여부를 추적할 수 없습니다.',
 ]);
 export function compareWorkspace({assets, workspace, query, now} = {}) {
   const w = validateWorkspace(workspace, {now}), q = normalizeQuery(query), data = jsonCopy(assets);
@@ -393,7 +442,7 @@ export function compareWorkspace({assets, workspace, query, now} = {}) {
     return m;
   });
   baseline.comparable = baseline.unknownCount === 0;
-  const assetFingerprint = dataFingerprint(selected.slice().sort((a,b) => a.id.localeCompare(b.id)).map(a => ({id:a.id,coordinates:a.coordinates,name:a.name,rawHours:a.rawHours || '',source:a.source})));
+  const assetFingerprint = dataFingerprint(selected.slice().sort((a,b) => a.id.localeCompare(b.id)).map(a => ({id:a.id,sourceFingerprint:assetSourceFingerprint(a)})));
   const result = {version: 1, regionId: w.regionId, generatedAt: nowIso(now), workspaceRevision: w.revision, query: {...q, assetIds: selected.map(a => a.id)},
     assetFingerprint, fingerprint: dataFingerprint({assetFingerprint, query:q, observations:w.observations, scenarios:w.scenarios}),
     selectedCount: selected.length, excludedByDistance: beforeDistance - selected.length, unlocatedCount: 0,
@@ -401,12 +450,13 @@ export function compareWorkspace({assets, workspace, query, now} = {}) {
   return validateComparison(result);
 }
 
-export function saveSnapshot(workspace, comparison, {name = '검토 결과', now} = {}) {
+export function saveSnapshot(workspace, comparison, {name = '검토 결과', now, ai} = {}) {
   const w = validateWorkspace(workspace, {now}), c = validateComparison(jsonCopy(comparison));
   if (c.regionId !== w.regionId || c.workspaceRevision !== w.revision) fail('현재 기록과 다른 계산 결과입니다. 다시 계산한 뒤 저장하세요.');
   if (w.snapshots.length >= MAX_SNAPSHOTS) fail(`검토 결과는 최대 ${MAX_SNAPSHOTS}개입니다. 백업 후 새 작업공간을 사용하세요.`);
   const stamp = nowIso(now);
-  w.snapshots.push({id:`snapshot-${w.revision+1}-${dataFingerprint({fingerprint:c.fingerprint,stamp}).slice(-12)}`,name:string(name,'저장 이름',120),createdAt:stamp,comparison:c});
+  w.snapshots.push({id:`snapshot-${w.revision+1}-${dataFingerprint({fingerprint:c.fingerprint,stamp}).slice(-12)}`,name:string(name,'저장 이름',120),createdAt:stamp,comparison:c,
+    ...(ai !== undefined && ai !== null ? {ai:normalizeSnapshotAi(ai,c,{saving:true})} : {})});
   return validateWorkspace(touch(w, now), {now});
 }
 export function diffSnapshots(previous, next) {

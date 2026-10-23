@@ -5,7 +5,9 @@ import {
   seedAssets, createWorkspace, recordObservation, upsertScenario, compareWorkspace,
   serializeWorkspace, parseWorkspace, validateWorkspace, saveSnapshot, diffSnapshots,
   normalizeObservation, normalizeQuery, mergeWorkspaces, straightDistance,
+  assetSourceFingerprint, observationState, spaceComparisonFingerprint, dataFingerprint,
 } from '../shared/space-twin-model.js';
+import {renderSpaceExplanation,spaceRulesSummary} from '../shared/space-review-evidence.js';
 
 const now = '2026-10-22T03:00:00.000Z';
 const later = '2026-10-23T03:00:00.000Z';
@@ -17,6 +19,10 @@ const query = (patch = {}) => ({dayOfWeek:1,start:'18:00',end:'21:00',assetIds:[
 const calculate = (w, q = query(), time = now) => compareWorkspace({assets,workspace:w,query:q,now:time});
 const change = (patch = {}) => ({assetId:assets[0].id,operatingStatus:'open',daysOfWeek:[1,2,3,4,5],opens:'09:00',closes:'21:00',additionalAnnualCost:120,...patch});
 const scenario = (patch = {}) => ({name:'저녁 개방 가정',changes:[change()],...patch});
+const explanation = comparison => {
+  const structured={version:1,claims:[{scenarioId:'baseline',assetId:null,metricRef:'eligibleCount'}],causes:[],followups:[{scenarioId:'baseline',assetId:assets[0].id,kind:'reservation'}]};
+  return {ok:true,mode:'llm',answer:renderSpaceExplanation(structured,comparison),model:'test-model',computedAt:now,evidenceId:'space-0123456789abcdef0123',comparisonFingerprint:spaceComparisonFingerprint(comparison),structured,comparison};
+};
 
 test('space twin: real public-source spaces retain stable IDs and raw hours without asserting operations', () => {
   const data = JSON.parse(fs.readFileSync(new URL('../public/data/layers/public-facilities.geojson',import.meta.url),'utf8'));
@@ -117,6 +123,63 @@ test('space twin: stale and overdue records are unknown instead of asserting cur
   assert.equal(calculate(w,query(),later).baseline.rows[0].provenance,'stale-record');
   const noExpiry=recordObservation(create(),assets[0].id,record({closes:'21:00'}),{now});
   assert.equal(calculate(noExpiry,query(),'2027-02-01T03:00:00Z').baseline.unknownCount,1);
+});
+
+test('space twin: source-bound field records become unknown after hours, location, identity or source changes',()=>{
+ const current=assets[0],w=recordObservation(create(),current.id,record({closes:'21:00',assetFingerprint:assetSourceFingerprint(current)}),{now});
+ assert.equal(calculate(w).baseline.eligibleCount,1);
+ assert.equal(observationState(w.observations[current.id],{now,asset:current}).sourceBinding,'matched');
+ for(const mutate of [a=>a.rawHours='원자료 시간 변경',a=>a.coordinates[0]+=.01,a=>a.address='변경된 주소',a=>a.name='공간명 변경',a=>a.source.date='2026-10-22']){
+  const changed=structuredClone(assets);mutate(changed[0]);
+  const c=compareWorkspace({assets:changed,workspace:w,query:query(),now});
+  assert.equal(c.baseline.eligibleCount,0);assert.equal(c.baseline.unknownCount,1);assert.equal(c.baseline.rows[0].provenance,'stale-record');assert.match(c.baseline.rows[0].reason,/원자료 변경/);
+ }
+ const cosmetic=structuredClone(assets);cosmetic[0].note='표현만 수정';
+ assert.equal(compareWorkspace({assets:cosmetic,workspace:w,query:query(),now}).baseline.eligibleCount,1);
+});
+test('space twin: legacy checks remain readable but do not claim detection of historical source changes',()=>{
+ const w=recordObservation(create(),assets[0].id,record({closes:'21:00'}),{now});
+ const changed=structuredClone(assets);changed[0].rawHours='원자료 변경';
+ const c=compareWorkspace({assets:changed,workspace:w,query:query(),now});
+ assert.equal(c.baseline.eligibleCount,1);assert.match(c.baseline.rows[0].reason,/이전 기록의 원자료 변경 추적 불가/);
+ assert.equal(observationState(w.observations[assets[0].id],{now,asset:changed[0]}).sourceBinding,'missing');
+ assert.equal(parseWorkspace(serializeWorkspace(w,{now}),{now}).observations[assets[0].id].assetFingerprint,undefined);
+ assert.throws(()=>normalizeObservation(record({assetFingerprint:'unverifiable'}),{now}),/지문/);
+});
+test('space twin: rechecking against changed source preserves old fingerprint in history and restores current computation',()=>{
+ let w=recordObservation(create(),assets[0].id,record({closes:'21:00',assetFingerprint:assetSourceFingerprint(assets[0])}),{now});
+ const changed=structuredClone(assets);changed[0].rawHours='운영시간 변경';
+ w=recordObservation(w,assets[0].id,record({closes:'21:00',observedOn:'2026-10-23',assetFingerprint:assetSourceFingerprint(changed[0])}),{now:later});
+ assert.notEqual(w.history[1].previous.assetFingerprint,w.history[1].next.assetFingerprint);
+ assert.equal(compareWorkspace({assets:changed,workspace:w,query:query(),now:later}).baseline.eligibleCount,1);
+});
+
+test('space twin: saved explanations roundtrip with original text, model, timestamp and exact calculation binding',()=>{
+ const w=recordObservation(create(),assets[0].id,record(),{now}),c=calculate(w),ai=explanation(c);
+ const saved=saveSnapshot(w,c,{now,ai});const restored=parseWorkspace(serializeWorkspace(saved,{now}),{now});
+ assert.equal(restored.snapshots[0].ai.answer,ai.answer);assert.equal(restored.snapshots[0].ai.model,'test-model');assert.equal(restored.snapshots[0].ai.computedAt,now);
+ assert.equal(restored.snapshots[0].ai.evidenceId,ai.evidenceId);assert.deepEqual(restored.snapshots[0].ai.structured,ai.structured);assert.ok(restored.snapshots[0].ai.contentFingerprint);
+ assert.equal(restored.snapshots[0].ai.comparison,undefined,'API payload is not nested again in every snapshot');
+ const bookkeeping={...c,generatedAt:later,workspaceRevision:c.workspaceRevision+1,fingerprint:'fnv1a64:0000000000000000'};
+ assert.equal(spaceComparisonFingerprint(c),spaceComparisonFingerprint(bookkeeping));
+ const changedFacts=calculate(w,query({dayOfWeek:2}));assert.notEqual(spaceComparisonFingerprint(c),spaceComparisonFingerprint(changedFacts));
+ assert.throws(()=>saveSnapshot(w,changedFacts,{now,ai}),/근거.*계산 결과/);
+});
+test('space twin: old snapshots still import without AI, and deterministic fallback can be preserved accurately',()=>{
+ const w=create(),c=calculate(w),old=saveSnapshot(w,c,{now});
+ assert.equal(parseWorkspace(serializeWorkspace(old,{now}),{now}).snapshots[0].ai,undefined);
+ const fallback={mode:'rules',answer:spaceRulesSummary(c),computedAt:now,evidenceId:'space-0123456789abcdef0123',comparisonFingerprint:spaceComparisonFingerprint(c),code:'LLM_NOT_CONFIGURED',notice:'AI 연결 없이 계산 요약을 보존합니다.'};
+ const saved=saveSnapshot(w,c,{now,ai:fallback});assert.equal(parseWorkspace(serializeWorkspace(saved,{now}),{now}).snapshots[0].ai.answer,fallback.answer);
+ assert.throws(()=>saveSnapshot(w,c,{now,ai:{...fallback,answer:'공식 예산은 300만원입니다.'}}),/요약 문장/);
+});
+test('space twin: imported AI reference, numeric-text, evidence and checksum tampering is rejected',()=>{
+ const w=recordObservation(create(),assets[0].id,record(),{now}),c=calculate(w),saved=saveSnapshot(w,c,{now,ai:explanation(c)});
+ for(const mutate of [a=>a.answer+=' 개선율 90%입니다.',a=>a.model='changed-model',a=>a.comparisonFingerprint='fnv1a64:0000000000000000',a=>a.evidenceId='unbound',a=>a.structured.claims[0].scenarioId='not-in-comparison']){
+  const copy=structuredClone(saved);mutate(copy.snapshots[0].ai);assert.throws(()=>parseWorkspace(JSON.stringify(copy),{now}));
+ }
+ // Recomputing the non-secret checksum cannot make an altered numeric sentence match its references.
+ const copy=structuredClone(saved),ai=copy.snapshots[0].ai;ai.answer=ai.answer.replace('충족 공간 0개','충족 공간 1개');delete ai.contentFingerprint;ai.contentFingerprint=dataFingerprint(ai);
+ assert.throws(()=>parseWorkspace(JSON.stringify(copy),{now}),/문장.*계산 근거/);
 });
 
 test('space twin: the observation date uses Korea day boundaries and rejects future or impossible dates', () => {

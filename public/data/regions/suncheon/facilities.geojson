@@ -1,0 +1,4031 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+    "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+    "sourceDate": "2026-10-10",
+    "sourceDateRange": [
+      "2026-10-10",
+      "2026-10-10"
+    ],
+    "retrievedAt": "2026-10-23T02:35:55.026Z",
+    "sourceSha256": "f645854d9af709c6cdd257343f76d0e939557d42b6a4318181c799f9509098f3",
+    "boundaryDate": "2026-07-01",
+    "sourceProviderCode": "5790000",
+    "providerDetailId": "uddi:dddbf61e-81b3-4044-a9a4-b5e961df2f4d",
+    "license": "공공데이터포털 순천시 제공기관 상세: 이용허락범위 제한 없음",
+    "licenseSourceUrl": "https://www.data.go.kr/tcs/dss/selectDpkDetailInfo.do?publicDataDetailPk=uddi:dddbf61e-81b3-4044-a9a4-b5e961df2f4d",
+    "licenseCheckedOn": "2026-10-23",
+    "coverage": "전국 공개 다운로드 7342행 전체 좌표 대조. 순천 내부 78행을 고유 공간 67개로 통합. 원문 좌표 20곳·수록 읍면동 8개. 순천 전체 공공시설 또는 건물 수·현장 운영상태를 뜻하지 않음.",
+    "nationwideRowsScanned": 7342,
+    "selectedBeforeGrouping": 78,
+    "accepted": 67,
+    "groupedExtraRows": 11,
+    "spacesWithMultipleSourceRows": 8,
+    "distinctPublishedCoordinates": 20,
+    "coveredDistricts": 8,
+    "excluded": {
+      "textMatchedOutsideOrMissingCoordinates": 0
+    },
+    "addedByGeometryWithoutSuncheonText": 0,
+    "transformation": "WGS84 원좌표 유지. 제공기관코드+공간명+주소로 동일 공간의 시간·요금별 행 통합. 운영시간·수용인원은 원문 참고치로 보존하며 현장확인 기록을 생성하지 않음. 공공 전화번호 외 인명·개인정보 열 수집 안 함."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:12f4fec3d46b9565e207",
+        "name": "장천 노랑극장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천6길 8",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "100",
+        "publishedArea": "285",
+        "publishedFacilityType": "기타",
+        "placeName": "장천 노랑극장",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장천노랑극장|순천시장천6길8",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "83b5ebccfebe02b92867f5cb5380b4796681483d94547a2304044eba2da77687"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4900775,
+          34.94735046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:1c4d8f3629aecb8ff77c",
+        "name": "생활문화센터 영동1번지 음악실2",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "6",
+        "publishedArea": "30.47",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지음악실2|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "71653f164bb531e0ebaf993408beff62166d3c2d2b239ab42fa65a244540efa1"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:1e34307a714fcc79e23e",
+        "name": "조곡생활체육공원",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 자경1길6",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "120",
+        "publishedArea": "8114",
+        "publishedFacilityType": "축구장",
+        "placeName": "조곡생활체육공원",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|조곡생활체육공원|순천시자경1길6",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "b4f3856e35fa7d4248a447196fca69495302b86bf89e3b272e56099dc0526f27"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "60000",
+            "extraUseHours": "1",
+            "extraFee": "20000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215056000",
+        "dongName": "조곡동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4994104,
+          34.94912276
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:24930c460418c7c28b49",
+        "name": "순천만국가정원 습지센터 정원연회장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "220",
+        "publishedArea": "208",
+        "publishedFacilityType": "기타",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터정원연회장|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "fdaf15b15d5629bbdc60a2d31f7f58954ad198212817c54b2586f62572642b9a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "100000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:259b1aca5b06bea81f0c",
+        "name": "팔마체육시설 생활체육 족구장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 06:00~23:00 / 주말 06:00~23:00 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "3439",
+        "publishedFacilityType": "족구장",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설생활체육족구장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "d9304de0ce2e6a79f37f88da447793b88f3dffb7ac83249cf807e26c2524d0cd"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 06:00~23:00 / 주말 06:00~23:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "14000",
+            "extraUseHours": "1",
+            "extraFee": "7000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:2f01d26738952f5cded6",
+        "name": "팔마체육시설 생활체육 테니스장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "8328",
+        "publishedFacilityType": "테니스장",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설생활체육테니스장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "d855e644f37987a5acf53b9e4533a4d5dc2808273cab5f089aff1cba55045d0b"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "14000",
+            "extraUseHours": "1",
+            "extraFee": "7000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:3055311a5518ddd88541",
+        "name": "장안창작마당-장안여인숙",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 금곡길 43",
+        "phone": "061-745-4371",
+        "department": "문화예술과",
+        "hours": "평일 09:00~18:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+        "publishedCapacity": "40",
+        "publishedArea": "",
+        "publishedFacilityType": "기타",
+        "placeName": "장안창작마당",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장안창작마당-장안여인숙|순천시금곡길43",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "7efabd19a7533427d67aef9d7278a9d0f3f491f3016aa671d7fb974a8bc787a9"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "10000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4805373,
+          34.95462351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:31dedb86cc4ccb62e71f",
+        "name": "청소년문화의집-댄스연습실1",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 명말1길 57",
+        "phone": "061-749-3782",
+        "department": "평생교육과",
+        "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "10",
+        "publishedArea": "36.61",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년문화의집",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년문화의집-댄스연습실1|순천시명말1길57",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "698100801fcc1d14d5be18ed6d25964608f8c59e7631c3d30c35525143d7664a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "2",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5214437,
+          34.94209287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:38ce261f28a44c7aadf8",
+        "name": "순천만국가정원 습지센터 입체영상관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "180",
+        "publishedArea": "470",
+        "publishedFacilityType": "기타",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터입체영상관|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "8f49d3d4b08ddbe541a839be8835f4535fed055a19621d0ffb46ca3faae6b0c4"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "100000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:3d4b63f5aee9d5025eca",
+        "name": "생활문화센터 영동1번지 동아리실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "50",
+        "publishedArea": "116.74",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지동아리실|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "5e37068e56bab7f1292b94b22b08e69af143f44b13574fbbe67c0a8cb4d17437"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:3fa1d1d167344a5da04c",
+        "name": "공익활동 지원센터 시민협력센터 공감 회의실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 삼산로 157",
+        "phone": "061-749-4490",
+        "department": "자치행정과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "",
+        "publishedArea": "",
+        "publishedFacilityType": "회의실",
+        "placeName": "공익활동 지원센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|공익활동지원센터시민협력센터공감회의실|순천시삼산로157",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "13033458a949cdd0ca08d817bc29d0c0ec054246c71b444d3636e37b138e9481"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "4",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215055000",
+        "dongName": "삼산동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4978703,
+          34.97718266
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:3fbbd8a72bce8493a99d",
+        "name": "순천문화예술회관 대극장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 삼산로16",
+        "phone": "061-749-8612",
+        "department": "문화예술회관",
+        "hours": "평일 08:00~22:00 / 주말 08:00~22:00 / 휴관 연중무휴",
+        "publishedCapacity": "914",
+        "publishedArea": "6506",
+        "publishedFacilityType": "기타",
+        "placeName": "순천문화예술회관",
+        "homepageUrl": "https://www.suncheon.go.kr/scart/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천문화예술회관대극장|순천시삼산로16",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "7bf79f2623a513f847eab5e904f1790ad53f380cfc25990191127fb56760cd6f"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 08:00~22:00 / 주말 08:00~22:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "600000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215055000",
+        "dongName": "삼산동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4852768,
+          34.97076978
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:46a8ba034834aaaca53e",
+        "name": "순천만국가정원 동천 갯벌공연장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 3개(담당자 확인 필요): 평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 13:00~18:00 / 주말 13:00~18:00 / 휴관 연중무휴 ; 평일 09:00~12:00 / 주말 09:00~12:00 / 휴관 연중무휴",
+        "publishedCapacity": "2000",
+        "publishedArea": "5150",
+        "publishedFacilityType": "기타",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원동천갯벌공연장|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 3,
+        "sourceRecordHashes": [
+          "54bde7511b521cd3ccb3c584943bc4913909967a779ba3485b9cc13e477af21b",
+          "c89bae355c8134d6ce88051c80ac7c56e2f90da7275a7a9221cabf20b5a7c0f4",
+          "9cc0f40b8b5e285855d01551689cde9e38bf7cc85770d141583cd087df820a82"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "180000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 13:00~18:00 / 주말 13:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "5",
+            "fee": "110000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~12:00 / 주말 09:00~12:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "75000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:4834dfdd6ce634130382",
+        "name": "상사종합체육관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 상사면 상사초등길 34",
+        "phone": "061-749-8151",
+        "department": "상사면사무소",
+        "hours": "평일 05:00~22:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "1067",
+        "publishedFacilityType": "체육관",
+        "placeName": "상사종합체육관",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|상사종합체육관|순천시상사면상사초등길34",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "5fe2a7a1c715c3ad5f3640e2d7e443efb2f338814ae5ee4408ffa362088aa0d6"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 05:00~22:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "4",
+            "fee": "20000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215040000",
+        "dongName": "상사면"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4497192,
+          34.94318236
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:4a03ffd5d587172cdba1",
+        "name": "팔마체육시설 팔마정구장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~21:00 / 휴관 연중무휴",
+        "publishedCapacity": "200",
+        "publishedArea": "4600",
+        "publishedFacilityType": "기타",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설팔마정구장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "f637d5cb7e340e588a5ca56195106a59f4fac532b4673fb594c50965a06804ef"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~21:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "14000",
+            "extraUseHours": "2",
+            "extraFee": "14000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:4d5777169b25d58fce0c",
+        "name": "육아종합지원센터-강당",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 율산길 27",
+        "phone": "061-749-4088",
+        "department": "보육아동과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "150",
+        "publishedArea": "211.56",
+        "publishedFacilityType": "기타",
+        "placeName": "육아종합지원센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|육아종합지원센터-강당|순천시율산길27",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "ac51e226ecd787f278d32ccd0baf844c09bd13b059d5f118a117088a63e75338"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "30000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5255093,
+          34.94155394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:50d2b50d00325275b836",
+        "name": "청소년수련관-영화관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 금곡길 20",
+        "phone": "061-749-6605",
+        "department": "평생교육과",
+        "hours": "평일 09:00~21:00 / 주말 09:00~18:00 / 휴관 셋째 주 일+국경일+공휴일+명절연휴",
+        "publishedCapacity": "190",
+        "publishedArea": "377",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년수련관",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년수련관-영화관|순천시금곡길20",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "039062f0d11a50a334ba822f3b533eae5eabd3a6d717f65b183066234824d342"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~21:00 / 주말 09:00~18:00 / 휴관 셋째 주 일+국경일+공휴일+명절연휴",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4826654,
+          34.95519249
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:558b2f1228ce42739e7c",
+        "name": "상하수경기장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 강변로 77",
+        "phone": "061-749-6475",
+        "department": "맑은물행정과",
+        "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "120",
+        "publishedArea": "",
+        "publishedFacilityType": "축구장",
+        "placeName": "상하수경기장",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|상하수경기장|순천시강변로77",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "ce57d68f9229c25b590cd52c593d64b230104ed03fe195d6959f1d46e6662478"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "60000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5118126,
+          34.90851827
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:57ded633e08f349da38c",
+        "name": "팔마체육시설 팔마수영장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 05:30~20:00 / 주말 09:00~18:00 / 휴관 셋째 주 일",
+        "publishedCapacity": "200",
+        "publishedArea": "1260",
+        "publishedFacilityType": "기타",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설팔마수영장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "1bfbabe8cb8e408cb1bdb4e7837fcdbfb283905d437272a8d4a9c90fa447b3fa"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 05:30~20:00 / 주말 09:00~18:00 / 휴관 셋째 주 일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:5867cbcccf7bec477547",
+        "name": "순천청년센터 세미나실2",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-753-4640",
+        "department": "청년정책과",
+        "hours": "평일 10:00~21:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+        "publishedCapacity": "6",
+        "publishedArea": "18",
+        "publishedFacilityType": "강당",
+        "placeName": "순천청년센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천청년센터세미나실2|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "21a2920867535726c4f6b3d5143194fd9a9091e382159a1cdd81b0c10394caa4"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 10:00~21:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:5b077df59b8d7bbcafe2",
+        "name": "순천만국가정원 동문 소회의실4",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 2개(담당자 확인 필요): 평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "30",
+        "publishedArea": "80",
+        "publishedFacilityType": "회의실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원동문소회의실4|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 2,
+        "sourceRecordHashes": [
+          "3d192af13f25840788b55c15c025f136ebc15cc2714a82c840b14364406b73cb",
+          "5ab95d738c4efed9a9fc5b0f05e7f97bf2cc9f733a6244026728664da3f69a89"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "60000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "40000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:650b48fe5257f68de7ef",
+        "name": "장천파랑새창고 교육회의실(교육/회의)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천5길 35-7",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 08:00~18:00 / 주말 08:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "50",
+        "publishedArea": "232.2",
+        "publishedFacilityType": "회의실",
+        "placeName": "장천파랑새창고",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장천파랑새창고교육회의실(교육/회의)|순천시장천5길35-7",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "e9621786f5233d84e4c9c143b259cd1535589937c522a76f2ae7c0b75bd0b754"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 08:00~18:00 / 주말 08:00~18:00 / 휴관 연중무휴",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4924816,
+          34.94809431
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:68b0aba83e2427ffc9fe",
+        "name": "장천 노랑극장 (연습실 2실)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천6길 8",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "20",
+        "publishedArea": "43",
+        "publishedFacilityType": "기타",
+        "placeName": "장천 노랑극장",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장천노랑극장(연습실2실)|순천시장천6길8",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "aa211a943b417b16b774088ed98cedb0770942c1dee3e69d7e237a6663a20a88"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4900775,
+          34.94735046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:6dce28020edb86b2d44b",
+        "name": "팔마체육시설 생활체육 정구장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "4154",
+        "publishedFacilityType": "기타",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설생활체육정구장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "bdd05527e66b78a91a10165eafb8fee240084d69371070bc6593299d03929ad3"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "14000",
+            "extraUseHours": "1",
+            "extraFee": "7000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:71e0423c72979f25a2af",
+        "name": "저전동행정복지센터 저전 나눔터 회의실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천6길 8",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 10:00~21:00 / 주말 10:00~21:00 / 휴관 연중무휴",
+        "publishedCapacity": "26",
+        "publishedArea": "185",
+        "publishedFacilityType": "회의실",
+        "placeName": "저전동행정복지센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|저전동행정복지센터저전나눔터회의실|순천시장천6길8",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "e4e7c3d871dce7d8333024799f75d0f531cb33e485918b6f3d7215dabf388aa2"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 10:00~21:00 / 주말 10:00~21:00 / 휴관 연중무휴",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4900775,
+          34.94735046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:72ee67ae4c5d2310c911",
+        "name": "몽미락센터-공유주방3",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 대전머리길 108",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "20",
+        "publishedArea": "81.2",
+        "publishedFacilityType": "기타",
+        "placeName": "몽미락센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|몽미락센터-공유주방3|순천시대전머리길108",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "2595f9dce8b15f900383599efd9ea42cbec57375f420219124dbcc269eb58a7c"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4917207,
+          34.94817052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:77a780a5451dfc5c5297",
+        "name": "청소년문화의집-다목적실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 명말1길 57",
+        "phone": "061-749-3782",
+        "department": "평생교육과",
+        "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "50",
+        "publishedArea": "155.1",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년문화의집",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년문화의집-다목적실|순천시명말1길57",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "5894e8174b3a00d4fa1d3f8af55a1dc44ec68fa65b5a8ad35232ede0e150e21a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "2",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5214437,
+          34.94209287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:790c80dfec28f38b5cb5",
+        "name": "순천만국가정원 습지센터 소회의실 2(2층)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 2개(담당자 확인 필요): 평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+        "publishedCapacity": "15",
+        "publishedArea": "54",
+        "publishedFacilityType": "회의실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터소회의실2(2층)|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 2,
+        "sourceRecordHashes": [
+          "52904c7d7e9e36a24f2e213bf416a73add6db9303ded430a2ada05718dcc0fb0",
+          "97f3cf4e3e70ff56727fe55659ae3ac405f5c56f0eb27c1ade9bb5d29615296d"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "40000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "25000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:79f4ce78dd5712c93fe8",
+        "name": "순천만국가정원 습지센터 소회의실 1(2층)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 2개(담당자 확인 필요): 평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+        "publishedCapacity": "30",
+        "publishedArea": "",
+        "publishedFacilityType": "회의실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터소회의실1(2층)|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 2,
+        "sourceRecordHashes": [
+          "64d1eb212735e06f5e9358b485713af93108c3481666ca79b8785be7f189deff",
+          "78ffd01b11ad9a9dbef7c39fd19df40e19912afcb5702b77734427b5da2fba93"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "40000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "25000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:7b7c4abef0451c595289",
+        "name": "몽미락센터-공유주방2",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 대전머리길 108",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "20",
+        "publishedArea": "81.2",
+        "publishedFacilityType": "기타",
+        "placeName": "몽미락센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|몽미락센터-공유주방2|순천시대전머리길108",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "b598a19a2ef10e111681787b1254993e170404f349c4efe1c38b1638db526cb5"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4917207,
+          34.94817052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:7b922cc97fc52dc39d8d",
+        "name": "팔마종합운동장 팔마주경기장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "12703",
+        "publishedArea": "70142",
+        "publishedFacilityType": "축구장",
+        "placeName": "팔마종합운동장",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마종합운동장팔마주경기장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "fa0b0d5fbfe15f9f0691fe737bb70d0bdb090cc1bda839ce97cc37fb3aefe07c"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "81000",
+            "extraUseHours": "1",
+            "extraFee": "27000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:812cf9faf85c5b344c98",
+        "name": "장천패랑새창고 전시행사실(전시/행사)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천5길 35-7",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 08:00~18:00 / 주말 08:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "50",
+        "publishedArea": "232.2",
+        "publishedFacilityType": "전시실",
+        "placeName": "장천파랑새창고",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장천패랑새창고전시행사실(전시/행사)|순천시장천5길35-7",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "64b77d9001b2ecdcbba3e9dcaa69b214529df2396ae26d569d59bceed1012a29"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 08:00~18:00 / 주말 08:00~18:00 / 휴관 연중무휴",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4924816,
+          34.94809431
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:82e84f8f6110fc171756",
+        "name": "순천만국가정원 습지센터 소회의실 5(1층)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 2개(담당자 확인 필요): 평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+        "publishedCapacity": "15",
+        "publishedArea": "26",
+        "publishedFacilityType": "회의실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터소회의실5(1층)|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 2,
+        "sourceRecordHashes": [
+          "9089b56a83c0f4767260bcdcce867d38923cab6e723bdcff1269e67188d9d12f",
+          "cafa0789441632ea5fd2d1ae6cd41c20973c1fa78e0e6bd95144e80c2a02cbbf"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "20000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "15000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:83dd810a3896f5f2f837",
+        "name": "저전동행정복지센터 저전 나눔터 전시실 전체전시",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 장천6길 8",
+        "phone": "061-749-8269",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~21:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "26",
+        "publishedArea": "185",
+        "publishedFacilityType": "전시실",
+        "placeName": "저전동행정복지센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|저전동행정복지센터저전나눔터전시실전체전시|순천시장천6길8",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "64648cc853bcce73b59d951c663080b7842d91e2a51c649d05bac275979e8a0d"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~21:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4900775,
+          34.94735046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:83e34541a61ed484b0ec",
+        "name": "업사이클센터 교육실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마1길 9-19",
+        "phone": "061-749-3026",
+        "department": "청소자원과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 일+공휴일",
+        "publishedCapacity": "30",
+        "publishedArea": "48.241",
+        "publishedFacilityType": "기타",
+        "placeName": "업사이클센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|업사이클센터교육실|순천시팔마1길9-19",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "c16e1f048eadc67c21ff454d3f755617e15d226450464825795710b14d057046"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "50000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5126323,
+          34.93249123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:83ef77e8fc6a65edc63e",
+        "name": "몽미락센터 회의실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 대전머리길 108",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "20",
+        "publishedArea": "53.29",
+        "publishedFacilityType": "회의실",
+        "placeName": "몽미락센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|몽미락센터회의실|순천시대전머리길108",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "8690b49cc81758c15c4c624c80a94e47680f375aec5191d7eb65d79d5f5304d4"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4917207,
+          34.94817052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:87a95100c160171e03bc",
+        "name": "순천문화예술회관 소극장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 삼산로16",
+        "phone": "061-749-8612",
+        "department": "문화예술회관",
+        "hours": "평일 08:00~22:00 / 주말 08:00~22:00 / 휴관 연중무휴",
+        "publishedCapacity": "152",
+        "publishedArea": "230",
+        "publishedFacilityType": "기타",
+        "placeName": "순천문화예술회관",
+        "homepageUrl": "https://www.suncheon.go.kr/scart/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천문화예술회관소극장|순천시삼산로16",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "d51c58d4423f85561502411dc8e5db2128b50f8ffd432602c65679dce2e1e4ab"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 08:00~22:00 / 주말 08:00~22:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "200000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215055000",
+        "dongName": "삼산동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4852768,
+          34.97076978
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:8945c80236a5a6b9b649",
+        "name": "순천만국가정원 갯지렁이 전시관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "50",
+        "publishedArea": "92",
+        "publishedFacilityType": "전시실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원갯지렁이전시관|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "e9a58af8e73b80c601218af8d15818ca0538ca8b7d2eaa30dca52628dc9be63a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "72000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:8b0561e4635c95d78a53",
+        "name": "순천만국가정원 습지센터 컨퍼런스 홀",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 3개(담당자 확인 필요): 평일 13:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~12:00 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "380",
+        "publishedFacilityType": "강당",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터컨퍼런스홀|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 3,
+        "sourceRecordHashes": [
+          "4ed4dc775d58b06b5efc85a651b8f69c4f94f1a9c54ecee538a7906230bb336c",
+          "2838bbf9563c35fa6f4dde7d024ffc56cf74539822559b6c8d8897b361c08bfb",
+          "580871b7987821ab8b2ca9f0aa667097870999fe93d3034b7753a51ceb65d59a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 13:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "5",
+            "fee": "180000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~12:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "120000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "300000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:908f25bd3447767b4845",
+        "name": "순천부 읍성 서문안내소-다목적실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 호남길 52",
+        "phone": "061-749-4302",
+        "department": "문화예술과",
+        "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+        "publishedCapacity": "30",
+        "publishedArea": "302",
+        "publishedFacilityType": "기타",
+        "placeName": "순천부 읍성 서문안내소",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천부읍성서문안내소-다목적실|순천시호남길52",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "8e589d63f2770ea19e9eeb907ecf10bd9455c746cd1e4f99f108a16c2b266a67"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "4",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4810463,
+          34.95525578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:937a9dca34bee1503aef",
+        "name": "순천부 읍성 남문터광장-기획전시실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 호남길 52",
+        "phone": "061-749-4302",
+        "department": "문화예술과",
+        "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+        "publishedCapacity": "30",
+        "publishedArea": "163",
+        "publishedFacilityType": "전시실",
+        "placeName": "순천부 읍성 남문터광장",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천부읍성남문터광장-기획전시실|순천시호남길52",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "3e97cdd147ac02863a7df6a4e9233d8eb02191896acf6c5cd17b3402a8e55d96"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "10000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4810463,
+          34.95525578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:95f491cf784c39e29075",
+        "name": "생활문화센터 영동1번지 녹음실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "4",
+        "publishedArea": "26.56",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지녹음실|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "b7d089148341e90fd0322cda31f4e3b20aa38cbb68ded73e4e93c504516645bb"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:99a6400f7986cdf8ca61",
+        "name": "생활문화센터 영동1번지 음악실3",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "3",
+        "publishedArea": "22.79",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지음악실3|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "c0228f3adba354bb781fb2a820115fe99f390b0f7ee712a0d33ece1d8f6584ef"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:9b982d629e4f7d187954",
+        "name": "생활문화센터 영동1번지 다목적 연습실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "30",
+        "publishedArea": "137.19",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지다목적연습실|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "c5a1ba79797060b73ca6d269004732ef119cfb3849378214f183503002195107"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:a02b2f8074960ebef6ea",
+        "name": "팔마체육관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 05:00~23:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "3576",
+        "publishedArea": "23728",
+        "publishedFacilityType": "체육관",
+        "placeName": "팔마체육관",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육관|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "eb5eb89096a8689f23da800605c6c7499478c62d37403f4547cff9761281b824"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 05:00~23:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "50000",
+            "extraUseHours": "3",
+            "extraFee": "75000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:a25819ebc20ab3e56445",
+        "name": "강청수변공원축구장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 서면 강청길 82",
+        "phone": "061-749-8130",
+        "department": "서면사무소",
+        "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "200",
+        "publishedArea": "",
+        "publishedFacilityType": "축구장",
+        "placeName": "강청수변공원",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|강청수변공원축구장|순천시서면강청길82",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "2ace973cb7633932fa9d07a8f40e5a38c9141843098d56feace7871c034504a9"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+            "paidUse": "N",
+            "referenceUseHours": "",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215032000",
+        "dongName": "서면"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4991249,
+          34.98564008
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:a46158da79339aa07cb3",
+        "name": "순천문화예술회관 전시실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 삼산로16",
+        "phone": "061-749-8612",
+        "department": "문화예술회관",
+        "hours": "평일 09:00~19:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "150",
+        "publishedArea": "410",
+        "publishedFacilityType": "전시실",
+        "placeName": "순천문화예술회관",
+        "homepageUrl": "https://www.suncheon.go.kr/scart/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천문화예술회관전시실|순천시삼산로16",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "d25a4e0bb5de5fda7324527e35ad799192ff4cbaaf44770a33c10dc753309a04"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~19:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "40000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215055000",
+        "dongName": "삼산동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4852768,
+          34.97076978
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:aaa33c188c061ebe6ede",
+        "name": "청소년수련관-야외무대",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 금곡길 20",
+        "phone": "061-749-6605",
+        "department": "평생교육과",
+        "hours": "평일 09:00~21:00 / 주말 09:00~18:00 / 휴관 셋째 주 일+국경일+공휴일+명절연휴",
+        "publishedCapacity": "",
+        "publishedArea": "533",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년수련관",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년수련관-야외무대|순천시금곡길20",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "49ef0d069b0a89031b8ebff31118871728c624daa61633417878c5b8255a72f6"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~21:00 / 주말 09:00~18:00 / 휴관 셋째 주 일+국경일+공휴일+명절연휴",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4826654,
+          34.95519249
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:ab9fac6e69e2af31f4f5",
+        "name": "팔마종합운동장 보조경기장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 06:00~21:30 / 주말 06:00~21:30 / 휴관 연중무휴",
+        "publishedCapacity": "200",
+        "publishedArea": "23000",
+        "publishedFacilityType": "축구장",
+        "placeName": "팔마종합운동장",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마종합운동장보조경기장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "d807ba7002e2dded3de77602da3ad8ca37594007a661f16c0098e9e0462256bf"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 06:00~21:30 / 주말 06:00~21:30 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "60000",
+            "extraUseHours": "1",
+            "extraFee": "20000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:acf84a601abc5aca09ab",
+        "name": "청소년문화의집-밴드연습실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 명말1길 57",
+        "phone": "061-749-3782",
+        "department": "평생교육과",
+        "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "5",
+        "publishedArea": "37.8",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년문화의집",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년문화의집-밴드연습실|순천시명말1길57",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "fb53e3b72eeac6e0fa26e37426839324fa39f8fb49473091ed586a940603e4fd"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "2",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5214437,
+          34.94209287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:aeb5016a6a2c1d77a3d8",
+        "name": "장안창작마당-다목적실(공유부엌)",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 금곡길 43",
+        "phone": "061-745-4371",
+        "department": "문화예술과",
+        "hours": "평일 09:00~18:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+        "publishedCapacity": "4",
+        "publishedArea": "",
+        "publishedFacilityType": "기타",
+        "placeName": "장안창작마당",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|장안창작마당-다목적실(공유부엌)|순천시금곡길43",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "1fcad19ff6823cdc9fa4e461b96779e05c4a10c18e5b5e2440aae42a9d4c8b2a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "4",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4805373,
+          34.95462351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:b24985d25fa19ab4ec30",
+        "name": "올림픽기념국민생활관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 05:00~21:00 / 주말 05:00~21:00 / 휴관 셋째 주 일",
+        "publishedCapacity": "200",
+        "publishedArea": "1260",
+        "publishedFacilityType": "배드맨턴장",
+        "placeName": "올림픽기념국민생활관",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|올림픽기념국민생활관|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "b686eb94b05d8b127df127f764a21d0a5b750a324bdb1dc47544417d5f0e97e6"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 05:00~21:00 / 주말 05:00~21:00 / 휴관 셋째 주 일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "1500",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:b3447db310a870ccc69d",
+        "name": "팔마체육시설 다목적체육관",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 09:00~21:00 / 주말 09:00~21:00 / 휴관 토+공휴일",
+        "publishedCapacity": "100",
+        "publishedArea": "364",
+        "publishedFacilityType": "다목적경기장",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설다목적체육관|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "edd1a9c07093b9eda995781cc10ca06f5f9095e9860ceb494cddf68d42f2bd00"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~21:00 / 주말 09:00~21:00 / 휴관 토+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "20000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:bcf5abc8adedb4ca79e5",
+        "name": "상사경기장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 상사면 상사초등길 34",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "120",
+        "publishedArea": "11282",
+        "publishedFacilityType": "축구장",
+        "placeName": "상사경기장",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|상사경기장|순천시상사면상사초등길34",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "e6ed9578096b1a4899befe78b9d238e3541857826f2f14c24139e72cdfed2751"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 07:00~18:00 / 주말 07:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "60000",
+            "extraUseHours": "1",
+            "extraFee": "20000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215040000",
+        "dongName": "상사면"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4497192,
+          34.94318236
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:bd824265f640e5d04d63",
+        "name": "팔마체육시설 양궁장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "100",
+        "publishedArea": "1653",
+        "publishedFacilityType": "기타",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설양궁장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "223ca7378a7f01c1351e8b4fc5db898ccfca0ea8b214207a080db9a93604e10d"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "20000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:bef087f03158f8706af7",
+        "name": "생활문화센터 영동1번지 음악실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "7",
+        "publishedArea": "32.62",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지음악실|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "bc2b0127e52b10c83bcf13f6fe7f9c9be811db93e025e6ccf9eafa03d4df274d"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:c33b3cd924ceb4924f02",
+        "name": "순천청년센터 문화공연장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-753-4640",
+        "department": "청년정책과",
+        "hours": "평일 10:00~21:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+        "publishedCapacity": "80",
+        "publishedArea": "117.5",
+        "publishedFacilityType": "기타",
+        "placeName": "순천청년센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천청년센터문화공연장|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "02ca528da08804a5cc6cdcaa503df58ff8fad49c32093f2055005831ad8674ce"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 10:00~21:00 / 주말 10:00~18:00 / 휴관 토+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:ca8833c2aeb39b7da128",
+        "name": "청소년문화의집-댄스연습실2",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 명말1길 57",
+        "phone": "061-749-3782",
+        "department": "평생교육과",
+        "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "6",
+        "publishedArea": "21.12",
+        "publishedFacilityType": "기타",
+        "placeName": "청소년문화의집",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|청소년문화의집-댄스연습실2|순천시명말1길57",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "51f00861071d0f7664d807dd5fb659785b09643670358c99e7e0e9f28825ce4a"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~13:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "2",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5214437,
+          34.94209287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:d160b175be0d3acc6707",
+        "name": "팔마체육시설 팔마테니스장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마로333",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "7330",
+        "publishedFacilityType": "테니스장",
+        "placeName": "팔마체육시설",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|팔마체육시설팔마테니스장|순천시팔마로333",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "2dcf8856240e0cefaa04afd10532578e0f963b379781b658c4b07f3de387e353"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 06:00~20:30 / 주말 06:00~20:30 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "14000",
+            "extraUseHours": "1",
+            "extraFee": "7000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.519901,
+          34.93640121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:d2ba6443206eb08ad41c",
+        "name": "문화건강센터 수영장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 232",
+        "phone": "061-749-8486",
+        "department": "체육시설운영과",
+        "hours": "평일 05:30~20:00 / 주말 09:00~18:00 / 휴관 셋째 주 일",
+        "publishedCapacity": "200",
+        "publishedArea": "3549",
+        "publishedFacilityType": "기타",
+        "placeName": "문화건강센터",
+        "homepageUrl": "https://www.suncheon.go.kr/yeyak/training/list/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|문화건강센터수영장|순천시중앙로232",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "ede86ba9fbc0d9145f842082123be937e6489bdebff37d8088bfcbf641a71b5f"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 05:30~20:00 / 주말 09:00~18:00 / 휴관 셋째 주 일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215055000",
+        "dongName": "삼산동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4865509,
+          34.96676031
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:ddbc637dbe95b250811f",
+        "name": "업사이클센터 기획전시실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 팔마1길 9-19",
+        "phone": "061-749-3026",
+        "department": "청소자원과",
+        "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 일+공휴일",
+        "publishedCapacity": "30",
+        "publishedArea": "130",
+        "publishedFacilityType": "전시실",
+        "placeName": "업사이클센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|업사이클센터기획전시실|순천시팔마1길9-19",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "615019f065c900ba486632d2e13761b58b2033c1c1e43aa12dc9b47dc0ec9fdb"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "50000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215057000",
+        "dongName": "덕연동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5126323,
+          34.93249123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:df19076fe6e3a7890488",
+        "name": "몽미락센터-공유주방1",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 대전머리길 108",
+        "phone": "061-746-0346",
+        "department": "도시공간재생과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "20",
+        "publishedArea": "81.2",
+        "publishedFacilityType": "기타",
+        "placeName": "몽미락센터",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|몽미락센터-공유주방1|순천시대전머리길108",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "70924cc4d16ffad08db8ac84f97d479497888b4f900092d3b564892ff3c111ad"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "N",
+            "referenceUseHours": "3",
+            "fee": "",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215061000",
+        "dongName": "장천동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4917207,
+          34.94817052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:e7edc19f6f09d23bbd55",
+        "name": "한옥글방-회의실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 금곡길 28",
+        "phone": "061-749-4305",
+        "department": "문화예술과",
+        "hours": "평일 10:00~19:00 / 주말 10:00~18:00 / 휴관 월+공휴일",
+        "publishedCapacity": "40",
+        "publishedArea": "",
+        "publishedFacilityType": "회의실",
+        "placeName": "한옥글방",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|한옥글방-회의실|순천시금곡길28",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "3dd215625a023e23cab255482b39c8db7783e93927e107960effc14f72cd17f2"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 10:00~19:00 / 주말 10:00~18:00 / 휴관 월+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "4",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4818135,
+          34.95507868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:ef6b1d9e332d02e7900f",
+        "name": "순천만국가정원 동문 소회의실3",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 2개(담당자 확인 필요): 평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+        "publishedCapacity": "70",
+        "publishedArea": "147",
+        "publishedFacilityType": "회의실",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원동문소회의실3|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 2,
+        "sourceRecordHashes": [
+          "9157ab0008228eaddc045a0c7289a7ed14623d79d26e1a7140b8adae42ae0a68",
+          "27ed793db6dc2416cd53ab4542b8b320f1bb616287cde35319b08e8b2e8001ee"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 00:00~23:59 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "110000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~23:59 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "70000",
+            "extraUseHours": "1",
+            "extraFee": "10000",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:f1b04736c91a0a57886a",
+        "name": "생활문화센터 영동1번지 학습실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 중앙로 95",
+        "phone": "061-746-2911",
+        "department": "청년정책과",
+        "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+        "publishedCapacity": "14",
+        "publishedArea": "35.01",
+        "publishedFacilityType": "기타",
+        "placeName": "생활문화센터 영동1번지",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|생활문화센터영동1번지학습실|순천시중앙로95",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "759695e8c1e831f932406459152f53d4a0c890da38fd13af6782024b2c6cbc3f"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~18:00 / 주말 00:00~00:00 / 휴관 토+일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "2",
+            "fee": "3000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4836658,
+          34.95424629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:f6ef1b2580271cbc9ac1",
+        "name": "순천부 읍성 남문터광장-다목적 강의실",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 호남길 52",
+        "phone": "061-749-4302",
+        "department": "문화예술과",
+        "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+        "publishedCapacity": "50",
+        "publishedArea": "204",
+        "publishedFacilityType": "기타",
+        "placeName": "순천부 읍성 남문터광장",
+        "homepageUrl": "https://www.suncheon.go.kr/minju/0004/0004/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천부읍성남문터광장-다목적강의실|순천시호남길52",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 1,
+        "sourceRecordHashes": [
+          "c759bbaaf208fba0ee31a0c2fae5520192be639f7d229db478bdba32880db76f"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 09:00~19:00 / 주말 10:00~18:00 / 휴관 일+공휴일",
+            "paidUse": "Y",
+            "referenceUseHours": "4",
+            "fee": "5000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215051500",
+        "dongName": "향동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4810463,
+          34.95525578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "suncheon-public:fdd19d4988579be672bc",
+        "name": "순천만국가정원 습지센터 야외공연장",
+        "category": "public",
+        "layerId": "public-facilities",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 순천시",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-10-10",
+        "address": "전남광주통합특별시 순천시 국가정원1호길 47",
+        "phone": "1577-2013",
+        "department": "국가정원운영과",
+        "hours": "공개 원문 조건 3개(담당자 확인 필요): 평일 13:00~18:00 / 주말 13:00~18:00 / 휴관 연중무휴 ; 평일 09:00~12:00 / 주말 09:00~12:00 / 휴관 연중무휴 ; 평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+        "publishedCapacity": "300",
+        "publishedArea": "910",
+        "publishedFacilityType": "기타",
+        "placeName": "순천만국가정원",
+        "homepageUrl": "https://scbay.suncheon.go.kr/",
+        "sourceInstitutionCode": "5790000",
+        "sourceIdentity": {
+          "kind": "derived-registry",
+          "key": "5790000|순천만국가정원습지센터야외공연장|순천시국가정원1호길47",
+          "upstreamPermanentIdAvailable": false
+        },
+        "sourceRecordCount": 3,
+        "sourceRecordHashes": [
+          "1b221dd74a28d6eb85230376070a624b39f8d33f66c1bc3ad8d3829b555b2c0c",
+          "f83fb3df6e1b98c0ed994d47679660a0ee3e2c6c7d1ada01b83f6ed32b0c9e5a",
+          "f3315443abbcb33a27dfc6ca8f02281b86e42ea495303ba597706b8c56c19dd2"
+        ],
+        "sourceConditionVariants": [
+          {
+            "hours": "평일 13:00~18:00 / 주말 13:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "5",
+            "fee": "20000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~12:00 / 주말 09:00~12:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "3",
+            "fee": "15000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          },
+          {
+            "hours": "평일 09:00~18:00 / 주말 09:00~18:00 / 휴관 연중무휴",
+            "paidUse": "Y",
+            "referenceUseHours": "8",
+            "fee": "35000",
+            "extraUseHours": "",
+            "extraFee": "",
+            "sourceDate": "2026-10-10"
+          }
+        ],
+        "monthly": {},
+        "metricName": "운영량",
+        "metricUnit": "건",
+        "dataKind": "official-snapshot",
+        "reviewStatus": "unverified",
+        "positionSource": "source-coordinates",
+        "note": "공개 개방공간 단위. 같은 장소의 시간·요금별 행은 하나로 묶고 원문 조건을 보존했습니다. 게시 시간·수용인원은 현재 개방·예약 가능·현장 확인 상태가 아닙니다.",
+        "dongId": "suncheon-1215063500",
+        "dongName": "도사동"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.4981539,
+          34.92844435
+        ]
+      }
+    }
+  ]
+}

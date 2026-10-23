@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "id": "suncheon",
+  "name": "순천",
+  "fullName": "전남광주통합특별시 순천시",
+  "jurisdictionCode": "12150",
+  "codeSystem": "MOIS-ADM",
+  "timeZone": "Asia/Seoul",
+  "bounds": [
+    127.17493298556175,
+    34.83086602180856,
+    127.5938942597566,
+    35.1890871812297
+  ],
+  "center": [
+    127.38441362265917,
+    35.00997660151913
+  ],
+  "boundaryUrl": "/data/regions/suncheon/admin-boundaries.geojson",
+  "facilitiesUrl": "/data/regions/suncheon/facilities.geojson",
+  "facilityLayerId": "public-facilities",
+  "districtCount": 24,
+  "capabilities": {
+    "spaceTwin": true,
+    "legacySeoguServices": false
+  },
+  "source": {
+    "name": "SGIS 행정동 경계 가공: vuski/admdongkor + 공공데이터포털 순천시 공개자료",
+    "url": "https://raw.githubusercontent.com/vuski/admdongkor/master/ver20260701/HangJeongDong_ver20260701.geojson",
+    "asOf": "2026-07-01",
+    "note": "adm_cd2 앞 5자리 행정기관코드. 공공데이터 제공기관코드 5790000과 구분. 공공공간 기준일·수록 범위는 시설 메타데이터에 별도 기록."
+  },
+  "sample": false
+}
