@@ -12,7 +12,7 @@
   "rawSha256": "fe8a9613e873d73b82ecb965469b66eff9010c5508e51b50e42b244d5447e19c",
   "receivedRows": 1639,
   "regionRows": 134,
-  "mappedRows": 123,
+  "mappedRows": 122,
   "exclusions": [
     {
       "name": "The#염주센트럴어린이집",
@@ -23,6 +23,34 @@
         "35.06368176631195"
       ],
       "reason": "원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음"
+    },
+    {
+      "id": "childcare-seogu-7d51687f20f80f452be8",
+      "name": "광주서구청어린이집",
+      "address": "전남광주통합특별시 서구 경열로 33 서구청",
+      "registeredStatus": "정상",
+      "sourceRow": "99",
+      "sourceCoordinates": [
+        "126.86332875147805",
+        "35.147776108049314"
+      ],
+      "code": "SOURCE_COORDINATE_CONFLICT",
+      "reason": "동일 주소의 별도 공식 공개위치와 2,472m 불일치: 원문 좌표 재확인 전 공간 수록·계산에서 제외, 임의 보정하지 않음",
+      "reviewEvidence": {
+        "checkedAt": "2026-10-24",
+        "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+        "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+        "sourceDate": "2026-08-06",
+        "referenceId": "public-facilities:c586188584edc03fa702",
+        "referenceName": "전남광주통합특별시서구청 들불홀",
+        "referenceAddress": "전남광주통합특별시 서구 경열로 33",
+        "referenceCoordinates": [
+          126.8900126833,
+          35.15202903
+        ],
+        "distanceM": 2472,
+        "meaning": "동일 주소의 독립 공개자료와 위치 불일치 확인. 비교 좌표는 어린이집 대체 좌표가 아니며 실제 위치·출입구 재확인 필요."
+      }
     },
     {
       "name": "광주어린이집",
@@ -125,6 +153,8 @@
       "reason": "원문 운영현황 휴지 등: 현재 운영 시설 참고목록에서 제외"
     }
   ],
+  "coordinateReviewCount": 1,
+  "coordinateReviewPolicy": "검토기록의 시설 ID와 문제 좌표가 모두 같은 경우만 제외. 원문 좌표가 변경되면 지역경계 등 일반 검증을 다시 적용하며 자동 대체하지 않음.",
   "license": "공공누리 제1유형 · 출처표시",
   "licenseSourceUrl": "https://www.data.go.kr/data/15013108/standard.do"
 }

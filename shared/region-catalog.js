@@ -17,5 +17,7 @@ export function regionLink(id, search='') {
   const params=new URLSearchParams();params.set('region',id);
   const map=new URLSearchParams(search).get('map');
   if (['boundary','libre'].includes(map)) params.set('map',map);
+  const work=new URLSearchParams(search).get('work');
+  if(['care','safety'].includes(work))params.set('work',work);
   return '/?'+params.toString();
 }

@@ -20,7 +20,7 @@
     },
     "api/city-scene.js": {
       "maxDuration": 30,
-      "includeFiles": "public/data/admin-dongs.geojson"
+      "includeFiles": "public/data/regions/*.json"
     },
     "api/city-wms.js": {
       "maxDuration": 30,

@@ -23,6 +23,26 @@ const REGIONS = {
   seogu: {district: '서구', boundary: 'public/data/admin-dongs.geojson'},
   suncheon: {district: '순천시', boundary: 'public/data/regions/suncheon/admin-boundaries.geojson'},
 };
+// Quarantine a reviewed source coordinate, never a facility by name alone.
+// A later source coordinate change is eligible for the normal checks again.
+const COORDINATE_REVIEWS = [{
+  id: 'childcare-seogu-7d51687f20f80f452be8',
+  sourceCoordinates: [126.86332875147805, 35.147776108049314],
+  code: 'SOURCE_COORDINATE_CONFLICT',
+  reason: '동일 주소의 별도 공식 공개위치와 2,472m 불일치: 원문 좌표 재확인 전 공간 수록·계산에서 제외, 임의 보정하지 않음',
+  evidence: {
+    checkedAt: '2026-10-24',
+    sourceName: '전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구',
+    sourceUrl: 'https://www.data.go.kr/data/15013117/standard.do',
+    sourceDate: '2026-08-06',
+    referenceId: 'public-facilities:c586188584edc03fa702',
+    referenceName: '전남광주통합특별시서구청 들불홀',
+    referenceAddress: '전남광주통합특별시 서구 경열로 33',
+    referenceCoordinates: [126.8900126833, 35.15202903],
+    distanceM: 2472,
+    meaning: '동일 주소의 독립 공개자료와 위치 불일치 확인. 비교 좌표는 어린이집 대체 좌표가 아니며 실제 위치·출입구 재확인 필요.',
+  },
+}];
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const sha = value => createHash('sha256').update(value).digest('hex');
 const assert = (condition, message) => {if (!condition) throw Error(message);};
@@ -60,6 +80,11 @@ export async function collectChildcare({sourceHtml, outputDirectory = resolve(RO
       else if (!pointInRegion([longitude, latitude], boundaries)) reason = '원문 좌표가 해당 지역 행정경계 밖: 임의 보정하지 않음';
       if (reason) {exclusions.push({name: row[3], address: row[7], registeredStatus: row[5], sourceCoordinates: [row[18], row[17]], reason}); continue;}
       const id = `childcare-${regionId}-${sha(JSON.stringify([row[3], row[7]])).slice(0, 20)}`;
+      const review = COORDINATE_REVIEWS.find(item => item.id === id && item.sourceCoordinates[0] === longitude && item.sourceCoordinates[1] === latitude);
+      if (review) {
+        exclusions.push({id, name: row[3], address: row[7], registeredStatus: row[5], sourceRow: row[0], sourceCoordinates: [row[18], row[17]], code: review.code, reason: review.reason, reviewEvidence: review.evidence});
+        continue;
+      }
       if (ids.has(id)) {exclusions.push({name: row[3], address: row[7], reason: '동일 명칭·주소 중복'}); continue;}
       ids.add(id);
       const district = boundaries.features.find(feature => pointInRegion([longitude, latitude], {features: [feature]}));
@@ -86,17 +111,20 @@ export async function collectChildcare({sourceHtml, outputDirectory = resolve(RO
     }
     for (const feature of features) if (coordinates.get(feature.geometry.coordinates.join(',')) > 1)
       feature.properties.coordinateNote = '동일 대표좌표에 여러 시설이 등록됨. 같은 공동주택·건물일 수 있으며 시설별 실제 출입구 확인 필요.';
+    const coordinateReviewCount = exclusions.filter(item => item.code === 'SOURCE_COORDINATE_CONFLICT').length;
     const receipt = {
       regionId, sourceName: SOURCE_NAME, sourceUrl: SOURCE_URL, queryUrl: QUERY_URL, queryMethod: 'POST', queryBody: QUERY_BODY,
       queryMeaning: '비정기(수시), 포털 시도 선택값 12. 코드와 원문 시군구명·주소·해당 지역 경계를 함께 확인.',
       sourceDate: null, sourceDateMeaning: '수시조회 화면에 자료 기준일이 따로 제공되지 않음. 수집시각을 원자료 기준일로 대체하지 않음.',
       collectedAt, rawSha256: sha(bytes), receivedRows: parsed.declaredRows,
       regionRows: scopedRows.length, mappedRows: features.length, exclusions,
+      ...(coordinateReviewCount ? {coordinateReviewCount, coordinateReviewPolicy: '검토기록의 시설 ID와 문제 좌표가 모두 같은 경우만 제외. 원문 좌표가 변경되면 지역경계 등 일반 검증을 다시 적용하며 자동 대체하지 않음.'} : {}),
       license: '공공누리 제1유형 · 출처표시', licenseSourceUrl: LICENSE_URL,
     };
     const result = {type: 'FeatureCollection', metadata: {
       regionId, sourceName: SOURCE_NAME, sourceUrl: SOURCE_URL, sourceDate: null, collectedAt,
-      coverage: `${config.district} 공개 SHEET ${scopedRows.length}행 중 운영현황 정상·재개 및 지역 경계 안 좌표 ${features.length}행. 원자료 기준일 미제공, 현재 운영과 입소 가능 여부 미검수.`,
+      coverage: `${config.district} 공개 SHEET ${scopedRows.length}행 중 운영현황 정상·재개 및 지역 경계 안 좌표${coordinateReviewCount ? `, 확인된 좌표 불일치 ${coordinateReviewCount}행 제외 후` : ''} ${features.length}행. 원자료 기준일 미제공, 현재 운영과 입소 가능 여부 미검수.`,
+      ...(coordinateReviewCount ? {coordinateReviewCount} : {}),
       complete: false, license: receipt.license, licenseSourceUrl: LICENSE_URL,
       countMeaning: '수록 영유아 어린이집 대표위치 수 · 초등돌봄 시설·전체 공급·수요 또는 이용 가능한 자리 수가 아님',
       sourceReceipt: `/data/decision/${regionId}/childcare-source.json`,

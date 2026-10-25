@@ -64,10 +64,11 @@ export function representative(g) {
   return coordinatesOf(g)[0]?.slice(0,2)||null;
 }
 export function distance(a,b){const r=Math.PI/180;const x=(b[0]-a[0])*r*Math.cos((a[1]+b[1])/2*r),y=(b[1]-a[1])*r;return 6371008.8*Math.hypot(x,y);}
-export function validGeometry(g,{maxVertices=25000}={}){
+export function validGeometry(g,{maxVertices=25000,bounds=[126.6,34.9,127.1,35.4]}={}){
   if(!g||!['Point','LineString','MultiLineString','Polygon','MultiPolygon'].includes(g.type))return false;
+  if(!Array.isArray(bounds)||bounds.length!==4||!bounds.every(Number.isFinite)||bounds[0]>=bounds[2]||bounds[1]>=bounds[3])return false;
   let points;try{points=coordinatesOf(g);}catch{return false;}
-  if(!points.length||points.length>maxVertices||points.some(p=>p.length<2||!p.slice(0,2).every(Number.isFinite)||p[0]<126.6||p[0]>127.1||p[1]<34.9||p[1]>35.4))return false;
+  if(!points.length||points.length>maxVertices||points.some(p=>p.length<2||!p.slice(0,2).every(Number.isFinite)||p[0]<bounds[0]||p[0]>bounds[2]||p[1]<bounds[1]||p[1]>bounds[3]))return false;
   if(multi(g).length)for(const poly of multi(g))for(const r of poly)if(r.length<4||r[0][0]!==r.at(-1)[0]||r[0][1]!==r.at(-1)[1])return false;
   return true;
 }

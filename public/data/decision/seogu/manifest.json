@@ -118,12 +118,12 @@
       "unit": "어린이집 대표점",
       "complete": false,
       "topic": "care",
-      "sha256": "ee06fe4b529835b8d047f241425883dff3c5b574e7e97f5339c81c067ee0872c",
+      "sha256": "1a3f94a87185daebad52e6265a2e670fa0a3bfc1655f13f87735f4a26285971d",
       "sourceName": "한국사회보장정보원 · 어린이집정보공개포털 어린이집 기본정보",
       "sourceUrl": "https://info.childcare.go.kr/info_html5/oais/openapi/OpenApiSlL.jsp",
       "sourceDate": null,
       "collectedAt": "2026-10-23T17:32:48.964Z",
-      "coverage": "서구 공개 SHEET 134행 중 운영현황 정상·재개 및 지역 경계 안 좌표 123행. 원자료 기준일 미제공, 현재 운영과 입소 가능 여부 미검수.",
+      "coverage": "서구 공개 SHEET 134행 중 운영현황 정상·재개 및 지역 경계 안 좌표, 확인된 좌표 불일치 1행 제외 후 122행. 원자료 기준일 미제공, 현재 운영과 입소 가능 여부 미검수.",
       "license": "공공누리 제1유형 · 출처표시"
     },
     {

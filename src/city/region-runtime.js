@@ -2,10 +2,19 @@ import {esc} from './catalog.js';
 import {REGION_CATALOG,regionLink} from '../../shared/region-catalog.js';
 
 export const legacyEnabled = profile => !profile || profile.capabilities.legacySeoguServices;
+export function initialMapEngine(profile,search='') {
+  const requested=new URLSearchParams(search).get('map');
+  if(['vworld','boundary','libre'].includes(requested))return requested;
+  return requested==='clean'&&legacyEnabled(profile)?'clean':'vworld';
+}
+/** National basemap configuration never enables a Seo-gu data adapter in another region. */
+export function regionMapConfig(profile,config) {
+  return legacyEnabled(profile)?config:{configured:{vworld3d:config?.configured?.vworld3d===true},note:'선택 지역의 브이월드 배경지도 · 지역자료는 별도 데이터팩 사용'};
+}
 const PORTABLE_ACTIONS = new Set(['overview','dong','dong-frame','dong-tour','close-detail','panels','fullscreen','sidebar-tab','appearance','engine','list','feature','feature-frame','isolate','clear-layers','zoom-in','zoom-out','rotate','orbit','top','oblique','refresh-enabled','export-csv','settings','credits','live-detail','live-refresh','region-info','region-chooser','pilot-measure','ui-theme','ui-finish','ui-reset']);
 export function supportsAction(profile, action, dataset = {}) {
   if (legacyEnabled(profile)) return true;
-  if (action === 'engine') return ['boundary','libre'].includes(dataset.engine);
+  if (action === 'engine') return ['vworld','boundary','libre'].includes(dataset.engine);
   return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-)/.test(action);
 }
 export function regionLayers(profile, layers) {

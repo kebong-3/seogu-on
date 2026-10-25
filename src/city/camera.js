@@ -9,8 +9,14 @@ export function frameFor(geometry,level='dong',viewport={width:1200,height:800},
   const width=distance([b[0],center[1]],[b[2],center[1]]),height=distance([center[0],b[1]],[center[0],b[3]]);
   const aspect=clamp(viewport.width/Math.max(250,viewport.height),.45,2.5);
   const extent=Math.max(height*1.15,width/aspect,level==='facility'?120:400);
-  const range=clamp(extent/Math.tan(Math.PI/6)*(level==='overview'?1.15:1.05),level==='facility'?230:850,36000);
+  const range=clamp(extent/Math.tan(Math.PI/6)*(level==='overview'?1.15:1.05),level==='facility'?230:850,level==='overview'?120000:36000);
   return {center,range,heading,pitch:level==='overview'?-52:level==='facility'?-38:-44,level};
+}
+export function outsideRegionView(center,geometry) {
+  const bounds=boundsOf(geometry);
+  if(!bounds||!Array.isArray(center)||center.length<2||!center.slice(0,2).every(Number.isFinite))return false;
+  const marginX=Math.max(.08,(bounds[2]-bounds[0])*.15),marginY=Math.max(.08,(bounds[3]-bounds[1])*.15);
+  return center[0]<bounds[0]-marginX||center[0]>bounds[2]+marginX||center[1]<bounds[1]-marginY||center[1]>bounds[3]+marginY;
 }
 export function poseAt(a,b,t,arch=true){const q=smooth(clamp(t,0,1)),travel=distance(a.center,b.center);return {
   center:[a.center[0]+(b.center[0]-a.center[0])*q,a.center[1]+(b.center[1]-a.center[1])*q],

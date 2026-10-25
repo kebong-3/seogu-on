@@ -4,13 +4,14 @@ import {parseKst} from './solar.js';
 import {loadCleanModel} from './clean-model.js';
 import {createDongLabels3D} from './dong-labels-3d.js';
 import {fc,multi,inside,representative,distance,maskGeometry,boundsOf} from './geometry.js';
-import {CameraDirector,frameFor,clamp} from './camera.js';
+import {CameraDirector,frameFor,outsideRegionView,clamp} from './camera.js';
 import {LAYERS,LAYER_BY_ID,iconData,clusterIconData} from './catalog.js';
 import {maskedProvider} from './raster.js';
 import {terrainGrid,slopeSummary,profilePoints,parseGlb} from './analysis.js';
 const tell=(type,data={})=>parent.postMessage({seoguCity:true,type,...data},location.origin);
 const notice=document.getElementById('notice');
 const clean=window.SEO_ENGINE==='clean';
+const region=window.SEO_REGION||{name:'서구',center:[126.855,35.14],range:16000};
 let sunController=null,dongLabels=null;
 let buildingStyleResult=null,renderFrames=0,renderFailed=false;
 let quality='balanced',visual=displayOptions(),lastBoundary,cleanStats=null;
@@ -27,16 +28,16 @@ function clearOwned(ds){ds.entities.removeAll();}
 function groundRef(){return clean?C.HeightReference.NONE:C.HeightReference.CLAMP_TO_GROUND;}
 async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))return false;C=window.Cesium;viewer=clean?window.seoCleanViewer:window.ws3d.viewer;if(!viewer.entities||!viewer.scene?.globe)return false;ready=true;
  viewer.scene.globe.depthTestAgainstTerrain=false;
- if(viewer.scene.screenSpaceCameraController){viewer.scene.screenSpaceCameraController.minimumZoomDistance=65;viewer.scene.screenSpaceCameraController.maximumZoomDistance=60000;}
+ if(viewer.scene.screenSpaceCameraController){viewer.scene.screenSpaceCameraController.minimumZoomDistance=65;viewer.scene.screenSpaceCameraController.maximumZoomDistance=150000;}
  boundarySource=new C.CustomDataSource('seo-city-dongs');maskSource=new C.CustomDataSource('seo-city-focus');analysisSource=new C.CustomDataSource('seo-city-analysis');modelSource=new C.CustomDataSource('seo-city-model-label');
  for(const s of [boundarySource,maskSource,analysisSource,modelSource])await viewer.dataSources.add(s);
- currentPose={center:[126.86,35.145],range:16000,heading:320,pitch:-48,level:'overview'};
+ currentPose={center:[...region.center],range:region.range,heading:320,pitch:-48,level:'overview'};
  sunController=createSunController(viewer,C,{emit:tell,getPose:readPose});
  dongLabels=createDongLabels3D({C,viewer,source:boundarySource,requestRender,clampToGround:!clean});
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
  for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>director.stop(),{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
- viewer.camera.moveEnd.addEventListener(()=>{const pose=readPose();currentPose=pose;tell('pose',{pose});if(admin&&pose.center&&(pose.center[0]<126.70||pose.center[0]>127.02||pose.center[1]<35.01||pose.center[1]>35.28))director.fly(frameFor(admin,'overview'),{duration:900,arch:false});});
+ viewer.camera.moveEnd.addEventListener(()=>{const pose=readPose();currentPose=pose;tell('pose',{pose});if(admin&&outsideRegionView(pose.center,admin))director.fly(frameFor(admin,'overview'),{duration:900,arch:false});});
  if(!clean){buildingStyleResult=setBuildingStyle(map,'detailed');tell('building-style-result',buildingStyleResult);}
  viewer.scene.postRender?.addEventListener(()=>{renderFrames++;});
  viewer.scene.renderError?.addEventListener(()=>{renderFailed=true;tell('error',{message:'3D 렌더링 중 오류가 발생했습니다. 선명도를 낮추거나 다른 지도 모드로 전환하세요.'});});
@@ -102,7 +103,7 @@ async function handle(m){switch(m.type){
  case'raster':toggleRaster(m.id,m.visible);break;
  case'camera':director.fly(m.pose,{duration:m.duration??1900,arch:m.arch!==false});break;
  case'rotate':{const p=readPose();director.fly({...p,heading:p.heading+(m.angle||45)},{duration:700,arch:false});break;}
- case'zoom':{const p=readPose();director.fly({...p,range:clamp(p.range*(m.delta>0?.7:1.4),100,36000)},{duration:500,arch:false});break;}
+ case'zoom':{const p=readPose();director.fly({...p,range:clamp(p.range*(m.delta>0?.7:1.4),100,120000)},{duration:500,arch:false});break;}
  case'tilt':{const p=readPose();director.fly({...p,pitch:m.top?-89.5:-44},{duration:800,arch:false});break;}
  case'orbit':director.orbiting?director.stop():director.orbit();break;
  case'stop':director.stop();selectionMode=null;profileStart=null;break;
@@ -129,4 +130,4 @@ if(clean){try{C=window.Cesium;window.seoCleanViewer=new C.Viewer('vmap',{animati
  (window.seoCleanViewer.creditDisplay||window.seoCleanViewer.cesiumWidget?.creditDisplay)?.addStaticCredit(new C.Credit('© OpenStreetMap contributors · ODbL · 도형 일부 수록 / 지형 없음',true));
  init().catch(e=>tell('error',{message:e.message}));
  }catch(e){setNotice('도시모형 WebGL 초기화 실패');tell('error',{message:'도시모형의 WebGL 초기화 실패: '+e.message});}
-}else{try{if(!window.vw?.Map)throw Error('VWorld SDK를 받지 못했습니다. 키·등록 도메인·외부 접속을 확인하세요.');window.vw.ws3dInitCallBack=()=>init().catch(e=>tell('error',{message:e.message}));map=new window.vw.Map();map.setOption({mapId:'vmap',initPosition:new window.vw.CameraPosition(new window.vw.CoordZ(126.855,35.14,15500),new window.vw.Direction(320,-50,0)),logo:false,navigation:false});map.start();let tries=0;const timer=setInterval(()=>{if(ready){clearInterval(timer);return;}init().catch(()=>{});if(++tries>120){clearInterval(timer);tell('error',{message:'브이월드 초기화 30초 대기 초과. 키·도메인·서비스 승인을 확인하세요.'});}},250);}catch(e){setNotice(e.message);tell('error',{message:e.message});}}
+}else{try{if(!window.vw?.Map)throw Error('VWorld SDK를 받지 못했습니다. 키·등록 도메인·외부 접속을 확인하세요.');window.vw.ws3dInitCallBack=()=>init().catch(e=>tell('error',{message:e.message}));map=new window.vw.Map();map.setOption({mapId:'vmap',initPosition:new window.vw.CameraPosition(new window.vw.CoordZ(region.center[0],region.center[1],region.range),new window.vw.Direction(320,-50,0)),logo:false,navigation:false});map.start();let tries=0;const timer=setInterval(()=>{if(ready){clearInterval(timer);return;}init().catch(()=>{});if(++tries>120){clearInterval(timer);tell('error',{message:'브이월드 초기화 30초 대기 초과. 키·도메인·서비스 승인을 확인하세요.'});}},250);}catch(e){setNotice(e.message);tell('error',{message:e.message});}}

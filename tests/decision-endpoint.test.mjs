@@ -65,10 +65,16 @@ test('living facility lookup opens a present-day map instead of adding hypotheti
  for(const question of ['어린이집 2곳 추가해줘','비상벨 2개 설치해줘','야간 정류장 보안등 점검'])assert.equal(isDecisionQuestion(question),true,question);
  assert.equal(isDecisionQuestion('어린이집 설치기준 알려줘'),false);
 });
+test('living care lookup does not substitute childcare centres for distinct requested facility types',()=>{
+ const boundaries={features:[{properties:{dongId:'seogu-01',dongName:'풍암동'}}]};
+ for(const question of ['유치원 위치 보여줘','지역아동센터 목록 알려줘','공동육아나눔터 어디 있어?','다함께돌봄센터 위치 보여줘','아이돌봄센터 찾아줘','지역 아동 센터 지도 보여줘','어린이집과 유치원 위치 보여줘','돌봄시설 중 공동 육아 나눔터 찾아줘'])assert.equal(livingMapIntent(question,{boundaries}),null,question);
+ for(const question of ['어린이집 위치 보여줘','돌봄시설 지도 보여줘','육아시설 현황 알려줘'])assert.deepEqual(livingMapIntent(question,{boundaries}),{topic:'care'},question);
+ assert.deepEqual(livingMapIntent('풍암동 돌봄시설 위치 보여줘',{boundaries}),{topic:'care',scopeId:'seogu-01'});
+});
 test('care and safety comparisons choose their own source files and domain followups',async()=>{
  const care=await runDecision({regionId:'seogu',question:'어린이집 주변 활동공간 점검 목록을 보여줘'},options);
  assert.equal(care.result.preset.id,'childcare');assert.equal(care.result.preset.target,'childcare');assert.equal(care.result.preset.service,'public-spaces');
- assert.ok(care.ai.structured.followups.includes('careEligibility'));assert.equal(care.result.rows.length,123);
+ assert.ok(care.ai.structured.followups.includes('careEligibility'));assert.equal(care.result.rows.length,122);
  const bells=await runDecision({regionId:'seogu',workflow:'inspection',presetId:'women-safety',proposedSites:[]},options);
  assert.equal(bells.result.preset.service,'emergency-bell');assert.ok(bells.ai.structured.followups.includes('safetyOperation'));
  assert.equal(bells.result.sourceStatus.find(s=>s.id==='emergency-bell').sourceDate,'2023-06-21');

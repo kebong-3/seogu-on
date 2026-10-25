@@ -386,7 +386,7 @@
       "snapshot": {
         "state": "published",
         "file": "/data/decision/seogu/childcare.geojson",
-        "features": 123,
+        "features": 122,
         "sourceDate": null,
         "sourceDateRange": null,
         "collectedAt": "2026-10-23T17:32:48.964Z"

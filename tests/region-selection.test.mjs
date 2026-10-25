@@ -13,6 +13,9 @@ test('only shipped regions are selectable and map preference is safely preserved
   for(const value of ['../seogu','adoption-template','https://example.org','',null,{},'suncheon.json']) assert.throws(()=>registeredRegionId(value));
   assert.equal(regionLink('suncheon','?map=boundary&unknown=x'),'/?region=suncheon&map=boundary');
   assert.equal(regionLink('suncheon','?map=clean'),'/?region=suncheon');
+  assert.equal(regionLink('suncheon','?work=care'),'/?region=suncheon&work=care');
+  assert.equal(regionLink('seogu','?map=boundary&work=safety'),'/?region=seogu&map=boundary&work=safety');
+  assert.equal(regionLink('suncheon','?map=vworld&work=care&unknown=x'),'/?region=suncheon&work=care');
 });
 
 test('region endpoint changes actual data paths and rejects an unregistered query',async()=>{

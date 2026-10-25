@@ -12,7 +12,11 @@ export function isDecisionQuestion(question) {
 export function livingMapIntent(question,{boundaries}={}) {
   const q=String(question||'').normalize('NFKC').replace(/\s+/g,' ').trim();
   if(!q||isDecisionQuestion(q)||/점검|정비|후보지|공백|사각지대|반경|비교|부족|더 필요|늘려|확충|육아휴직|지원금|보육료|설치\s*기준|법령|조례|입소\s*(?:기준|자격)/.test(q))return null;
-  const care=/육아\s*(?:시설|지원시설|지도|공간)|돌봄\s*(?:시설|센터|지도|공간)|어린이집|유치원|지역아동센터|공동육아|아이돌봄\s*(?:시설|센터)/.test(q);
+  // The living care pack contains childcare centres only. Keep distinct facility
+  // types (and mixed requests containing them) in the category-aware ask flow:
+  // it can use the separate kindergarten source or explain missing coverage.
+  if(/유치원|지역아동센터|공동육아|다함께돌봄|아이돌봄(?:시설|센터)|돌봄센터/.test(q.replace(/\s+/g,'')))return null;
+  const care=/육아\s*(?:시설|지원시설|지도|공간)|돌봄\s*(?:시설|지도|공간)|어린이집/.test(q);
   const safety=/여성안심|여성 안심|여성안전|여성 안전|안심시설|안전시설|안심벨|비상벨|안심지킴|보안등|안심택배/.test(q);
   if(!care&&!safety)return null;
   const lookup=/보여|지도|위치|어디|현황|찾아|조회|목록|알려/.test(q)||q.length<35;

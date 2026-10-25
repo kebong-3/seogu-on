@@ -113,7 +113,7 @@ export function buildDecisionPurpose(result = {}, preset = result?.preset || {})
   if (unavailable.length) missingData.unshift(`이번 비교에서 미연결인 자료: ${unavailable.map(source => text(source.title) || text(source.id) || text(source.datasetId) || '이름 미제공').join(' · ')}. 해당 자료는 0개로 해석하지 않습니다.`);
   const nextActions = [...purpose.nextActions];
   if (workflow === 'inspection') nextActions[0] = '대상별 위치와 선정 근거를 확인하고 좌표 목록 CSV를 내려받아 현장점검 대상을 정합니다.';
-  if (workflow === 'site') nextActions[0] = '예시 위치를 실제 사업 후보 A·B로 바꾸고, 같은 반경의 주변자료를 비교합니다.';
+  if (workflow === 'site') nextActions[0] = '실제 사업 후보 A·B의 위치를 지도에서 정하고, 같은 반경의 주변자료를 비교합니다.';
   if (result.status === 'unavailable') nextActions[0] = '자료 출처와 연결 상태를 확인하고, 비교에 필요한 시설자료를 연결한 뒤 다시 계산합니다.';
   return {kind, title:purpose.title, useWhen:purpose.useWhen, confirmed, nextActions, missingData};
 }
