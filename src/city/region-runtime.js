@@ -15,7 +15,7 @@ const PORTABLE_ACTIONS = new Set(['overview','dong','dong-frame','dong-tour','cl
 export function supportsAction(profile, action, dataset = {}) {
   if (legacyEnabled(profile)) return true;
   if (action === 'engine') return ['vworld','boundary','libre'].includes(dataset.engine);
-  return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-)/.test(action);
+  return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-|walk-)/.test(action);
 }
 export function regionLayers(profile, layers) {
   if (legacyEnabled(profile)) return layers;

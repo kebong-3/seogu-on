@@ -1,7 +1,7 @@
 {
   "mode": "Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel",
-  "checks": 61,
-  "passed": 61,
+  "checks": 66,
+  "passed": 66,
   "results": [
     {
       "name": "All public JSON/GeoJSON parse",
@@ -190,6 +190,31 @@
     },
     {
       "name": "Suncheon question uses its actual public spaces",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "/src/city/walk-routes.js",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/walk-routes.css",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/walk-routes?region=seogu",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/api/walk-routes?region=suncheon",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Walking routes are wired but never fabricate a route without a key",
       "passed": true,
       "detail": ""
     },

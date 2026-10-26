@@ -51,6 +51,7 @@
     }
   },
   "rewrites": [
+    {"source": "/api/walk-routes", "destination": "/api/ai?route=walk-routes"},
     {
       "source": "/api/mcp",
       "destination": "/api/ai?route=mcp"

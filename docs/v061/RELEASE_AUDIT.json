@@ -1,10 +1,22 @@
 {
   "scope": "local built files",
-  "version": "0.12.2",
-  "webBundleSha256": "b5a09cb114a19d8de77a35a273dbebb5d0c84f4ce05e19d4ae9cb6cff1364b81",
+  "version": "0.13.0",
+  "webBundleSha256": "c57d7961e2fc574a18519a30e581658c84ef6554483b3645a1082b926957e404",
   "results": [
     {
       "name": "Release identifier equals application version",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/walk-routes.js",
+      "passed": true
+    },
+    {
+      "name": "Built src/city/walk-routes.css",
+      "passed": true
+    },
+    {
+      "name": "Built shared/walk-route-model.js",
       "passed": true
     },
     {

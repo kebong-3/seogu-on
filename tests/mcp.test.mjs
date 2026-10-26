@@ -236,10 +236,11 @@ test('배포 설정: 함수 12개 이하, rewrites, includeFiles, dev 서버 경
   assert.equal(rewrites['/api/mcp'], '/api/ai?route=mcp');
   assert.equal(rewrites['/api/ask'], '/api/ai?route=ask');
   assert.equal(rewrites['/api/decision-twin'], '/api/ai?route=decision-twin');
+  assert.equal(rewrites['/api/walk-routes'], '/api/ai?route=walk-routes');
   // vercel.json 에 적힌 함수는 모두 실제 파일이어야 한다.
   for (const path of Object.keys(config.functions)) assert.ok(functions.includes(path.replace('api/', '')), path);
 
   const dev = readFileSync(`${root}scripts/dev.mjs`, 'utf8');
-  assert.match(dev, /\['mcp', 'ask', 'space-review', 'region-profile', 'decision-twin'\]\.includes\(name\)/);
+  assert.match(dev, /\['mcp', 'ask', 'space-review', 'region-profile', 'decision-twin', 'walk-routes'\]\.includes\(name\)/);
   assert.match(dev, /'city-wms', 'ai'\]/);
 });

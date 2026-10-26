@@ -17,7 +17,7 @@ check('Relative module imports resolve',missing.length===0,JSON.stringify(missin
 check('Cesium license included',files.includes(resolve(dist,'vendor/cesium/LICENSE.md')));
 const port=Number(process.env.VERIFY_PORT||4197),url=`http://127.0.0.1:${port}`;
 const env={...process.env,PORT:String(port),VWORLD_BROWSER_KEY:'',VWORLD_DOMAIN:'',VWORLD_API_KEY:'',KMA_SERVICE_KEY:'',DATA_GO_KR_SERVICE_KEY:'',AIRKOREA_SERVICE_KEY:'',SAFETYDATA_SERVICE_KEY:'',SAFETYDATA_KEYS_JSON:'{}',SAFETYDATA_LOCATION_INDEX_JSON:'{}',INFRA_SOURCES_JSON:'[]'};
-Object.assign(env,{AI_PROVIDER:'google',AI_API_KEY:'',GEMINI_API_KEY:'',REGION_PROFILE:'seogu'});
+Object.assign(env,{TMAP_API_KEY:'',TMAP_APP_KEY:'',AI_PROVIDER:'google',AI_API_KEY:'',GEMINI_API_KEY:'',REGION_PROFILE:'seogu'});
 for(const key of Object.keys(env))if(/^SAFETYDATA_\d+_KEY$/.test(key))env[key]='';
 const child=spawn(process.execPath,['scripts/dev.mjs','--dist'],{cwd:root,env,stdio:['ignore','pipe','pipe']});
 try{
@@ -58,6 +58,12 @@ try{
  await route('/data/regions/suncheon/admin-boundaries.geojson',200,b=>JSON.parse(b).features.length===24);
  const sunAsk=await fetch(url+'/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({regionId:'suncheon',question:'순천 수영장을 찾아줘'})});
  const sunAnswer=await sunAsk.json();check('Suncheon question uses its actual public spaces',sunAsk.status===200&&sunAnswer.regionId==='suncheon'&&sunAnswer.structured?.candidateCount===2&&sunAnswer.map.highlight.features.every(f=>f.properties.name.includes('수영')));
+ await route('/src/city/walk-routes.js',200);
+ await route('/src/city/walk-routes.css',200);
+ await route('/api/walk-routes?region=seogu',200,(b,r)=>{const d=JSON.parse(b);return d.region.id==='seogu'&&d.configured===false&&d.candidates.length>0&&r.headers.get('cache-control')==='no-store';});
+ await route('/api/walk-routes?region=suncheon',200,b=>{const d=JSON.parse(b);return d.region.id==='suncheon'&&d.candidates.length>0&&!d.candidates.some(c=>c.category==='police');});
+ const walkResponse=await fetch(url+'/api/walk-routes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({regionId:'seogu',mode:'shade',start:[126.8900126833,35.15202903],end:[126.8777206,35.156420477]})});
+ const walkBody=await walkResponse.json();check('Walking routes are wired but never fabricate a route without a key',walkResponse.status===503&&walkBody.code==='TMAP_NOT_CONFIGURED'&&!walkBody.routes);
  await route('/api/space-review',405);
  const facilities=JSON.parse(await readFile(resolve(root,'public/data/layers/public-facilities.geojson'),'utf8'));
  const assetId=`public-facilities::${facilities.features[0].properties.id}`;
