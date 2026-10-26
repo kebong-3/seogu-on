@@ -23,7 +23,7 @@ const lineGeometry=route=>{
 };
 const difference=(value,base,format)=>{const gap=value-base;if(!Number.isFinite(gap))return '';return gap===0?'변화 없음':`${gap>0?'+':'−'}${format(Math.abs(gap))}`;};
 const samePlace=(a,b)=>xy(a)&&xy(b)&&a.every((v,i)=>Math.abs(v-b[i])<.000001);
-const candidateName=c=>[c.name,c.category].filter(Boolean).join(' · ');
+const candidateName=c=>[c.name,({shade:'그늘막',shelter:'쉼터',police:'경찰시설',bell:'비상벨',childcare:'어린이집',public:'공공공간'})[c.category]||'시설'].filter(Boolean).join(' · ');
 async function responseBody(response){try{return await response.json();}catch{throw Error('서버 응답을 읽지 못했어요. 잠시 뒤 다시 시도해 주세요.');}}
 const pointFrom=c=>c?{id:c.id,name:c.name,coordinate:[...c.coordinate],sourceName:c.sourceName,sourceDate:c.sourceDate}:null;
 

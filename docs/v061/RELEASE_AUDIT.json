@@ -1,7 +1,7 @@
 {
   "scope": "local built files",
   "version": "0.13.0",
-  "webBundleSha256": "06858227144a3c0a46a0f5418c01c741642054a1b7d52be3e9ed1b1b2895a009",
+  "webBundleSha256": "46217e9462ab86c6cd6e815e02cf18f776af7fc98ec7346517b191fcff5aae0e",
   "results": [
     {
       "name": "Release identifier equals application version",
