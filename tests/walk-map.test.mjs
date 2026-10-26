@@ -30,3 +30,10 @@ test('choosing the direct route removes the previous alternative and does not mu
  const h=harness(),a=route('a','direct'),b=route('b','via');const original=JSON.stringify([a,b]);h.map.paint([a,b],'b');h.sent.length=0;h.map.paint([a,b],'a');
  assert.ok(!h.sent.some(m=>m.id==='walk-selected'&&m.visible));assert.equal(JSON.stringify([a,b]),original);h.map.destroy();
 });
+
+test('provider turn points do not become facility markers along the whole route',()=>{
+ const h=harness(),a=route('a','direct');a.geojson.features.unshift({type:'Feature',geometry:{type:'Point',coordinates:[126.89,35.15]},properties:{pointType:'SP',description:'길 안내'}});
+ h.map.paint([a],'a',[{id:'start',name:'출발',coordinate:[126.89,35.15],role:'start'}]);
+ assert.equal(h.sent.find(m=>m.id==='walk-direct'&&m.visible).features.length,1);
+ assert.equal(h.sent.find(m=>m.id==='walk-points'&&m.visible).features.length,1);h.map.destroy();
+});

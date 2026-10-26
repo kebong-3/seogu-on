@@ -9,7 +9,8 @@ export function createWalkMap({send,now=Date.now,schedule=setTimeout,cancel=clea
     const direct=routes.find(r=>r.role==='direct'),active=routes.find(r=>r.id===activeId)||direct||routes[0];
     const feature=(f,id,color)=>({...f,properties:{...f.properties,id,name:id,displayColor:color,sourceName:'TMAP 보행자 경로',ephemeral:true}});
     for(const [id,route,color]of [['walk-direct',direct,'#1769b3'],['walk-selected',active?.id!==direct?.id?active:null,'#c65c00']]) {
-      if(route?.geojson?.features?.length)layers.push({type:'layer',id,color,visible:true,features:route.geojson.features.map((f,i)=>feature(f,`${id}-${i}`,color))});
+      const lines=route?.geojson?.features?.filter(f=>['LineString','MultiLineString'].includes(f.geometry?.type))||[];
+      if(lines.length)layers.push({type:'layer',id,color,visible:true,features:lines.map((f,i)=>feature(f,`${id}-${i}`,color))});
     }
     const valid=points.filter(p=>Array.isArray(p.coordinate)&&p.coordinate.length===2&&p.coordinate.every(Number.isFinite));
     if(valid.length)layers.push({type:'layer',id:'walk-points',visible:true,features:valid.map((p,i)=>({type:'Feature',geometry:{type:'Point',coordinates:p.coordinate.slice()},properties:{id:p.id||`walk-point-${i}`,name:p.name||'경로 지점',displayColor:p.role==='start'?'#167747':p.role==='end'?'#b32e55':'#c65c00',sourceName:'선택한 도보 지점',ephemeral:true}}))});
