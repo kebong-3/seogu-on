@@ -8,7 +8,7 @@ import {rankWalkCandidates,walkDistance as distance,walkCandidateSupportsMode} f
 
 const ENDPOINT='https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1';
 const MAX_BODY=50*1024,MAX_UPSTREAM=1024*1024,MAX_DISTANCE=10000,TTL=30*60000;
-const MODES=new Set(['shade','safety','care','inspection']);
+const MODES=new Set(['shade','winter','safety','care','inspection']);
 const minuteBuckets=new Map();let dayBucket={day:'',calls:0};
 const plain=value=>value&&typeof value==='object'&&!Array.isArray(value);
 const xy=value=>Array.isArray(value)&&value.length===2&&value.every(Number.isFinite)&&Math.abs(value[0])<=180&&Math.abs(value[1])<=90;
@@ -35,14 +35,30 @@ function takeRequest(req,now){
   return true;
 }
 function input(body){
-  const keys=new Set(['regionId','mode','start','end','avoidStairs','viaIds']);
+  const keys=new Set(['regionId','mode','start','end','avoidStairs','viaIds','departureAt','shadowTiming','maxDetourMeters','maxDetourMinutes','includeLevels']);
   if(!plain(body)||Object.keys(body).some(key=>!keys.has(key)))throw bad(400,'INVALID_WALK_REQUEST','도보 요청에는 지역·출발·도착·검토유형·계단옵션·공개 후보 ID만 사용할 수 있습니다.');
   const regionId=registeredRegionId(body.regionId??'seogu'),mode=body.mode??'shade';
   if(!MODES.has(mode)||!xy(body.start)||!xy(body.end))throw bad(400,'INVALID_WALK_REQUEST','검토유형과 출발·도착의 경도·위도를 확인하세요.');
   if(body.avoidStairs!==undefined&&typeof body.avoidStairs!=='boolean')throw bad(400,'INVALID_WALK_REQUEST','계단 제외 옵션은 참·거짓 값이어야 합니다.');
+  if(body.includeLevels!==undefined&&typeof body.includeLevels!=='boolean')throw bad(400,'INVALID_WALK_REQUEST','층수에 따른 높이 추정 포함은 참·거짓 값이어야 합니다.');
+  const seasonal={shadowTiming:body.shadowTiming??'departure-static',includeLevels:body.includeLevels===true};
+  if(!['departure-static','walk-time'].includes(seasonal.shadowTiming))throw bad(400,'INVALID_WALK_REQUEST','그림자는 출발시각 고정 또는 이동시각 반영 중 하나로 비교하세요.');
+  if(body.departureAt!==undefined)seasonal.departureAt=departureTime(body.departureAt);
+  for(const [key,max,label]of [['maxDetourMeters',3000,'추가 거리'],['maxDetourMinutes',60,'추가 시간']])if(body[key]!==undefined){if(typeof body[key]!=='number'||!Number.isFinite(body[key])||body[key]<0||body[key]>max)throw bad(400,'INVALID_WALK_REQUEST',`허용 ${label}는 0~${max} 범위의 숫자로 입력하세요.`);seasonal[key]=body[key];}
   const viaIds=body.viaIds;
   if(viaIds!==undefined&&(!Array.isArray(viaIds)||viaIds.length>(mode==='inspection'?3:2)||viaIds.some(id=>typeof id!=='string'||!id||id.length>240)||new Set(viaIds).size!==viaIds.length))throw bad(400,'INVALID_WALK_REQUEST',mode==='inspection'?'점검 경유지는 중복 없이 3곳까지 순서대로 선택하세요.':'비교할 경유 후보는 중복 없이 2곳까지 선택하세요.');
-  return {regionId,mode,start:[...body.start],end:[...body.end],avoidStairs:body.avoidStairs===true,...(viaIds===undefined?{}:{viaIds:[...viaIds]})};
+  return {regionId,mode,start:[...body.start],end:[...body.end],avoidStairs:body.avoidStairs===true,...seasonal,...(viaIds===undefined?{}:{viaIds:[...viaIds]})};
+}
+function departureTime(value){
+  const match=typeof value==='string'&&value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?(Z|([+-])(\d{2}):(\d{2}))$/);
+  if(!match)throw bad(400,'INVALID_DEPARTURE_TIME','출발일시는 한국시간 +09:00 등 시간대가 명시된 ISO 날짜·시각으로 입력하세요.');
+  const [year,month,day,hour,minute,second]=match.slice(1,7).map(part=>Number(part||0)),ms=Number((match[7]||'').padEnd(3,'0'));
+  const calendar=new Date(Date.UTC(year,month-1,day,hour,minute,second,ms));
+  const zoneHour=Number(match[10]||0),zoneMinute=Number(match[11]||0),offset=(zoneHour*60+zoneMinute)*(match[9]==='-'?-1:1);
+  if(year<2000||year>2100||calendar.getUTCFullYear()!==year||calendar.getUTCMonth()!==month-1||calendar.getUTCDate()!==day||calendar.getUTCHours()!==hour||calendar.getUTCMinutes()!==minute||calendar.getUTCSeconds()!==second||zoneHour>14||zoneMinute>59||(zoneHour===14&&zoneMinute!==0))throw bad(400,'INVALID_DEPARTURE_TIME','2000~2100년의 실제 출발 날짜·시각과 시간대 범위를 확인하세요.');
+  const normalized=new Date(+calendar-offset*60000+9*3600000).toISOString();
+  if(Number(normalized.slice(0,4))<2000||Number(normalized.slice(0,4))>2100)throw bad(400,'INVALID_DEPARTURE_TIME','한국시간 출발일시는 2000~2100년 범위여야 합니다.');
+  return normalized.replace('Z','+09:00');
 }
 function publicCandidate(candidate){return {id:clean(candidate.id),name:clean(candidate.name,180),category:clean(candidate.category,80),coordinate:[...candidate.coordinate],sourceName:clean(candidate.sourceName),sourceDate:clean(candidate.sourceDate,40)||null,note:clean(candidate.note,700),routeEligible:candidate.routeEligible===true,modes:[...MODES].filter(mode=>walkCandidateSupportsMode(candidate,mode))};}
 async function candidatesFor(regionId,options){
@@ -109,6 +125,46 @@ async function fetchRoute(spec,request,context){
   finally{clearTimeout(timer);}
 }
 
+function unevaluatedSeasonal(request,reason,routes=[]){
+  return {status:'not-evaluated',mode:request.mode==='winter'?'winter':'summer',departureAt:request.departureAt||null,timeZone:'Asia/Seoul',timing:request.shadowTiming,
+    criteria:{maxDetourMeters:request.maxDetourMeters??null,maxDetourMinutes:request.maxDetourMinutes??null,conditions:'both',includeLevels:request.includeLevels},
+    comparison:{preferredRouteId:null,rankedRouteIds:[],basis:request.mode==='winter'?'선택일의 모형 일조·관리지점 주의 비교':'선택시각의 모형 햇볕 노출거리 비교',reason},
+    assumptions:['미평가는 그늘 0% 또는 현재 결빙·안전 상태의 평가 결과가 아닙니다.'],routes:routes.map(route=>({id:route.id,status:'not-evaluated',routeLengthMeters:null,evaluatedMeters:null,unevaluatedMeters:null,estimatedShadeMeters:null,sunlitMeters:null,modelNonShadeMeters:null,coverageRatio:null,reasons:[reason]}))};
+}
+async function applySeasonal(routes,request,options){
+  if(!['shade','winter'].includes(request.mode))return {status:'not-requested',comparison:{preferredRouteId:null,rankedRouteIds:[]}};
+  const defer=reason=>{const analysis=unevaluatedSeasonal(request,reason,routes);for(const route of routes)route.seasonal=analysis.routes.find(item=>item.id===route.id);return analysis;};
+  if(!request.departureAt)return defer('출발 날짜·시각을 명시하지 않아 건물 그늘·일조를 평가하지 않았습니다.');
+  try{
+    const loader=options.loadSeasonalData||(await import('./seasonal-walk-data.js')).loadSeasonalWalkData;
+    const evaluator=options.evaluateSeasonal||(await import('../shared/seasonal-walk-model.js')).evaluateSeasonalWalkRoutes;
+    const data=await loader({regionId:request.regionId,publicRoot:options.publicRoot});
+    if(!plain(data)||data.metadata?.regionId&&data.metadata.regionId!==request.regionId)return defer('선택 지역의 건물·높이·일조 자료 연결을 확인하지 못했습니다.');
+    if(['not-connected','unavailable','error'].includes(data.metadata?.state))return {...defer('선택 지역의 건물 높이·결빙관리 자료가 연결되지 않아 계절 평가를 보류했습니다.'),dataStatus:data.metadata};
+    const analysis=await evaluator({routes,buildings:data.buildings,coverageGeometry:data.coverageGeometry??null,icing:data.icing??null,metadata:data.metadata,
+      mode:request.mode==='winter'?'winter':'summer',departureAt:request.departureAt,shadowTiming:request.shadowTiming,
+      maxDetourMeters:request.maxDetourMeters??0,maxDetourMinutes:request.maxDetourMinutes??0,includeLevels:request.includeLevels},
+    {runtimeMs:2500,maxSamples:1800,maxOperations:2000000});
+    const actualIds=new Set(routes.map(route=>route.id));
+    if(!plain(analysis)||!Array.isArray(analysis.routes)||!plain(analysis.comparison)||analysis.routes.some(route=>!plain(route)||!actualIds.has(route.id))||new Set(analysis.routes.map(route=>route.id)).size!==analysis.routes.length)return defer('현재 조회한 실제 보행경로와 건물 그늘·일조 평가 결과를 연결하지 못했습니다.');
+    const comparison={...analysis.comparison};
+    if(comparison.preferredRouteId!==null&&comparison.preferredRouteId!==undefined&&!actualIds.has(comparison.preferredRouteId))return defer('현재 조회에 없는 경로의 우선안을 표시하지 않았습니다.');
+    const ranked=Array.isArray(comparison.rankedRouteIds)?comparison.rankedRouteIds:[];
+    if(ranked.some(id=>!actualIds.has(id))||new Set(ranked).size!==ranked.length)return defer('현재 조회에 없는 경로의 비교 순위를 표시하지 않았습니다.');
+    if(!data.coverageGeometry)Object.assign(comparison,{preferredRouteId:null,rankedRouteIds:[],reason:'건물·높이 자료의 전수 평가범위를 확인하지 못해 부분 그늘 근거만 제시하고 우선안은 고르지 않았습니다.'});
+    if(!Number.isFinite(request.maxDetourMeters)||!Number.isFinite(request.maxDetourMinutes))Object.assign(comparison,{preferredRouteId:null,rankedRouteIds:[],reason:'허용할 추가 거리와 추가 시간을 모두 명시하지 않아 우선안을 고르지 않았습니다.'});
+    if(!routes.some(route=>route.role==='direct'))Object.assign(comparison,{preferredRouteId:null,rankedRouteIds:[],reason:'직접 경로를 받지 못해 같은 기준의 우회·그늘 개선량을 비교하지 않았습니다.'});
+    if(comparison.preferredRouteId){
+      const direct=routes.find(route=>route.role==='direct'),preferred=routes.find(route=>route.id===comparison.preferredRouteId);
+      if(preferred.distanceMeters-direct.distanceMeters>request.maxDetourMeters||preferred.durationSeconds-direct.durationSeconds>request.maxDetourMinutes*60)Object.assign(comparison,{preferredRouteId:null,rankedRouteIds:[],reason:'우선안이 명시한 추가 거리·시간 조건을 모두 충족하지 않아 선택을 보류했습니다.'});
+    }
+    const byId=new Map(analysis.routes.map(route=>[route.id,route]));
+    for(const route of routes)route.seasonal=byId.get(route.id)||{id:route.id,status:'not-evaluated',estimatedShadeMeters:null,sunlitMeters:null,unevaluatedMeters:null,reasons:['이 경로는 계절 모형으로 평가하지 않았습니다.']};
+    if(comparison.preferredRouteId){const order=new Map((comparison.rankedRouteIds||[]).map((id,index)=>[id,index]));routes.sort((a,b)=>Number(b.id===comparison.preferredRouteId)-Number(a.id===comparison.preferredRouteId)||(order.get(a.id)??Infinity)-(order.get(b.id)??Infinity)||a.distanceMeters-b.distanceMeters);}
+    return {...analysis,departureAt:request.departureAt,comparison,timeZone:'Asia/Seoul',criteria:{maxDetourMeters:request.maxDetourMeters??null,maxDetourMinutes:request.maxDetourMinutes??null,conditions:'both',includeLevels:request.includeLevels},dataStatus:data.metadata};
+  }catch{return defer('건물 그늘·일조 자료를 평가하지 못해 일반 보행경로 결과를 유지했습니다.');}
+}
+
 export async function runWalkRoutes(body,options={}){
   const request=input(body),env=options.env||process.env,now=options.now??Date.now(),key=keyFor(env);
   if(!key)throw bad(503,'TMAP_NOT_CONFIGURED','Vercel에 TMAP_API_KEY를 등록하고 재배포하세요.');
@@ -119,7 +175,7 @@ export async function runWalkRoutes(body,options={}){
   const eligible=pack.candidates.filter(candidate=>walkCandidateSupportsMode(candidate,request.mode)&&distance(request.start,candidate.coordinate)>=10&&distance(request.end,candidate.coordinate)>=10);
   let via=[];
   if(request.viaIds!==undefined){via=request.viaIds.map(id=>{const candidate=eligible.find(p=>p.id===id);if(!candidate)throw bad(400,'WALK_INVALID_VIA','이 지역의 공개 접근을 확인할 수 있는 경유 후보를 선택하세요. 비상벨 등 참고 위치는 경유할 수 없습니다.');return candidate;});}
-  else if(request.mode!=='inspection')via=rankWalkCandidates(eligible,{start:request.start,end:request.end,mode:request.mode,limit:2}).map(candidate=>eligible.find(p=>p.id===candidate.id)).filter(Boolean).slice(0,2);
+  else if(request.mode!=='inspection')via=rankWalkCandidates(eligible,{start:request.start,end:request.end,mode:request.mode,limit:2,maxDetourMeters:request.maxDetourMeters}).map(candidate=>eligible.find(p=>p.id===candidate.id)).filter(Boolean).slice(0,2);
   if(new Set(via.map(candidate=>candidate.coordinate.join(','))).size!==via.length)throw bad(400,'WALK_INVALID_VIA','같은 위치의 공개 경유 후보를 중복 선택할 수 없습니다.');
   const specs=[{id:'direct',label:'직접 도보경로',role:'direct',via:[]}],warnings=[...baseWarnings,...(pack.limitations||[])];
   if(request.mode==='inspection'&&via.length)specs.push({id:'inspection',label:'선택 순서대로 점검 경유',role:'via',via});
@@ -132,7 +188,13 @@ export async function runWalkRoutes(body,options={}){
   if(request.avoidStairs)warnings.push('계단 제외 옵션을 제공기관에 요청했습니다. 실제 계단·공사·횡단시설과 이동약자 이용 가능 여부는 현장에서 확인하세요.');
   if(!via.length)warnings.push(request.mode==='inspection'?'점검 경유지를 선택하지 않아 직접 도보경로만 조회했습니다.':'이번 조건에 맞는 경유 후보가 없어 직접 도보경로만 조회했습니다.');
   routes.sort((a,b)=>a.role==='direct'?-1:b.role==='direct'?1:a.distanceMeters-b.distanceMeters||a.durationSeconds-b.durationSeconds);
-  const result={ok:true,requestedAt:new Date(now).toISOString(),expiresAt:new Date(now+TTL).toISOString(),mode:request.mode,region:{id:pack.profile.id,name:pack.profile.name},routes,candidates:via,warnings,limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}};
+  const seasonal=await applySeasonal(routes,request,options);
+  if(['shade','winter'].includes(request.mode)){
+    warnings.push('그늘·일조는 선택한 날짜·시각의 건물 모형 추정이며, TMAP 경로는 이번에 조회한 보행망입니다. 선택일의 실제 도로·통행·날씨 상태를 예측하지 않습니다.');
+    if(seasonal.status==='not-evaluated')warnings.push(seasonal.comparison.reason);
+    if(request.mode==='winter')warnings.push('겨울 일조부족·결빙관리지점 근접은 확인할 주의정보입니다. 현재 결빙·노면온도·미끄러짐 확률을 산정하지 않습니다.');
+  }
+  const result={ok:true,requestedAt:new Date(now).toISOString(),expiresAt:new Date(now+TTL).toISOString(),mode:request.mode,region:{id:pack.profile.id,name:pack.profile.name},routes,candidates:via,warnings,seasonal,limits:{...limits,dailyCallsPerInstance:dailyLimit(env)} };
   if(Buffer.byteLength(JSON.stringify(result))>3*1024*1024)throw bad(502,'TMAP_RESPONSE_TOO_LARGE','경로 비교 결과가 응답 크기 제한을 초과했습니다. 조회 거리를 줄여 주세요.');
   return result;
 }
@@ -148,9 +210,11 @@ export async function handleWalkRoutes(req,res,options={}){
     if(req.method==='GET'){
       const url=new URL(req.url||'/api/walk-routes','https://local.invalid'),regionId=registeredRegionId(url.searchParams.get('region')||'seogu'),pack=await candidatesFor(regionId,{...options,env});
       let configured=false;try{configured=!!keyFor(env);}catch{}
-      respond(res,200,{ok:true,configured,region:{id:pack.profile.id,name:pack.profile.name},candidates:pack.candidates.slice(0,5000),candidateCount:pack.candidates.length,truncated:pack.candidates.length>5000,warnings:[...baseWarnings,...(pack.limitations||[])],limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}});return;
+      let safetyReferences=null;try{const loader=options.loadSafetyReferences||(await import('./seasonal-walk-data.js')).loadSafeReturnReferences;safetyReferences=await loader({regionId,publicRoot:options.publicRoot});}catch{}
+      respond(res,200,{ok:true,configured,region:{id:pack.profile.id,name:pack.profile.name},candidates:pack.candidates.slice(0,5000),candidateCount:pack.candidates.length,truncated:pack.candidates.length>5000,safetyReferences,warnings:[...baseWarnings,...(pack.limitations||[])],limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}});return;
     }
     if(!/^application\/json(?:\s*;|$)/i.test(String(req.headers?.['content-type']||'')))throw bad(415,'JSON_REQUIRED','도보경로 요청은 application/json으로 보내세요.');
     respond(res,200,await runWalkRoutes(await readBody(req,{maxBytes:MAX_BODY}),{...options,env}));
   }catch(error){respond(res,error.status||503,{ok:false,code:error.code||'WALK_UNAVAILABLE',error:error.code&&error.status?error.message:'도보경로 자료를 준비하지 못했습니다. 잠시 후 다시 조회하세요.'});}
 }
+

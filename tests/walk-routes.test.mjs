@@ -104,3 +104,74 @@ test('per-IP requests and per-day provider attempts are bounded; zero explicitly
   const capped=await runWalkRoutes(automatic,options({env:{...env,TMAP_DAILY_LIMIT:'1'},fetcher}));assert.equal(calls,1);assert.equal(capped.routes.length,1);assert.ok(capped.warnings.some(w=>w.includes('호출 한도')));
   resetWalkRouteLimits();await assert.rejects(runWalkRoutes(request(),options({env:{...env,TMAP_DAILY_LIMIT:'0'},fetcher})),{code:'TMAP_DAILY_LIMIT'});assert.equal(calls,1);
 });
+
+const seasonalRequest=extra=>{const base=request();const via=rankWalkCandidates(packs.seogu.candidates,{...base,limit:1})[0];return {...base,viaIds:[via.id],departureAt:'2027-07-15T14:00:00+09:00',shadowTiming:'walk-time',maxDetourMeters:500,maxDetourMinutes:5,...extra};};
+const seasonalData=()=>({buildings:{type:'FeatureCollection',features:[]},coverageGeometry:packs.seogu.geometry,icing:null,metadata:{regionId:'seogu',sourceName:'TEST ONLY · 평가범위 검증용 합성자료'}});
+const seasonalFetcher=async(_url,init)=>{const body=JSON.parse(init.body);return mockResponse(body,{distanceMeters:body.passList?3800:3456,durationSeconds:body.passList?850:789});};
+const fakeSeasonal=input=>({status:'assessed',mode:input.mode,departureAt:input.departureAt,timing:input.shadowTiming,model:{name:'TEST ONLY'},assumptions:['합성 모델 연결검사'],routes:input.routes.map(route=>({id:route.id,status:'assessed',estimatedShadeMeters:route.role==='via'?150:50,evaluatedMeters:1000,unevaluatedMeters:0,sunlitMeters:route.role==='via'?850:950,coverageRatio:1})),comparison:{preferredRouteId:input.routes.find(route=>route.role==='via')?.id||'direct',rankedRouteIds:input.routes.map(route=>route.id).reverse(),basis:'TEST ONLY bounded improvement',reason:'model-bounded-improvement'}});
+
+test('legacy shade requests keep TMAP results and explicitly defer seasonal metrics without a selected time',async()=>{
+  const result=await runWalkRoutes(request(),options({fetcher:seasonalFetcher,loadSeasonalData:()=>{throw Error('no automatic seasonal input');}}));
+  assert.equal(result.routes[0].distanceMeters,3456);assert.equal(result.seasonal.status,'not-evaluated');assert.equal(result.seasonal.departureAt,null);assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.equal(result.routes[0].seasonal.estimatedShadeMeters,null);assert.equal(result.routes[0].seasonal.coverageRatio,null);
+});
+test('seasonal inputs reject ambiguous time, impossible dates and nonnumeric detour limits before a paid call',async()=>{
+  let calls=0;const opts=options({fetcher:async()=>{calls++;throw Error('must not call');}});
+  for(const departureAt of ['2027-07-15T14:00','2027-02-30T09:00:00+09:00','2027-07-15T25:00:00+09:00','2027-07-15T14:00:00+14:30','1999-12-31T09:00:00+09:00'])await assert.rejects(runWalkRoutes(seasonalRequest({departureAt}),opts),{code:'INVALID_DEPARTURE_TIME'});
+  for(const extra of [{maxDetourMeters:-1},{maxDetourMeters:3001},{maxDetourMinutes:'5'},{maxDetourMinutes:61},{shadowTiming:'guess-time'},{includeLevels:'true'}])await assert.rejects(runWalkRoutes(seasonalRequest(extra),opts),{code:'INVALID_WALK_REQUEST'});
+  assert.equal(calls,0);
+});
+test('only successful TMAP routes are assessed, bound to their own IDs and ordered by the seasonal preference',async()=>{
+  let evaluated,internal;
+  const result=await runWalkRoutes(seasonalRequest({departureAt:'2027-07-15T05:00:00Z'}),options({fetcher:seasonalFetcher,loadSeasonalData:seasonalData,evaluateSeasonal:(input,budget)=>{evaluated=input;internal=budget;return fakeSeasonal(input);}}));
+  assert.equal(evaluated.routes.length,2);assert.equal(evaluated.departureAt,'2027-07-15T14:00:00.000+09:00');assert.equal(evaluated.includeLevels,false);assert.equal(evaluated.shadowTiming,'walk-time');assert.equal(evaluated.maxDetourMeters,500);assert.equal(internal.runtimeMs,2500);
+  assert.equal(result.routes[0].id,'via-1');assert.equal(result.routes[0].distanceMeters,3800);assert.equal(result.routes[0].durationSeconds,850);assert.equal(result.routes[0].seasonal.id,'via-1');assert.equal(result.seasonal.criteria.conditions,'both');assert.equal(result.seasonal.timeZone,'Asia/Seoul');assert.equal(Date.parse(result.expiresAt)-Date.parse(result.requestedAt),30*60000);
+});
+test('unknown source coverage permits partial model evidence but never a route preference',async()=>{
+  const result=await runWalkRoutes(seasonalRequest(),options({fetcher:seasonalFetcher,loadSeasonalData:()=>({...seasonalData(),coverageGeometry:null}),evaluateSeasonal:fakeSeasonal}));
+  assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.deepEqual(result.seasonal.comparison.rankedRouteIds,[]);assert.equal(result.routes[0].id,'direct');assert.equal(result.routes[1].seasonal.estimatedShadeMeters,150);assert.match(result.seasonal.comparison.reason,/전수 평가범위/);
+});
+test('both explicit detour conditions and a real direct baseline are necessary for a preference',async()=>{
+  const base=seasonalRequest();delete base.maxDetourMinutes;
+  const missing=await runWalkRoutes(base,options({fetcher:seasonalFetcher,loadSeasonalData:seasonalData,evaluateSeasonal:fakeSeasonal}));assert.equal(missing.seasonal.comparison.preferredRouteId,null);assert.match(missing.seasonal.comparison.reason,/모두 명시/);
+  const excessive=await runWalkRoutes(seasonalRequest({maxDetourMeters:0,maxDetourMinutes:0}),options({fetcher:seasonalFetcher,loadSeasonalData:seasonalData,evaluateSeasonal:fakeSeasonal}));assert.equal(excessive.seasonal.comparison.preferredRouteId,null);assert.match(excessive.seasonal.comparison.reason,/조건을 모두/);
+  const noDirect=await runWalkRoutes(seasonalRequest(),options({loadSeasonalData:seasonalData,evaluateSeasonal:fakeSeasonal,fetcher:async(url,init)=>JSON.parse(init.body).passList?seasonalFetcher(url,init):new Response('PROVIDER PRIVATE DETAIL',{status:403})}));assert.equal(noDirect.routes.length,1);assert.equal(noDirect.routes[0].id,'via-1');assert.equal(noDirect.seasonal.comparison.preferredRouteId,null);assert.match(noDirect.seasonal.comparison.reason,/직접 경로/);
+});
+test('a seasonal model cannot introduce a route or overwrite TMAP distance and duration',async()=>{
+  const result=await runWalkRoutes(seasonalRequest(),options({fetcher:seasonalFetcher,loadSeasonalData:seasonalData,evaluateSeasonal:()=>({routes:[{id:'not-returned-by-tmap'}],comparison:{preferredRouteId:'not-returned-by-tmap',rankedRouteIds:[]}})}));
+  assert.equal(result.seasonal.status,'not-evaluated');assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.deepEqual(result.routes.map(route=>route.distanceMeters),[3456,3800]);assert.ok(result.routes.every(route=>route.seasonal.estimatedShadeMeters===null));
+});
+test('seasonal data failure or a foreign region keeps valid TMAP geometry with a deferred assessment',async()=>{
+  for(const loader of [()=>{throw Error(`private ${TEST_KEY}`);},()=>({...seasonalData(),metadata:{regionId:'suncheon'}})]){
+    const result=await runWalkRoutes(seasonalRequest(),options({fetcher:seasonalFetcher,loadSeasonalData:loader,evaluateSeasonal:fakeSeasonal}));assert.equal(result.routes.length,2);assert.equal(result.seasonal.status,'not-evaluated');assert.ok(!JSON.stringify(result).includes(TEST_KEY));assert.ok(result.routes.every(route=>route.geojson.features.some(feature=>feature.geometry.type==='LineString')));
+  }
+});
+test('real solar assessment at night defers shade rather than labelling absent daylight as zero shade',async()=>{
+  const input=seasonalRequest({departureAt:'2027-07-15T01:00:00+09:00',viaIds:[]}),routeMeters=Math.round(walkDistance(input.start,input.end));
+  const result=await runWalkRoutes(input,options({fetcher:async(_url,init)=>mockResponse(JSON.parse(init.body),{distanceMeters:routeMeters,durationSeconds:Math.ceil(routeMeters/1.2)}),loadSeasonalData:seasonalData}));
+  assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.equal(result.routes[0].seasonal.estimatedShadeMeters,null);assert.ok(result.routes[0].seasonal.reasons.some(reason=>/night|sun/i.test(reason)));
+});
+test('estimated building heights reach the model only when explicitly enabled',async()=>{
+  let assessed;
+  const result=await runWalkRoutes(seasonalRequest({includeLevels:true}),options({fetcher:seasonalFetcher,loadSeasonalData:seasonalData,evaluateSeasonal:input=>{assessed=input;return fakeSeasonal(input);}}));
+  assert.equal(assessed.includeLevels,true);assert.equal(result.seasonal.criteria.includeLevels,true);
+});
+test('official safety references are read-only metadata and reference failures do not disable the catalogue',async()=>{
+  for(const loader of [()=>({sourceName:'공식 지도 참고자료',sourceDate:'2026-08',geometryAvailable:false,routes:[{id:'reference-1',name:'공식 안내',area:'주변 설명 · 선형 아님',sourceUrl:'https://www.gjpolice.go.kr/'}]}),()=>{throw Error('reference read unavailable');}]){
+    const res=response();await handleWalkRoutes({method:'GET',url:'/api/walk-routes?region=seogu',headers:{host:'local.test'}},res,{env:{},loadCandidates,loadSafetyReferences:loader});
+    assert.equal(res.statusCode,200);assert.ok(res.body.candidates.length>0);assert.equal(res.headers['cache-control'],'no-store');
+    if(res.body.safetyReferences){assert.equal(res.body.safetyReferences.geometryAvailable,false);assert.equal(res.body.safetyReferences.routes.length,1);assert.ok(res.body.safetyReferences.routes.every(item=>!item.geometry&&!item.coordinate));}else assert.equal(res.body.safetyReferences,null);
+  }
+});
+test('winter uses actual TMAP alternatives, source building heights and historical management points without inventing complete coverage',async()=>{
+  const input=seasonalRequest({mode:'winter',departureAt:'2027-01-15T09:00:00+09:00'});delete input.viaIds;let calls=0;
+  const result=await runWalkRoutes(input,options({fetcher:async(url,init)=>{
+    calls++;assert.equal(url,'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1');const body=JSON.parse(init.body),points=[[+body.startX,+body.startY],...(body.passList?body.passList.split('_').map(p=>p.split(',').map(Number)):[]),[+body.endX,+body.endY]];
+    const meters=Math.ceil(points.slice(1).reduce((sum,point,index)=>sum+walkDistance(points[index],point),0));return mockResponse(body,{distanceMeters:meters,durationSeconds:Math.ceil(meters/1.2)});
+  }}));
+  assert.ok(calls>=2&&calls<=3);assert.equal(result.mode,'winter');assert.equal(result.seasonal.mode,'winter');assert.equal(result.seasonal.model.includeLevels,false);assert.ok(result.seasonal.model.heightCounts.sourceHeight>0);assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.equal(result.seasonal.dataStatus.state,'partial');
+  for(const route of result.routes){assert.ok(route.geojson.features.some(feature=>feature.geometry.type==='LineString'));assert.equal(Object.hasOwn(route.seasonal,'iceProbability'),false);}
+});
+test('an unconnected city returns null seasonal metrics and keeps ordinary routes rather than a zero-shade claim',async()=>{
+  const result=await runWalkRoutes(request('suncheon',{mode:'winter',departureAt:'2027-01-15T09:00:00+09:00',maxDetourMeters:500,maxDetourMinutes:5}),options({fetcher:seasonalFetcher}));
+  assert.equal(result.region.id,'suncheon');assert.equal(result.seasonal.status,'not-evaluated');assert.equal(result.seasonal.dataStatus.state,'not-connected');assert.equal(result.seasonal.comparison.preferredRouteId,null);assert.equal(result.routes[0].seasonal.estimatedShadeMeters,null);assert.equal(result.routes[0].seasonal.sunlitMeters,null);
+});

@@ -17,7 +17,7 @@ test('selected facility detour is overlaid with the direct reference in distinct
 test('clear wipes viewer and pending-message geometry rather than only hiding it',()=>{
  const h=harness(),pending=new PendingMessages();h.map.paint([route('a','direct')],'a');for(const m of h.sent)pending.add(m);h.sent.length=0;
  h.map.clear();for(const m of h.sent)pending.add(m);
- assert.equal(h.sent.length,3);assert.ok(h.sent.every(m=>m.visible===false&&m.features.length===0));
+ assert.equal(h.sent.length,4);assert.ok(h.sent.every(m=>m.visible===false&&m.features.length===0));
  assert.ok(pending.drain().every(m=>m.features.length===0));h.sent.length=0;h.map.replay();assert.equal(h.sent.length,0);
 });
 
@@ -36,4 +36,14 @@ test('provider turn points do not become facility markers along the whole route'
  h.map.paint([a],'a',[{id:'start',name:'출발',coordinate:[126.89,35.15],role:'start'}]);
  assert.equal(h.sent.find(m=>m.id==='walk-direct'&&m.visible).features.length,1);
  assert.equal(h.sent.find(m=>m.id==='walk-points'&&m.visible).features.length,1);h.map.destroy();
+});
+
+test('seasonal sample segments have separate model colors and expire with provider routes',()=>{
+ const h=harness(),a=route('a','direct'),original=JSON.stringify(a),segment=state=>({type:'Feature',geometry:a.geojson.features[0].geometry,properties:{assessmentState:state}});
+ h.map.paint([a],'a',[],[segment('shade'),segment('unknown'),segment('low'),segment('bogus')]);
+ const shown=h.sent.find(m=>m.id==='walk-assessment'&&m.visible);
+ assert.deepEqual(shown.features.map(f=>f.properties.displayColor),['#007d75','#78838c','#d66a24']);
+ assert.ok(shown.features.every(f=>f.properties.ephemeral));assert.equal(JSON.stringify(a),original);
+ h.sent.length=0;h.setTime(30*60*1000);h.map.replay();
+ assert.ok(h.sent.some(m=>m.id==='walk-assessment'&&!m.visible&&m.features.length===0));
 });

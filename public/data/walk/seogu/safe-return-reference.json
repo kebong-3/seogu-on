@@ -1,0 +1,47 @@
+{
+  "sourceName": "광주경찰청 · 서부경찰서 여성안심귀갓길 지도 6개소",
+  "sourceDate": "2026-08",
+  "publishedAt": "2026-08-24",
+  "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+  "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+  "geometryAvailable": false,
+  "georeferencingStatus": "official-map-only",
+  "routes": [
+    {
+      "id": "seogu-safe-return-geumho-1",
+      "name": "금호1",
+      "area": "금호지구대·금호중학교·금부초등학교 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    },
+    {
+      "id": "seogu-safe-return-geumho-2",
+      "name": "금호2",
+      "area": "광주중학교·화개초등학교·어린이천국공원 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    },
+    {
+      "id": "seogu-safe-return-geumho-3",
+      "name": "금호3",
+      "area": "운리초등학교·운리중학교·풍암고등학교·운리어린이공원·새누리어린이공원 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    },
+    {
+      "id": "seogu-safe-return-hwajeong-1",
+      "name": "화정1",
+      "area": "상무역 남쪽·운천저수지 동쪽 골목 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    },
+    {
+      "id": "seogu-safe-return-hwajeong-2",
+      "name": "화정2",
+      "area": "화정4동행정복지센터·맛고을어린이공원 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    },
+    {
+      "id": "seogu-safe-return-nongseong-1",
+      "name": "농성1",
+      "area": "농성광장·광주상공회의소 동쪽·농성2동행정복지센터 북쪽 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
+    }
+  ]
+}
