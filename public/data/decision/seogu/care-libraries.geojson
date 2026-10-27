@@ -1,0 +1,108 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도 · 광주광역시 환경교육통합시스템",
+    "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 2개 중 주소·지역경계 대조 후 지도에 2개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 2,
+    "uniqueCoordinates": 2,
+    "directoryRecords": 2,
+    "unlocatedRecords": 0,
+    "missingSourceDateCount": 2,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.888918,
+          35.15522263
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-library-sangrok",
+        "name": "상록도서관 유아도서관",
+        "address": "광주광역시 서구 상무대로1171번길 11",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 상무대로1171번길 11",
+        "phone": "062-350-4580",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-libraries",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:1bf787326096bc91cccd",
+          "matchedName": "상록도서관",
+          "matchedAddress": "전남광주통합특별시 서구 상무대로1171번길 11",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-03",
+        "dongName": "농성1동",
+        "category": "care",
+        "facilityType": "어린이도서관",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.881858,
+          35.12979872
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-library-ecology",
+        "name": "어린이생태학습도서관",
+        "address": "광주광역시 서구 풍암공원로 8",
+        "sourceUrl": "https://gjeec.or.kr/educationRoadView.es?mid=a10907000000&ter_seq=6",
+        "sourceName": "광주광역시 환경교육통합시스템",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 풍암공원로 8",
+        "phone": "062-350-4584",
+        "hours": "평일 09:00~18:00, 주말 09:00~17:00",
+        "note": "매월 둘째·넷째 월요일 및 공휴일 휴관. 유아·초등 생태교육 프로그램 운영.",
+        "datasetId": "care-libraries",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:aa6a34e968b8d51b3600",
+          "matchedName": "서구어린이생태학습도서관",
+          "matchedAddress": "전남광주통합특별시 서구 풍암공원로 8",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-17",
+        "dongName": "풍암동",
+        "category": "care",
+        "facilityType": "어린이도서관",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

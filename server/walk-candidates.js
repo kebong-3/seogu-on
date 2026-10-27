@@ -8,6 +8,14 @@ import {WALK_MODE_CATEGORIES} from '../shared/walk-route-model.js';
 
 const SOURCES = Object.freeze({
   seogu: Object.freeze([
+    {id:'care-child-centers',category:'care',path:'/data/decision/seogu/care-child-centers.geojson'},
+    {id:'care-alltogether',category:'care',path:'/data/decision/seogu/care-alltogether.geojson'},
+    {id:'care-nursing',category:'care',path:'/data/decision/seogu/care-nursing.geojson'},
+    {id:'care-toys',category:'care',path:'/data/decision/seogu/care-toys.geojson'},
+    {id:'care-libraries',category:'care',path:'/data/decision/seogu/care-libraries.geojson'},
+    {id:'care-play',category:'care',path:'/data/decision/seogu/care-play.geojson'},
+    {id:'care-parenting',category:'care',path:'/data/decision/seogu/care-parenting.geojson'},
+    {id:'care-village',category:'care',path:'/data/decision/seogu/care-village.geojson'},
     {id:'shade',category:'shade',path:'/data/city/local-shade.geojson'},
     {id:'heat-shelters',category:'shelter',path:'/data/city/official/heat-shelter.geojson'},
     {id:'police',category:'police',path:'/data/city/official/police-official.geojson'},
@@ -22,6 +30,7 @@ const SOURCES = Object.freeze({
   ]),
 });
 const NOTES = Object.freeze({
+  care:'공식 돌봄·육아시설 목록의 주소 대표위치입니다. 실제 출입구·수유실 층·운영시간·이용자격은 기관 확인이 필요합니다.',
   shade:'공개 그늘막 위치이며 실제 개방·그늘·일사 노출 감소를 확인하지 않았습니다.',
   shelter:'공개 무더위쉼터 위치이며 현재 개방시간·이용대상·운영 상태는 기관 확인이 필요합니다.',
   police:'공개 경찰관서 위치이며 현재 상주·운영 상태와 보행 안전성을 확인하지 않았습니다.',

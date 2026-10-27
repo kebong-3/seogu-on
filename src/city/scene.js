@@ -78,7 +78,7 @@ function groundPoint(position){const ray=viewer.camera.getPickRay(position),p=ra
 async function click(event){const hits=viewer.scene.drillPick?.(event.position,12)||[viewer.scene.pick(event.position)];const point=groundPoint(event.position);
  if(selectionMode==='hide-building'){const feature=hits.find(f=>C.Cesium3DTileFeature&&f instanceof C.Cesium3DTileFeature);if(feature){if(!hiddenFeatures.has(feature))hiddenFeatures.set(feature,feature.show);feature.show=false;tell('tool-result',{kind:'hide-building',count:hiddenFeatures.size,note:'현재 로드된 건물 객체만 숨김. 실제 건물자료 삭제가 아닙니다.'});requestRender();}else tell('tool-result',{kind:'hide-building',error:'이 건물은 공개 개별 선택 기능을 제공하지 않습니다.'});return;}
  if(selectionMode==='operation-point'||selectionMode==='operation-route'){if(!point||!scope||!inside(point,scope)){tell('map-warning',{message:'선택 구역 안에서 클릭하세요.'});return;}const tool=selectionMode;if(tool==='operation-point')selectionMode=null;tell('point',{point,tool});return;}
- if(selectionMode){if(!point||!inside(point,scope)){tell('tool-result',{kind:selectionMode,error:'선택한 서구 구역 안에서 지점을 선택하세요.'});return;}
+ if(selectionMode){const pickScope=['walk-start','walk-end'].includes(selectionMode)?admin:scope;if(!point||!pickScope||!inside(point,pickScope)){tell('tool-result',{kind:selectionMode,error:'선택 지역의 경계 안에서 지점을 선택하세요.'});return;}
   const mode=selectionMode;if(mode==='profile'){if(!profileStart){profileStart=point;mark(point,'단면 시작');tell('tool-result',{kind:'profile-start',point});return;}const start=profileStart;profileStart=null;selectionMode=null;await terrainProfile(start,point);return;}
   selectionMode=null;mark(point,'선택 지점');tell('point',{point,tool:mode});if(mode==='slope')await terrainSlope(point);if(mode==='place-model')await placeModel(point);return;
  }
@@ -101,7 +101,7 @@ async function handle(m){switch(m.type){
  case'boundaries':await boundaries(m);break;
  case'layer':renderLayer(m);break;
  case'raster':toggleRaster(m.id,m.visible);break;
- case'camera':director.fly(m.pose,{duration:m.duration??1900,arch:m.arch!==false});break;
+ case'camera':director.fly(m.pose,{duration:m.duration??1900,arch:m.arch!==false,orbitAfter:m.orbitAfter===true});break;
  case'rotate':{const p=readPose();director.fly({...p,heading:p.heading+(m.angle||45)},{duration:700,arch:false});break;}
  case'zoom':{const p=readPose();director.fly({...p,range:clamp(p.range*(m.delta>0?.7:1.4),100,120000)},{duration:500,arch:false});break;}
  case'tilt':{const p=readPose();director.fly({...p,pitch:m.top?-89.5:-44},{duration:800,arch:false});break;}

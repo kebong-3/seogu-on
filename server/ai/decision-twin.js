@@ -47,13 +47,13 @@ function validateBody(body) {
 async function modelJson(system,payload,ctx,{maxTokens=1600,budgetMs=11000}={}) {
   const config=modelConfig(ctx.env);
   if(config.error)throw new LlmError('LLM_BAD_REQUEST','AI 연결 설정을 확인하세요.');
-  if(!config.key&&config.provider==='google')throw new LlmError('LLM_NOT_CONFIGURED','AI 연결 설정이 없습니다.');
+  if(!config.key&&config.provider!=='openai-compatible')throw new LlmError('LLM_NOT_CONFIGURED','AI 연결 설정이 없습니다.');
   if(!takeDaily(ctx.env,ctx.now))throw new LlmError('LLM_DAILY_LIMIT','하루 AI 호출 한도에 도달했습니다.');
   const body={systemInstruction:{parts:[{text:system}]},contents:[{role:'user',parts:[{text:JSON.stringify(payload)}]}],generationConfig:{temperature:0,maxOutputTokens:maxTokens,responseMimeType:'application/json'}};
-  if(config.provider==='openai-compatible'){body.tools=[{functionDeclarations:[]}];body.toolConfig={functionCallingConfig:{mode:'NONE'}};}
+  if(config.provider!=='google'){body.tools=[{functionDeclarations:[]}];body.toolConfig={functionCallingConfig:{mode:'NONE'}};}
   const send=config.provider==='google'?generate:generateCompatible;
   const deadline=Math.min(ctx.deadline,Date.now()+budgetMs);
-  const request={fetcher:ctx.fetcher||fetch,key:config.key,baseUrl:config.baseUrl,model:config.model,body,timeoutMs:Math.max(1,deadline-Date.now())};
+  const request={fetcher:ctx.fetcher||fetch,key:config.key,baseUrl:config.baseUrl,reasoningEffort:config.reasoningEffort,model:config.model,body,timeoutMs:Math.max(1,deadline-Date.now())};
   let response,model=config.model;
   try{response=await send(request);}catch(error){
     if(config.provider!=='google'||error.code!=='LLM_MODEL_NOT_FOUND'||deadline-Date.now()<3500)throw error;

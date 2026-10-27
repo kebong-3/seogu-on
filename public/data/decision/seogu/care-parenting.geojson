@@ -1,0 +1,64 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+    "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 2개 중 주소·지역경계 대조 후 지도에 1개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 1,
+    "uniqueCoordinates": 1,
+    "directoryRecords": 2,
+    "unlocatedRecords": 1,
+    "missingSourceDateCount": 1,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.842220211165,
+          35.152218682651
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-childcare-support",
+        "name": "광주광역시서구 육아종합지원센터",
+        "address": "광주광역시 서구 상무자유로 73",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 상무자유로 73",
+        "phone": "062-375-0756",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-parenting",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2025-01-08",
+          "featureId": "aed-15-0000921",
+          "matchedName": "광주광역시일가정양립지원본부",
+          "matchedAddress": "전남광주통합특별시 서구 상무자유로 73, 광주여성발전센터 (치평동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-07",
+        "dongName": "치평동",
+        "category": "care",
+        "facilityType": "육아종합지원센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "지역아동센터 광주지원단",
+    "sourceUrl": "https://www.gjicare.kr/center_location/22?sca=%EC%84%9C%EA%B5%AC",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 46개 중 주소·지역경계 대조 후 지도에 5개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 5,
+    "uniqueCoordinates": 5,
+    "directoryRecords": 46,
+    "unlocatedRecords": 41,
+    "missingSourceDateCount": 5,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8621301,
+          35.13715752
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-community-child-25",
+        "name": "금호지역아동센터",
+        "address": "광주광역시 서구 운천로 32번길 23",
+        "sourceUrl": "https://www.gjicare.kr/center_location/25?sca=%EC%84%9C%EA%B5%AC",
+        "sourceName": "지역아동센터 광주지원단",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주광역시 운천로 32번길 23",
+        "phone": "070-7011-6544",
+        "datasetId": "care-child-centers",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "공공데이터포털 / 무료급식소·복지관",
+          "sourceUrl": "https://www.data.go.kr/data/15013107/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "welfare-official:a6a071220111cf",
+          "matchedName": "금호종합사회복지관",
+          "matchedAddress": "전남광주통합특별시 서구 운천로32번길 23",
+          "path": "/data/city/official/welfare-official.geojson",
+          "fileSha256": "c9348cf1bcee17eda1fe3d54f43a96ebf87c85c797e96fe7dc2faa87cb67fbca"
+        },
+        "dongId": "seogu-15",
+        "dongName": "금호1동",
+        "category": "care",
+        "facilityType": "지역아동센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.872611,
+          35.1477254658
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-community-child-33",
+        "name": "맨투맨지역아동센터",
+        "address": "광주광역시 서구 상무대로 1014번길 44",
+        "sourceUrl": "https://www.gjicare.kr/center_location/33?sca=%EC%84%9C%EA%B5%AC",
+        "sourceName": "지역아동센터 광주지원단",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주광역시 상무대로 1014번길 44",
+        "phone": "062-385-0910",
+        "datasetId": "care-child-centers",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:c7f67dca4655c5408a43",
+          "matchedName": "화정문고",
+          "matchedAddress": "전남광주통합특별시 서구 상무대로1014번길 44",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-12",
+        "dongName": "화정3동",
+        "category": "care",
+        "facilityType": "지역아동센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.891144,
+          35.16013192
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-community-child-37",
+        "name": "브니엘지역아동센터",
+        "address": "광주광역시 서구 천변좌로 108번길 5",
+        "sourceUrl": "https://www.gjicare.kr/center_location/37?sca=%EC%84%9C%EA%B5%AC&page=2",
+        "sourceName": "지역아동센터 광주지원단",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주광역시 천변좌로 108번길 5",
+        "phone": "062-352-3927",
+        "datasetId": "care-child-centers",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:ab2cb6f4a93bdfd1ca4e",
+          "matchedName": "브니엘작은도서관",
+          "matchedAddress": "전남광주통합특별시 서구 천변좌로108번길 5",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-02",
+        "dongName": "양3동",
+        "category": "care",
+        "facilityType": "지역아동센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.905661,
+          35.1504139318
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-community-child-47",
+        "name": "아이들세상지역아동센터",
+        "address": "광주광역시 서구 독립로 193,2층",
+        "sourceUrl": "https://www.gjicare.kr/center_location/47?sca=%EC%84%9C%EA%B5%AC&page=2",
+        "sourceName": "지역아동센터 광주지원단",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주광역시 독립로 193,2층",
+        "phone": "062-365-3255",
+        "datasetId": "care-child-centers",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:283c9161f13494aa8aa5",
+          "matchedName": "양동문고",
+          "matchedAddress": "전남광주통합특별시 서구 독립로 193",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-01",
+        "dongName": "양동",
+        "category": "care",
+        "facilityType": "지역아동센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.87227,
+          35.13714926
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-community-child-52",
+        "name": "우성지역아동센터",
+        "address": "광주광역시 서구 염화로31번길 5,3층",
+        "sourceUrl": "https://www.gjicare.kr/center_location/52?sca=%EC%84%9C%EA%B5%AC&page=3",
+        "sourceName": "지역아동센터 광주지원단",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "염화로31번길 5,3층",
+        "phone": "062-373-0136",
+        "datasetId": "care-child-centers",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:ac5882331c44d61c44cd",
+          "matchedName": "지혜의샘터",
+          "matchedAddress": "전남광주통합특별시 서구 염화로31번길 5",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-13",
+        "dongName": "화정4동",
+        "category": "care",
+        "facilityType": "지역아동센터",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

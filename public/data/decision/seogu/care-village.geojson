@@ -1,0 +1,150 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+    "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 6개 중 주소·지역경계 대조 후 지도에 3개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 3,
+    "uniqueCoordinates": 3,
+    "directoryRecords": 6,
+    "unlocatedRecords": 3,
+    "missingSourceDateCount": 3,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.876911,
+          35.1435978343
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-village-hwajeong3",
+        "name": "화정3동 주민자치위원회 마을돌봄",
+        "address": "광주광역시 서구 월드컵4강로68번길 21",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 월드컵4강로68번길 21",
+        "phone": null,
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-village",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "public-facilities:d35a3b7b7a85a0f21e26",
+          "matchedName": "화정3동행정복지센터회의실",
+          "matchedAddress": "전남광주통합특별시 서구 월드컵4강로68번길 21",
+          "path": "/data/layers/public-facilities.geojson",
+          "fileSha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439"
+        },
+        "dongId": "seogu-12",
+        "dongName": "화정3동",
+        "category": "care",
+        "facilityType": "마을돌봄",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8571483,
+          35.1353242971
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-village-geumsang",
+        "name": "마을교육공동체 금상첨화",
+        "address": "광주광역시 서구 운천로31번길 17, 금호1동주민 커뮤니티센터",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 운천로31번길 17, 금호1동주민 커뮤니티센터",
+        "phone": null,
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-village",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "public-facilities:642dff7e58821f3ac944",
+          "matchedName": "금호1동행정복지센터3층회의실",
+          "matchedAddress": "전남광주통합특별시 서구 운천로31번길 17",
+          "path": "/data/layers/public-facilities.geojson",
+          "fileSha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439"
+        },
+        "dongId": "seogu-15",
+        "dongName": "금호1동",
+        "category": "care",
+        "facilityType": "마을돌봄",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8646705257,
+          35.1709037735
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-village-masil",
+        "name": "동천교육공동체 마실",
+        "address": "광주광역시 서구 유림로98번길 8, 동천동 행정복지센터",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 유림로98번길 8, 동천동 행정복지센터",
+        "phone": "062-942-0436",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-village",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "public-facilities:45eb3a10d93b47834695",
+          "matchedName": "동천동행정복지센터회의실",
+          "matchedAddress": "전남광주통합특별시 서구 유림로98번길 8",
+          "path": "/data/layers/public-facilities.geojson",
+          "fileSha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439"
+        },
+        "dongId": "seogu-18",
+        "dongName": "동천동",
+        "category": "care",
+        "facilityType": "마을돌봄",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

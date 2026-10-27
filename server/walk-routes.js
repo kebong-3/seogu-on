@@ -4,6 +4,7 @@ import {readBody,crossOrigin} from './ai/ask.js';
 import {registeredRegionId} from '../shared/region-catalog.js';
 import {pointInRegion} from '../shared/region-profile.js';
 import {loadWalkCandidates} from './walk-candidates.js';
+import {searchWalkPlaces} from './walk-place-search.js';
 import {rankWalkCandidates,walkDistance as distance,walkCandidateSupportsMode} from '../shared/walk-route-model.js';
 
 const ENDPOINT='https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1';
@@ -60,7 +61,7 @@ function departureTime(value){
   if(Number(normalized.slice(0,4))<2000||Number(normalized.slice(0,4))>2100)throw bad(400,'INVALID_DEPARTURE_TIME','한국시간 출발일시는 2000~2100년 범위여야 합니다.');
   return normalized.replace('Z','+09:00');
 }
-function publicCandidate(candidate){return {id:clean(candidate.id),name:clean(candidate.name,180),category:clean(candidate.category,80),coordinate:[...candidate.coordinate],sourceName:clean(candidate.sourceName),sourceDate:clean(candidate.sourceDate,40)||null,note:clean(candidate.note,700),routeEligible:candidate.routeEligible===true,modes:[...MODES].filter(mode=>walkCandidateSupportsMode(candidate,mode))};}
+function publicCandidate(candidate){return {id:clean(candidate.id),name:clean(candidate.name,180),address:clean(candidate.address,240),category:clean(candidate.category,80),coordinate:[...candidate.coordinate],sourceName:clean(candidate.sourceName),sourceDate:clean(candidate.sourceDate,40)||null,note:clean(candidate.note,700),routeEligible:candidate.routeEligible===true,modes:[...MODES].filter(mode=>walkCandidateSupportsMode(candidate,mode))};}
 async function candidatesFor(regionId,options){
   const pack=await (options.loadCandidates||loadWalkCandidates)({regionId,env:options.env,publicRoot:options.publicRoot});
   if(pack.profile?.id!==regionId||!Array.isArray(pack.boundaries?.features)||!pack.boundaries.features.length||!Array.isArray(pack.candidates))throw bad(503,'WALK_DATA_UNAVAILABLE','선택 지역의 공개 경유 자료를 준비하지 못했습니다.');
@@ -209,6 +210,7 @@ export async function handleWalkRoutes(req,res,options={}){
     const env=options.env||process.env;
     if(req.method==='GET'){
       const url=new URL(req.url||'/api/walk-routes','https://local.invalid'),regionId=registeredRegionId(url.searchParams.get('region')||'seogu'),pack=await candidatesFor(regionId,{...options,env});
+      if(url.searchParams.has('q')){respond(res,200,await searchWalkPlaces(url.searchParams.get('q'),pack,{env,fetcher:options.fetcher||fetch}));return;}
       let configured=false;try{configured=!!keyFor(env);}catch{}
       let safetyReferences=null;try{const loader=options.loadSafetyReferences||(await import('./seasonal-walk-data.js')).loadSafeReturnReferences;safetyReferences=await loader({regionId,publicRoot:options.publicRoot});}catch{}
       respond(res,200,{ok:true,configured,region:{id:pack.profile.id,name:pack.profile.name},candidates:pack.candidates.slice(0,5000),candidateCount:pack.candidates.length,truncated:pack.candidates.length>5000,safetyReferences,warnings:[...baseWarnings,...(pack.limitations||[])],limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}});return;

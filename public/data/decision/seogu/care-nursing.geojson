@@ -1,0 +1,623 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "수유정보알리미 (인구보건복지협회)",
+    "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=3663",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 13개 중 주소·지역경계 대조 후 지도에 13개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 13,
+    "uniqueCoordinates": 12,
+    "directoryRecords": 13,
+    "unlocatedRecords": 0,
+    "missingSourceDateCount": 13,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.858688790576,
+          35.150512363307
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-3663",
+        "name": "광주광역시도시철도공사 운천역 수유실",
+        "address": "광주광역시 서구 상무대로 지하 883 (운천역)",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=3663",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 상무대로 지하 883 (운천역)",
+        "indoorLocation": "운천역 사무실 맞은편",
+        "roomType": "모유수유/착유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2023-05-04",
+          "featureId": "aed-15-0096393",
+          "matchedName": "광주교통공사",
+          "matchedAddress": "전남광주통합특별시 서구 상무대로 지하883, 운천역 (쌍촌동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-09",
+        "dongName": "상무2동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.851461925213,
+          35.160099410523
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-997",
+        "name": "광주광역시청 수유실",
+        "address": "광주광역시 서구 내방로 111",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=997",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 내방로 111",
+        "indoorLocation": "1층 로비",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2023-01-04",
+          "featureId": "aed-15-0052082",
+          "matchedName": "광주광역시청",
+          "matchedAddress": "전남광주통합특별시 서구 내방로 111, 전남광주통합특별시청 18층 (치평동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-07",
+        "dongName": "치평동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.890112188537,
+          35.152029025672
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-994",
+        "name": "광주서구보건소 수유실",
+        "address": "광주광역시 서구 경열로 33",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=994",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 경열로 33",
+        "indoorLocation": "2층 예방접종실 안",
+        "roomType": "모유수유/착유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2022-10-13",
+          "featureId": "aed-15-0034865",
+          "matchedName": "전남광주통합특별시 서구보건소",
+          "matchedAddress": "전남광주통합특별시 서구 경열로 33, 서구청 (농성동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-03",
+        "dongName": "농성1동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.890112188537,
+          35.152029025672
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-995",
+        "name": "광주서구청 수유실",
+        "address": "광주광역시 서구 경열로 33",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=995",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 경열로 33",
+        "indoorLocation": "1층 체육관광과 앞에",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": null,
+          "featureId": "aed-15-0119576",
+          "matchedName": "전남광주통합특별시 서구청",
+          "matchedAddress": "전남광주통합특별시 서구 경열로 33, 서구청 (농성동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-03",
+        "dongName": "농성1동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.879642404696,
+          35.160614267849
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-998",
+        "name": "광주유스퀘어종합버스터미널 수유실",
+        "address": "광주광역시 서구 무진대로 904",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=998",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 무진대로 904",
+        "indoorLocation": "1층 영풍문고 오른쪽",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": null,
+          "featureId": "aed-15-0015138",
+          "matchedName": "광주금호터미널㈜",
+          "matchedAddress": "전남광주통합특별시 서구 무진대로 904 (광천동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-05",
+        "dongName": "광천동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.840480480884,
+          35.146777057547
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1000",
+        "name": "김대중컨벤션센터 수유실",
+        "address": "광주광역시 서구 상무누리로 30",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1000",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 상무누리로 30",
+        "indoorLocation": "1층 전시실 옆",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": null,
+          "featureId": "aed-15-0111136",
+          "matchedName": "광주광역시관광공사",
+          "matchedAddress": "전남광주통합특별시 서구 상무누리로 30, 김대중컨벤션센터 (치평동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-07",
+        "dongName": "치평동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.852377098,
+          35.152374619
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1006",
+        "name": "롯데마트맥스상무점 수유실",
+        "address": "광주광역시 서구 시청로 40",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1006",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 시청로 40",
+        "indoorLocation": "2층 문화센터앞",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "source_location",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "수유정보알리미 공식 길찾기 링크의 등록 위치 · 출입구 미검수",
+        "coordinateSource": {
+          "sourceName": "수유정보알리미",
+          "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1006",
+          "mapUrl": "https://map.daum.net/?sX=591259.0&sY=797337.0&sName=%ED%98%84%EC%9E%AC%EC%9C%84%EC%B9%98&eX=466372.0&eY=460024.0&eName=%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8%EB%A7%A5%EC%8A%A4%EC%83%81%EB%AC%B4%EC%A0%90",
+          "transform": "WCONGNAMUL / 2.5 → EPSG:5181 → EPSG:4326 (proj4js 2.15.0)",
+          "transformSource": "https://devtalk.kakao.com/t/topic/38086",
+          "raw": {
+            "x": 466372,
+            "y": 460024,
+            "crs": "WCONGNAMUL"
+          }
+        },
+        "dongId": "seogu-07",
+        "dongName": "치평동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "수유정보알리미 공식 길찾기 링크의 등록 위치 · 출입구 미검수"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.875572011,
+          35.132974515
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-996",
+        "name": "롯데아울렛월드컵점 수유실",
+        "address": "광주광역시 서구 금화로 240",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=996",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 금화로 240",
+        "indoorLocation": "1층 유아동복 매장 옆",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "source_location",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "수유정보알리미 공식 길찾기 링크의 등록 위치 · 출입구 미검수",
+        "coordinateSource": {
+          "sourceName": "수유정보알리미",
+          "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=996",
+          "mapUrl": "https://map.daum.net/?sX=591259.0&sY=797337.0&sName=%ED%98%84%EC%9E%AC%EC%9C%84%EC%B9%98&eX=471649.0&eY=454636.0&eName=%EB%A1%AF%EB%8D%B0%EC%95%84%EC%9A%B8%EB%A0%9B%EC%9B%94%EB%93%9C%EC%BB%B5%EC%A0%90",
+          "transform": "WCONGNAMUL / 2.5 → EPSG:5181 → EPSG:4326 (proj4js 2.15.0)",
+          "transformSource": "https://devtalk.kakao.com/t/topic/38086",
+          "raw": {
+            "x": 471649,
+            "y": 454636,
+            "crs": "WCONGNAMUL"
+          }
+        },
+        "dongId": "seogu-17",
+        "dongName": "풍암동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "수유정보알리미 공식 길찾기 링크의 등록 위치 · 출입구 미검수"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.888918,
+          35.15522263
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1003",
+        "name": "상록도서관 수유실",
+        "address": "광주광역시 서구 상무대로1171번길 11",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1003",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 상무대로1171번길 11",
+        "indoorLocation": "지하1층 어린이자료실 내",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:1bf787326096bc91cccd",
+          "matchedName": "상록도서관",
+          "matchedAddress": "전남광주통합특별시 서구 상무대로1171번길 11",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-03",
+        "dongName": "농성1동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8825,
+          35.16111111111111
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-999",
+        "name": "신세계백화점광주점 수유실",
+        "address": "광주광역시 서구 무진대로 932",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=999",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 무진대로 932",
+        "indoorLocation": "6층 아동복 매장 옆",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "행정안전부 국민안전24 / 민방위대피소",
+          "sourceUrl": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+          "sourceDate": null,
+          "featureId": "civil-defense-shelter:6d51135db2c4cc",
+          "matchedName": "신세계백화점 지하주차장(지하 2,3층)",
+          "matchedAddress": "광주광역시 서구 무진대로 932 (광천동, 신세계백화점)",
+          "path": "/data/city/official/civil-defense-shelter.geojson",
+          "fileSha256": "5b8224ffe824d90abb0fcb1033b0942c45bf932ca7d0cab650cd325246a10c36"
+        },
+        "dongId": "seogu-05",
+        "dongName": "광천동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.881858,
+          35.12979872
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1011",
+        "name": "어린이생태학습도서관 수유실",
+        "address": "광주광역시 서구 풍암공원로 8",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1011",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 풍암공원로 8",
+        "indoorLocation": "1층 자료실 옆",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국도서관표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "libraries:aa6a34e968b8d51b3600",
+          "matchedName": "서구어린이생태학습도서관",
+          "matchedAddress": "전남광주통합특별시 서구 풍암공원로 8",
+          "path": "/data/layers/libraries.geojson",
+          "fileSha256": "3c1e69a15be52226729a540afa2b178c10ef8c25e763bed567ed3d75b28f9e57"
+        },
+        "dongId": "seogu-17",
+        "dongName": "풍암동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.88203225,
+          35.1587619
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1010",
+        "name": "이마트광주점 수유실",
+        "address": "광주광역시 서구 죽봉대로 61",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1010",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 죽봉대로 61",
+        "indoorLocation": "2층 미용실앞",
+        "roomType": "모유수유/착유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "행정안전부 생활안전지도 / 약국",
+          "sourceUrl": "https://www.safemap.go.kr/main/smap.do",
+          "sourceDate": null,
+          "featureId": "pharmacy-official:6ec6860e37a5d0",
+          "matchedName": "미소그린약국",
+          "matchedAddress": "광주광역시 서구 죽봉대로 61, 2층 (화정동)",
+          "path": "/data/city/official/pharmacy-official.geojson",
+          "fileSha256": "e469d6144cd6f4c733d7e50a018ad7fd9bc62faa5a2cc0b0e9593b572868e899"
+        },
+        "dongId": "seogu-10",
+        "dongName": "화정1동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.842220211165,
+          35.152218682651
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-nursing-1004",
+        "name": "일가정양립지원본부 수유실",
+        "address": "광주광역시 서구 상무자유로 73",
+        "sourceUrl": "https://www.sooyusil.com/home/42.htm?roomNo=1004",
+        "sourceName": "수유정보알리미 (인구보건복지협회)",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "광주 서구 상무자유로 73",
+        "indoorLocation": "1층 1366센터 맞은편",
+        "roomType": "가족수유실",
+        "note": "공식 목록 등록 정보. 방문 전 운영 여부 확인 권장.",
+        "datasetId": "care-nursing",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 수유시설 등록상태 운영중 · 최종수정 2026-09-10 · 당일 이용 가능 여부는 기관 확인",
+        "sourceModifiedAt": "2026-09-10",
+        "registeredStatus": "운영중",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2025-01-08",
+          "featureId": "aed-15-0000921",
+          "matchedName": "광주광역시일가정양립지원본부",
+          "matchedAddress": "전남광주통합특별시 서구 상무자유로 73, 광주여성발전센터 (치평동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-07",
+        "dongName": "치평동",
+        "category": "care",
+        "facilityType": "수유실",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

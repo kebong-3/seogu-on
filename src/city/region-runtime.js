@@ -24,7 +24,7 @@ export function regionLayers(profile, layers) {
 export function applyRegionChrome(profile) {
   const q = selector => document.querySelector(selector), text = (selector,value) => {const node=q(selector);if(node)node.textContent=value;};
   const districtLabel=legacyEnabled(profile)?'행정동':'읍·면·동';
-  text('.sidebar-heading h1',`${profile.name} · 공간행정`);
+  text('.sidebar-heading h1',`${profile.name} · 우리 동네`);
   text('.overview-card strong',`${profile.name} 전체`);
   text('.overview-card small',`${profile.districtCount}개 ${districtLabel} 한눈에`);
   text('.breadcrumbs [data-action="overview"]',`${profile.name} 전체`);

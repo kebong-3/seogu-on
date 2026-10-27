@@ -1,9 +1,9 @@
 /** Public-facility preselection only. Actual walking routes are calculated by the route provider. */
-const CATEGORIES = ['shade','shelter','police','bell','childcare','public'];
+const CATEGORIES = ['shade','shelter','police','bell','childcare','care','public'];
 export const WALK_MODE_CATEGORIES = Object.freeze({
   shade: Object.freeze(['shade','shelter']),
   safety: Object.freeze(['police']),
-  care: Object.freeze(['childcare','public']),
+  care: Object.freeze(['childcare','care','public']),
   inspection: Object.freeze([...CATEGORIES]),
   winter: Object.freeze(['public','police','shelter','shade']),
 });

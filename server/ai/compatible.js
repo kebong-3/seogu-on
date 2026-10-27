@@ -5,7 +5,7 @@ function schema(s) {
   return Object.fromEntries(Object.entries(s).map(([k,v])=>[k,k==='type'&&typeof v==='string'?v.toLowerCase():schema(v)]));
 }
 /** vLLM 등 Chat Completions 호환 서버용 전송 어댑터. 공간도구·근거 검사는 공유한다. */
-export async function generateCompatible({fetcher,key,model,baseUrl,body,timeoutMs}) {
+export async function generateCompatible({fetcher,key,model,baseUrl,body,timeoutMs,reasoningEffort}) {
   const messages=[{role:'system',content:body.systemInstruction.parts.map(p=>p.text||'').join('\n')}];
   let serial=0;
   const waiting=[];
@@ -27,6 +27,11 @@ export async function generateCompatible({fetcher,key,model,baseUrl,body,timeout
     tools:body.tools[0].functionDeclarations.map(d=>({type:'function',function:{name:d.name,description:d.description,parameters:schema(d.parameters)||{type:'object',properties:{}}}})),
     tool_choice:body.toolConfig.functionCallingConfig.mode==='NONE'?'none':'auto'};
   if (!request.tools.length) { delete request.tools; delete request.tool_choice; }
+  if(reasoningEffort){
+    request.reasoning_effort=reasoningEffort;
+    // Reasoning and the final answer share the completion budget. Retain room for content.
+    if(baseUrl==='https://api.upstage.ai/v1'&&!['none','minimal'].includes(reasoningEffort))request.max_tokens=Math.max(request.max_tokens||0,8192);
+  }
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
   try {
     const response=await fetcher(`${baseUrl}/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json',...(key?{Authorization:`Bearer ${key}`}:{})},body:JSON.stringify(request),signal:controller.signal,redirect:'error'});
@@ -34,6 +39,7 @@ export async function generateCompatible({fetcher,key,model,baseUrl,body,timeout
     const payload=await response.json(),message=payload.choices?.[0]?.message;
     if(!message)throw new LlmError('LLM_BAD_RESPONSE','AI 응답을 확인하지 못했습니다.');
     const parts=[];
+    // Deliberately discard message.reasoning and all other provider-only fields.
     if(typeof message.content==='string')parts.push({text:message.content});
     for(const c of message.tool_calls||[]){let args;try{args=JSON.parse(c.function.arguments);}catch{throw new LlmError('LLM_BAD_RESPONSE','AI 도구 인자를 해석하지 못했습니다.');}
       parts.push({functionCall:{id:c.id,name:c.function.name,args}});

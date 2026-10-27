@@ -25,7 +25,7 @@ export const ASK_LIMITS = {
 
 /** 응답의 code 값과 뜻. docs/AI_PANEL.md 의 표와 같아야 한다. */
 export const ASK_CODES = {
-  LLM_NOT_CONFIGURED: 'AI_API_KEY 또는 GEMINI_API_KEY 가 설정되지 않음',
+  LLM_NOT_CONFIGURED: '선택한 AI의 서버 키(UPSTAGE_API_KEY / AI_API_KEY / GEMINI_API_KEY)가 설정되지 않음',
   LLM_MODEL_NOT_FOUND: '모델 이름을 찾지 못함(AI_MODEL 확인)',
   LLM_QUOTA: '연결된 AI 제공기관의 사용량 한도 초과(429)',
   LLM_KEY_REJECTED: '키가 거부됨(오타·만료·제한 설정)',
@@ -232,8 +232,8 @@ export async function answerQuestion(input, ctx = {}) {
   const preparedCtx = {...ctx, env, preparedOutcome};
   const config=modelConfig(env);
   if(config.error)return rulesResponse(input,preparedCtx,'LLM_BAD_REQUEST');
-  const {key,model,provider,baseUrl}=config;
-  if (!key && provider==='google') return rulesResponse(input, preparedCtx, 'LLM_NOT_CONFIGURED');
+  const {key,model,provider,baseUrl,reasoningEffort}=config;
+  if (!key && provider!=='openai-compatible') return rulesResponse(input, preparedCtx, 'LLM_NOT_CONFIGURED');
   if (!takeDaily(env, now)) return rulesResponse(input, preparedCtx, 'LLM_DAILY_LIMIT');
 
   const store = getStore(ctx.dataDir);
@@ -241,7 +241,7 @@ export async function answerQuestion(input, ctx = {}) {
     const outcome = await answerByLlm(
       input.question,
       { dongName: input.dong?.name, previousQuestions: input.previousQuestions, dongNames: store.dongs.map(d => d.name), reviewContext: input.reviewContext },
-      { key, model, provider,baseUrl, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir,
+      { key, model, provider,baseUrl, reasoningEffort, fetcher: ctx.fetcher || fetch, dataDir: ctx.dataDir,
         budgetMs: Math.max(1, (ctx.budgetMs ?? 25000) - (Date.now() - startedAt)), now: ctx.clock,
         preparedOutcome: preparedOutcome?.matched && preparedOutcome.results.length ? preparedOutcome : null },
     );

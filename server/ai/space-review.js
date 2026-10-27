@@ -77,7 +77,7 @@ export function unsupportedSpaceNumbers(answer, evidence) {
 async function explainSpace(profile, comparison, ctx) {
   const config = modelConfig(ctx.env), evidence = spaceEvidence(profile, comparison);
   if (config.error) throw new LlmError('LLM_BAD_REQUEST','AI 제공기관 설정을 확인하세요.');
-  if (!config.key && config.provider === 'google') throw new LlmError('LLM_NOT_CONFIGURED','AI 연결 설정이 없습니다.');
+  if (!config.key && config.provider !== 'openai-compatible') throw new LlmError('LLM_NOT_CONFIGURED','AI 연결 설정이 없습니다.');
   if (!takeDaily(ctx.env, ctx.now)) throw new LlmError('LLM_DAILY_LIMIT','하루 AI 호출 한도에 도달했습니다.');
   const system = [
     '당신은 지방행정 공공공간 활용 검토 도우미입니다. 서버 계산 결과에서 담당자가 먼저 볼 근거와 확인 업무를 선택합니다.',
@@ -94,12 +94,12 @@ async function explainSpace(profile, comparison, ctx) {
     '현재 사용자 확인기록과 변경 가정은 다릅니다. 확인이 부족한 기준안, 변경된 요일·시간, 미산정 비용을 고려해 구체적인 공간의 확인 업무를 우선순위로 선택하세요.',
   ].join('\n');
   const body = {systemInstruction:{parts:[{text:system}]},contents:[{role:'user',parts:[{text:JSON.stringify(evidence)}]}],generationConfig:{temperature:0.15,maxOutputTokens:2200},tools:[{functionDeclarations:[]}],toolConfig:{functionCallingConfig:{mode:'NONE'}}};
-  const send = config.provider === 'openai-compatible' ? generateCompatible : generate;
+  const send = config.provider === 'google' ? generate : generateCompatible;
   // Gemini rejects an empty tools declaration; the compatible adapter accepts it and omits it downstream.
   if (config.provider === 'google') { delete body.tools; delete body.toolConfig; }
   const deadline = Date.now() + Math.min(24000, Math.max(1000,ctx.budgetMs ?? 24000));
   let model = config.model, payload;
-  const request = {fetcher:ctx.fetcher || fetch,key:config.key,baseUrl:config.baseUrl,model,body,timeoutMs:deadline-Date.now()};
+  const request = {fetcher:ctx.fetcher || fetch,key:config.key,baseUrl:config.baseUrl,reasoningEffort:config.reasoningEffort,model,body,timeoutMs:deadline-Date.now()};
   try { payload = await send(request); }
   catch (error) {
     if (config.provider !== 'google' || error.code !== 'LLM_MODEL_NOT_FOUND' || deadline-Date.now()<3500) throw error;

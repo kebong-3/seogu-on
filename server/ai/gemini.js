@@ -301,7 +301,8 @@ export async function answerByLlm(question, context, ctx) {
   const now = ctx.now || Date.now;
   const deadline = now() + (ctx.budgetMs ?? LIMITS.budgetMs);
   let model = ctx.model;
-  const send=ctx.provider==='openai-compatible'?generateCompatible:generate;
+  const compatible=['openai-compatible','upstage'].includes(ctx.provider);
+  const send=compatible?generateCompatible:generate;
   const prepared = ctx.preparedOutcome;
   const state = { steps: [...(prepared?.steps || [])], results: [...(prepared?.results || [])] };
   const declarations = toFunctionDeclarations();
@@ -315,7 +316,7 @@ export async function answerByLlm(question, context, ctx) {
     tools: [{ functionDeclarations: declarations }],
     generationConfig: { temperature: 0.2, maxOutputTokens: 2048,
       // 공식 Gemma 4 API의 minimal은 내부 thinking을 끄며, 공개 근거의 짧은 요약 지연을 줄인다.
-      ...(ctx.provider !== 'openai-compatible' && /^gemma-4-/.test(model) ? {thinkingConfig: {thinkingLevel: 'minimal'}} : {}),
+      ...(!compatible && /^gemma-4-/.test(model) ? {thinkingConfig: {thinkingLevel: 'minimal'}} : {}),
     },
   };
 
@@ -328,6 +329,7 @@ export async function answerByLlm(question, context, ctx) {
       fetcher: ctx.fetcher,
       key: ctx.key,
       baseUrl: ctx.baseUrl,
+      reasoningEffort: ctx.reasoningEffort,
       model,
       timeoutMs: remaining,
       body: { ...base, contents, toolConfig: { functionCallingConfig: { mode: textOnly ? 'NONE' : 'AUTO' } } },
@@ -336,7 +338,7 @@ export async function answerByLlm(question, context, ctx) {
     try { payload = await send(request); }
     catch (error) {
       // 첫 요청에서만 복구: 서로 다른 모델의 함수 호출/생각 서명을 섞지 않는다.
-      if (ctx.provider==='openai-compatible' || round !== 1 || error.code !== 'LLM_MODEL_NOT_FOUND' || deadline - now() < LIMITS.minCallMs * 2) throw error;
+      if (compatible || round !== 1 || error.code !== 'LLM_MODEL_NOT_FOUND' || deadline - now() < LIMITS.minCallMs * 2) throw error;
       const alternative = await discoverCompatibleModel({fetcher: ctx.fetcher, key: ctx.key, excluded: model, timeoutMs: Math.min(2000, deadline - now() - LIMITS.minCallMs)});
       if (!alternative) throw error;
       if (deadline - now() < LIMITS.minCallMs) throw new LlmError('LLM_TIMEOUT', '모델 복구 중 응답 시간 예산을 다 썼습니다.');

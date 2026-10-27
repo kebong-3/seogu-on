@@ -15,7 +15,7 @@ const fixtures=[
   {id:'bell',name:'여자화장실 내 비상벨',category:'bell',coordinate:[126.88,35.16],routeEligible:false},
 ];
 const saved={document:globalThis.document,fetch:globalThis.fetch,innerWidth:globalThis.innerWidth,localStorage:globalThis.localStorage};
-function setup({configured=true,post}={}){
+function setup({configured=true,post,search}={}){
   const hostListeners=new Map(),nodes=new Map(),calls=[],paints=[],tools=[];let html='',clears=0,catalogueCandidates=structuredClone(fixtures),catalogueReferences=null;
   const host={scrollTop:0,addEventListener(type,handler){hostListeners.set(type,handler)},removeEventListener(type){hostListeners.delete(type)}};
   globalThis.document={hidden:false,getElementById(id){return id==='detail-body'?host:nodes.get(id)},addEventListener(){},removeEventListener(){}};
@@ -26,11 +26,70 @@ function setup({configured=true,post}={}){
     {id:'direct',role:'direct',label:'직접',distanceMeters:1200,durationSeconds:900,geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates:[request.start,request.end]},properties:{}}]},via:[]},
     {id:'via',role:'via',label:'시설 경유',distanceMeters:1500,durationSeconds:1080,geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates:[request.start,...(request.viaIds||['shade']).map(id=>fixtures.find(c=>c.id===id).coordinate),request.end]},properties:{}}]},via:(request.viaIds||['shade']).map(id=>fixtures.find(c=>c.id===id))},
   ],warnings:[]});
-  globalThis.fetch=async(url,options={})=>{calls.push({url,options});if(!options.method)return {ok:true,json:async()=>({configured,region:{id:'seogu'},candidates:catalogueCandidates,safetyReferences:catalogueReferences})};const request=JSON.parse(options.body);return post?post(request,routeBody):{ok:true,json:async()=>routeBody(request)}};
+  globalThis.fetch=async(url,options={})=>{calls.push({url,options});if(new URL(url,'https://local.invalid').searchParams.has('q'))return search?search(url):{ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[]})};if(!options.method)return {ok:true,json:async()=>({configured,region:{id:'seogu'},candidates:catalogueCandidates,safetyReferences:catalogueReferences})};const request=JSON.parse(options.body);return post?post(request,routeBody):{ok:true,json:async()=>routeBody(request)}};
   const api={state,show(title,body,view){html=body;state.view=view},label(){return '서구 전체'},send(message){tools.push(message)},toast(){},paintWalkRoutes(routes,active,points,assessmentFeatures){paints.push({routes,active,points,assessmentFeatures})},clearWalkRoutes(){clears++},frameGeometry(){}};
   const ui=installWalkRoutes(api);
-  return {ui,api,calls,paints,tools,nodes,setCandidates(items){catalogueCandidates=items},setReferences(value){catalogueReferences=value},get html(){return html},get clears(){return clears},action:async(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),change(id,value,checked){hostListeners.get('change')({target:{id,value,checked}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
+  return {ui,api,calls,paints,tools,nodes,setCandidates(items){catalogueCandidates=items},setReferences(value){catalogueReferences=value},get html(){return html},get clears(){return clears},action:async(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),submit(field){return hostListeners.get('submit')({target:{dataset:{walkSearch:field}},preventDefault(){}})},input(id,value,extra={}){hostListeners.get('input')({target:{id,value,...extra}})},change(id,value,checked){hostListeners.get('change')({target:{id,value,checked}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
 }
+
+test('place search requires choosing a result before routing, and preserves searched points on catalogue refresh',async()=>{
+  const item={id:'search:seogu:0',name:'장난감도서관',address:'서구 경열로 33',coordinate:[126.852,35.151],sourceName:'브이월드 장소·주소 검색'};
+  const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[item,{...item,id:'outside',name:'구 밖',coordinate:[130,40]}]})})});try{
+    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'경열로 33'});await env.submit('start');
+    assert.match(env.html,/장난감도서관/);assert.doesNotMatch(env.html,/구 밖/);assert.ok(env.calls.every(call=>!call.options.method));
+    await env.action('walk-calculate');assert.match(env.html,/출발과 도착을 모두 선택/);assert.ok(env.calls.every(call=>!call.options.method));
+    await env.action('walk-choose-place',{field:'start',index:'0'});await env.action('walk-retry');await env.action('walk-calculate');
+    assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).start,item.coordinate);
+    env.input('walk-start-query','다른 주소');await env.action('walk-calculate');assert.match(env.html,/출발과 도착을 모두 선택/);
+  }finally{env.cleanup();}
+});
+
+test('editing an in-flight place search enables a new search and ignores the older reply',async()=>{
+  let finishOld;
+  const oldItem={id:'search:seogu:old',name:'이전 검색 시설',coordinate:[126.85,35.15]};
+  const newItem={id:'search:seogu:new',name:'새 검색 시설',coordinate:[126.86,35.16]};
+  const env=setup({search:async url=>new URL(url,'https://local.invalid').searchParams.get('q')==='첫 검색'?new Promise(resolve=>{finishOld=()=>resolve({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[oldItem]})})}):{ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[newItem]})}});
+  try{
+    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'첫 검색'});
+    const pending=env.submit('start');assert.match(env.html,/검색 중/);
+    const button={disabled:true,textContent:'검색 중'};let removed=0;
+    env.input('walk-start-query','새 검색',{closest:selector=>selector==='form'?{querySelector:()=>button}:{querySelector:()=>({remove(){removed++}})}});
+    assert.equal(button.disabled,false);assert.equal(button.textContent,'검색');assert.equal(removed,2);
+    env.nodes.set('walk-start-query',{value:'새 검색'});await env.submit('start');
+    assert.match(env.html,/새 검색 시설/);finishOld();await pending;
+    assert.match(env.html,/새 검색 시설/);assert.doesNotMatch(env.html,/이전 검색 시설/);
+  }finally{env.cleanup();}
+});
+
+test('map endpoints can cross a selected dong within the region and swapping cancels a pending map pick',async()=>{
+  const env=setup();try{
+    env.api.state.district=polygon;env.api.state.scope={type:'Polygon',coordinates:[[[126.88,35.15],[126.90,35.15],[126.90,35.16],[126.88,35.16],[126.88,35.15]]]};
+    await env.action('walk-routes');await env.action('walk-pick',{field:'start'});env.ui.onEvent({type:'point',tool:'walk-start',point:[126.8,35.1]});
+    await env.action('walk-pick',{field:'end'});await env.action('walk-swap');
+    assert.equal(env.tools.at(-1).type,'stop');env.ui.onEvent({type:'point',tool:'walk-end',point:[126.7,35.2]});await env.action('walk-calculate');
+    const body=JSON.parse(env.calls.at(-1).options.body);assert.deepEqual(body.end,[126.8,35.1]);assert.deepEqual(body.start,fixtures[1].coordinate);
+  }finally{env.cleanup();}
+});
+
+test('explicit route cancel keeps endpoints and ignores a response that finishes later',async()=>{
+  let finish;
+  const env=setup({post:async(request,body)=>new Promise(resolve=>{finish=()=>resolve({ok:true,json:async()=>body(request)})})});try{
+    await env.action('walk-routes');const pending=env.action('walk-calculate');assert.match(env.html,/조회 취소/);await env.action('walk-cancel-route');finish();await pending;
+    assert.equal(env.paints.length,0);assert.match(env.html,/출발·도착은 유지/);assert.match(env.html,/서구청 들불홀/);
+  }finally{env.cleanup();}
+});
+
+test('leaving the walking service cancels pending work and cannot repaint on map ready, while endpoints survive',async()=>{
+  let finish,first=true;
+  const env=setup({post:async(request,body)=>{if(first){first=false;return new Promise(resolve=>{finish=()=>resolve({ok:true,json:async()=>body(request)})})}return {ok:true,json:async()=>body(request)}}});
+  try{
+    await env.action('walk-routes');const pending=env.action('walk-calculate');
+    env.ui.suspend();env.api.state.view='resilience';finish();await pending;
+    env.ui.onEvent({type:'ready'});env.ui.scopeChanged();assert.equal(env.paints.length,0);assert.equal(env.api.state.view,'resilience');
+    await env.action('walk-routes');assert.match(env.html,/서구청 들불홀/);assert.match(env.html,/화정1동행정복지센터 다목적실/);
+    await env.action('walk-calculate');assert.equal(env.paints.length,1);
+  }finally{env.cleanup();}
+});
 
 test('opening chooses two real examples without a paid request, and explicit comparison sends only coordinates',async()=>{
   const env=setup();try{
@@ -130,7 +189,7 @@ test('catalogue refresh removes duplicate-coordinate and no-longer-supported way
 
 test('seasonal controls send an explicit Korean-time departure and preserve zero detour limits without an automatic request',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');assert.match(env.html,/예시 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울철 보행안전/);
+    await env.action('walk-routes');assert.match(env.html,/예시 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울 안전보행/);
     env.change('walk-departure-at','2026-07-15T14:10');env.change('walk-max-detour-meters','0');env.change('walk-max-detour-minutes','0');env.change('walk-shadow-timing','departure-static');
     assert.equal(env.calls.filter(c=>c.options.method==='POST').length,0);
     await env.action('walk-calculate');const body=JSON.parse(env.calls.at(-1).options.body);

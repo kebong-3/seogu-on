@@ -1,0 +1,150 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "regionId": "seogu",
+    "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+    "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+    "sourceDate": null,
+    "collectedAt": "2026-10-27",
+    "complete": false,
+    "coverage": "공식 공개목록 5개 중 주소·지역경계 대조 후 지도에 3개 표시. 나머지는 시설 목록에 주소로 제공. 현재 운영·전체 시설·출입구를 보장하지 않음.",
+    "directoryPath": "/data/decision/seogu/care-directory.json",
+    "publishedRecords": 3,
+    "uniqueCoordinates": 3,
+    "directoryRecords": 5,
+    "unlocatedRecords": 2,
+    "missingSourceDateCount": 3,
+    "countMeaning": "시설 또는 수유공간 수록점. 같은 주소의 다른 서비스는 별도 항목. 정원·빈자리·현재 운영 수가 아님."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.847724112722,
+          35.145564853001
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-play-together",
+        "name": "광주같이돌봄가게",
+        "address": "광주광역시 서구 상무대로 760",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 상무대로 760",
+        "phone": "062-710-1717",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-play",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "국립중앙의료원 E-GEN 자동심장충격기 찾기",
+          "sourceUrl": "https://e-gen.or.kr/egen/search_aed.do?searchType=general&jusoType=addrroad&loca=26&emogdstr=1505&sidoCode=12&gugunCode=240",
+          "sourceDate": "2026-03-20",
+          "featureId": "aed-15-0000112",
+          "matchedName": "광주교통공사",
+          "matchedAddress": "전남광주통합특별시 서구 상무대로 760, 전남광주통합특별시도시철도공사 (마륵동)",
+          "path": "/data/city/official/aed.geojson",
+          "fileSha256": "e7c06f3c371a7ce31b0cd5533d41c5ce7da6ce6859ffe4ec021ab531dd33a1f6"
+        },
+        "dongId": "seogu-14",
+        "dongName": "서창동",
+        "category": "care",
+        "facilityType": "놀이·체험시설",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8301340092,
+          35.11523537
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-culture-seochang",
+        "name": "서창 한옥문화관",
+        "address": "광주광역시 서구 눌재로 420",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 눌재로 420",
+        "phone": "062-373-1365",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-play",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "public-facilities:3f9bd6eb1f103770ce03",
+          "matchedName": "서창한옥문화관강당",
+          "matchedAddress": "전남광주통합특별시 서구 눌재로 420",
+          "path": "/data/layers/public-facilities.geojson",
+          "fileSha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439"
+        },
+        "dongId": "seogu-14",
+        "dongName": "서창동",
+        "category": "care",
+        "facilityType": "놀이·체험시설",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.860191855,
+          35.1315313668
+        ]
+      },
+      "properties": {
+        "id": "care-seogu-play-climbing",
+        "name": "서구 청소년수련관 어린이클라이밍",
+        "address": "광주광역시 서구 마재로 3",
+        "sourceUrl": "https://www.gjwf.or.kr/kium/07/01",
+        "sourceName": "광주여성가족재단 영유아 돌봄·놀이지도",
+        "sourceDate": null,
+        "verifiedAt": "2026-10-27",
+        "sourceAddress": "서구 마재로 3",
+        "phone": "062-654-4318",
+        "note": "공식 돌봄놀이지도 수록. 자료 기준일 미표기; 방문 전 프로그램 운영 여부 확인.",
+        "datasetId": "care-play",
+        "regionId": "seogu",
+        "locationStatus": "address_reference",
+        "collectedAt": "2026-10-27",
+        "operationalStatus": "공식 목록 수록 · 현재 운영·이용 가능 여부는 기관 확인",
+        "geometryMeaning": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인",
+        "coordinateSource": {
+          "sourceName": "전국공공시설개방정보표준데이터 / 전남광주통합특별시 서구",
+          "sourceUrl": "https://www.data.go.kr/data/15013117/standard.do",
+          "sourceDate": "2026-08-06",
+          "featureId": "public-facilities:cbd3c94f461ae67d1c1a",
+          "matchedName": "서구문화센터2층전시실",
+          "matchedAddress": "전남광주통합특별시 서구 마재로 3",
+          "path": "/data/layers/public-facilities.geojson",
+          "fileSha256": "cc5aed9aa6d8276553d080398fa564658046d89fca36fe68cb7d35b9d7f82439"
+        },
+        "dongId": "seogu-16",
+        "dongName": "금호2동",
+        "category": "care",
+        "facilityType": "놀이·체험시설",
+        "coordinateSourceDescription": "동일 도로명주소의 공개 건물·단지 대표위치 · 시설 출입구/실내 위치 미확인"
+      }
+    }
+  ]
+}

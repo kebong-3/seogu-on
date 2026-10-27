@@ -14,7 +14,7 @@ const selected=new Set(['shade','heat-shelters','police','emergency-bell','child
 async function fixture(t,regionId='seogu'){
   const root=await mkdtemp(join(tmpdir(),'seo-walk-candidates-'));t.after(()=>rm(root,{recursive:true,force:true}));
   const profile=await read(`/data/regions/${regionId}.json`),manifest=await read(`/data/decision/${regionId}/manifest.json`);
-  const paths=new Set([`/data/regions/${regionId}.json`,profile.boundaryUrl,profile.facilitiesUrl,`/data/decision/${regionId}/manifest.json`,...manifest.datasets.filter(d=>selected.has(d.id)).map(d=>d.path)]);
+  const paths=new Set([`/data/regions/${regionId}.json`,profile.boundaryUrl,profile.facilitiesUrl,`/data/decision/${regionId}/manifest.json`,...manifest.datasets.filter(d=>selected.has(d.id)||d.id.startsWith('care-')).map(d=>d.path)]);
   for(const path of paths){const target=resolve(root,path.slice(1));await mkdir(dirname(target),{recursive:true});await copyFile(resolve(publicRoot,path.slice(1)),target);}
   return {root,profile,manifest,regionId};
 }
@@ -26,8 +26,8 @@ async function rewriteSource(fixture,id,change){
 
 test('key-free Seo-gu candidates are source-backed points inside actual polygons, excluding CCTV and lighting layers',async()=>{
   const pack=await loadWalkCandidates({regionId:'seogu',env:{}});
-  assert.equal(pack.profile.id,'seogu');assert.equal(pack.candidates.length,746);
-  assert.deepEqual(new Set(pack.candidates.map(c=>c.category)),new Set(['shade','shelter','police','bell','childcare','public']));
+  assert.equal(pack.profile.id,'seogu');assert.equal(pack.candidates.length,777);
+  assert.deepEqual(new Set(pack.candidates.map(c=>c.category)),new Set(['shade','shelter','police','bell','childcare','care','public']));
   assert.ok(pack.candidates.every(c=>pointInRegion(c.coordinate,pack.boundaries)&&pointInGeometry(c.coordinate,pack.geometry)));
   assert.ok(pack.candidates.every(c=>c.id&&c.name&&c.sourceName&&/^https?:/.test(c.sourceUrl)));
   assert.ok(pack.candidates.every(c=>c.note.includes('실제 출입구')&&typeof c.routeEligible==='boolean'));
@@ -85,7 +85,7 @@ test('tampered hashes, cross-region file paths and symlinks cannot substitute a 
 
 test('identical duplicate records are merged but conflicting identities fail instead of moving a facility',async t=>{
   const f=await fixture(t);await rewriteSource(f,'shade',raw=>{raw.features.push(structuredClone(raw.features[0]));});
-  const pack=await loadWalkCandidates({regionId:'seogu',env:{},publicRoot:f.root});assert.equal(pack.candidates.length,746);assert.equal(pack.sourceStatus.find(s=>s.datasetId==='shade').duplicates,1);
+  const pack=await loadWalkCandidates({regionId:'seogu',env:{},publicRoot:f.root});assert.equal(pack.candidates.length,777);assert.equal(pack.sourceStatus.find(s=>s.datasetId==='shade').duplicates,1);
   const g=await fixture(t);await rewriteSource(g,'shade',raw=>{const duplicate=structuredClone(raw.features[0]);duplicate.properties.name+=' 충돌';raw.features.push(duplicate);});
   await assert.rejects(loadWalkCandidates({regionId:'seogu',env:{},publicRoot:g.root}),error=>error.code==='WALK_SOURCE_MISMATCH');
 });
