@@ -11,11 +11,11 @@ export function initialMapEngine(profile,search='') {
 export function regionMapConfig(profile,config) {
   return legacyEnabled(profile)?config:{configured:{vworld3d:config?.configured?.vworld3d===true},note:'선택 지역의 브이월드 배경지도 · 지역자료는 별도 데이터팩 사용'};
 }
-const PORTABLE_ACTIONS = new Set(['overview','dong','dong-frame','dong-tour','close-detail','panels','fullscreen','sidebar-tab','appearance','engine','list','feature','feature-frame','isolate','clear-layers','zoom-in','zoom-out','rotate','orbit','top','oblique','refresh-enabled','export-csv','settings','credits','live-detail','live-refresh','region-info','region-chooser','pilot-measure','ui-theme','ui-finish','ui-reset']);
+const PORTABLE_ACTIONS = new Set(['overview','dong','dong-frame','dong-tour','close-detail','panels','fullscreen','sidebar-tab','appearance','engine','list','feature','feature-frame','isolate','clear-layers','zoom-in','zoom-out','rotate','orbit','top','oblique','refresh-enabled','export-csv','settings','credits','live-detail','live-refresh','region-info','region-chooser','pilot-measure','ui-theme','ui-finish','ui-reset','service-menu','service-readiness','service-readiness-refresh','field-operations']);
 export function supportsAction(profile, action, dataset = {}) {
   if (legacyEnabled(profile)) return true;
   if (action === 'engine') return ['vworld','boundary','libre'].includes(dataset.engine);
-  return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-|walk-)/.test(action);
+  return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-|walk-|field-|service-readiness)/.test(action);
 }
 export function regionLayers(profile, layers) {
   if (legacyEnabled(profile)) return layers;

@@ -1,0 +1,33 @@
+name: Official data refresh review
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 12 * * 1'
+permissions:
+  contents: read
+concurrency:
+  group: official-data-review
+  cancel-in-progress: false
+jobs:
+  stage-public-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check currently published source hashes and region boundaries
+        run: node scripts/validate-decision-data.mjs
+      - name: Stage official public childcare snapshot and compare identities
+        run: node scripts/data/prepare-refresh.mjs --fetch
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: official-data-review-NOT-published
+          path: |
+            data-staging/**/refresh-review.json
+            data-staging/**/childcare.geojson
+            data-staging/**/childcare-source.json
+          if-no-files-found: warn
+          retention-days: 14

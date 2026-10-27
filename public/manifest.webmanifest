@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "서구온 · 생활권 디지털트윈",
+  "short_name": "서구온",
+  "lang": "ko",
+  "start_url": "/?source=installed",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f1f8ff",
+  "theme_color": "#0752a7",
+  "icons": [{"src":"/brand/seogu-on-symbol.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}],
+  "shortcuts": [
+    {"name":"도보 길안내","url":"/?tool=walk&work=shade"},
+    {"name":"돌봄시설 찾기","url":"/?work=care"}
+  ]
+}

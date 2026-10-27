@@ -189,7 +189,7 @@ test('catalogue refresh removes duplicate-coordinate and no-longer-supported way
 
 test('seasonal controls send an explicit Korean-time departure and preserve zero detour limits without an automatic request',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');assert.match(env.html,/예시 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울 안전보행/);
+    await env.action('walk-routes');assert.match(env.html,/선택 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울 안전보행/);
     env.change('walk-departure-at','2026-07-15T14:10');env.change('walk-max-detour-meters','0');env.change('walk-max-detour-minutes','0');env.change('walk-shadow-timing','departure-static');
     assert.equal(env.calls.filter(c=>c.options.method==='POST').length,0);
     await env.action('walk-calculate');const body=JSON.parse(env.calls.at(-1).options.body);
@@ -259,3 +259,19 @@ test('a winter time window with fully unknown sunlight remains unevaluated while
     lowSun=20;env.change('walk-departure-at','2027-01-15T10:00');await env.action('walk-calculate');assert.match(env.html,/일조 적은 거리<\/span><b>20m/);
   }finally{env.cleanup();}
 });
+test('current location is used only on an explicit action and uncertain fixes cannot retain the old sample start',async()=>{
+ const env=setup();let reads=0;try{
+  env.api.geolocation={getCurrentPosition(success){reads++;success({coords:{longitude:126.852,latitude:35.151,accuracy:8},timestamp:Date.now()});}};
+  await env.action('walk-routes');assert.equal(reads,0);await env.action('walk-current-start');assert.equal(reads,1);assert.match(env.html,/출발지: 현재 위치/);await env.action('walk-calculate');assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).start,[126.852,35.151]);
+  env.api.geolocation={getCurrentPosition(success){success({coords:{longitude:126.85,latitude:35.15,accuracy:300},timestamp:Date.now()});}};await env.action('walk-current-start');const count=env.calls.length;await env.action('walk-calculate');assert.equal(env.calls.length,count);assert.match(env.html,/출발과 도착을 모두 선택/);
+ }finally{env.cleanup();}
+});
+
+test('a public-facility plan is reviewed and applied without a route call, while foreign candidate IDs are rejected',async()=>{
+ const answer={ok:true,region:{id:'seogu'},mode:'rules',plan:{mode:'care',startId:'start',endId:'end',viaIds:['care'],avoidStairs:true},checkDetails:[{code:'access',text:'기관에 이용조건을 확인하세요.'}],notice:'계획을 확인하세요.'};
+ const env=setup({post:async request=>{assert.equal(request.kind,'plan');return {ok:true,json:async()=>structuredClone(answer)};}});try{
+  await env.action('walk-routes');env.nodes.set('walk-plan-question',{value:'서구청에서 시설까지 계단 없이'});await env.action('walk-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/AI 미사용/);assert.match(env.html,/시설·조건을 확인하고 반영/);await env.action('walk-apply-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/checked>계단/);assert.match(env.html,/기관에 이용조건/);
+  answer.plan.endId='foreign-id';await env.action('walk-plan');assert.match(env.html,/공개목록과 계획 결과가 달라/);assert.doesNotMatch(env.html,/data-action="walk-apply-plan"/);
+ }finally{env.cleanup();}
+});
+

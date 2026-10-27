@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PILOT_MIN_PAIRS,PILOT_MAX_BYTES,createPilotBook,validatePilotBook,currentPilotRecords,recordPilotMeasurement,voidPilotMeasurement,summarizePilot,median,serializePilotBook,parsePilotBook,pilotRawCsv,pilotCsvCell} from '../shared/pilot-measure.js';
-import {pilotSummaryHtml} from '../src/city/pilot-measure.js';
+import {pilotSummaryHtml,parsePilotObservationInput,installPilotMeasure} from '../src/city/pilot-measure.js';
+import {runRegisteredAction} from '../src/city/actions.js';
 
 const NOW='2026-10-22T10:00:00.000Z';
 const NEXT='2026-10-22T10:01:00.000Z';
@@ -97,4 +98,86 @@ test('raw CSV exports both method rows for every original, edit and exclusion',(
 test('summary HTML escapes conditions and participant input and shows insufficient samples honestly',()=>{
   const groups=summarizePilot(add(createPilotBook('seogu')));groups[0].conditionId='<script>x</script>';groups[0].pairs[0].participantId='<img src=x onerror=alert(1)>';
   const html=pilotSummaryHtml(groups);assert.ok(html.includes('&lt;script&gt;'));assert.ok(html.includes('&lt;img'));assert.equal(html.includes('<script>'),false);assert.match(html,/요약효과 미산정/);
+});
+
+test('legacy version 1 observations migrate optional KPIs to null without inventing completion or zero counts',()=>{
+  const legacy=clone(three());for(const row of legacy.events)for(const method of ['baseline','seoguOn'])for(const key of ['completed','wrongSelections','phoneCalls'])delete row[method][key];
+  const before=JSON.stringify(legacy),book=parsePilotBook(before,{regionId:'seogu'});
+  assert.equal(JSON.stringify(legacy),before);assert.equal(book.version,1);
+  for(const row of book.events)for(const method of ['baseline','seoguOn']){assert.equal(row[method].completed,null);assert.equal(row[method].wrongSelections,null);assert.equal(row[method].phoneCalls,null);}
+  assert.deepEqual(parsePilotBook(serializePilotBook(book)),book);
+  const group=summarizePilot(book)[0];assert.equal(group.completion.pairCount,0);assert.equal(group.completion.baseline.ratePct,null);assert.equal(group.confirmedTime.medians,null);assert.equal(group.optionalKpis.phoneCallsReduced.median,null);
+  assert.equal(group.medians.secondsSaved,20,'legacy raw observed-time API remains compatible');
+  const html=pilotSummaryHtml([group]);assert.match(html,/완료 여부 미측정/);assert.doesNotMatch(html,/>\+20초</,'unconfirmed legacy time must not appear as completed-task savings');
+});
+
+test('optional KPI types are strict and zero, false and null remain different values',()=>{
+  const m=measurement(),base=m.baseline;
+  for(const completed of [0,1,'true','false','',undefined,{},[]])assert.throws(()=>add(createPilotBook('seogu'),'P001',{baseline:{...base,completed}}),/완료 여부/);
+  for(const key of ['wrongSelections','phoneCalls'])for(const value of [-1,.5,NaN,Infinity,'0',undefined,10001])assert.throws(()=>add(createPilotBook('seogu'),'P001',{baseline:{...base,[key]:value}}),/시설 선택·확인 전화/);
+  const book=add(createPilotBook('seogu'),'P001',{baseline:{...base,completed:false,wrongSelections:0,phoneCalls:null}}),o=book.events[0].baseline;
+  assert.equal(o.completed,false);assert.equal(o.wrongSelections,0);assert.equal(o.phoneCalls,null);
+});
+
+test('completion rates use the same known paired participants and expose unknown or unmatched records',()=>{
+  let book=createPilotBook('seogu');const statuses=[[true,true],[false,true],[true,false],[null,true],[false,null],[true,undefined]];
+  statuses.forEach(([a,b],i)=>{const m=measurement();book=add(book,`P00${i+1}`,{baseline:{...m.baseline,completed:a},seoguOn:b===undefined?null:{...m.seoguOn,completed:b}});});
+  const group=summarizePilot(book)[0];assert.equal(group.pairCount,5);assert.equal(group.completion.pairCount,3);assert.equal(group.completion.excludedCount,3);
+  assert.equal(group.completion.baseline.known,3);assert.equal(group.completion.seoguOn.known,3);assert.equal(group.completion.baseline.completed,2);assert.equal(group.completion.seoguOn.completed,2);assert.equal(group.completion.baseline.ratePct,2/3*100);assert.equal(group.completion.differencePp,0);
+  assert.equal(group.completion.baseline.unmeasured,1);assert.equal(group.completion.seoguOn.unmeasured,2);assert.equal(group.confirmedTime.pairCount,1);assert.equal(group.confirmedTime.medians,null);
+});
+
+test('an incomplete fast task cannot improve successful completion-time savings',()=>{
+  let book=createPilotBook('seogu');for(const id of ['P001','P002','P003']){const m=measurement();book=add(book,id,{baseline:{...m.baseline,completed:true},seoguOn:{...m.seoguOn,completed:true}});}
+  const m=measurement();book=add(book,'P004',{baseline:{...m.baseline,completed:true},seoguOn:{...m.seoguOn,seconds:1,completed:false}});
+  const group=summarizePilot(book)[0],failed=group.pairs.find(row=>row.participantId==='P004');
+  assert.equal(failed.secondsSaved,null);assert.equal(failed.timeReductionPct,null);assert.equal(failed.timeStatus,'incomplete');assert.equal(group.confirmedTime.pairCount,3);assert.deepEqual(group.confirmedTime.medians,{secondsSaved:20,timeReductionPct:20});assert.equal(group.completion.seoguOn.ratePct,75);
+  const html=pilotSummaryHtml([group]);assert.match(html,/미완료 · 제외/);assert.doesNotMatch(html,/\+99초/);assert.match(html,/3명의 기록/);
+});
+
+test('optional count comparisons use their own paired denominators and preserve zero and adverse differences',()=>{
+  let book=createPilotBook('seogu');const values=[[3,0,4,1],[2,1,1,3],[0,1,0,0],[4,null,null,2]];
+  values.forEach(([a,b,c,d],i)=>{const m=measurement();book=add(book,`P00${i+1}`,{baseline:{...m.baseline,wrongSelections:a,phoneCalls:c},seoguOn:{...m.seoguOn,wrongSelections:b,phoneCalls:d}});});
+  const group=summarizePilot(book)[0];assert.deepEqual(group.optionalKpis,{wrongSelectionsReduced:{pairCount:3,median:1},phoneCallsReduced:{pairCount:3,median:0}});
+  assert.equal(group.pairs[2].wrongSelectionsReduced,-1);assert.equal(group.pairs[1].phoneCallsReduced,-2);assert.equal(group.pairs[2].phoneCallsReduced,0);assert.equal(group.pairs[3].wrongSelectionsReduced,null);
+  const html=pilotSummaryHtml([group]);assert.match(html,/잘못된 시설 선택/);assert.match(html,/확인 전화/);assert.match(html,/>0건</);
+});
+
+test('condition mismatch suppresses all new rates and summaries and separate tasks never pool KPI samples',()=>{
+  let book=createPilotBook('seogu');for(const id of ['P001','P002','P003']){const m=measurement();book=add(book,id,{baseline:{...m.baseline,completed:true,wrongSelections:2,phoneCalls:2},seoguOn:{...m.seoguOn,completed:true,wrongSelections:0,phoneCalls:0},conditions:id==='P003'?'다른 조건':m.conditions});}
+  const group=summarizePilot(book)[0];assert.equal(group.conditionsMatch,false);assert.equal(group.completion.baseline.ratePct,null);assert.equal(group.completion.differencePp,null);assert.equal(group.confirmedTime.medians,null);assert.equal(group.optionalKpis.phoneCallsReduced.median,null);
+  let separated=createPilotBook('seogu');for(const taskId of ['space-comparison','field-recheck'])for(const id of ['P001','P002']){const m=measurement();separated=add(separated,id,{taskId,baseline:{...m.baseline,completed:true,phoneCalls:1},seoguOn:{...m.seoguOn,completed:true,phoneCalls:0}});}
+  assert.ok(summarizePilot(separated).every(g=>g.confirmedTime.pairCount===2&&g.confirmedTime.medians===null&&g.optionalKpis.phoneCallsReduced.median===null));
+});
+
+test('optional values survive edits, exclusion, restoration and CSV history with unknown cells left blank',()=>{
+  const m=measurement();let book=add(createPilotBook('seogu'),'P001',{baseline:{...m.baseline,completed:false,wrongSelections:0,phoneCalls:null},seoguOn:{...m.seoguOn,completed:null,wrongSelections:null,phoneCalls:0}}),id=book.events[0].recordId;
+  book=add(book,'P001',{baseline:{...m.baseline,completed:true,wrongSelections:1,phoneCalls:2}},{recordId:id,now:NEXT});
+  book=voidPilotMeasurement(book,id,{reason:'추가 채점 대기',now:'2026-10-22T10:02:00.000Z'});
+  book=add(book,'P001',{baseline:{...m.baseline,completed:true,wrongSelections:1,phoneCalls:2}},{recordId:id,now:'2026-10-22T10:03:00.000Z'});
+  const restored=parsePilotBook(serializePilotBook(book));assert.equal(restored.events[0].baseline.completed,false);assert.equal(restored.events[0].baseline.wrongSelections,0);assert.equal(restored.events[0].baseline.phoneCalls,null);assert.equal(restored.events.at(-1).baseline.completed,true);assert.equal(restored.events.length,4);
+  const csv=pilotRawCsv(restored).split('\r\n').filter(Boolean);assert.ok(csv[0].endsWith('"completed","wrong_selections","phone_calls"'));assert.ok(csv[1].endsWith('"false","0",""'));assert.ok(csv[2].endsWith('"","","0"'));assert.ok(csv[7].endsWith('"true","1","2"'));
+});
+
+test('form parsing preserves optional blank, measured zero and incomplete values without accepting KPI-only records',()=>{
+  assert.equal(parsePilotObservationInput({seconds:'',errors:'',sourceOmissions:'',evidence:'',completed:'',wrongSelections:'',phoneCalls:''}),null);
+  assert.throws(()=>parsePilotObservationInput({completed:'false'}),/투입시간/);
+  const base={seconds:'10',errors:'0',sourceOmissions:'0',evidence:'중단 시점과 채점표',completed:'false',wrongSelections:'0',phoneCalls:''};
+  assert.deepEqual(parsePilotObservationInput(base),{seconds:10,errors:0,sourceOmissions:0,evidence:base.evidence,completed:false,wrongSelections:0,phoneCalls:null});
+  assert.equal(parsePilotObservationInput({...base,completed:''}).completed,null);assert.throws(()=>parsePilotObservationInput({...base,completed:'yes'}),/완료 여부/);
+});
+
+test('the panel shows optional fields and persists actual incomplete, zero and unknown inputs',async t=>{
+  const originals={document:globalThis.document,localStorage:globalThis.localStorage},listeners={},nodes={},storage=new Map(),toasts=[];
+  const root={addEventListener:(name,handler)=>listeners[name]=handler,removeEventListener:name=>delete listeners[name]};
+  globalThis.document={getElementById:id=>id==='app'?root:nodes[id]||null,querySelector:()=>null};
+  globalThis.localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value)};
+  const api={state:{regionProfile:{id:'seogu',name:'서구'},view:null},show(title,html,view){this.html=html;this.state.view=view;},toast:text=>toasts.push(text)},ui=installPilotMeasure(api);
+  t.after(()=>{ui.destroy();for(const [key,value]of Object.entries(originals)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}});
+  ui.open();assert.match(api.html,/pilot-baseline-completed/);assert.match(api.html,/pilot-seoguOn-wrongSelections/);assert.match(api.html,/pilot-baseline-phoneCalls/);
+  const m=measurement();nodes['pilot-form']={};for(const key of ['participantId','taskId','conditionId','sequence','sessionDate','conditions'])nodes['pilot-'+key]={value:m[key],focus(){}};
+  for(const method of ['baseline','seoguOn'])for(const [key,value]of Object.entries({...m[method],completed:method==='baseline'?'true':'false',wrongSelections:'0',phoneCalls:''}))nodes[`pilot-${method}-${key}`]={value:String(value)};
+  listeners.submit({target:{id:'pilot-form'},preventDefault(){}});
+  const book=parsePilotBook(storage.get('seoon.pilot-measure.v1.seogu'));assert.equal(book.events[0].baseline.completed,true);assert.equal(book.events[0].seoguOn.completed,false);assert.equal(book.events[0].seoguOn.wrongSelections,0);assert.equal(book.events[0].seoguOn.phoneCalls,null);assert.match(api.html,/미완료 · 제외/);
+  await runRegisteredAction({dataset:{action:'pilot-edit',id:book.events[0].recordId}},api);assert.match(api.html,/value="false" selected/);assert.match(api.html,/pilot-seoguOn-phoneCalls[^>]*value=""/);assert.ok(toasts.some(value=>value.includes('저장')));
 });

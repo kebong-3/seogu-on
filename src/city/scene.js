@@ -36,7 +36,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  sunController=createSunController(viewer,C,{emit:tell,getPose:readPose});
  dongLabels=createDongLabels3D({C,viewer,source:boundarySource,requestRender,clampToGround:!clean});
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
- for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>director.stop(),{passive:true});
+ for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>{director.stop();tell('interaction');},{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
  viewer.camera.moveEnd.addEventListener(()=>{const pose=readPose();currentPose=pose;tell('pose',{pose});if(admin&&outsideRegionView(pose.center,admin))director.fly(frameFor(admin,'overview'),{duration:900,arch:false});});
  if(!clean){buildingStyleResult=setBuildingStyle(map,'detailed');tell('building-style-result',buildingStyleResult);}

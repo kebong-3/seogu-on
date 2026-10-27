@@ -3,6 +3,7 @@ const ENTRIES={
  'decision-living-map':'living','decision-twin':'living','decision-inspection':'living',
  'decision-site-review':'living','decision-preset':'living','decision-from-question':'living',
  'walk-routes':'walk','walk-mode':'walk',
+ 'service-readiness':'operations','field-operations':'operations',
  resilience:'disaster','resilience-preset':'disaster',
  preset:'explore','infra-select':'explore','clear-layers':'explore',
 };

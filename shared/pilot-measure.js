@@ -38,10 +38,18 @@ function timestamp(value) {
 }
 function observation(value, label) {
   if (value === null) return null;
-  object(value, label, ['seconds','errors','sourceOmissions','evidence']);
+  object(value, label, ['seconds','errors','sourceOmissions','evidence','completed','wrongSelections','phoneCalls']);
   if (typeof value.seconds !== 'number' || !Number.isFinite(value.seconds) || value.seconds < 1 || value.seconds > 86400) invalid(`${label} 완료시간은 1~86,400초의 실제 측정값을 입력하세요.`);
   for (const key of ['errors','sourceOmissions']) if (!Number.isSafeInteger(value[key]) || value[key] < 0 || value[key] > 10000) invalid(`${label} 오류·출처누락은 0~10,000의 정수로 기록하세요. 확인하지 않은 값은 0으로 입력하지 마세요.`);
-  return {seconds:value.seconds, errors:value.errors, sourceOmissions:value.sourceOmissions, evidence:text(value.evidence, `${label} 결과물·채점 근거`, 1500)};
+  // Version 1 records predate these optional KPIs. Missing means unmeasured, never zero/false.
+  const completed=own(value,'completed')?value.completed:null;
+  if(completed!==null&&typeof completed!=='boolean')invalid(`${label} 과제 완료 여부는 완료·미완료·미측정으로 기록하세요.`);
+  const optional={};for(const key of ['wrongSelections','phoneCalls']){
+    const count=own(value,key)?value[key]:null;
+    if(count!==null&&(!Number.isSafeInteger(count)||count<0||count>10000))invalid(`${label} 잘못된 시설 선택·확인 전화는 0~10,000의 정수 또는 미측정으로 기록하세요.`);
+    optional[key]=count;
+  }
+  return {seconds:value.seconds, errors:value.errors, sourceOmissions:value.sourceOmissions, evidence:text(value.evidence, `${label} 결과물·채점 근거`, 1500),completed,...optional};
 }
 function payload(value) {
   object(value, '측정', ['participantId','taskId','conditionId','sequence','sessionDate','conditions','baseline','seoguOn']);
@@ -120,14 +128,39 @@ export function summarizePilot(book) {
     groups.get(key).records.push(row);
   }
   return [...groups.values()].map(group => {
-    const pairs=group.records.filter(row=>row.baseline && row.seoguOn).map(row=>({recordId:row.recordId,participantId:row.participantId,sequence:row.sequence,secondsSaved:row.baseline.seconds-row.seoguOn.seconds,timeReductionPct:(row.baseline.seconds-row.seoguOn.seconds)/row.baseline.seconds*100,errorsReduced:row.baseline.errors-row.seoguOn.errors,sourceOmissionsReduced:row.baseline.sourceOmissions-row.seoguOn.sourceOmissions}));
+    const pairedRecords=group.records.filter(row=>row.baseline && row.seoguOn);
+    const pairs=pairedRecords.map(row=>{
+      const a=row.baseline,b=row.seoguOn,timeEligible=a.completed!==false&&b.completed!==false;
+      return {recordId:row.recordId,participantId:row.participantId,sequence:row.sequence,
+        // Legacy measured-time differences remain readable; only confirmedTime is a success-time estimate.
+        secondsSaved:timeEligible?a.seconds-b.seconds:null,timeReductionPct:timeEligible?(a.seconds-b.seconds)/a.seconds*100:null,
+        timeStatus:a.completed===true&&b.completed===true?'both-completed':timeEligible?'completion-unmeasured':'incomplete',
+        baselineCompleted:a.completed,seoguOnCompleted:b.completed,
+        errorsReduced:a.errors-b.errors,sourceOmissionsReduced:a.sourceOmissions-b.sourceOmissions,
+        wrongSelectionsReduced:a.wrongSelections!==null&&b.wrongSelections!==null?a.wrongSelections-b.wrongSelections:null,
+        phoneCallsReduced:a.phoneCalls!==null&&b.phoneCalls!==null?a.phoneCalls-b.phoneCalls:null};
+    });
     const conditionsMatch = new Set(group.records.map(row=>row.conditions)).size <= 1;
     const sufficient = pairs.length >= PILOT_MIN_PAIRS && conditionsMatch;
     const orders = {AB:pairs.filter(row=>row.sequence==='AB').length,BA:pairs.filter(row=>row.sequence==='BA').length};
+    const completePairs=pairs.filter(row=>row.timeStatus==='both-completed');
+    const confirmedTime={pairCount:completePairs.length,medians:conditionsMatch&&completePairs.length>=PILOT_MIN_PAIRS?{secondsSaved:median(completePairs.map(p=>p.secondsSaved)),timeReductionPct:median(completePairs.map(p=>p.timeReductionPct))}:null};
+    const completionRecords=pairedRecords.filter(row=>row.baseline.completed!==null&&row.seoguOn.completed!==null);
+    const completion={pairCount:completionRecords.length,excludedCount:group.records.length-completionRecords.length};
+    for(const method of methods){
+      const completed=completionRecords.filter(row=>row[method].completed===true).length;
+      completion[method]={completed,known:completionRecords.length,unmeasured:group.records.filter(row=>!row[method]||row[method].completed===null).length,ratePct:conditionsMatch&&completionRecords.length?completed/completionRecords.length*100:null};
+    }
+    completion.differencePp=completion.baseline.ratePct!==null?completion.seoguOn.ratePct-completion.baseline.ratePct:null;
+    const optionalKpis={};for(const metric of ['wrongSelectionsReduced','phoneCallsReduced']){
+      const values=pairs.map(row=>row[metric]).filter(Number.isFinite);
+      optionalKpis[metric]={pairCount:values.length,median:conditionsMatch&&values.length>=PILOT_MIN_PAIRS?median(values):null};
+    }
     return {taskId:group.taskId,conditionId:group.conditionId,conditions:group.records[0].conditions,recordCount:group.records.length,pairCount:pairs.length,pendingCount:group.records.length-pairs.length,conditionsMatch,orders,pairs,
+      completion,confirmedTime,optionalKpis,
       status:sufficient?'descriptive':!conditionsMatch?'conditions-mismatch':'insufficient-pairs',
-      medians:sufficient?Object.fromEntries(['secondsSaved','timeReductionPct','errorsReduced','sourceOmissionsReduced'].map(key=>[key,median(pairs.map(row=>row[key]))])):null,
-      notices:[!conditionsMatch?'같은 조건 ID의 공통 조건 메모가 달라 요약을 보류합니다.':pairs.length<PILOT_MIN_PAIRS?`같은 과제·조건의 완성된 ${PILOT_MIN_PAIRS}인 비교부터 요약을 계산합니다.`:'개인별 차이의 중앙값입니다. 적은 표본의 관찰 결과이며 전체 공무원이나 다른 업무에 일반화하지 않습니다.',...(pairs.length && (!orders.AB || !orders.BA)?['수행순서가 한쪽에만 있습니다. 연습·순서 효과가 포함될 수 있습니다.']:[])]};
+      medians:sufficient?Object.fromEntries(['secondsSaved','timeReductionPct','errorsReduced','sourceOmissionsReduced'].map(key=>{const values=pairs.map(row=>row[key]).filter(Number.isFinite);return [key,values.length>=PILOT_MIN_PAIRS?median(values):null];})):null,
+      notices:[!conditionsMatch?'같은 조건 ID의 공통 조건 메모가 달라 요약을 보류합니다.':pairs.length<PILOT_MIN_PAIRS?`같은 과제·조건의 완성된 ${PILOT_MIN_PAIRS}인 비교부터 요약을 계산합니다.`:'개인별 차이의 중앙값입니다. 적은 표본의 관찰 결과이며 전체 공무원이나 다른 업무에 일반화하지 않습니다.',...(pairs.length && (!orders.AB || !orders.BA)?['수행순서가 한쪽에만 있습니다. 연습·순서 효과가 포함될 수 있습니다.']:[]),...(completePairs.length<pairs.length?['미완료 또는 완료 여부 미측정 과제는 완료시간 감소 요약에서 제외합니다. 이전 기록의 완료 여부를 임의로 채우지 않습니다.']:[])]};
   });
 }
 export function serializePilotBook(book) {
@@ -148,10 +181,10 @@ export function pilotCsvCell(value) {
 }
 export function pilotRawCsv(book) {
   const normalized = validatePilotBook(book), latest = new Map(current(normalized.events).map(row=>[row.recordId,row]));
-  const rows=[['region_id','record_id','revision','is_latest','latest_state','event_action','participant_id','task_id','condition_id','sequence','session_date','common_conditions','method','observed','seconds','errors','source_omissions','evidence','entered_at','void_reason']];
+  const rows=[['region_id','record_id','revision','is_latest','latest_state','event_action','participant_id','task_id','condition_id','sequence','session_date','common_conditions','method','observed','seconds','errors','source_omissions','evidence','entered_at','void_reason','completed','wrong_selections','phone_calls']];
   for (const row of normalized.events) for (const method of methods) {
     const value=row[method], last=latest.get(row.recordId);
-    rows.push([normalized.regionId,row.recordId,row.revision,row.revision===last.revision,last.action==='void'?'excluded':'active',row.action,row.participantId,row.taskId,row.conditionId,row.sequence,row.sessionDate,row.conditions,method,!!value,value?.seconds,value?.errors,value?.sourceOmissions,value?.evidence,row.recordedAt,row.voidReason]);
+    rows.push([normalized.regionId,row.recordId,row.revision,row.revision===last.revision,last.action==='void'?'excluded':'active',row.action,row.participantId,row.taskId,row.conditionId,row.sequence,row.sessionDate,row.conditions,method,!!value,value?.seconds,value?.errors,value?.sourceOmissions,value?.evidence,row.recordedAt,row.voidReason,value?.completed,value?.wrongSelections,value?.phoneCalls]);
   }
   return '\uFEFF'+rows.map(row=>row.map(pilotCsvCell).join(',')).join('\r\n')+'\r\n';
 }
