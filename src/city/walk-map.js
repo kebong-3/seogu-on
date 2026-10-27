@@ -1,3 +1,4 @@
+import {WALK_ROUTE_COLORS} from './navigation-line-style.js';
 /** TMAP overlays stay outside the application's saved layers and report records. */
 export function createWalkMap({send,now=Date.now,schedule=setTimeout,cancel=clearTimeout,lifetimeMs=30*60*1000}) {
   const ids=['walk-direct','walk-selected','walk-assessment','walk-points'];
@@ -8,9 +9,9 @@ export function createWalkMap({send,now=Date.now,schedule=setTimeout,cancel=clea
     clear();
     const direct=routes.find(r=>r.role==='direct'),active=routes.find(r=>r.id===activeId)||direct||routes[0];
     const feature=(f,id,color)=>({...f,properties:{...f.properties,id,name:id,displayColor:color,sourceName:'TMAP 보행자 경로',ephemeral:true}});
-    for(const [id,route,color]of [['walk-direct',direct,'#1769b3'],['walk-selected',active?.id!==direct?.id?active:null,'#c65c00']]) {
+    for(const [id,route,color]of [['walk-direct',direct,WALK_ROUTE_COLORS.direct],['walk-selected',active?.id!==direct?.id?active:null,WALK_ROUTE_COLORS.selected]]) {
       const lines=route?.geojson?.features?.filter(f=>['LineString','MultiLineString'].includes(f.geometry?.type))||[];
-      if(lines.length)layers.push({type:'layer',id,color,visible:true,features:lines.map((f,i)=>feature(f,`${id}-${i}`,color))});
+      if(lines.length)layers.push({type:'layer',id,color,visible:true,features:lines.map((f,i)=>{const line=feature(f,`${id}-${i}`,color);line.properties.walkActive=route.id===active?.id;return line;})});
     }
     const assessmentColors={shade:'#007d75',sun:'#e9ad22',unknown:'#78838c',low:'#d66a24',sufficient:'#e9ad22'};
     const assessed=assessmentFeatures.slice(0,2000).filter(f=>f?.geometry?.type==='LineString'&&Array.isArray(f.geometry.coordinates)&&f.geometry.coordinates.length>=2&&f.geometry.coordinates.every(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite))&&Object.hasOwn(assessmentColors,f.properties?.assessmentState));

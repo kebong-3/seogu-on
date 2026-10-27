@@ -9,7 +9,7 @@ function harness(){let time=0,next;const sent=[];const map=createWalkMap({send:m
 test('selected facility detour is overlaid with the direct reference in distinct colors',()=>{
  const h=harness();h.map.paint([route('a','direct'),route('b','via')],'b',[{id:'start',name:'출발',role:'start',coordinate:[126.89,35.15]}]);
  const shown=h.sent.filter(m=>m.visible);assert.deepEqual(shown.map(m=>m.id),['walk-direct','walk-selected','walk-points']);
- assert.equal(shown[0].features[0].properties.displayColor,'#1769b3');assert.equal(shown[1].features[0].properties.displayColor,'#c65c00');
+ assert.equal(shown[0].features[0].properties.displayColor,'#00e5ff');assert.equal(shown[1].features[0].properties.displayColor,'#ff49db');
  assert.equal(shown[2].features[0].properties.name,'출발');assert.equal(shown[0].features[0].properties.ephemeral,true);
  h.map.destroy();
 });
