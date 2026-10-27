@@ -188,3 +188,15 @@ test('assessment ranges preserve the actual route bend and do not connect discon
   const disconnected={id:'parts',geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'MultiLineString',coordinates:[[a,bend],[c,d]]},properties:{}}]},seasonal:{samples:[{fromMeters:0,toMeters:first+length,state:'unknown'}]}};
   const parts=buildWalkAssessmentFeatures(disconnected);assert.equal(parts.length,2);assert.deepEqual(parts[0].geometry.coordinates.at(-1),bend);assert.deepEqual(parts[1].geometry.coordinates[0],c);assert.ok(parts.every(feature=>feature.properties.assessmentState==='unknown'));
 });
+
+
+test('a winter time window with fully unknown sunlight remains unevaluated while positive partial evidence remains visible',async()=>{
+  let lowSun=0;
+  const env=setup({post:async(request,body)=>{const answer=body(request);answer.seasonal={status:'partial',comparison:{preferredRouteId:null}};for(const route of answer.routes)route.seasonal={status:'partial',routeLengthMeters:route.distanceMeters,evaluatedMeters:0,unevaluatedMeters:route.distanceMeters,estimatedShadeMeters:0,coverageRatio:0,lowSunMeters:lowSun,winterUnevaluatedMeters:route.distanceMeters,winterCoverageRatio:0,icingNearbyMeters:120,winter:{window:{date:'2027-01-15',startHour:9,endHour:16}}};return{ok:true,json:async()=>answer}}});
+  try{
+    await env.action('walk-routes');await env.action('walk-mode',{mode:'winter'});await env.action('walk-calculate');
+    assert.match(env.html,/일조 적은 거리<\/span><b>미평가/);assert.doesNotMatch(env.html,/일조 적은 거리<\/span><b>0m/);
+    assert.match(env.html,/공개 대표점 50m 이내\(앱 설정\)/);assert.match(env.html,/현재 보도의 빙판 여부를 판정한 값은 아니에요/);
+    lowSun=20;env.change('walk-departure-at','2027-01-15T10:00');await env.action('walk-calculate');assert.match(env.html,/일조 적은 거리<\/span><b>20m/);
+  }finally{env.cleanup();}
+});
