@@ -9,12 +9,28 @@ const ROOT=fileURLToPath(new URL('../../',import.meta.url)),STAGING=resolve(ROOT
 const SOURCE='https://info.childcare.go.kr/info_html5/stat/sheet/StatCrInfoResult.jsp';
 const QUERY='flag=crInfo&std_condi=N&sido=12&sigun=&exlChk=&offset=0&limit=2000';
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
+// Collection time describes this retrieval, not a change to a facility. Ignore
+// only this known collector field: source dates, field-check dates and all actual
+// facility values remain comparable. Sort object keys without reordering arrays.
+const canonical=value=>JSON.stringify(normalize(value));
+function normalize(value){
+ if(Array.isArray(value))return value.map(normalize);
+ if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().map(key=>[key,normalize(value[key])]));
+ return value;
+}
+const contentOf=feature=>({...feature,properties:Object.fromEntries(Object.entries(feature.properties).filter(([key])=>key!=='collectedAt'))});
 export function compareSnapshots(before,after){
  const records=value=>{if(value?.type!=='FeatureCollection'||!Array.isArray(value.features))throw Error('수집본의 GeoJSON 형식을 확인하세요.');const map=new Map();for(const feature of value.features){const id=feature?.properties?.id;if(typeof id!=='string'||!id||map.has(id))throw Error('수집본 식별자가 없거나 중복되었습니다.');map.set(id,feature);}return map;};
- const previous=records(before),next=records(after),added=[],removed=[],changed=[];
- for(const [id,record]of next){const old=previous.get(id);if(!old)added.push(id);else if(JSON.stringify(old)!==JSON.stringify(record))changed.push({id,coordinateChanged:JSON.stringify(old.geometry)!==JSON.stringify(record.geometry),nameChanged:old.properties.name!==record.properties.name,requiresReview:true});}
+ const previous=records(before),next=records(after),added=[],removed=[],changed=[],collectionTimeOnly=[];
+ for(const [id,record]of next){
+  const old=previous.get(id);if(!old){added.push(id);continue;}
+  if(canonical(contentOf(old))!==canonical(contentOf(record))){
+   const changedProperties=[...new Set([...Object.keys(old.properties),...Object.keys(record.properties)])].filter(key=>key!=='collectedAt'&&canonical(old.properties[key])!==canonical(record.properties[key])).sort();
+   changed.push({id,coordinateChanged:canonical(old.geometry)!==canonical(record.geometry),nameChanged:old.properties.name!==record.properties.name,changedProperties,requiresReview:true});
+  }else if(old.properties.collectedAt!==record.properties.collectedAt)collectionTimeOnly.push(id);
+ }
  for(const id of previous.keys())if(!next.has(id))removed.push(id);
- return {previousRecords:previous.size,nextRecords:next.size,added,removed,changed,requiresReview:true,meaning:'명칭·주소 해시 변경은 추가와 제외로 나타날 수 있습니다. 제외를 폐업으로, 좌표 변경을 검수 완료로 해석하지 않습니다.'};
+ return {previousRecords:previous.size,nextRecords:next.size,added,removed,changed,collectionTimeOnly,requiresReview:true,meaning:'시설별 수집시각(properties.collectedAt)만 달라진 기록은 changed에서 제외하고 collectionTimeOnly에 표시합니다. 원자료 기준일·확인일·운영조건·주소·좌표·정현원 변경은 비교합니다. 명칭·주소 해시 변경은 추가와 제외로 나타날 수 있습니다. 제외를 폐업으로, 좌표 변경을 검수 완료로 해석하지 않습니다.'};
 }
 async function fetchOfficial(target){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);try{const response=await fetch(SOURCE,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:QUERY,redirect:'error',signal:controller.signal});if(!response.ok)throw Error('공식 공개 SHEET HTTP '+response.status);if(Number(response.headers.get('content-length')||0)>20*1024*1024)throw Error('수집 원문 크기 제한 초과');const reader=response.body.getReader(),chunks=[];let bytes=0;try{while(true){const item=await reader.read();if(item.done)break;bytes+=item.value.byteLength;if(bytes>20*1024*1024){await reader.cancel();throw Error('수집 원문 크기 제한 초과');}chunks.push(Buffer.from(item.value));}}finally{reader.releaseLock();}await writeFile(target,Buffer.concat(chunks));}finally{clearTimeout(timer);}

@@ -44,6 +44,26 @@ test('place search requires choosing a result before routing, and preserves sear
   }finally{env.cleanup();}
 });
 
+test('search evidence stays accessible outside the selection button and after choosing the endpoint',async()=>{
+  const item={id:'source-place',name:'근거 시설',coordinate:[126.852,35.151],sourceName:'공식 원문',sourceDate:null,sourceUrl:'https://example.gov/source?a=1&b=2'};
+  const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[item]})})});try{
+    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
+    assert.match(env.html,/<\/button><small class="walk-search-source">기준 미제공 · <a href="https:\/\/example\.gov\/source\?a=1&amp;b=2"/);
+    await env.action('walk-choose-place',{field:'start',index:'0'});
+    assert.match(env.html,/선택 시설 원자료<\/a> · 기준 미제공/);
+    assert.match(env.html,/rel="noopener noreferrer"/);
+  }finally{env.cleanup();}
+});
+
+test('missing or unsafe search evidence URLs are never made into clickable links',async()=>{
+  const items=[{id:'unsafe',name:'잘못된 링크',coordinate:[126.852,35.151],sourceUrl:'javascript:alert(1)'},{id:'credential',name:'인증주소',coordinate:[126.853,35.151],sourceUrl:'https://private:secret@example.gov/source'},{id:'missing',name:'원문 미제공',coordinate:[126.854,35.151]}];
+  const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items})})});try{
+    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
+    assert.equal((env.html.match(/원자료 링크 미제공/g)||[]).length,3);
+    assert.doesNotMatch(env.html,/href="(?:javascript:|https:\/\/private:secret)/);
+  }finally{env.cleanup();}
+});
+
 test('editing an in-flight place search enables a new search and ignores the older reply',async()=>{
   let finishOld;
   const oldItem={id:'search:seogu:old',name:'이전 검색 시설',coordinate:[126.85,35.15]};
@@ -274,4 +294,3 @@ test('a public-facility plan is reviewed and applied without a route call, while
   answer.plan.endId='foreign-id';await env.action('walk-plan');assert.match(env.html,/공개목록과 계획 결과가 달라/);assert.doesNotMatch(env.html,/data-action="walk-apply-plan"/);
  }finally{env.cleanup();}
 });
-

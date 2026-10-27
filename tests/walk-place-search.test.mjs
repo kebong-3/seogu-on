@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {searchWalkPlaces} from '../server/walk-place-search.js';
+import {handleWalkRoutes} from '../server/walk-routes.js';
+import {loadWalkCandidates} from '../server/walk-candidates.js';
 
 const pack={profile:{id:'seogu',bounds:[126,34,128,37]},boundaries:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Polygon',coordinates:[[[126,34],[128,34],[128,37],[126,37],[126,34]]]},properties:{}}]},candidates:[{id:'facility',name:'서구 장난감도서관',address:'광주 서구 경열로 33',coordinate:[126.85,35.15],routeEligible:true},{id:'private-bell',name:'비상벨',address:'광주 서구 경열로 33',coordinate:[126.85,35.15],routeEligible:false}]};
 test('without a search key, searches name and address across public endpoint candidates',async()=>{
@@ -118,4 +120,42 @@ test('provider-only suggestions are labeled approximate, bounded to the region a
 
 test('normalization does not bypass length or control-character validation',async()=>{
   for(const query of ['  ','가'.repeat(101),'수유\n방','수유\u0000방','\u007f수유실',null,{}])await assert.rejects(searchWalkPlaces(query,namedPack,{env:{}}),{code:'WALK_SEARCH_QUERY'});
+});
+
+const response=()=>({statusCode:200,setHeader(){},end(text){this.body=JSON.parse(text);}});
+test('actual GET search preserves the exact original links and unknown dates for the three deployed evaluation failures',async()=>{
+  const original=await loadWalkCandidates({regionId:'seogu',env:{}});
+  for(const [query,name]of [['광주시청 장난감도서관','광주시청 장난감도서관'],['소꿉놀이','소꿉놀이 장난감도서관'],['운천역','광주광역시도시철도공사 운천역 수유실']]){
+    const res=response();
+    await handleWalkRoutes({method:'GET',url:'/api/walk-routes?region=seogu&q='+encodeURIComponent(query),headers:{host:'test.local'}},res,
+      {env:{},loadCandidates:async()=>original,fetcher:async()=>{throw Error('No external request is required');}});
+    assert.equal(res.statusCode,200);assert.equal(res.body.providerAvailable,false);
+    const expected=original.candidates.find(candidate=>candidate.name===name),item=res.body.items.find(candidate=>candidate.id===expected.id);
+    assert.ok(item,name);assert.ok(expected.sourceUrl);
+    assert.equal(item.sourceUrl,expected.sourceUrl);assert.equal(item.sourceDate,null);
+    assert.equal(item.datasetId,expected.datasetId);assert.equal(item.sourceId,expected.sourceId);
+  }
+});
+
+test('catalogue and search API projections retain long existing URLs, and missing links stay null',async()=>{
+  const originalUrl='https://example.org/public-record?record='+('a'.repeat(300));
+  const withSource={...pack.candidates[0],sourceName:'공식 공개시설 시험자료',sourceDate:null,sourceUrl:originalUrl,datasetId:'care-toys',sourceId:'source-facility'};
+  const noSource={...withSource,id:'missing-url',name:'다른 장난감도서관',sourceUrl:undefined};
+  const sourcePack={...pack,candidates:[withSource,noSource]};
+  for(const url of ['/api/walk-routes?region=seogu','/api/walk-routes?region=seogu&q='+encodeURIComponent('장난감대여소')]){
+    const res=response();await handleWalkRoutes({method:'GET',url,headers:{host:'test.local'}},res,
+      {env:{},loadCandidates:async()=>sourcePack,loadSafetyReferences:async()=>null});
+    assert.equal(res.statusCode,200);
+    const items=res.body.items||res.body.candidates,first=items.find(item=>item.id===withSource.id),missing=items.find(item=>item.id===noSource.id);
+    assert.equal(first.sourceUrl,originalUrl);assert.equal(first.sourceDate,null);
+    assert.equal(missing.sourceUrl,null);assert.equal(missing.sourceDate,null);
+  }
+});
+
+test('actual GET retains reviewed category metadata needed for child-library alias matching',async()=>{
+  const ecology={...namedPack.candidates[1],id:'ecology',name:'어린이생태학습도서관',datasetId:'care-libraries',sourceId:'library-source',sourceName:'공식 도서관 자료',sourceDate:null,sourceUrl:'https://example.org/library'};
+  const res=response();await handleWalkRoutes({method:'GET',url:'/api/walk-routes?region=seogu&q='+encodeURIComponent('유아도서관'),headers:{host:'test.local'}},res,
+    {env:{},loadCandidates:async()=>({...pack,candidates:[ecology]})});
+  assert.equal(res.statusCode,200);assert.equal(res.body.items.length,1);
+  assert.equal(res.body.items[0].id,'ecology');assert.equal(res.body.items[0].aliasMatch,true);assert.equal(res.body.items[0].sourceUrl,ecology.sourceUrl);
 });

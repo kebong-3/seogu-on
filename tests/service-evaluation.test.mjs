@@ -59,6 +59,13 @@ test('full default run uses actual local data, does not call fetch or ambient ke
     assert.ok(report.rows.every(r=>r.cost===null));
     assert.ok(report.rows.filter(r=>r.execution==='not_executed').every(r=>r.latencyMs===null&&r.status==='not_executed'));
     assert.ok(report.rows.some(r=>r.status==='pass'&&r.manualReview.status==='pending'));
+    for(const id of ['search-05','search-06','search-07']){
+      const row=report.rows.find(r=>r.id===id);
+      assert.equal(row.facts.contract,'GET /api/walk-routes');
+      assert.equal(row.evidenceAudit.missing,false);
+      assert.ok(row.evidence.some(source=>typeof source.url==='string'&&source.url.startsWith('https://')));
+      assert.ok(row.evidence.some(source=>source.date===null));
+    }
     const unlocated=report.rows.find(r=>r.id==='care-13');
     assert.equal(unlocated.facts.unlocatedCandidateCount,0);
     assert.equal(unlocated.facts.unlocated,47);

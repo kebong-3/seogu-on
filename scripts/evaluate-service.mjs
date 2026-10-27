@@ -9,8 +9,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {performance} from 'node:perf_hooks';
 import {loadWalkCandidates} from '../server/walk-candidates.js';
-import {searchWalkPlaces} from '../server/walk-place-search.js';
-import {runWalkRoutes} from '../server/walk-routes.js';
+import {runWalkRoutes,handleWalkRoutes} from '../server/walk-routes.js';
 import {handleAsk,resetAskLimits} from '../server/ai/ask.js';
 import {pointInRegion} from '../shared/region-profile.js';
 import {walkDistance,rankWalkCandidates,walkCandidateSupportsMode} from '../shared/walk-route-model.js';
@@ -179,8 +178,11 @@ async function localObservation(c,ctx){
   if(kind==='care')return ctx.care();
   const pack=await ctx.pack('seogu');
   if(kind==='search'){
-    try{const body=await searchWalkPlaces(c.local.query,pack,{env:{},fetcher:ctx.noNetwork});return {facts:{...responseFacts(body,200,pack),networkCalls:ctx.networkCount()-before},evidence:responseEvidence(body)};}
-    catch(error){return {facts:{httpStatus:error.status||500,code:error.code||'LOCAL_ERROR',networkCalls:ctx.networkCount()-before},evidence:[]};}
+    // Exercise the actual API projection too: direct search calls miss fields stripped upstream.
+    const res={statusCode:200,setHeader(){},end(text){this.body=JSON.parse(text);}};
+    await handleWalkRoutes({method:'GET',url:'/api/walk-routes?region=seogu&q='+encodeURIComponent(c.local.query),headers:{host:'evaluation.local'}},res,
+      {env:{},fetcher:ctx.noNetwork,publicRoot:PUBLIC,loadCandidates:async()=>pack});
+    return {facts:{...responseFacts(res.body,res.statusCode,pack),contract:'GET /api/walk-routes',networkCalls:ctx.networkCount()-before},evidence:responseEvidence(res.body)};
   }
   if(kind==='boundary'){
     const other=await ctx.pack(c.local.region),points=other.candidates.filter(p=>p.category==='public'&&p.routeEligible).map(p=>p.coordinate);

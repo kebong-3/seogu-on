@@ -64,7 +64,8 @@ function departureTime(value){
   if(Number(normalized.slice(0,4))<2000||Number(normalized.slice(0,4))>2100)throw bad(400,'INVALID_DEPARTURE_TIME','한국시간 출발일시는 2000~2100년 범위여야 합니다.');
   return normalized.replace('Z','+09:00');
 }
-function publicCandidate(candidate){return {id:clean(candidate.id),name:clean(candidate.name,180),address:clean(candidate.address,240),category:clean(candidate.category,80),coordinate:[...candidate.coordinate],sourceName:clean(candidate.sourceName),sourceDate:clean(candidate.sourceDate,40)||null,note:clean(candidate.note,700),routeEligible:candidate.routeEligible===true,modes:[...MODES].filter(mode=>walkCandidateSupportsMode(candidate,mode))};}
+const publicSourceUrl=value=>{if(typeof value!=='string'||value.length>2048)return null;try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)&&!u.username&&!u.password?value:null;}catch{return null;}};
+function publicCandidate(candidate){return {id:clean(candidate.id),name:clean(candidate.name,180),address:clean(candidate.address,240),category:clean(candidate.category,80),coordinate:[...candidate.coordinate],sourceName:clean(candidate.sourceName),sourceUrl:publicSourceUrl(candidate.sourceUrl),datasetId:clean(candidate.datasetId,120)||null,sourceId:clean(candidate.sourceId,240)||null,sourceDate:clean(candidate.sourceDate,40)||null,note:clean(candidate.note,700),routeEligible:candidate.routeEligible===true,modes:[...MODES].filter(mode=>walkCandidateSupportsMode(candidate,mode))};}
 async function candidatesFor(regionId,options){
   const pack=await (options.loadCandidates||loadWalkCandidates)({regionId,env:options.env,publicRoot:options.publicRoot});
   if(pack.profile?.id!==regionId||!Array.isArray(pack.boundaries?.features)||!pack.boundaries.features.length||!Array.isArray(pack.candidates))throw bad(503,'WALK_DATA_UNAVAILABLE','선택 지역의 공개 경유 자료를 준비하지 못했습니다.');

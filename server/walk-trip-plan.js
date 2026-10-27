@@ -6,7 +6,7 @@ import {registeredRegionId} from '../shared/region-catalog.js';
 import {pointInRegion,validCoordinate} from '../shared/region-profile.js';
 import {walkCandidateSupportsMode,walkDistance} from '../shared/walk-route-model.js';
 import {modelConfig} from './ai/model-config.js';
-import {generate,readCandidate,LlmError} from './ai/gemini.js';
+import {generate,readCandidate,LlmError,discoverCompatibleModel} from './ai/gemini.js';
 import {generateCompatible} from './ai/compatible.js';
 import {takeDaily} from './ai/ask.js';
 
@@ -169,6 +169,7 @@ const FALLBACKS=Object.freeze({
 });
 
 async function modelPlan(evidence,ctx){
+  const deadline=Date.now()+8000;
   const config=modelConfig(ctx.env);
   if(config.error)throw new LlmError('LLM_BAD_REQUEST','AI 설정 확인 필요');
   if(!config.key)throw new LlmError('LLM_NOT_CONFIGURED','AI 미연결');
@@ -189,11 +190,23 @@ async function modelPlan(evidence,ctx){
     generationConfig:{temperature:0,maxOutputTokens:1800,responseMimeType:'application/json'},tools:[{functionDeclarations:[]}],toolConfig:{functionCallingConfig:{mode:'NONE'}}};
   if(config.provider==='google'){delete body.tools;delete body.toolConfig;}
   const transport=config.provider==='google'?generate:generateCompatible;
-  const response=await transport({fetcher:ctx.fetcher,key:config.key,model:config.model,baseUrl:config.baseUrl,reasoningEffort:config.reasoningEffort,body,timeoutMs:8000});
+  const request={fetcher:ctx.fetcher,key:config.key,baseUrl:config.baseUrl,reasoningEffort:config.reasoningEffort,body};
+  let response,model=config.model;
+  try{response=await transport({...request,model,timeoutMs:Math.max(1,deadline-Date.now())});}
+  catch(error){
+    // Same Google recovery as map questions: one stable, same-family model, with the original deadline.
+    // Solar/compatible models are explicit choices and must never be silently replaced.
+    if(config.provider!=='google'||error.code!=='LLM_MODEL_NOT_FOUND'||deadline-Date.now()<3500)throw error;
+    const alternative=await discoverCompatibleModel({fetcher:ctx.fetcher,key:config.key,excluded:model,timeoutMs:Math.min(2000,deadline-Date.now()-1500)});
+    if(!alternative)throw error;
+    if(deadline-Date.now()<1500)throw new LlmError('LLM_TIMEOUT','AI 계획 복구 시간 초과');
+    model=alternative;
+    response=await transport({...request,model,timeoutMs:deadline-Date.now()});
+  }
   const result=readCandidate(response);
   if(result.calls.length||!result.text||result.text.length>5000||response.candidates?.[0]?.finishReason==='MAX_TOKENS')throw new LlmError('LLM_BAD_RESPONSE','AI 계획 형식 확인 실패');
   let value;try{value=JSON.parse(result.text);}catch{throw new LlmError('LLM_BAD_RESPONSE','AI 계획 JSON 확인 실패');}
-  return {plan:validateWalkTripPlan(value,evidence),provider:config.provider,model:config.model};
+  return {plan:validateWalkTripPlan(value,evidence),provider:config.provider,model,modelRecovered:model!==config.model};
 }
 
 /** No coordinates or source URLs are returned; IDs resolve in the user's existing catalogue. */
@@ -202,7 +215,7 @@ export async function planWalkTrip(body,{pack,env=process.env,fetcher=fetch}={})
   let plan=evidence.plan,mode='rules',extra={};
   try{
     const result=await modelPlan(evidence,{env,fetcher});
-    plan=result.plan;mode='llm';extra={provider:result.provider,model:result.model};
+    plan=result.plan;mode='llm';extra={provider:result.provider,model:result.model,modelRecovered:result.modelRecovered};
   }catch(error){
     const code=error instanceof LlmError&&Object.hasOwn(FALLBACKS,error.code)?error.code:'LLM_BAD_RESPONSE';
     extra={code,fallbackReason:FALLBACKS[code]};

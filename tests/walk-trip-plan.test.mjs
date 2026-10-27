@@ -14,6 +14,8 @@ const question='한빛도서관에서 시민문화센터까지 계단을 피해�
 const input=(q=question)=>({regionId:'seogu',question:q});
 const SOLAR={AI_PROVIDER:'upstage',UPSTAGE_API_KEY:'PLAN_TEST_CREDENTIAL',ASK_DAILY_LIMIT:'300'};
 const GOOGLE={AI_PROVIDER:'google',GEMINI_API_KEY:'PLAN_TEST_CREDENTIAL',ASK_DAILY_LIMIT:'300'};
+const json=(status,payload)=>new Response(JSON.stringify(payload),{status,headers:{'content-type':'application/json'}});
+const googleModel=(name,methods=['generateContent'])=>({name:'models/'+name,supportedGenerationMethods:methods});
 function modelFetcher(provider,change=payload=>payload.suppliedPlan,onRequest=()=>{}){
   return async(url,init)=>{
     const request=JSON.parse(init.body);
@@ -128,6 +130,89 @@ test('Google transport reuses the fixed generateContent endpoint and reports its
   assert.doesNotMatch(JSON.stringify(result),/PLAN_TEST_CREDENTIAL/);
 });
 
+test('Google 404 recovery uses the existing stable family selection, one daily allowance and one eight-second deadline',async t=>{
+  let now=Date.parse('2026-10-28T00:00:00Z');const timers=[],calls=[],originalSetTimeout=globalThis.setTimeout;
+  t.mock.method(Date,'now',()=>now);
+  t.mock.method(globalThis,'setTimeout',(fn,ms,...args)=>{timers.push(ms);return originalSetTimeout(fn,ms,...args);});
+  const success=modelFetcher('google');
+  const fetcher=async(url,init)=>{
+    calls.push({url:String(url),init});
+    if(calls.length===1){now+=1000;return json(404,{error:'RAW_ERROR PLAN_TEST_CREDENTIAL'});}
+    if(init.method==='GET'){
+      now+=600;
+      return json(200,{models:[googleModel('gemini-2.5-flash'),googleModel('gemini-3.8-flash'),googleModel('gemini-9.9-pro'),googleModel('gemini-9.9-flash-preview'),googleModel('gemma-4-31b-it'),googleModel('gemini-8.0-flash',['embedContent'])]});
+    }
+    return success(url,init);
+  };
+  const env={...GOOGLE,AI_MODEL:'gemini-2.5-flash',ASK_DAILY_LIMIT:'1'};
+  const result=await planWalkTrip(input(),{pack,env,fetcher});
+  assert.equal(result.mode,'llm');assert.equal(result.provider,'google');assert.equal(result.model,'gemini-3.8-flash');assert.equal(result.modelRecovered,true);
+  assert.equal(calls.length,3);assert.match(calls[0].url,/gemini-2\.5-flash:generateContent$/);
+  assert.equal(calls[1].url,'https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000');
+  assert.equal(calls[1].init.headers['x-goog-api-key'],'PLAN_TEST_CREDENTIAL');assert.equal(calls[1].init.redirect,'error');
+  assert.match(calls[2].url,/gemini-3\.8-flash:generateContent$/);assert.equal(calls[2].init.body,calls[0].init.body);
+  assert.deepEqual(timers,[8000,2000,6400]);
+  assert.equal(result.requiresConfirmation,true);assert.equal(result.routeRequested,false);assert.deepEqual(result.plan.viaIds,['nursing','toys']);
+  assert.doesNotMatch(JSON.stringify(result),/RAW_ERROR|PLAN_TEST_CREDENTIAL/);
+  const limited=await planWalkTrip(input(),{pack,env,fetcher});
+  assert.equal(limited.code,'LLM_DAILY_LIMIT');assert.equal(calls.length,3,'recovery uses the original daily allowance');
+});
+
+test('Gemma recovery stays within Gemma and the recovered plan still passes facility validation',async()=>{
+  const calls=[];const success=modelFetcher('google',payload=>({...payload.suppliedPlan,viaIds:['invented']}));
+  const fetcher=async(url,init)=>{
+    calls.push(String(url));
+    if(calls.length===1)return json(404,{});
+    if(init.method==='GET')return json(200,{models:[googleModel('gemini-3.8-flash'),googleModel('gemma-4-31b-it')]});
+    return success(url,init);
+  };
+  const result=await planWalkTrip(input(),{pack,env:GOOGLE,fetcher});
+  assert.equal(calls.length,3);assert.match(calls[2],/gemma-4-31b-it:generateContent$/);
+  assert.equal(result.mode,'rules');assert.equal(result.code,'LLM_UNGROUNDED');assert.equal(result.model,undefined);
+  assert.deepEqual(result.plan.viaIds,['nursing','toys']);assert.equal(result.requiresConfirmation,true);assert.equal(result.routeRequested,false);
+});
+
+test('Solar and other compatible 404s never discover or change a model',async()=>{
+  for(const env of [SOLAR,{AI_PROVIDER:'openai-compatible',AI_MODEL:'chosen-model',AI_API_BASE:'https://model.example/v1',AI_API_KEY:'PLAN_TEST_CREDENTIAL'}]){
+    const calls=[];
+    const result=await planWalkTrip(input(),{pack,env,fetcher:async(url,init)=>{calls.push({url:String(url),method:init.method});return json(404,{error:'RAW_ERROR PLAN_TEST_CREDENTIAL'});}});
+    assert.equal(calls.length,1);assert.equal(calls[0].method,'POST');assert.equal(result.code,'LLM_MODEL_NOT_FOUND');assert.equal(result.mode,'rules');
+    assert.equal(result.model,undefined);assert.doesNotMatch(JSON.stringify(result),/RAW_ERROR|PLAN_TEST_CREDENTIAL/);
+  }
+});
+
+test('failed discovery or repeated Google 404 preserves an honest fallback with at most one alternate',async()=>{
+  for(const variant of ['list-error','no-compatible','retry-error']){
+    const calls=[];
+    const fetcher=async(url,init)=>{
+      calls.push(String(url));
+      if(init.method!=='GET')return json(404,{error:'RAW_ERROR PLAN_TEST_CREDENTIAL'});
+      if(variant==='list-error')return json(403,{error:'RAW_ERROR PLAN_TEST_CREDENTIAL'});
+      return json(200,{models:variant==='no-compatible'?[googleModel('gemini-4.0-pro'),googleModel('gemma-4-31b-it')]:[googleModel('gemini-3.8-flash')]});
+    };
+    const result=await planWalkTrip(input(),{pack,env:{...GOOGLE,AI_MODEL:'gemini-2.5-flash'},fetcher});
+    assert.equal(calls.length,variant==='retry-error'?3:2);assert.equal(result.mode,'rules');assert.equal(result.code,'LLM_MODEL_NOT_FOUND');
+    assert.equal(result.model,undefined);assert.equal(result.requiresConfirmation,true);assert.doesNotMatch(JSON.stringify(result),/RAW_ERROR|PLAN_TEST_CREDENTIAL/);
+  }
+});
+
+test('Google recovery stops when the original deadline lacks time for discovery or a final attempt',async t=>{
+  let now=Date.parse('2026-10-28T00:00:00Z');t.mock.method(Date,'now',()=>now);
+  for(const variant of ['slow-initial','slow-discovery']){
+    const calls=[];
+    const fetcher=async(url,init)=>{
+      calls.push(String(url));
+      if(init.method!=='GET'){now+=variant==='slow-initial'?5000:1000;return json(404,{});}
+      now+=6000; // Simulates a late response even if a provider ignores the abort signal.
+      return json(200,{models:[googleModel('gemini-3.8-flash')]});
+    };
+    const result=await planWalkTrip(input(),{pack,env:{...GOOGLE,AI_MODEL:'gemini-2.5-flash'},fetcher});
+    assert.equal(calls.length,variant==='slow-initial'?1:2);
+    assert.equal(result.mode,'rules');assert.equal(result.code,variant==='slow-initial'?'LLM_MODEL_NOT_FOUND':'LLM_TIMEOUT');
+    assert.equal(result.requiresConfirmation,true);assert.equal(result.routeRequested,false);
+  }
+});
+
 test('invented IDs, changed conditions, extra fields, unknown checks and duplicate stops all fall back to verified rules',async()=>{
   const mutations=[
     p=>({...p,startId:'invented'}),p=>({...p,endId:'nursing'}),p=>({...p,mode:'winter'}),p=>({...p,avoidStairs:false}),
@@ -165,7 +250,7 @@ test('daily budget zero blocks the model and provider errors trigger one explici
   let calls=0;
   const disabled=await planWalkTrip(input(),{pack,env:{...SOLAR,ASK_DAILY_LIMIT:'0'},fetcher:async()=>{calls++;throw Error('must not call');}});
   assert.equal(disabled.code,'LLM_DAILY_LIMIT');assert.equal(calls,0);
-  for(const [status,code]of [[401,'LLM_KEY_REJECTED'],[404,'LLM_MODEL_NOT_FOUND'],[429,'LLM_QUOTA'],[500,'LLM_BAD_RESPONSE']]){
+  for(const [status,code]of [[401,'LLM_KEY_REJECTED'],[429,'LLM_QUOTA'],[500,'LLM_BAD_RESPONSE']]){
     calls=0;const result=await planWalkTrip(input(),{pack,env:GOOGLE,fetcher:async()=>{calls++;return new Response(JSON.stringify({error:{message:'RAW_ERROR PLAN_TEST_CREDENTIAL'}}),{status});}});
     assert.equal(calls,1);assert.equal(result.mode,'rules');assert.equal(result.code,code);
     assert.doesNotMatch(JSON.stringify(result),/RAW_ERROR|PLAN_TEST_CREDENTIAL/);
@@ -179,7 +264,7 @@ test('model timeout is capped at eight seconds and maps to rules fallback (mock 
     const fetcher=async(_url,{signal})=>new Promise((_,reject)=>signal.addEventListener('abort',()=>reject(Object.assign(Error('cancelled'),{name:'AbortError'})),{once:true}));
     const result=await planWalkTrip(input(),{pack,env:SOLAR,fetcher});
     assert.equal(result.mode,'rules');assert.equal(result.code,'LLM_TIMEOUT');
-    assert.deepEqual(timers,[8000]);
+    assert.equal(timers.length,1);assert.ok(timers[0]>0&&timers[0]<=8000);
   }finally{globalThis.setTimeout=actualSetTimeout;}
 });
 
