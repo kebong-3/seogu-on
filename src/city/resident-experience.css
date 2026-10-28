@@ -69,3 +69,12 @@ body[data-usage="resident"] .scene-caption{display:none!important}.resident-usag
 @media(max-width:820px){:root{--footer-h:94px}body #app.walking-guidance #map{top:114px;left:0;right:0;bottom:calc(94px + env(safe-area-inset-bottom,0px))}body #app.walking-guidance .detail-panel{bottom:calc(102px + env(safe-area-inset-bottom,0px));max-height:52dvh}}
 body:has(.walk-routes.is-picking) #toast{top:126px;bottom:auto}
 @media(min-width:821px) and (max-height:780px){body .home-hero{display:none!important}}
+/* The map camera centers inside its own viewport, so keep that center above the guidance sheet. */
+@media(max-width:820px){
+ body #app.walking-guidance .live-ribbon,body #app.walking-guidance .camera-controls{display:none!important}
+ body #app.walking-guidance #map{top:68px;bottom:calc(45dvh + 112px + env(safe-area-inset-bottom,0px))}
+ body #app.walking-guidance .detail-panel{max-height:45dvh;bottom:calc(102px + env(safe-area-inset-bottom,0px))}
+ body #app.walking-guidance .detail-head{padding:11px 14px}
+ body #app.walking-guidance .detail-head h2{font-size:17px}
+ body #app.walking-guidance .detail-head .eyebrow{display:none}
+}
