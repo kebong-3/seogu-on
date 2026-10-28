@@ -134,7 +134,7 @@ test('manual reroute drops only confidently passed stops and preserves upcoming 
 
 test('manual map interaction turns off camera following, while restoring follow uses the accepted current location',async()=>{
   const env=setup();try{
-    await env.action('walk-nav-start');env.fix(point(20),0);const before=env.follows.length;env.controller.onEvent({type:'interaction'});env.fix(point(30),10);assert.equal(env.follows.length,before);assert.match(env.html,/현재 위치로 보기/);
+    await env.action('walk-nav-start');env.fix(point(20),0);const before=env.follows.length;env.controller.onEvent({type:'interaction'});env.fix(point(30),10);assert.equal(env.follows.length,before);assert.match(env.html,/현재 위치로 돌아가기/);
     await env.action('walk-nav-follow');assert.equal(env.follows.length,before+1);assert.deepEqual(env.follows.at(-1).coordinate,point(30));
   }finally{env.cleanup();}
 });
@@ -154,7 +154,7 @@ test('a missing first location times out and cleans up the watch',async t=>{
 
 test('the complete route panel resets GPS when endpoints change and suspends it on a service switch',async()=>{
   const setup=setupRoutes(),{env,ui}=setup;try{
-    await env.action('walk-routes');await env.action('walk-calculate');assert.match(setup.html,/전체 회전 안내/);await env.action('walk-nav-start');env.fix(point(30),0);assert.equal(env.watches.size,1);
+    await env.action('walk-routes');await env.action('walk-example');await env.action('walk-calculate');assert.match(setup.html,/전체 회전 안내/);await env.action('walk-nav-start');env.fix(point(30),0);assert.equal(env.watches.size,1);
     setup.change('walk-end-choice','b');assert.ok(env.cleared.includes(1));assert.equal(env.sends.filter(m=>m.id==='walk-position').at(-1).visible,false);
     await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(40),10);assert.equal(env.watches.size,2);ui.suspend();assert.ok(env.cleared.includes(2));assert.equal(env.sends.filter(m=>m.id==='walk-position').at(-1).visible,false);const before=env.sends.length;env.fix(point(60),20,5,2);assert.equal(env.sends.length,before);
   }finally{setup.cleanup();}
@@ -162,21 +162,42 @@ test('the complete route panel resets GPS when endpoints change and suspends it 
 
 test('closing the complete route panel stops GPS without discarding the comparison result',async()=>{
   const setup=setupRoutes(),{env,ui}=setup;try{
-    await env.action('walk-routes');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);const clearCount=setup.clears;
-    ui.panelClosed();assert.ok(env.cleared.includes(1));assert.equal(setup.clears,clearCount);await env.action('walk-routes');assert.match(setup.html,/도보경로 비교/);assert.match(setup.html,/길안내 시작/);
+    await env.action('walk-routes');await env.action('walk-example');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);const clearCount=setup.clears;
+    ui.panelClosed();assert.ok(env.cleared.includes(1));assert.equal(setup.clears,clearCount);await env.action('walk-routes');assert.match(setup.html,/경로를 확인하세요/);assert.match(setup.html,/길안내 시작/);
   }finally{setup.cleanup();}
 });
 
 test('expired route results stop the full panel GPS watch before another navigation can continue',async()=>{
   const setup=setupRoutes(),{env}=setup;try{
-    await env.action('walk-routes');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);
+    await env.action('walk-routes');await env.action('walk-example');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);
     env.setTime(31*60);await env.action('walk-routes');assert.ok(env.cleared.includes(1));assert.equal(env.sends.filter(m=>m.id==='walk-position').at(-1).visible,false);assert.match(setup.html,/표시 시간이 끝났어요/);assert.doesNotMatch(setup.html,/walking-navigation/);
   }finally{setup.cleanup();}
 });
 
 test('choosing another route stops GPS and prepares the new provider instruction list before restarting',async()=>{
   const setup=setupRoutes(),{env}=setup;try{
-    await env.action('walk-routes');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);
+    await env.action('walk-routes');await env.action('walk-example');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);
     await env.action('walk-select-route',{id:'alternative'});assert.ok(env.cleared.includes(1));assert.match(setup.html,/전체 회전 안내/);assert.match(setup.html,/대안 경로 도착/);
+  }finally{setup.cleanup();}
+});
+
+
+test('permission retry stays explicit and expanded guidance settings survive GPS and option updates',async()=>{
+  const env=setup();try{
+    env.controller.prepare();assert.match(env.html,/<details class="walking-nav-settings">/);assert.match(env.html,/시작을 누르면 위치 사용을 요청/);assert.equal(env.watches.size,0);
+    await env.action('walk-nav-start');env.error(1);assert.match(env.html,/위치 확인하고 다시 시작/);assert.equal(env.state.watching,false);
+    await env.action('walk-nav-start');assert.equal(env.watches.size,2);assert.equal(env.state.watching,true);
+    env.host.querySelector=selector=>({open:['.walking-nav-settings','.walking-steps'].includes(selector)});
+    env.fix(point(30),0);await env.action('walk-nav-voice');assert.match(env.html,/<details class="walking-nav-settings" open>/);assert.match(env.html,/<details class="walking-steps" open>/);
+    await env.action('walk-nav-stop');assert.ok(env.cleared.includes(2));assert.equal(env.state.watching,false);
+  }finally{env.cleanup();}
+});
+
+
+test('map endpoint picking ends active GPS and cancelling keeps guidance stopped',async()=>{
+  const setup=setupRoutes(),{env,ui}=setup;try{
+    await env.action('walk-routes');await env.action('walk-example');await env.action('walk-calculate');await env.action('walk-nav-start');env.fix(point(30),0);
+    await env.action('walk-pick',{field:'end'});assert.ok(env.cleared.includes(1));assert.equal(env.modes.at(-1),false);assert.equal(env.sends.filter(message=>message.id==='walk-position').at(-1).visible,false);assert.match(setup.html,/class="walk-routes is-picking"/);
+    await env.action('walk-cancel-pick');assert.doesNotMatch(setup.html,/class="walk-routes is-picking"/);assert.match(setup.html,/전체 회전 안내/);const count=env.sends.length;env.fix(point(40),10,5,1);assert.equal(env.sends.length,count);assert.equal(env.watches.size,1);
   }finally{setup.cleanup();}
 });

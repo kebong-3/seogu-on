@@ -32,10 +32,13 @@ function setup({configured=true,post,search}={}){
   return {ui,api,calls,paints,tools,nodes,setCandidates(items){catalogueCandidates=items},setReferences(value){catalogueReferences=value},get html(){return html},get clears(){return clears},action:async(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),submit(field){return hostListeners.get('submit')({target:{dataset:{walkSearch:field}},preventDefault(){}})},input(id,value,extra={}){hostListeners.get('input')({target:{id,value,...extra}})},change(id,value,checked){hostListeners.get('change')({target:{id,value,checked}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
 }
 
+// Existing comparison scenarios explicitly choose the seasonal mode and example endpoints.
+async function openExample(env){await env.action('walk-routes',{mode:'shade'});await env.action('walk-example');}
+
 test('place search requires choosing a result before routing, and preserves searched points on catalogue refresh',async()=>{
   const item={id:'search:seogu:0',name:'장난감도서관',address:'서구 경열로 33',coordinate:[126.852,35.151],sourceName:'브이월드 장소·주소 검색'};
   const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[item,{...item,id:'outside',name:'구 밖',coordinate:[130,40]}]})})});try{
-    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'경열로 33'});await env.submit('start');
+    await openExample(env);env.nodes.set('walk-start-query',{value:'경열로 33'});await env.submit('start');
     assert.match(env.html,/장난감도서관/);assert.doesNotMatch(env.html,/구 밖/);assert.ok(env.calls.every(call=>!call.options.method));
     await env.action('walk-calculate');assert.match(env.html,/출발과 도착을 모두 선택/);assert.ok(env.calls.every(call=>!call.options.method));
     await env.action('walk-choose-place',{field:'start',index:'0'});await env.action('walk-retry');await env.action('walk-calculate');
@@ -47,7 +50,7 @@ test('place search requires choosing a result before routing, and preserves sear
 test('search evidence stays accessible outside the selection button and after choosing the endpoint',async()=>{
   const item={id:'source-place',name:'근거 시설',coordinate:[126.852,35.151],sourceName:'공식 원문',sourceDate:null,sourceUrl:'https://example.gov/source?a=1&b=2'};
   const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[item]})})});try{
-    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
+    await openExample(env);env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
     assert.match(env.html,/<\/button><small class="walk-search-source">기준 미제공 · <a href="https:\/\/example\.gov\/source\?a=1&amp;b=2"/);
     await env.action('walk-choose-place',{field:'start',index:'0'});
     assert.match(env.html,/선택 시설 원자료<\/a> · 기준 미제공/);
@@ -58,7 +61,7 @@ test('search evidence stays accessible outside the selection button and after ch
 test('missing or unsafe search evidence URLs are never made into clickable links',async()=>{
   const items=[{id:'unsafe',name:'잘못된 링크',coordinate:[126.852,35.151],sourceUrl:'javascript:alert(1)'},{id:'credential',name:'인증주소',coordinate:[126.853,35.151],sourceUrl:'https://private:secret@example.gov/source'},{id:'missing',name:'원문 미제공',coordinate:[126.854,35.151]}];
   const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items})})});try{
-    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
+    await openExample(env);env.nodes.set('walk-start-query',{value:'근거 시설'});await env.submit('start');
     assert.equal((env.html.match(/원자료 링크 미제공/g)||[]).length,3);
     assert.doesNotMatch(env.html,/href="(?:javascript:|https:\/\/private:secret)/);
   }finally{env.cleanup();}
@@ -70,7 +73,7 @@ test('editing an in-flight place search enables a new search and ignores the old
   const newItem={id:'search:seogu:new',name:'새 검색 시설',coordinate:[126.86,35.16]};
   const env=setup({search:async url=>new URL(url,'https://local.invalid').searchParams.get('q')==='첫 검색'?new Promise(resolve=>{finishOld=()=>resolve({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[oldItem]})})}):{ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[newItem]})}});
   try{
-    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'첫 검색'});
+    await openExample(env);env.nodes.set('walk-start-query',{value:'첫 검색'});
     const pending=env.submit('start');assert.match(env.html,/검색 중/);
     const button={disabled:true,textContent:'검색 중'};let removed=0;
     env.input('walk-start-query','새 검색',{closest:selector=>selector==='form'?{querySelector:()=>button}:{querySelector:()=>({remove(){removed++}})}});
@@ -84,7 +87,7 @@ test('editing an in-flight place search enables a new search and ignores the old
 test('map endpoints can cross a selected dong within the region and swapping cancels a pending map pick',async()=>{
   const env=setup();try{
     env.api.state.district=polygon;env.api.state.scope={type:'Polygon',coordinates:[[[126.88,35.15],[126.90,35.15],[126.90,35.16],[126.88,35.16],[126.88,35.15]]]};
-    await env.action('walk-routes');await env.action('walk-pick',{field:'start'});env.ui.onEvent({type:'point',tool:'walk-start',point:[126.8,35.1]});
+    await openExample(env);await env.action('walk-pick',{field:'start'});env.ui.onEvent({type:'point',tool:'walk-start',point:[126.8,35.1]});
     await env.action('walk-pick',{field:'end'});await env.action('walk-swap');
     assert.equal(env.tools.at(-1).type,'stop');env.ui.onEvent({type:'point',tool:'walk-end',point:[126.7,35.2]});await env.action('walk-calculate');
     const body=JSON.parse(env.calls.at(-1).options.body);assert.deepEqual(body.end,[126.8,35.1]);assert.deepEqual(body.start,fixtures[1].coordinate);
@@ -94,7 +97,7 @@ test('map endpoints can cross a selected dong within the region and swapping can
 test('explicit route cancel keeps endpoints and ignores a response that finishes later',async()=>{
   let finish;
   const env=setup({post:async(request,body)=>new Promise(resolve=>{finish=()=>resolve({ok:true,json:async()=>body(request)})})});try{
-    await env.action('walk-routes');const pending=env.action('walk-calculate');assert.match(env.html,/조회 취소/);await env.action('walk-cancel-route');finish();await pending;
+    await openExample(env);const pending=env.action('walk-calculate');assert.match(env.html,/조회 취소/);await env.action('walk-cancel-route');finish();await pending;
     assert.equal(env.paints.length,0);assert.match(env.html,/출발·도착은 유지/);assert.match(env.html,/서구청 들불홀/);
   }finally{env.cleanup();}
 });
@@ -103,7 +106,7 @@ test('leaving the walking service cancels pending work and cannot repaint on map
   let finish,first=true;
   const env=setup({post:async(request,body)=>{if(first){first=false;return new Promise(resolve=>{finish=()=>resolve({ok:true,json:async()=>body(request)})})}return {ok:true,json:async()=>body(request)}}});
   try{
-    await env.action('walk-routes');const pending=env.action('walk-calculate');
+    await openExample(env);const pending=env.action('walk-calculate');
     env.ui.suspend();env.api.state.view='resilience';finish();await pending;
     env.ui.onEvent({type:'ready'});env.ui.scopeChanged();assert.equal(env.paints.length,0);assert.equal(env.api.state.view,'resilience');
     await env.action('walk-routes');assert.match(env.html,/서구청 들불홀/);assert.match(env.html,/화정1동행정복지센터 다목적실/);
@@ -111,9 +114,9 @@ test('leaving the walking service cancels pending work and cannot repaint on map
   }finally{env.cleanup();}
 });
 
-test('opening chooses two real examples without a paid request, and explicit comparison sends only coordinates',async()=>{
+test('explicit example selection chooses two real places without a paid request, and explicit comparison sends only coordinates',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');
+    await openExample(env);
     assert.equal(env.calls.length,1);assert.ok(!env.calls[0].options.method);
     assert.match(env.html,/서구청 들불홀/);assert.match(env.html,/계단을 피하는 옵션/);
     assert.doesNotMatch(env.html,/<option[^>]*value="bell"/,'inaccessible indoor bell is not an endpoint choice');
@@ -129,7 +132,7 @@ test('opening chooses two real examples without a paid request, and explicit com
 
 test('inspection preserves the chosen visit order, excludes duplicate coordinates and estimates local stay time separately',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');await env.action('walk-mode',{mode:'inspection'});
+    await openExample(env);await env.action('walk-mode',{mode:'inspection'});
     for(const id of ['care','same-place','police','shade']){env.nodes.set('walk-via-choice',{value:id});await env.action('walk-add-via');}
     await env.action('walk-move-via',{id:'shade',direction:'up'});
     await env.action('walk-calculate');
@@ -144,7 +147,7 @@ test('changing mode invalidates a pending response and does not paint a stale ro
   let release,routeResult;
   const env=setup({post:async(request,body)=>{routeResult=body(request);return new Promise(resolve=>{release=resolve})}});
   try{
-    await env.action('walk-routes');const pending=env.action('walk-calculate');
+    await openExample(env);const pending=env.action('walk-calculate');
     await env.action('walk-mode',{mode:'care'});release({ok:true,json:async()=>routeResult});await pending;
     assert.equal(env.paints.length,0);assert.match(env.html,/돌봄시설을 들르는 길/);assert.doesNotMatch(env.html,/walk-route-card/);
   }finally{env.cleanup();}
@@ -152,7 +155,7 @@ test('changing mode invalidates a pending response and does not paint a stale ro
 
 test('unconfigured and map-selection flows do not silently query a route',async()=>{
   const env=setup({configured:false});try{
-    await env.action('walk-routes');assert.match(env.html,/지금은 도보길을 조회할 수 없어요/);
+    await openExample(env);assert.match(env.html,/지금은 도보길을 조회할 수 없어요/);
     await env.action('walk-calculate');assert.equal(env.calls.length,1);
     await env.action('walk-pick',{field:'start'});assert.equal(env.tools.at(-1).tool,'walk-start');
     assert.equal(env.ui.onEvent({type:'point',tool:'walk-start',point:[130,40]}),true);assert.doesNotMatch(env.html,/지도에서 고른 출발지/);
@@ -164,7 +167,7 @@ test('unconfigured and map-selection flows do not silently query a route',async(
 test('results expire and clear their private map geometry when the panel reopens',async()=>{
   const env=setup(),realNow=Date.now;let now=realNow();Date.now=()=>now;
   try{
-    await env.action('walk-routes');await env.action('walk-calculate');assert.equal(env.paints.length,1);
+    await openExample(env);await env.action('walk-calculate');assert.equal(env.paints.length,1);
     now+=31*60000;env.api.state.view=null;await env.action('walk-routes');
     assert.match(env.html,/조회한 경로의 표시 시간이 끝났어요/);assert.doesNotMatch(env.html,/walk-route-card/);assert.ok(env.clears>1);
   }finally{Date.now=realNow;env.cleanup();}
@@ -173,7 +176,7 @@ test('results expire and clear their private map geometry when the panel reopens
 
 test('catalogue refresh updates endpoint coordinates, preserves map points and removes vanished or ineligible inspection visits',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');await env.action('walk-mode',{mode:'inspection'});
+    await openExample(env);await env.action('walk-mode',{mode:'inspection'});
     await env.action('walk-pick',{field:'start'});env.ui.onEvent({type:'point',tool:'walk-start',point:[126.85,35.2]});
     for(const id of ['care','police','shade']){env.nodes.set('walk-via-choice',{value:id});await env.action('walk-add-via');}
     await env.action('walk-calculate');assert.equal(env.paints.length,1);
@@ -196,7 +199,7 @@ test('catalogue refresh updates endpoint coordinates, preserves map points and r
 test('catalogue refresh removes duplicate-coordinate and no-longer-supported waypoints',async()=>{
   const env=setup();try{
     const meeting={id:'meeting',name:'별도 활동공간',category:'public',coordinate:[126.884,35.159],routeEligible:true};
-    env.setCandidates([...structuredClone(fixtures),meeting]);await env.action('walk-routes');await env.action('walk-mode',{mode:'care'});
+    env.setCandidates([...structuredClone(fixtures),meeting]);await openExample(env);await env.action('walk-mode',{mode:'care'});
     for(const id of ['care','meeting']){env.nodes.set('walk-via-choice',{value:id});await env.action('walk-add-via');}
     const updated=[...structuredClone(fixtures),{...meeting,coordinate:[...fixtures.find(c=>c.id==='care').coordinate]}];
     env.setCandidates(updated);await env.action('walk-retry');await env.action('walk-calculate');
@@ -209,7 +212,7 @@ test('catalogue refresh removes duplicate-coordinate and no-longer-supported way
 
 test('seasonal controls send an explicit Korean-time departure and preserve zero detour limits without an automatic request',async()=>{
   const env=setup();try{
-    await env.action('walk-routes');assert.match(env.html,/선택 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울 안전보행/);
+    await openExample(env);assert.match(env.html,/선택 일시/);assert.match(env.html,/한국시간/);assert.match(env.html,/겨울 안전보행/);
     env.change('walk-departure-at','2026-07-15T14:10');env.change('walk-max-detour-meters','0');env.change('walk-max-detour-minutes','0');env.change('walk-shadow-timing','departure-static');
     assert.equal(env.calls.filter(c=>c.options.method==='POST').length,0);
     await env.action('walk-calculate');const body=JSON.parse(env.calls.at(-1).options.body);
@@ -218,11 +221,12 @@ test('seasonal controls send an explicit Korean-time departure and preserve zero
   }finally{env.cleanup();}
 });
 
-test('seasonal recommendations show calculated shade and unevaluated distance and select only the server-provided preferred candidate',async()=>{
+test('seasonal evidence remains available while direct is initially selected and an alternative requires an explicit selection',async()=>{
   const env=setup({post:async(request,body)=>{const answer=body(request);answer.seasonal={status:'partial',comparison:{preferredRouteId:'via',basis:'우회 한도 안에서 미평가 구간까지 함께 비교했어요.',reason:'model-bounded-improvement'}};for(const route of answer.routes)route.seasonal=route.id==='via'?{routeLengthMeters:1500,evaluatedMeters:1200,unevaluatedMeters:300,estimatedShadeMeters:500,sunlitMeters:700,coverageRatio:.8,reasons:['건물높이가 미상인 구간은 미평가로 남겼어요.']}:{routeLengthMeters:1200,evaluatedMeters:1000,unevaluatedMeters:200,estimatedShadeMeters:100,sunlitMeters:900,coverageRatio:1000/1200};return{ok:true,json:async()=>answer}}});
   try{
-    await env.action('walk-routes');await env.action('walk-calculate');assert.equal(env.paints.at(-1).active,'via');
+    await openExample(env);await env.action('walk-calculate');assert.equal(env.paints.at(-1).active,'direct');
     assert.match(env.html,/조회한 후보 중 먼저 살펴볼 길/);assert.match(env.html,/수록 건물로 계산한 추정 그늘/);assert.match(env.html,/500m/);assert.match(env.html,/300m/);assert.match(env.html,/80%/);assert.match(env.html,/그늘·일조 미확인 거리/);assert.doesNotMatch(env.html,/최적|안전을 보장|개선 여부를 확정하기 어려워요/);
+    await env.action('walk-select-route',{id:'via'});assert.equal(env.paints.at(-1).active,'via');
     env.change('walk-departure-at','2026-07-15T16:00');assert.doesNotMatch(env.html,/walk-route-card/,'changing the time clears the old route evaluation');
   }finally{env.cleanup();}
 });
@@ -230,7 +234,7 @@ test('seasonal recommendations show calculated shade and unevaluated distance an
 test('winter separates icing-record proximity from sunlight evaluation and night does not turn unknown shade into zero',async()=>{
   const env=setup({post:async(request,body)=>{const answer=body(request);answer.seasonal={status:'not-evaluated',comparison:{preferredRouteId:null,reason:'야간에는 건물그늘을 평가하지 않았어요.'}};for(const route of answer.routes)route.seasonal={status:'deferred',solarState:request.departureAt.includes('T14:')?'day':'night',routeLengthMeters:route.distanceMeters,evaluatedMeters:0,unevaluatedMeters:route.distanceMeters,estimatedShadeMeters:request.departureAt.includes('T14:')?0:null,sunlitMeters:request.departureAt.includes('T14:')?0:null,coverageRatio:0,lowSunMeters:null,icingNearbyMeters:120,reasons:[request.departureAt.includes('T14:')?'coverage-not-declared':'night']};return{ok:true,json:async()=>answer}}});
   try{
-    await env.action('walk-routes');await env.action('walk-mode',{mode:'winter'});env.change('walk-departure-at','2027-01-15T22:00');await env.action('walk-calculate');
+    await openExample(env);await env.action('walk-mode',{mode:'winter'});env.change('walk-departure-at','2027-01-15T22:00');await env.action('walk-calculate');
     assert.match(env.html,/일조 적은 거리/);assert.match(env.html,/결빙관리지점 인근/);assert.match(env.html,/120m/);assert.match(env.html,/우선안은 정하지 않았어요/);assert.match(env.html,/결빙 발생 여부나 확률을 계산한 값은 아니에요/);
     await env.action('walk-mode',{mode:'shade'});env.change('walk-departure-at','2026-07-15T22:00');await env.action('walk-calculate');assert.match(env.html,/수록 건물로 계산한 추정 그늘<\/span><b>미평가/);env.change('walk-departure-at','2026-07-15T14:00');await env.action('walk-calculate');assert.match(env.html,/수록 건물로 계산한 추정 그늘<\/span><b>0m/);assert.match(env.html,/그늘·일조 미확인 거리/);
   }finally{env.cleanup();}
@@ -239,7 +243,7 @@ test('winter separates icing-record proximity from sunlight evaluation and night
 test('official safe-return references expose their source without manufacturing a mapped route',async()=>{
   const env=setup();try{
     env.setReferences({sourceName:'공식 경찰 안내',sourceDate:'2026-08',sourceUrl:'https://example.gov/official',routes:[{id:'official-1',name:'금호1 <안내>',description:'공식 안내에서 구간 확인'}]});
-    await env.action('walk-routes');await env.action('walk-mode',{mode:'safety'});
+    await openExample(env);await env.action('walk-mode',{mode:'safety'});
     assert.match(env.html,/공식 여성안심 귀갓길 안내/);assert.match(env.html,/금호1 &lt;안내&gt;/);assert.match(env.html,/https:\/\/example.gov\/official/);assert.match(env.html,/이번에 비교한 도보경로와는 별개/);assert.equal(env.paints.length,0);assert.equal(env.calls.filter(c=>c.options.method==='POST').length,0);
   }finally{env.cleanup();}
 });
@@ -248,7 +252,7 @@ test('official safe-return references expose their source without manufacturing 
 test('levels-based heights are opt-in, invalidate old results and disclose the number of assumed-height buildings',async()=>{
   const env=setup({post:async(request,body)=>{const answer=body(request);answer.seasonal={status:'partial',model:{includeLevels:request.includeLevels,heightCounts:{total:10,sourceHeight:2,estimatedHeight:request.includeLevels?3:0,unknownHeight:request.includeLevels?5:8}},coverage:{declared:false},comparison:{preferredRouteId:null}};return{ok:true,json:async()=>answer}}});
   try{
-    await env.action('walk-routes');assert.match(env.html,/층수로 높이를 추정한 건물도 포함/);assert.doesNotMatch(env.html,/id="walk-include-levels"[^>]*checked/);
+    await openExample(env);assert.match(env.html,/층수로 높이를 추정한 건물도 포함/);assert.doesNotMatch(env.html,/id="walk-include-levels"[^>]*checked/);
     await env.action('walk-calculate');assert.equal(JSON.parse(env.calls.at(-1).options.body).includeLevels,false);
     env.change('walk-include-levels','',true);assert.doesNotMatch(env.html,/walk-route-card/);const before=env.calls.length;
     assert.match(env.html,/id="walk-include-levels"[^>]*checked/);assert.equal(env.calls.length,before);
@@ -273,7 +277,7 @@ test('a winter time window with fully unknown sunlight remains unevaluated while
   let lowSun=0;
   const env=setup({post:async(request,body)=>{const answer=body(request);answer.seasonal={status:'partial',comparison:{preferredRouteId:null}};for(const route of answer.routes)route.seasonal={status:'partial',routeLengthMeters:route.distanceMeters,evaluatedMeters:0,unevaluatedMeters:route.distanceMeters,estimatedShadeMeters:0,coverageRatio:0,lowSunMeters:lowSun,winterUnevaluatedMeters:route.distanceMeters,winterCoverageRatio:0,icingNearbyMeters:120,winter:{window:{date:'2027-01-15',startHour:9,endHour:16}}};return{ok:true,json:async()=>answer}}});
   try{
-    await env.action('walk-routes');await env.action('walk-mode',{mode:'winter'});await env.action('walk-calculate');
+    await openExample(env);await env.action('walk-mode',{mode:'winter'});await env.action('walk-calculate');
     assert.match(env.html,/일조 적은 거리<\/span><b>미평가/);assert.doesNotMatch(env.html,/일조 적은 거리<\/span><b>0m/);
     assert.match(env.html,/공개 대표점 50m 이내\(앱 설정\)/);assert.match(env.html,/현재 보도의 빙판 여부를 판정한 값은 아니에요/);
     lowSun=20;env.change('walk-departure-at','2027-01-15T10:00');await env.action('walk-calculate');assert.match(env.html,/일조 적은 거리<\/span><b>20m/);
@@ -282,7 +286,7 @@ test('a winter time window with fully unknown sunlight remains unevaluated while
 test('current location is used only on an explicit action and uncertain fixes cannot retain the old sample start',async()=>{
  const env=setup();let reads=0;try{
   env.api.geolocation={getCurrentPosition(success){reads++;success({coords:{longitude:126.852,latitude:35.151,accuracy:8},timestamp:Date.now()});}};
-  await env.action('walk-routes');assert.equal(reads,0);await env.action('walk-current-start');assert.equal(reads,1);assert.match(env.html,/출발지: 현재 위치/);await env.action('walk-calculate');assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).start,[126.852,35.151]);
+  await openExample(env);assert.equal(reads,0);await env.action('walk-current-start');assert.equal(reads,1);assert.match(env.html,/출발지: 현재 위치/);await env.action('walk-calculate');assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).start,[126.852,35.151]);
   env.api.geolocation={getCurrentPosition(success){success({coords:{longitude:126.85,latitude:35.15,accuracy:300},timestamp:Date.now()});}};await env.action('walk-current-start');const count=env.calls.length;await env.action('walk-calculate');assert.equal(env.calls.length,count);assert.match(env.html,/출발과 도착을 모두 선택/);
  }finally{env.cleanup();}
 });
@@ -290,7 +294,108 @@ test('current location is used only on an explicit action and uncertain fixes ca
 test('a public-facility plan is reviewed and applied without a route call, while foreign candidate IDs are rejected',async()=>{
  const answer={ok:true,region:{id:'seogu'},mode:'rules',plan:{mode:'care',startId:'start',endId:'end',viaIds:['care'],avoidStairs:true},checkDetails:[{code:'access',text:'기관에 이용조건을 확인하세요.'}],notice:'계획을 확인하세요.'};
  const env=setup({post:async request=>{assert.equal(request.kind,'plan');return {ok:true,json:async()=>structuredClone(answer)};}});try{
-  await env.action('walk-routes');env.nodes.set('walk-plan-question',{value:'서구청에서 시설까지 계단 없이'});await env.action('walk-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/AI 미사용/);assert.match(env.html,/시설·조건을 확인하고 반영/);await env.action('walk-apply-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/checked>계단/);assert.match(env.html,/기관에 이용조건/);
+  await openExample(env);env.nodes.set('walk-plan-question',{value:'서구청에서 시설까지 계단 없이'});await env.action('walk-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/AI 미사용/);assert.match(env.html,/시설·조건을 확인하고 반영/);await env.action('walk-apply-plan');assert.equal(env.calls.filter(c=>c.options.method==='POST').length,1);assert.match(env.html,/checked>계단/);assert.match(env.html,/기관에 이용조건/);
   answer.plan.endId='foreign-id';await env.action('walk-plan');assert.match(env.html,/공개목록과 계획 결과가 달라/);assert.doesNotMatch(env.html,/data-action="walk-apply-plan"/);
  }finally{env.cleanup();}
+});
+
+
+test('first entry has empty endpoints and folded conditions, and only explicit examples populate them',async()=>{
+  const env=setup();try{
+    await env.action('walk-routes');
+    assert.equal(env.calls.length,1);assert.match(env.html,/data-walk-step="1" aria-current="step"/);
+    assert.match(env.html,/<details class="walk-conditions" data-walk-disclosure="conditions">/);
+    assert.match(env.html,/data-mode="basic" aria-pressed="true"/);
+    assert.doesNotMatch(env.html,/id="walk-(?:start|end)-selected"/);
+    assert.doesNotMatch(env.html,/id="walk-departure-at"/);
+    assert.match(env.html,/data-action="walk-calculate" disabled/);
+    await env.action('walk-calculate');assert.equal(env.calls.length,1);
+    await env.action('walk-example');assert.match(env.html,/<strong>예시 장소<\/strong>/);assert.equal(env.calls.length,1);
+    await env.action('walk-calculate');const sent=JSON.parse(env.calls.at(-1).options.body);
+    assert.equal(sent.navigation,true);assert.equal(sent.mode,'shade');assert.equal(Object.hasOwn(sent,'departureAt'),false);assert.equal(Object.hasOwn(sent,'viaIds'),false);
+    assert.equal(env.paints.at(-1).active,'direct');assert.match(env.html,/data-walk-step="2" aria-current="step"/);
+    assert.match(env.html,/<details class="walk-entry walk-notes" data-walk-disclosure="endpoints">/);
+    assert.doesNotMatch(env.html,/<section class="walk-results"[^>]*aria-live/);
+  }finally{env.cleanup();}
+});
+
+test('returning to basic routing removes seasonal and visit choices without silently querying',async()=>{
+  const env=setup();try{
+    await openExample(env);await env.action('walk-mode',{mode:'care'});env.nodes.set('walk-via-choice',{value:'care'});await env.action('walk-add-via');
+    const calls=env.calls.length;await env.action('walk-mode',{mode:'basic'});assert.equal(env.calls.length,calls);
+    await env.action('walk-calculate');const sent=JSON.parse(env.calls.at(-1).options.body);
+    assert.equal(sent.navigation,true);assert.equal(Object.hasOwn(sent,'viaIds'),false);assert.equal(Object.hasOwn(sent,'departureAt'),false);
+  }finally{env.cleanup();}
+});
+test('seasonal result dates stay visible outside folded assessment and distinguish an explicit example from chosen time',async()=>{
+ const env=setup();try{await openExample(env);await env.action('walk-mode',{mode:'shade'});await env.action('walk-time-example');await env.action('walk-calculate');let result=env.html.slice(env.html.indexOf('<section class="walk-results"'));assert.match(result,/<p class="walk-result-condition"><strong>예시 일시/);assert.ok(result.indexOf('walk-result-condition')<result.indexOf('walk-result-details'));assert.match(result,/현재 안전 판정이 아니에요/);env.change('walk-departure-at','2026-08-01T13:00');await env.action('walk-calculate');result=env.html.slice(env.html.indexOf('<section class="walk-results"'));assert.match(result,/<p class="walk-result-condition"><strong>출발 일시/);}finally{env.cleanup();}
+});
+
+test('facility entry resolves only a unique source reference in the current region and keeps GPS opt-in',async()=>{
+  const env=setup();let locationRequests=0;env.api.geolocation={getCurrentPosition(){locationRequests++}};
+  env.setCandidates(fixtures.map(c=>({...c,sourceRefs:c.id==='care'?[{datasetId:'verified-care',sourceId:'public-42'}]:[]})));
+  try{
+    await env.action('walk-routes',{destinationRegion:'seogu',destinationDataset:'verified-care',destinationSourceId:'public-42'});
+    assert.match(env.html,/도착지: 실제 어린이집/);assert.doesNotMatch(env.html,/id="walk-start-selected"/);assert.equal(locationRequests,0);assert.equal(env.calls.filter(c=>c.options.method).length,0);
+    env.change('walk-start-choice','start');await env.action('walk-calculate');assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).end,fixtures.find(c=>c.id==='care').coordinate);
+    await env.action('walk-routes',{destinationRegion:'suncheon',destinationDataset:'verified-care',destinationSourceId:'public-42'});
+    assert.match(env.html,/현재 지역에서 확인하지 못했어요/);assert.doesNotMatch(env.html,/id="walk-end-selected"/);const before=env.calls.length;await env.action('walk-calculate');assert.equal(env.calls.length,before);
+  }finally{env.cleanup();}
+});
+
+test('facility entry rejects ambiguous, ineligible and missing IDs instead of routing to a stale endpoint',async()=>{
+  const env=setup();env.setCandidates(fixtures.map(c=>({...c,sourceRefs:['care','same-place'].includes(c.id)?[{datasetId:'overlap',sourceId:'1'}]:[]})));
+  try{
+    await openExample(env);
+    for(const data of [{destinationId:'bell'},{destinationId:'missing'},{destinationDataset:'overlap',destinationSourceId:'1'}]){
+      await env.action('walk-routes',{destinationRegion:'seogu',...data});assert.doesNotMatch(env.html,/id="walk-end-selected"/);assert.match(env.html,/현재 지역에서 확인하지 못했어요/);
+    }
+    assert.equal(env.calls.filter(c=>c.options.method).length,0);
+  }finally{env.cleanup();}
+});
+
+test('mobile map picking keeps the cancel control visible and cancel preserves existing endpoints',async()=>{
+  const env=setup();let closed=0;env.api.close=()=>closed++;globalThis.innerWidth=375;
+  try{
+    await openExample(env);await env.action('walk-pick',{field:'end'});assert.equal(closed,0);assert.match(env.html,/class="walk-routes is-picking"/);assert.match(env.html,/data-action="walk-cancel-pick"/);
+    await env.action('walk-cancel-pick');assert.doesNotMatch(env.html,/class="walk-routes is-picking"/);await env.action('walk-calculate');assert.deepEqual(JSON.parse(env.calls.at(-1).options.body).end,fixtures[1].coordinate);
+  }finally{env.cleanup();}
+});
+
+test('one-shot location failures and invalid timestamps never enable routing with an unverified start',async()=>{
+  const env=setup();let respond,fail=false;env.api.geolocation={getCurrentPosition(success){if(fail)throw Error('device unavailable');respond=success;}};
+  try{
+    await openExample(env);await env.action('walk-current-start');respond({coords:{longitude:126.852,latitude:35.151,accuracy:10}});
+    assert.match(env.html,/위치가 부정확해/);const before=env.calls.length;await env.action('walk-calculate');assert.equal(env.calls.length,before);
+    fail=true;await env.action('walk-current-start');assert.match(env.html,/현재 위치를 시작하지 못했어요/);assert.doesNotMatch(env.html,/data-action="walk-current-start" disabled/);
+  }finally{env.cleanup();}
+});
+
+
+test('facility entry waits for an already pending catalogue and a later service switch prevents late selection',async()=>{
+  for(const leave of [false,true]){
+    const env=setup();const fetchCatalogue=globalThis.fetch;let release;
+    globalThis.fetch=async(...args)=>{const response=await fetchCatalogue(...args);return new Promise(resolve=>{release=()=>resolve(response)});};
+    try{
+      const first=env.action('walk-routes');await Promise.resolve();await Promise.resolve();
+      const handoff=env.action('walk-routes',{destinationRegion:'seogu',destinationId:'care'});
+      if(leave){env.ui.suspend();env.api.state.view='resilience';}
+      release();await Promise.all([first,handoff]);assert.equal(env.calls.length,1);
+      if(leave){assert.equal(env.api.state.view,'resilience');assert.doesNotMatch(env.html,/도착지: 실제 어린이집/);}
+      else{assert.match(env.html,/도착지: 실제 어린이집/);assert.doesNotMatch(env.html,/id="walk-start-selected"/);}
+    }finally{env.cleanup();}
+  }
+});
+
+
+test('closing the panel or choosing on the map invalidates a pending one-shot location callback',async()=>{
+  for(const action of ['close','map']){
+    const env=setup();let respond,follows=0;env.api.geolocation={getCurrentPosition(success){respond=success;}};env.api.followWalkPosition=()=>follows++;
+    try{
+      await env.action('walk-routes');await env.action('walk-current-start');
+      if(action==='close'){env.ui.panelClosed();env.api.state.view=null;}else await env.action('walk-pick',{field:'start'});
+      const html=env.html;respond({coords:{longitude:126.852,latitude:35.151,accuracy:10},timestamp:Date.now()});
+      assert.equal(env.html,html);assert.equal(follows,0);assert.equal(env.api.state.view,action==='close'?null:'walk-routes');
+    }finally{env.cleanup();}
+  }
 });

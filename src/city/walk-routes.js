@@ -86,9 +86,10 @@ export function buildWalkAssessmentFeatures(route,{mode='shade'}={}){
 
 /** TMAP results stay in memory and in private map layers until their short expiry. */
 export function installWalkRoutes(api){
-  let regionId='',mode='shade',candidates=[],catalogueLoaded=false,configured=null,start=null,end=null,avoidStairs=false,viaIds=[],sample=false,stayMinutes=10;
+  let regionId='',mode='shade',basic=true,candidates=[],catalogueLoaded=false,configured=null,start=null,end=null,avoidStairs=false,viaIds=[],sample=false,stayMinutes=10;
+  const expanded=new Set();let entrySequence=0;
   let result=null,activeId='',expires=0,expiryTimer=null,pick='',error='',notice='',loading=false,busy=false,destroyed=false,suspended=false;
-  let catalogueController=null,routeController=null,catalogueSequence=0,routeSequence=0;
+  let catalogueController=null,cataloguePromise=null,routeController=null,catalogueSequence=0,routeSequence=0;
   const searches={start:{query:'',items:[],busy:false,notice:'',sequence:0},end:{query:'',items:[],busy:false,notice:'',sequence:0}};
   let navigation=null,locateSequence=0,locating=false,tripPlan=null,planQuestion='',planning=false,planController=null,planSequence=0;
   let departure=currentDeparture(),departureExample=false,shadowTiming='walk-time',maxDetourMeters=500,maxDetourMinutes=5,safetyReferences=null,includeLevels=false,assessmentFeatures=[];
@@ -96,7 +97,7 @@ export function installWalkRoutes(api){
   const openNow=()=>api.state.view===VIEW;
   const regionName=()=>api.state.regionProfile?.name||'선택 지역';
   const limit=()=>mode==='inspection'?3:2;
-  const seasonalMode=()=>mode==='shade'||mode==='winter';
+  const seasonalMode=()=>!basic&&(mode==='shade'||mode==='winter');
   const isMode=id=>MODES.some(m=>m.id===id);
   const disabled=()=>busy||loading?' disabled':'';
   const candidateById=id=>candidates.find(c=>c.id===id);
@@ -109,11 +110,12 @@ export function installWalkRoutes(api){
   });
   function clearResult(message=''){
     navigation?.stop();planController?.abort();planController=null;planSequence++;planning=false;tripPlan=null;locateSequence++;locating=false;routeController?.abort();routeController=null;routeSequence++;busy=false;result=null;activeId='';assessmentFeatures=[];expires=0;clearTimeout(expiryTimer);expiryTimer=null;api.clearWalkRoutes?.();
-    if(message)notice=message;
+    if(message)notice=message;updateStep();host()?.querySelector?.('.walk-results')?.remove?.();
   }
   function cancelPick(){pick='';api.send?.({type:'stop'});}
   function clearSearch(field){const search=searches[field];search.controller?.abort();search.controller=null;search.sequence++;search.busy=false;search.items=[];search.notice='';}
   function reset(){
+    entrySequence++;expanded.clear();basic=true;mode='shade';
     for(const field of ['start','end']){clearSearch(field);searches[field].query='';}
     catalogueController?.abort();catalogueController=null;catalogueSequence++;clearResult();cancelPick();regionId=api.state.regionProfile?.id||'seogu';candidates=[];catalogueLoaded=false;configured=null;start=null;end=null;viaIds=[];avoidStairs=false;stayMinutes=10;sample=false;error='';notice='';loading=false;departure=currentDeparture();departureExample=false;shadowTiming='walk-time';maxDetourMeters=500;maxDetourMinutes=5;safetyReferences=null;includeLevels=false;
   }
@@ -155,7 +157,7 @@ export function installWalkRoutes(api){
     return changed;
   }
   async function loadCatalogue(){
-    const hadCatalogue=catalogueLoaded,previous=JSON.stringify({start,end,visits:selectedVisits().map(pointFrom)});
+    const previous=JSON.stringify({start,end,visits:selectedVisits().map(pointFrom)});
     catalogueController?.abort();catalogueController=new AbortController();const controller=catalogueController,seq=++catalogueSequence;loading=true;error='';render();
     const timer=setTimeout(()=>controller.abort(),20000);
     try{
@@ -164,15 +166,24 @@ export function installWalkRoutes(api){
       if(seq!==catalogueSequence||destroyed)return;
       if(regionOf(body)&&regionOf(body)!==regionId)throw Error('선택 지역과 시설 자료의 지역이 달라 표시하지 않았어요.');
       const seen=new Set();candidates=list(body.candidates).filter(c=>c&&typeof c.id==='string'&&typeof c.name==='string'&&xy(c.coordinate)&&!seen.has(c.id)&&seen.add(c.id)).map(c=>({...c,name:c.name.slice(0,180),coordinate:[...c.coordinate]}));
-      configured=body.configured===true;safetyReferences=body.safetyReferences||body.safeReturn||null;catalogueLoaded=true;const changed=reconcileCatalogueSelection(previous);if(!hadCatalogue&&!start&&!end)chooseSample();
+      configured=body.configured===true;safetyReferences=body.safetyReferences||body.safeReturn||null;catalogueLoaded=true;const changed=reconcileCatalogueSelection(previous);
       if(!candidates.length)notice=(changed?notice+' ':'')+'이 지역의 수록시설 목록이 없어요. 지도에서 출발·도착을 선택할 수 있어요.';
     }catch(cause){if(seq!==catalogueSequence||destroyed)return;error=cause.name==='AbortError'?'시설 목록을 읽는 시간이 길어졌어요. 다시 열어 주세요.':cause.message||'시설 목록을 읽지 못했어요.';}
     finally{clearTimeout(timer);if(seq===catalogueSequence&&!destroyed){loading=false;if(openNow())render();}}
   }
-  async function open(nextMode){
+  async function open(nextMode,destination){
     if(destroyed)return;suspended=false;if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
-    if(nextMode&&isMode(nextMode)&&mode!==nextMode){clearResult();cancelPick();mode=nextMode;viaIds=[];if(departureExample&&seasonalMode())departure=daylightExample(mode);error='';notice='';}
-    expireIfNeeded();render();if(!catalogueLoaded&&!loading)await loadCatalogue();else if(result)paint();
+    const entry=++entrySequence;
+    if(nextMode==='basic'&&!basic||nextMode&&isMode(nextMode)&&(mode!==nextMode||basic)){clearResult();cancelPick();basic=nextMode==='basic';mode=basic?'shade':nextMode;viaIds=[];if(departureExample&&seasonalMode())departure=daylightExample(mode);error='';notice='';}
+    expireIfNeeded();render();if(!catalogueLoaded){if(!loading)cataloguePromise=loadCatalogue();await cataloguePromise;}else if(result)paint();
+    if(destination&&entry===entrySequence&&!destroyed&&!suspended){
+      clearResult();cancelPick();clearSearch('end');searches.end.query='';if(sample){start=null;clearSearch('start');searches.start.query='';}sample=false;end=null;
+      const boundary=api.state.district||api.state.scope,regionMatches=!destination.destinationRegion||destination.destinationRegion===regionId;
+      const matching=regionMatches?candidates.filter(c=>c.routeEligible===true&&xy(c.coordinate)&&boundary&&inside(c.coordinate,boundary)&&(destination.destinationId?c.id===destination.destinationId:destination.destinationDataset&&destination.destinationSourceId&&[c,...list(c.sourceRefs)].some(ref=>ref.datasetId===destination.destinationDataset&&ref.sourceId!=null&&String(ref.sourceId)===destination.destinationSourceId))):[];
+      if(matching.length===1){end=pointFrom(matching[0]);viaIds=viaIds.filter(id=>!samePlace(candidateById(id)?.coordinate,end.coordinate));notice='도착지를 골랐어요. 출발지를 정하면 길을 찾을 수 있어요.';error='';}
+      else{error='이 시설의 위치를 현재 지역에서 확인하지 못했어요. 도착지를 검색하거나 지도에서 선택해 주세요.';notice='';}
+      expanded.add('endpoints');render();
+    }
   }
   function pointOptions(field){
     const selected=field==='start'?start:end;
@@ -252,15 +263,32 @@ export function installWalkRoutes(api){
     clearResult();const seq=++planSequence,controller=new AbortController();planController=controller;planning=true;error='';render();const timer=setTimeout(()=>controller.abort(),20000);
     try{const response=await fetch('/api/walk-routes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'plan',regionId,question:planQuestion}),signal:controller.signal}),body=await responseBody(response);if(seq!==planSequence||destroyed)return;if(!response.ok||body.ok===false)throw Error(typeof body.error==='string'?body.error:'방문계획을 정리하지 못했어요.');const plan=body.plan,ids=[plan?.startId,plan?.endId,...list(plan?.viaIds)].filter(Boolean);if(regionOf(body)!==regionId||!isMode(plan?.mode)||typeof plan?.avoidStairs!=='boolean'||!Array.isArray(plan?.viaIds)||plan.viaIds.length>3||ids.some(id=>!candidateById(id)))throw Error('공개목록과 계획 결과가 달라 반영하지 않았어요.');tripPlan=body;}catch(cause){if(seq===planSequence)error=cause.name==='AbortError'?'계획을 정리하는 시간이 길어졌어요. 시설을 직접 골라 주세요.':cause.message;}finally{clearTimeout(timer);if(seq===planSequence){planning=false;planController=null;if(openNow())render();}}
   }
-  function applyTripPlan(){if(!tripPlan||busy||loading)return;const planned=tripPlan,plan=planned.plan;clearResult();cancelPick();for(const field of ['start','end']){clearSearch(field);searches[field].query='';}mode=plan.mode;start=pointFrom(candidateById(plan.startId));end=pointFrom(candidateById(plan.endId));avoidStairs=plan.avoidStairs;viaIds=plan.viaIds.filter(id=>matchingVia().some(c=>c.id===id)).slice(0,limit());sample=false;tripPlan=planned;error='';notice='계획의 시설과 조건을 반영했어요. 출발·도착을 확인하고 도보경로 찾기를 누르세요.';render();}
+  function applyTripPlan(){if(!tripPlan||busy||loading)return;const planned=tripPlan,plan=planned.plan;clearResult();cancelPick();for(const field of ['start','end']){clearSearch(field);searches[field].query='';}basic=false;mode=plan.mode;expanded.add('conditions');start=pointFrom(candidateById(plan.startId));end=pointFrom(candidateById(plan.endId));avoidStairs=plan.avoidStairs;viaIds=plan.viaIds.filter(id=>matchingVia().some(c=>c.id===id)).slice(0,limit());sample=false;tripPlan=planned;error='';notice='계획의 시설과 조건을 반영했어요. 출발·도착을 확인하고 도보경로 찾기를 누르세요.';render();}
+  const disclosure=(id,classes,summary,content)=>`<details class="${classes}" data-walk-disclosure="${id}"${expanded.has(id)?' open':''}><summary>${summary}</summary>${content}</details>`;
+  function stepItems(){
+    const state=navigation?.getState(),guiding=state&&['requesting','active','off-route','rerouting','reroute-error','preview','arrived'].includes(state.status),step=guiding?3:result?2:1;
+    return ['출발·도착','경로 선택','안내 시작'].map((label,i)=>`<li data-walk-step="${i+1}"${step===i+1?' aria-current="step"':''} class="${step>i+1?'is-done':''}"><span aria-hidden="true">${step>i+1?'✓':i+1}</span>${label}</li>`).join('');
+  }
+  function updateStep(){const el=host()?.querySelector?.('.walk-steps');if(el)el.innerHTML=stepItems();}
+  function pointFieldsHtml(){
+    return `<section class="walk-points"><h3>어디로 걸어갈까요?</h3><p class="walk-help">장소명이나 주소를 검색해 선택하세요.</p>${['start','end'].map((field,i)=>`<div class="walk-point-field"><label for="walk-${field}-query"><span class="walk-point-dot ${field}">${i===0?'출발':'도착'}</span></label><div class="walk-endpoint-input">${pointSearchHtml(field)}${field==='start'?`<button class="walking-locate" data-action="walk-current-start"${disabled()}${locating?' disabled':''}>${locating?'현재 위치 확인 중…':'현재 위치에서 출발'}</button><p class="walk-location-note">누르면 기기의 위치 사용을 요청해요.</p>`:''}${disclosure(`point-${field}`,'walk-point-alternatives','지도·시설목록에서 선택',`<button data-action="walk-pick" data-field="${field}"${disabled()}>지도에서 선택</button><label class="walk-sr-only" for="walk-${field}-choice">${field==='start'?'출발지':'도착지'} 수록시설 선택</label><select id="walk-${field}-choice"${disabled()}>${pointOptions(field)}</select>`)}</div></div>`).join('')}<div class="walk-point-tools"><button class="walk-text-button" data-action="walk-swap"${disabled()}>출발·도착 바꾸기 ⇄</button><button class="walk-text-button" data-action="walk-example"${disabled()}>예시로 해보기</button></div>${sample?'<p class="walk-example-note"><strong>예시 장소</strong> 내가 고른 출발·도착이 아니에요. 실제 이동할 장소로 바꿔 주세요.</p>':''}</section>`;
+  }
+  function conditionHtml(){
+    const current=MODES.find(m=>m.id===mode),label=basic?'기본 길찾기':current.label;
+    return disclosure('conditions','walk-conditions',`<span>계절·방문 조건 <small>선택사항</small></span><b>${e(label)}</b>`,`<p class="walk-help">원하는 경우 그늘·겨울 조건이나 방문할 시설을 더해요.</p><nav class="walk-tabs" aria-label="도보길 목적"><button data-action="walk-mode" data-mode="basic" aria-pressed="${basic}">기본 길찾기</button>${MODES.map(m=>`<button data-action="walk-mode" data-mode="${m.id}" aria-pressed="${!basic&&mode===m.id}">${e(m.label)}</button>`).join('')}</nav>${basic?'<p class="walk-help">경유시설 없이 도착지까지 가는 보행경로를 찾아요.</p>':`<p class="walk-intro">${e(current.help)}</p>${seasonalControlsHtml()}${visitsHtml()}${safetyReferencesHtml()}`}`);
+  }
+  function routeCardHtml(route,direct){
+    return `<button class="walk-route-card${activeId===route.id?' is-active':''}" data-action="walk-select-route" data-id="${e(route.id)}" aria-pressed="${activeId===route.id}"><span class="walk-route-title">${e(route.role==='direct'?'바로 가는 경로':route.label||'시설 경유 경로')}${activeId===route.id?' · 선택됨':''}</span><strong>${duration(route.durationSeconds)} <span>· ${distance(route.distanceMeters)}</span></strong>${route.role!=='direct'&&direct?`<small>바로 가는 길보다 ${difference(route.durationSeconds,direct.durationSeconds,duration)} · ${difference(route.distanceMeters,direct.distanceMeters,distance)}</small>`:''}${mode==='inspection'&&list(route.via).length?`<span class="walk-route-stay">체류 ${stayMinutes}분 × ${list(route.via).length}곳 가정 · 총 약 ${duration(route.durationSeconds+stayMinutes*list(route.via).length*60)}</span>`:''}${list(route.via).length?`<span class="walk-route-via">경유: ${e(route.via.map(c=>c.name).join(' → '))}</span>`:''}<span class="walk-map-link">${activeId===route.id?'이 길로 아래에서 안내를 시작하세요':'이 경로 선택'} ↗</span></button>`;
+  }
   function resultHtml(){
     if(!result)return '';
-    const direct=result.routes.find(r=>r.role==='direct');
-    return `<section class="walk-results" aria-live="polite"><div class="walk-section-heading"><h3>도보경로 비교</h3><span>TMAP</span></div><p class="walk-help">예상 보행시간이며, 시설 이용·점검에 머무는 시간은 별도예요.</p>${navigation?.html()||''}${seasonalSummaryHtml()}${assessmentLegendHtml()}<p class="walk-route-key"><i style="--route-color:${activeId===direct?.id?'#00e5ff':'#ff49db'}"></i>굵은 선: 선택한 경로 · 가는 가운데 선: 계절 평가</p><div class="walk-route-cards">${result.routes.map(route=>`<button class="walk-route-card${activeId===route.id?' is-active':''}" data-action="walk-select-route" data-id="${e(route.id)}" aria-pressed="${activeId===route.id}"><span class="walk-route-title">${e(route.role==='direct'?'바로 가는 경로':route.label||'시설 경유 경로')}</span><strong>${duration(route.durationSeconds)} <span>· ${distance(route.distanceMeters)}</span></strong>${route.role!=='direct'&&direct?`<small>바로 가는 길보다 ${difference(route.durationSeconds,direct.durationSeconds,duration)} · ${difference(route.distanceMeters,direct.distanceMeters,distance)}</small>`:''}${seasonalMetricsHtml(route)}${mode==='inspection'&&list(route.via).length?`<span class="walk-route-stay">체류 ${stayMinutes}분 × ${list(route.via).length}곳 가정 · 총 약 ${duration(route.durationSeconds+stayMinutes*list(route.via).length*60)}</span>`:''}${list(route.via).length?`<span class="walk-route-via">경유: ${e(route.via.map(c=>c.name).join(' → '))}</span>`:''}<span class="walk-map-link">${activeId===route.id?'지도에 표시 중':'이 경로 지도 보기'} ↗</span></button>`).join('')}</div><p class="walk-query-time">TMAP 도보경로 · 조회 ${time(result.requestedAt)}<br>${time(expires)}까지 이 화면에서 확인할 수 있어요.</p>${seasonalBasisHtml()}${list(result.warnings).length?`<details class="walk-notes"><summary>이번 경로의 확인사항</summary><ul>${list(result.warnings).map(w=>`<li>${e(typeof w==='string'?w:w.message||w.note||'추가 확인이 필요해요.')}</li>`).join('')}</ul></details>`:''}<details class="walk-notes"><summary>시설 자료와 이용 범위</summary><p>시설 개방·작동 상태는 방문 전에 확인하세요. ${seasonalMode()?'건물과 햇빛을 단순화한 거리 추정이며, 실제 체감온도나 현장 상태와는 다를 수 있어요.':mode==='safety'?'안심시설 경유는 실제 안전도나 안전한 통행을 보장하는 판정이 아니에요.':''}</p>${list(result.routes.find(r=>r.id===activeId)?.via).map(c=>`<p><strong>${e(c.name)}</strong><br>${e(c.sourceName||'공개 수록자료')} · 기준 ${e(c.sourceDate||'미제공')}${c.note?`<br>${e(c.note)}`:''}</p>`).join('')}</details></section>`;
+    const direct=result.routes.find(r=>r.role==='direct'),active=result.routes.find(r=>r.id===activeId),alternatives=result.routes.filter(r=>r!==active);
+    return `<section class="walk-results"><div class="walk-result-heading"><h3>2. 경로를 확인하세요</h3><span>TMAP 보행경로</span></div>${seasonalMode()?`<p class="walk-result-condition"><strong>${result.uiDepartureExample?'예시 일시':'출발 일시'} ${e(departureLabel(result.uiConditions?.departureAt))} · 한국시간</strong><span>계절 조건을 계산한 참고 결과 · 현재 안전 판정이 아니에요.</span></p>`:''}${sample?'<p class="walk-example-note"><strong>예시 장소의 경로예요</strong> 실제 이동할 출발·도착을 먼저 확인하세요.</p>':''}${active?routeCardHtml(active,direct):''}${alternatives.length?disclosure('alternatives','walk-notes walk-alternatives',`다른 경로 비교 · ${alternatives.length}개`,alternatives.sort((a,b)=>Number(b.role==='direct')-Number(a.role==='direct')).map(route=>routeCardHtml(route,direct)).join('')):''}${navigation?.html()||''}<div class="walk-result-details">${seasonalMode()?disclosure('assessment','walk-notes walk-assessment-details','그늘·겨울 비교 결과 보기',seasonalSummaryHtml()+result.routes.map(route=>`<h3>${e(route.role==='direct'?'바로 가는 경로':route.label||'시설 경유 경로')}</h3>${seasonalMetricsHtml(route)}`).join('')+assessmentLegendHtml()+seasonalBasisHtml()):''}<p class="walk-route-key"><i style="--route-color:${activeId===direct?.id?'#00e5ff':'#ff49db'}"></i>굵은 선: 선택한 경로${assessmentFeatures.length?' · 가는 가운데 선: 계절 평가':''}</p><p class="walk-query-time">조회 ${time(result.requestedAt)} · ${time(expires)}까지 표시<br>예상 보행시간이며 시설에 머무는 시간은 별도예요.</p>${list(result.warnings).length?disclosure('warnings','walk-notes','이번 경로의 확인사항',`<ul>${list(result.warnings).map(w=>`<li>${e(typeof w==='string'?w:w.message||w.note||'추가 확인이 필요해요.')}</li>`).join('')}</ul>`):''}${disclosure('sources','walk-notes','시설 자료와 이용 범위',`<p>시설 개방·작동 상태는 방문 전에 확인하세요. ${seasonalMode()?'건물과 햇빛을 단순화한 거리 추정이며, 실제 체감온도나 현장 상태와는 다를 수 있어요.':mode==='safety'&&!basic?'안심시설 경유는 실제 안전도나 안전한 통행을 보장하는 판정이 아니에요.':''}</p>${list(active?.via).map(c=>`<p><strong>${e(c.name)}</strong><br>${e(c.sourceName||'공개 수록자료')} · 기준 ${e(c.sourceDate||'미제공')}${c.note?`<br>${e(c.note)}`:''}</p>`).join('')}`)}</div></section>`;
   }
   function render(){
-    if(destroyed)return;const scroll=host()?.scrollTop||0,current=MODES.find(m=>m.id===mode);
-    api.show('계절 안심 도보 내비게이션',`<div class="walk-routes" aria-busy="${busy||loading}"><p class="walk-subtitle">여름 그늘길 · 겨울 안전보행</p><nav class="walk-tabs" aria-label="도보길 목적">${MODES.map(m=>`<button data-action="walk-mode" data-mode="${m.id}" aria-pressed="${mode===m.id}">${e(m.label)}</button>`).join('')}</nav><p class="walk-intro">${e(current.help)}</p>${tripPlanHtml()}${configured===false?'<div class="walk-connection"><strong>지금은 도보길을 조회할 수 없어요.</strong><p>출발·도착은 먼저 골라둘 수 있어요.</p><button data-action="walk-retry">다시 확인</button></div>':''}${loading?'<p class="walk-status" role="status">이 지역의 공개시설 목록을 읽고 있어요.</p>':''}${error?`<div class="walk-error" role="alert"><p>${e(error)}</p>${!catalogueLoaded?'<button data-action="walk-retry">다시 불러오기</button>':''}</div>`:''}${pick?`<div class="walk-pick" role="status"><strong>지도에서 ${pick==='start'?'출발':'도착'} 위치를 선택하세요.</strong><p>${e(regionName())} 전체에서 선택할 수 있어요.</p><button data-action="walk-cancel-pick">선택 취소</button></div>`:''}<section class="walk-points"><button class="walking-locate" data-action="walk-current-start"${disabled()}${locating?' disabled':''}>${locating?'현재 위치 확인 중…':'현재 위치를 출발지로'}</button><p class="walk-help">기기의 위치 사용을 허용하면 출발지에 반영해요. 경로 조회 시 좌표가 TMAP에 전송돼요.</p><div class="walk-section-heading"><h3>어디서 어디까지 갈까요?</h3><button class="walk-text-button" data-action="walk-example"${disabled()}>예시 선택</button></div><p class="walk-help">장소명·주소를 검색하거나 수록시설 목록과 지도에서 출발·도착을 선택해요.</p>${['start','end'].map((field,i)=>`<div class="walk-point-field"><label for="walk-${field}-choice"><span class="walk-point-dot ${field}">${i===0?'출발':'도착'}</span></label><div class="walk-endpoint-input">${pointSearchHtml(field)}<label class="walk-sr-only" for="walk-${field}-choice">${field==='start'?'출발지':'도착지'} 수록시설 선택</label><select id="walk-${field}-choice"${disabled()}>${pointOptions(field)}</select></div><button data-action="walk-pick" data-field="${field}"${disabled()}>지도에서 선택</button></div>`).join('')}<button class="walk-text-button walk-swap" data-action="walk-swap"${disabled()}>출발·도착 바꾸기 ⇄</button>${sample?'<p class="walk-example-note">실제 수록시설을 예시로 골랐어요. 원하는 위치로 바꿀 수 있어요.</p>':''}</section>${seasonalControlsHtml()}${visitsHtml()}${safetyReferencesHtml()}<label class="walk-checkbox"><input id="walk-avoid-stairs" type="checkbox"${avoidStairs?' checked':''}${disabled()}>계단을 피하는 옵션 적용</label><p class="walk-send-note">선택한 위치는 경로 조회를 위해 TMAP에 전송돼요.</p><div class="walk-run-actions"><button class="walk-primary" data-action="walk-calculate"${disabled()}${configured!==true||!start||!end||mode==='inspection'&&!viaIds.length?' disabled':''}>${busy?'도보경로를 찾고 있어요…':'도보경로 찾기'}</button><button data-action="${busy?'walk-cancel-route':'walk-reset'}"${loading?' disabled':''}>${busy?'조회 취소':'초기화'}</button></div>${notice?`<p class="walk-notice" role="status">${e(notice)}</p>`:''}${resultHtml()}</div>`,VIEW);
+    if(destroyed)return;const scroll=host()?.scrollTop||0;
+    const endpoints=pointFieldsHtml()+conditionHtml()+`<label class="walk-checkbox"><input id="walk-avoid-stairs" type="checkbox"${avoidStairs?' checked':''}${disabled()}>계단을 피하는 옵션 적용</label>${tripPlanHtml()}<div class="walk-request-summary">${start&&end?`${e(start.name)} → ${e(end.name)}`:'출발·도착을 고르면 길을 찾을 수 있어요.'}${seasonalMode()?`<small>${departureExample?'예시 일시':'출발'} ${e(departure.replace('T',' '))} · 한국시간</small>`:''}${avoidStairs?'<small>계단 회피 요청</small>':''}</div><p class="walk-send-note">길찾기를 누르면 선택한 좌표를 TMAP에 전송해요.</p><div class="walk-run-actions"><button class="walk-primary" data-action="walk-calculate"${disabled()}${configured!==true||!start||!end||!basic&&mode==='inspection'&&!viaIds.length?' disabled':''}>${busy?'도보경로 찾는 중…':error&&start&&end?'경로 다시 찾기':'도보경로 찾기'}</button><button class="walk-text-button" data-action="${busy?'walk-cancel-route':'walk-reset'}"${loading?' disabled':''}>${busy?'조회 취소':'초기화'}</button></div>`;
+    api.show('계절 안심 도보 내비게이션',`<div class="walk-routes${pick?' is-picking':''}" aria-busy="${busy||loading}"><p class="walk-subtitle">여름 그늘길 · 겨울 안전보행</p><ol class="walk-steps" aria-label="길찾기 순서">${stepItems()}</ol>${configured===false?'<div class="walk-connection"><strong>지금은 도보길을 조회할 수 없어요.</strong><p>출발·도착은 먼저 골라둘 수 있어요.</p><button data-action="walk-retry">연결 다시 확인</button></div>':''}${loading?'<p class="walk-status" role="status">장소 목록을 불러오고 있어요.</p>':''}${error?`<div class="walk-error" role="alert"><p>${e(error)}</p>${!catalogueLoaded?'<button data-action="walk-retry">다시 불러오기</button>':''}</div>`:''}${pick?`<div class="walk-pick" role="status"><strong>지도에서 ${pick==='start'?'출발':'도착'} 위치를 누르세요.</strong><p>${e(regionName())} 전체에서 선택할 수 있어요.</p><button data-action="walk-cancel-pick">지도 선택 취소</button></div>`:''}${result?disclosure('endpoints','walk-entry walk-notes',`<span>1. 출발·도착 변경</span><small>${e(start?.name||'출발')} → ${e(end?.name||'도착')}</small>`,endpoints):`<section class="walk-entry">${endpoints}</section>`}${notice?`<p class="walk-notice" role="status">${e(notice)}</p>`:''}${resultHtml()}</div>`,VIEW);
     if(host())host().scrollTop=scroll;
   }
   function paint(){
@@ -275,11 +303,11 @@ export function installWalkRoutes(api){
     if(!xy(start?.coordinate)||!xy(end?.coordinate)){error='출발과 도착을 모두 선택해 주세요.';render();return;}
     if(walkDistance(start.coordinate,end.coordinate)<10){error='출발과 도착을 10m 이상 떨어진 위치로 골라 주세요.';render();return;}
     if(selectedVisits().some(c=>samePlace(c.coordinate,start.coordinate)||samePlace(c.coordinate,end.coordinate))){error='출발·도착과 다른 경유시설을 골라 주세요.';render();return;}
-    if(mode==='inspection'&&!viaIds.length){error='방문할 점검지를 한 곳 이상 골라 주세요.';render();return;}
+    if(!basic&&mode==='inspection'&&!viaIds.length){error='방문할 점검지를 한 곳 이상 골라 주세요.';render();return;}
     const departureAt=seasonalMode()?departureISO(departure):null;
     if(seasonalMode()&&(!departureAt||!Number.isFinite(maxDetourMeters)||maxDetourMeters<0||maxDetourMeters>3000||!Number.isFinite(maxDetourMinutes)||maxDetourMinutes<0||maxDetourMinutes>60)){error='출발 일시와 우회 한도를 확인해 주세요. 거리 0~3,000m, 시간 0~60분으로 입력할 수 있어요.';render();return;}
     clearResult();cancelPick();error='';notice='';busy=true;routeController=new AbortController();const controller=routeController,seq=++routeSequence;
-    const request={regionId,mode,start:[...start.coordinate],end:[...end.coordinate],avoidStairs};if(viaIds.length)request.viaIds=[...viaIds];if(seasonalMode())Object.assign(request,{departureAt,shadowTiming,maxDetourMeters,maxDetourMinutes,includeLevels});render();
+    const request={regionId,mode,start:[...start.coordinate],end:[...end.coordinate],avoidStairs};if(basic)request.navigation=true;if(viaIds.length)request.viaIds=[...viaIds];if(seasonalMode())Object.assign(request,{departureAt,shadowTiming,maxDetourMeters,maxDetourMinutes,includeLevels});render();
     const timer=setTimeout(()=>controller.abort(),60000);
     try{
       const response=await fetch('/api/walk-routes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request),signal:controller.signal}),body=await responseBody(response);
@@ -291,7 +319,7 @@ export function installWalkRoutes(api){
       const requestedAt=Date.parse(body.requestedAt),serverExpiry=Date.parse(body.expiresAt),base=Number.isFinite(requestedAt)?requestedAt:Date.now();
       expires=Math.min(Number.isFinite(serverExpiry)?serverExpiry:base+MAX_RESULT_AGE,base+MAX_RESULT_AGE,Date.now()+MAX_RESULT_AGE);
       if(expires<=Date.now())throw Error('응답의 표시 시간이 끝났어요. 다시 비교해 주세요.');
-      result={...body,requestedAt:Number.isFinite(requestedAt)?body.requestedAt:new Date().toISOString(),routes,uiConditions:{departureAt,shadowTiming,maxDetourMeters,maxDetourMinutes,includeLevels},uiDepartureExample:departureExample};activeId=routes.find(r=>r.id===body.seasonal?.comparison?.preferredRouteId)?.id||routes.find(r=>r.role==='direct')?.id||routes[0].id;navigation?.prepare();paint();armExpiry();
+      result={...body,requestedAt:Number.isFinite(requestedAt)?body.requestedAt:new Date().toISOString(),routes,uiConditions:{departureAt,shadowTiming,maxDetourMeters,maxDetourMinutes,includeLevels},uiDepartureExample:departureExample};activeId=routes.find(r=>r.role==='direct')?.id||routes[0].id;expanded.delete('endpoints');navigation?.prepare();paint();armExpiry();
       const geometry=lineGeometry(routes.find(r=>r.id===activeId));if(geometry)api.frameGeometry?.(geometry);
     }catch(cause){if(seq!==routeSequence||destroyed)return;error=cause.name==='AbortError'?'경로 조회 시간이 길어졌어요. 잠시 뒤 다시 비교해 주세요.':cause.message||'도보경로를 조회하지 못했어요.';}
     finally{clearTimeout(timer);if(seq===routeSequence&&!destroyed){busy=false;routeController=null;if(openNow()){render();host()?.querySelector?.(error?'.walk-error':'.walk-results')?.scrollIntoView?.({block:'start',behavior:'smooth'});}}}
@@ -300,7 +328,7 @@ export function installWalkRoutes(api){
     if(busy||loading||locating)return;
     const geo=api.geolocation||globalThis.navigator?.geolocation;if(!geo?.getCurrentPosition){error='이 브라우저에서 현재 위치를 사용할 수 없어요.';render();return;}
     clearResult();start=null;sample=false;const seq=++locateSequence;locating=true;error='';notice='현재 위치를 확인하고 있어요.';render();
-    geo.getCurrentPosition(position=>{if(seq!==locateSequence||destroyed)return;locating=false;const coordinate=[position.coords.longitude,position.coords.latitude],boundary=api.state.district||api.state.scope;if(!xy(coordinate)||!boundary||!inside(coordinate,boundary)){error='현재 위치가 선택한 지역 밖이에요. 지역 안의 위치를 지도에서 선택하세요.';}else if(!Number.isFinite(position.coords.accuracy)||position.coords.accuracy>40||Date.now()-position.timestamp>15000||position.timestamp>Date.now()+5000){error='위치가 부정확해 출발지로 반영하지 않았어요. 하늘이 보이는 곳에서 다시 확인하세요.';}else{start={id:'map-start',name:'현재 위치',coordinate,sourceName:'기기 위치'};sample=false;notice='현재 위치를 출발지에 반영했어요. 도착지를 확인하고 도보경로를 찾으세요.';api.followWalkPosition?.(coordinate,0);}render();},cause=>{if(seq!==locateSequence||destroyed)return;locating=false;error=cause.code===1?'위치 권한이 거부됐어요. 브라우저와 기기 위치 설정을 확인하세요.':'현재 위치를 찾지 못했어요. 위치 설정을 확인하고 다시 시도하세요.';render();},{enableHighAccuracy:true,maximumAge:0,timeout:20000});
+    try{geo.getCurrentPosition(position=>{if(seq!==locateSequence||destroyed)return;locating=false;const coordinate=[position.coords.longitude,position.coords.latitude],boundary=api.state.district||api.state.scope;if(!xy(coordinate)||!boundary||!inside(coordinate,boundary)){error='현재 위치가 선택한 지역 밖이에요. 지역 안의 위치를 지도에서 선택하세요.';}else if(!Number.isFinite(position.coords.accuracy)||position.coords.accuracy<0||position.coords.accuracy>40||!Number.isFinite(position.timestamp)||Date.now()-position.timestamp>15000||position.timestamp>Date.now()+5000){error='위치가 부정확해 출발지로 반영하지 않았어요. 하늘이 보이는 곳에서 다시 확인하세요.';}else{start={id:'map-start',name:'현재 위치',coordinate,sourceName:'기기 위치'};sample=false;notice='현재 위치를 출발지에 반영했어요. 도착지를 확인하고 도보경로를 찾으세요.';api.followWalkPosition?.(coordinate,0);}render();},cause=>{if(seq!==locateSequence||destroyed)return;locating=false;error=cause.code===1?'위치 권한이 거부됐어요. 브라우저와 기기 위치 설정을 확인하세요.':'현재 위치를 찾지 못했어요. 위치 설정을 확인하고 다시 시도하세요.';render();},{enableHighAccuracy:true,maximumAge:0,timeout:20000});}catch{if(seq===locateSequence&&!destroyed){locating=false;error='현재 위치를 시작하지 못했어요. 다시 시도하거나 출발지를 검색해 주세요.';render();}}
   }
   async function rerouteFromPosition(fix,{signal,viaIds:remaining=[]}){
     const response=await fetch('/api/walk-routes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({regionId,mode,start:fix.coordinate,end:end.coordinate,avoidStairs,viaIds:remaining,navigation:true}),signal}),body=await responseBody(response);
@@ -314,7 +342,7 @@ export function installWalkRoutes(api){
   }
   function beginPick(field){
     if(busy||loading)return;if(!api.state.ready){api.toast?.('지도가 준비된 뒤 위치를 선택할 수 있어요.');return;}
-    if(!['start','end'].includes(field))return;clearSearch(field);pick=field;api.send?.({type:'tool',tool:`walk-${field}`});render();if(typeof innerWidth==='number'&&innerWidth<=820)api.close?.();api.toast?.(`지도에서 ${field==='start'?'출발':'도착'} 위치를 선택하세요.`);
+    if(!['start','end'].includes(field))return;navigation?.stop('지도에서 위치를 고르는 동안 길안내를 멈췄어요.');locateSequence++;locating=false;clearSearch(field);pick=field;api.send?.({type:'tool',tool:`walk-${field}`});render();api.toast?.(`지도에서 ${field==='start'?'출발':'도착'} 위치를 선택하세요.`);
   }
   function changePoint(field,id){const current=field==='start'?start:end,chosen=candidateById(id)||(current?.id===id?current:null);clearSearch(field);clearResult();cancelPick();if(field==='start')start=pointFrom(chosen);else end=pointFrom(chosen);sample=false;error='';notice='';render();}
   const change=event=>{
@@ -325,17 +353,17 @@ export function installWalkRoutes(api){
     if(event.target.id==='walk-stay-minutes'){const next=Number(event.target.value);stayMinutes=Number.isInteger(next)&&next>=0&&next<=120?next:10;render();}
     if(event.target.id==='walk-avoid-stairs'){clearResult();avoidStairs=event.target.checked;error='';notice='';render();}
   };
-  navigation=installWalkingNavigation({api,getRoute:()=>result?.routes.find(r=>r.id===activeId),getDestination:()=>end,getStops:()=>result?.routes.find(r=>r.id===activeId)?.via||[],requestReroute:rerouteFromPosition,onRerouted:()=>render()});
+  navigation=installWalkingNavigation({api,getRoute:()=>result?.routes.find(r=>r.id===activeId),getDestination:()=>end,getStops:()=>result?.routes.find(r=>r.id===activeId)?.via||[],requestReroute:rerouteFromPosition,onRerouted:()=>render(),onUpdate:updateStep});
   const offs=[
     registerAction('walk-current-start',useCurrentStart),registerAction('walk-plan',prepareTripPlan),registerAction('walk-apply-plan',applyTripPlan),
-    registerAction('walk-routes',button=>open(button?.dataset?.mode)),
-    registerAction('walk-mode',button=>open(button.dataset.mode)),
-    registerAction('walk-retry',()=>loadCatalogue()),
+    registerAction('walk-routes',button=>open(button?.dataset?.mode,button?.dataset?.destinationId||button?.dataset?.destinationSourceId?button.dataset:null)),
+    registerAction('walk-mode',button=>{expanded.add('conditions');return open(button.dataset.mode);}),
+    registerAction('walk-retry',()=>{cataloguePromise=loadCatalogue();return cataloguePromise;}),
     registerAction('walk-time-now',()=>{if(busy||loading)return;clearResult();departure=currentDeparture();departureExample=false;error='';notice='현재 한국시간으로 출발 일시를 바꿨어요.';render();}),
     registerAction('walk-time-example',()=>{if(busy||loading)return;clearResult();departure=daylightExample(mode);departureExample=true;error='';notice='낮 시간 예시를 선택했어요. 실제 출발 일시로 바꿀 수 있어요.';render();}),
     registerAction('walk-example',()=>{if(busy||loading)return;chooseSample();render();}),
     registerAction('walk-pick',button=>beginPick(button.dataset.field)),
-    registerAction('walk-cancel-pick',()=>{cancelPick();render();}),
+    registerAction('walk-cancel-pick',()=>{cancelPick();if(result)navigation?.prepare();render();}),
     registerAction('walk-swap',()=>{if(busy||loading)return;clearResult();cancelPick();for(const field of ['start','end'])clearSearch(field);[searches.start.query,searches.end.query]=[searches.end.query,searches.start.query];[start,end]=[end,start];sample=false;error='';notice='';render();}),
     registerAction('walk-add-via',()=>{if(busy||loading)return;const id=document.getElementById('walk-via-choice')?.value,c=matchingVia().find(c=>c.id===id);if(!c||viaIds.includes(id)||viaIds.length>=limit()||selectedVisits().some(chosen=>samePlace(chosen.coordinate,c.coordinate)))return;if(samePlace(c.coordinate,start?.coordinate)||samePlace(c.coordinate,end?.coordinate)){notice='출발·도착과 다른 경유시설을 골라 주세요.';render();return;}clearResult();viaIds.push(id);error='';notice='';render();}),
     registerAction('walk-remove-via',button=>{if(busy||loading)return;clearResult();viaIds=viaIds.filter(id=>id!==button.dataset.id);render();}),
@@ -344,16 +372,17 @@ export function installWalkRoutes(api){
     registerAction('walk-calculate',calculate),
     registerAction('walk-cancel-route',()=>{if(!busy)return;clearResult('경로 조회를 취소했어요. 출발·도착은 유지했어요.');error='';render();}),
     registerAction('walk-choose-place',button=>{const field=button.dataset.field;if(!['start','end'].includes(field)||busy||loading)return;const selected=searches[field].items[Number(button.dataset.index)];if(!selected)return;clearResult();cancelPick();clearSearch(field);if(field==='start')start=pointFrom(selected);else end=pointFrom(selected);sample=false;error='';notice='검색한 위치를 반영했어요. 실제 출입구는 지도에서 확인해 주세요.';render();}),
-    registerAction('walk-reset',()=>{clearResult();cancelPick();for(const field of ['start','end']){clearSearch(field);searches[field].query='';}start=null;end=null;viaIds=[];avoidStairs=false;stayMinutes=10;sample=false;error='';notice='출발·도착을 새로 선택해 주세요.';departure=currentDeparture();departureExample=false;shadowTiming='walk-time';maxDetourMeters=500;maxDetourMinutes=5;includeLevels=false;render();}),
+    registerAction('walk-reset',()=>{basic=true;mode='shade';expanded.clear();clearResult();cancelPick();for(const field of ['start','end']){clearSearch(field);searches[field].query='';}start=null;end=null;viaIds=[];avoidStairs=false;stayMinutes=10;sample=false;error='';notice='출발·도착을 새로 선택해 주세요.';departure=currentDeparture();departureExample=false;shadowTiming='walk-time';maxDetourMeters=500;maxDetourMinutes=5;includeLevels=false;render();}),
     registerAction('walk-select-route',button=>{if(!result||expireIfNeeded())return;navigation.stop();const route=result.routes.find(r=>r.id===button.dataset.id);if(!route)return;activeId=route.id;navigation.prepare();paint();const geometry=lineGeometry(route);if(geometry)api.frameGeometry?.(geometry);render();}),
   ];
   const submit=event=>{if(event.target?.dataset?.walkPlan){event.preventDefault();return prepareTripPlan();}const field=event.target?.dataset?.walkSearch;if(['start','end'].includes(field)){event.preventDefault();return searchPoint(field);}};
   const input=event=>{for(const field of ['start','end'])if(event.target.id===`walk-${field}-query`){searches[field].query=event.target.value;clearSearch(field);clearResult();if(field==='start')start=null;else end=null;sample=false;const select=document.getElementById(`walk-${field}-choice`);if(select)select.value='';const selected=document.getElementById(`walk-${field}-selected`);if(selected)selected.hidden=true;const run=host()?.querySelector?.('[data-action=walk-calculate]');if(run)run.disabled=true;const endpoint=event.target.closest?.('.walk-endpoint-input');endpoint?.querySelector?.('.walk-place-results')?.remove?.();endpoint?.querySelector?.('.walk-place-notice')?.remove?.();const submitButton=event.target.closest?.('form')?.querySelector?.('button[type="submit"]');if(submitButton){submitButton.disabled=busy||loading;submitButton.textContent='검색';}}};
-  host()?.addEventListener('change',change);host()?.addEventListener('submit',submit);host()?.addEventListener('input',input);
+  const toggle=event=>{const id=event.target?.dataset?.walkDisclosure;if(!id)return;if(event.target.open)expanded.add(id);else expanded.delete(id);};
+  host()?.addEventListener('toggle',toggle,true);host()?.addEventListener('change',change);host()?.addEventListener('submit',submit);host()?.addEventListener('input',input);
   const visibility=()=>{if(!document.hidden)expireIfNeeded();};document.addEventListener?.('visibilitychange',visibility);
   return {
     open,
-    suspend(){suspended=true;for(const field of ['start','end'])clearSearch(field);catalogueController?.abort();catalogueController=null;catalogueSequence++;loading=false;clearResult();cancelPick();},
+    suspend(){entrySequence++;suspended=true;for(const field of ['start','end'])clearSearch(field);catalogueController?.abort();catalogueController=null;catalogueSequence++;loading=false;clearResult();cancelPick();},
     onEvent(message){
       if(suspended)return false;navigation?.onEvent(message);
       if(message.type==='point'&&['walk-start','walk-end'].includes(message.tool)){
@@ -363,8 +392,8 @@ export function installWalkRoutes(api){
       }
       if(message.type==='ready'&&result){paint();return false;}return false;
     },
-    scopeChanged(){if(suspended)return;if(regionId&&regionId!==(api.state.regionProfile?.id||'seogu')){reset();if(openNow())loadCatalogue();return;}if(pick){cancelPick();if(openNow())render();}},
-    panelClosed(){navigation?.stop('길안내 화면을 닫아 위치 사용을 멈췄어요.');},
-    destroy(){navigation?.destroy();destroyed=true;for(const field of ['start','end'])clearSearch(field);catalogueController?.abort();catalogueSequence++;clearResult();cancelPick();offs.forEach(off=>off());host()?.removeEventListener('change',change);host()?.removeEventListener('submit',submit);host()?.removeEventListener('input',input);document.removeEventListener?.('visibilitychange',visibility);},
+    scopeChanged(){if(suspended)return;if(regionId&&regionId!==(api.state.regionProfile?.id||'seogu')){reset();if(openNow())cataloguePromise=loadCatalogue();return;}if(pick){cancelPick();if(openNow())render();}},
+    panelClosed(){locateSequence++;locating=false;navigation?.stop('길안내 화면을 닫아 위치 사용을 멈췄어요.');},
+    destroy(){navigation?.destroy();destroyed=true;for(const field of ['start','end'])clearSearch(field);catalogueController?.abort();catalogueSequence++;clearResult();cancelPick();offs.forEach(off=>off());host()?.removeEventListener('toggle',toggle,true);host()?.removeEventListener('change',change);host()?.removeEventListener('submit',submit);host()?.removeEventListener('input',input);document.removeEventListener?.('visibilitychange',visibility);},
   };
 }

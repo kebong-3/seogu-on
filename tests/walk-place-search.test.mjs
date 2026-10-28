@@ -159,3 +159,24 @@ test('actual GET retains reviewed category metadata needed for child-library ali
   assert.equal(res.statusCode,200);assert.equal(res.body.items.length,1);
   assert.equal(res.body.items[0].id,'ecology');assert.equal(res.body.items[0].aliasMatch,true);assert.equal(res.body.items[0].sourceUrl,ecology.sourceUrl);
 });
+
+test('catalogue and search preserve only validated source identity pairs for facility-to-walk handoff',async()=>{
+ const selected={...pack.candidates[0],sourceDate:null,sourceUrl:'https://example.org/source',sourceRefs:[
+  {datasetId:'care-toys',sourceId:'original-toy',sourceName:'Should not be copied',sourceUrl:'https://example.org/private-extra',coordinate:[126.85,35.15]},
+  {datasetId:'care-parenting',sourceId:'original-parenting'},
+  {datasetId:'care-toys',sourceId:'original-toy'},
+  {datasetId:'../bad',sourceId:'not-an-id'},
+  {datasetId:'care-toys',sourceId:'x\u0000secret'},
+  {datasetId:'care-toys',sourceId:' '},
+  {datasetId:'care-toys',sourceId:'x'.repeat(241)},
+  {datasetId:42,sourceId:'number-dataset'},null,
+ ]};
+ for(const url of ['/api/walk-routes?region=seogu','/api/walk-routes?region=seogu&q='+encodeURIComponent('장난감')]){
+  const res=response();await handleWalkRoutes({method:'GET',url,headers:{host:'test.local'}},res,
+   {env:{},loadCandidates:async()=>({...pack,candidates:[selected]}),loadSafetyReferences:async()=>null});
+  assert.equal(res.statusCode,200);const item=(res.body.items||res.body.candidates)[0];
+  assert.deepEqual(item.sourceRefs,[{datasetId:'care-toys',sourceId:'original-toy'},{datasetId:'care-parenting',sourceId:'original-parenting'}]);
+  assert.equal(item.sourceUrl,selected.sourceUrl);assert.equal(item.sourceDate,null);
+  assert.doesNotMatch(JSON.stringify(item.sourceRefs),/private-extra|coordinate|sourceName|secret/);
+ }
+});

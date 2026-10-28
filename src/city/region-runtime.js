@@ -15,7 +15,7 @@ const PORTABLE_ACTIONS = new Set(['overview','dong','dong-frame','dong-tour','cl
 export function supportsAction(profile, action, dataset = {}) {
   if (legacyEnabled(profile)) return true;
   if (action === 'engine') return ['vworld','boundary','libre'].includes(dataset.engine);
-  return PORTABLE_ACTIONS.has(action) || /^(space-|appearance-|pilot-|ask-|decision-|walk-|field-|service-readiness)/.test(action);
+  return PORTABLE_ACTIONS.has(action) || /^(resident-|space-|appearance-|pilot-|ask-|decision-|walk-|field-|service-readiness)/.test(action);
 }
 export function regionLayers(profile, layers) {
   if (legacyEnabled(profile)) return layers;
@@ -31,7 +31,7 @@ export function applyRegionChrome(profile) {
   text('#dong-tour',`${profile.districtCount}개 ${districtLabel} 자동 둘러보기`);
   text('#region-menu-current',profile.name);
   text('#ask-quick-hint',`${profile.name} 전체의 수록 자료를 기준으로 답합니다. 질문에 ${districtLabel} 이름을 쓰면 해당 구역을 조회합니다.`);
-  text('#tab-regions','업무·지역');
+  text('#tab-regions','지역·서비스');
   document.body.dataset.region=profile.id;
   if (legacyEnabled(profile)) return;
   for(const button of document.querySelectorAll('[data-action="decision-preset"][data-id="night-safety"]')){

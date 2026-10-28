@@ -54,7 +54,8 @@ export function installHomePanel() {
     sync();
   }
 
+  function open(){if(isCompact())panel?.classList.add('mobile-open');else document.body.classList.remove('map-focus');sync();}
   window.addEventListener('resize', sync);
   sync();
-  return {sync, toggle, closeDrawer};
+  return {sync, toggle, open, closeDrawer};
 }

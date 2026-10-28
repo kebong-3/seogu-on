@@ -1,8 +1,8 @@
-import {safeReturnGuide,careDirectoryHtml,careDirectoryRows} from './living-guide.js';
+import {livingGuideHtml,livingFacilityRows,LIVING_CARE_GROUPS} from './living-guide.js';
 import {registerAction} from './actions.js';
 import {decisionPurposeHtml} from './decision-purpose.js';
 import {frameFor} from './camera.js';
-import {inside} from './geometry.js';
+import {inside,locateDong} from './geometry.js';
 import {escapeDecisionHtml as e, decisionWorkflowTitle, decisionSources, decisionAiText, decisionCsv, decisionReportHtml} from './decision-report.js';
 
 const VIEW='decision-twin',LAYER='decision-twin-results';
@@ -38,7 +38,7 @@ export function installDecisionTwin(api){
   let result=null,manifest=null,ai=null,busy=false,explaining=false,error='',mapMode='scenario',pick=null,requestId=0,controller=null,suppressScope=false,destroyed=false;
   let conditionsOpen=false,selectedId='',showAll=false,interpretQuestion=false,planner=null,planNotice=null;
   let suspended=false,livingDirectory=null,livingReferences=null;
-  let living=false,livingTopic='care',livingData=[],livingQuery='',livingDataset='all',livingLimit=30;
+  let living=false,livingTopic='care',livingData=[],livingQuery='',livingDataset='all',livingLimit=10;
   const host=()=>document.getElementById('detail-body');
   const openNow=()=>api.state.view===VIEW;
   const regionName=()=>api.state.regionProfile?.name||regionId||'선택 지역';
@@ -54,7 +54,7 @@ export function installDecisionTwin(api){
 
   function reset(){
     controller?.abort();requestId++;regionId=api.state.regionProfile?.id||'seogu';scopeId=api.state.dong||'all';
-    living=false;livingData=[];livingQuery='';livingDataset='all';livingLimit=30;
+    living=false;livingData=[];livingQuery='';livingDataset='all';livingLimit=10;
     presetId='';radiusM=null;maxNew=3;proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;manifest=null;ai=null;error='';question='';pick=null;busy=false;explaining=false;showAll=false;selectedId='';interpretQuestion=false;planner=null;planNotice=null;
     api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);document.body.classList.remove('decision-picking');
   }
@@ -104,11 +104,7 @@ export function installDecisionTwin(api){
   }
 
   function livingRows(){
-    const query=livingQuery.toLocaleLowerCase('ko-KR'),scope=api.state.scope;
-    return livingData.filter(d=>livingDataset==='all'||d.id===livingDataset).flatMap(d=>d.features.map(feature=>({descriptor:d,feature}))).filter(({feature})=>{
-      const p=feature.properties||{};
-      return (!scope||inside(feature.geometry.coordinates,scope))&&(!query||`${p.name||''} ${p.address||''} ${p.roadAddress||''} ${p.lotAddress||''} ${p.facilityName||''}`.toLocaleLowerCase('ko-KR').includes(query));
-    });
+    return livingFacilityRows(livingData,{query:livingQuery,datasetId:livingDataset,scope:api.state.scope});
   }
   function livingCollectedDate(value){const date=new Date(value);return Number.isFinite(date.getTime())?new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date):String(value||'미제공');}
   function livingSourceDate(d){return d.meta.sourceDate||d.sourceDate||(Array.isArray(d.sourceDateRange)?d.sourceDateRange.join(' ~ '):'기준일 미제공');}
@@ -117,7 +113,7 @@ export function installDecisionTwin(api){
     if(requestedScope&&(requestedScope==='all'||list(api.state.dongs).some(f=>f.properties.dongId===requestedScope))&&api.state.dong!==requestedScope){suppressScope=true;try{api.chooseDong?.(requestedScope,true);}finally{suppressScope=false;}}
     if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
     controller?.abort();const sequence=++requestId;controller=new AbortController();const activeController=controller;
-    livingDirectory=null;livingReferences=null;living=true;livingTopic=Object.hasOwn(LIVING_TOPICS,topic)?topic:'care';livingQuery='';livingDataset='all';livingLimit=30;livingData=[];selectedId='';error='';busy=true;scopeId=api.state.dong||'all';pick=null;document.body.classList.remove('decision-picking');renderLiving();
+    livingDirectory=null;livingReferences=null;living=true;livingTopic=Object.hasOwn(LIVING_TOPICS,topic)?topic:'care';livingQuery='';livingDataset='all';livingLimit=10;livingData=[];selectedId='';error='';busy=true;scopeId=api.state.dong||'all';pick=null;document.body.classList.remove('decision-picking');renderLiving();
     const timer=setTimeout(()=>activeController.abort(),25000);
     const read=async path=>{const response=await fetch(path,{signal:activeController.signal});if(!response.ok)throw Error(`자료를 불러오지 못했습니다 (${response.status}).`);return response.json();};
     try{
@@ -141,8 +137,8 @@ export function installDecisionTwin(api){
           for(const [i,feature] of raw.features.entries()){
             const point=feature.geometry?.coordinates;
             if(feature.geometry?.type!=='Point'||!Array.isArray(point)||point.length<2||!point.slice(0,2).every(Number.isFinite)||!inside(point,api.state.district))continue;
-            const p=feature.properties||{},id=`living:${d.id}:${String(p.id??feature.id??i)}`;
-            item.features.push({...feature,geometry:{type:'Point',coordinates:point.slice(0,2)},properties:{...p,id,name:p.name||p.facilityName||d.title,category:d.title,displayColor:item.color,sourceName:p.sourceName||meta.sourceName||d.sourceName,sourceUrl:p.sourceUrl||meta.sourceUrl||d.sourceUrl,sourceDate:p.sourceDate||meta.sourceDate||d.sourceDate,datasetId:d.id}});
+            const p=feature.properties||{},sourceId=String(p.id??feature.id??''),id=`living:${d.id}:${sourceId||i}`,location=locateDong(point,{features:list(api.state.dongs)});
+            item.features.push({...feature,geometry:{type:'Point',coordinates:point.slice(0,2)},properties:{...p,id,name:p.name||p.facilityName||d.title,category:d.title,displayColor:item.color,sourceName:p.sourceName||meta.sourceName||d.sourceName,sourceUrl:p.sourceUrl||meta.sourceUrl||d.sourceUrl,sourceDate:Object.hasOwn(p,'sourceDate')?p.sourceDate:Object.hasOwn(meta,'sourceDate')?meta.sourceDate:d.sourceDate??null,datasetId:d.id,livingSourceId:sourceId,livingDongName:location.ambiguous?null:location.dongName}});
           }
           if(!item.features.length)item.error=meta.complete===true?'공개 제공범위 내 수록 위치 없음':'검증된 위치자료 미수록';
         }catch(cause){if(cause.name==='AbortError')throw cause;item.error=cause.message||'자료 조회 실패';}
@@ -168,10 +164,23 @@ export function installDecisionTwin(api){
     download(cleanFilename(`${regionName()}_${LIVING_TOPICS[livingTopic].label}_생활시설.csv`),'\uFEFF'+rows.map(row=>row.map(cell).join(',')).join('\r\n'),'text/csv;charset=utf-8');
   }
   function renderLiving(){
-    if(destroyed)return;const scroll=host()?.scrollTop||0,config=LIVING_TOPICS[livingTopic],rows=livingRows(),selected=rows.find(row=>row.feature.properties.id===selectedId),shown=(selected?[selected,...rows.filter(row=>row!==selected)]:rows).slice(0,livingLimit),missing=livingData.filter(d=>d.error),hasPreset=presets().some(p=>p.id===config.preset);
-    const scopedCount=d=>d.features.filter(f=>!api.state.scope||inside(f.geometry.coordinates,api.state.scope)).length;
-    api.show('돌봄·육아 · 생활안전지도',`<div class="decision-twin living-map" aria-busy="${busy}"><nav class="living-topic-tabs" aria-label="생활정보 분야">${Object.entries(LIVING_TOPICS).map(([id,c])=>`<button data-action="decision-living-topic" data-topic="${id}" aria-pressed="${livingTopic===id}">${e(c.label)}</button>`).join('')}</nav><p class="dt-purpose">${e(config.intro)}</p>${livingTopic==='safety'?safeReturnGuide(livingReferences):''}<section class="living-summary"><span class="dt-kicker">${e(scopeId==='all'?`${regionName()} 전체`:api.state.dongs?.find(f=>f.properties.dongId===scopeId)?.properties.dongName||'선택 구역')} · 공개 수록 위치</span><h3>${busy?'자료를 읽고 있습니다…':!livingData.some(d=>!d.error)?'이 지역의 자료 연결이 필요합니다':`공개자료 수록 위치 <strong>${num(rows.length)}곳</strong>`}</h3>${livingTopic==='care'&&careDirectoryRows(livingDirectory,{query:livingQuery,datasetId:livingDataset}).length?`<p>주소로 확인한 시설 ${num(careDirectoryRows(livingDirectory,{query:livingQuery,datasetId:livingDataset}).length)}곳은 아래 주소 목록에서 볼 수 있어요.</p>`:''}<p>${livingTopic==='care'?'이용대상·운영시간·신청 가능 여부는 기관에 확인하세요.':'시설 위치로 현재 안전도나 안전한 경로를 판정하지 않습니다. 안심벨 작동·야간 조도·실제 통행로는 현장 확인하세요.'}</p></section>${busy?'<p class="dt-status" role="status">공개자료의 시설 위치와 기준일을 확인하고 있습니다.</p>':''}${error?`<div class="dt-error" role="alert"><p>${e(error)}</p><button data-action="decision-living-retry">다시 불러오기</button></div>`:''}<div class="living-filters"><label for="living-scope">어느 동네를 볼까요?<select id="living-scope"><option value="all">${e(regionName())} 전체</option>${list(api.state.dongs).map(f=>`<option value="${e(f.properties.dongId)}"${scopeId===f.properties.dongId?' selected':''}>${e(f.properties.dongName)}</option>`).join('')}</select></label><label for="living-dataset">시설 종류<select id="living-dataset"><option value="all">함께 보기</option>${livingData.map(d=>`<option value="${e(d.id)}"${livingDataset===d.id?' selected':''}>${e(d.title)} · ${d.error?'자료 확인 필요':`${num(scopedCount(d))}곳`}</option>`).join('')}</select></label></div><form id="living-search" class="dt-question"><label class="dt-sr-only" for="living-query">시설 이름 또는 주소 검색</label><input id="living-query" name="query" value="${e(livingQuery)}" maxlength="100" placeholder="시설 이름·도로명으로 찾기" autocomplete="off"><button type="submit">찾기</button></form><div class="living-legend" aria-label="지도 시설 종류">${livingData.filter(d=>!d.error).map(d=>`<span><i style="--dt-dot:${e(d.color)}"></i>${e(d.title)} ${num(scopedCount(d))}곳</span>`).join('')}</div>${!busy&&!livingData.length?'<p class="dt-empty">이 지역은 해당 생활정보 자료 연결 전입니다. 시설이 없다는 뜻은 아닙니다.</p>':''}${missing.length?`<details class="living-missing"><summary>아직 확인할 수 없는 자료 ${num(missing.length)}종</summary><ul>${missing.map(d=>`<li><strong>${e(d.title)}</strong> · ${e(d.error)}</li>`).join('')}</ul><p class="dt-help">미연결 자료는 0곳으로 계산하지 않습니다.</p></details>`:''}<details class="living-next"><summary>담당자용 점검·보완안 검토</summary><p>${livingTopic==='care'?'수록 어린이집 주변의 활동공간과 프로그램 연계 후보지를 비교하세요.':'공개 안전시설을 함께 보며 점검할 위치를 정리하고 추가 설치안을 비교하세요.'}</p><div class="living-next-actions">${hasPreset?`<button data-action="decision-living-compare" data-workflow="coverage">${livingTopic==='care'?'주변 활동공간 연계안':'비상벨 추가안'} 비교</button><button data-action="decision-living-compare" data-workflow="inspection">현장 점검 후보 보기</button><button data-action="decision-living-compare" data-workflow="site">사업 후보지 A·B 비교</button>`:'<span class="dt-help">이 지역의 비교용 자료 연결 후 추가·이전안을 검토할 수 있습니다.</span>'}<button data-action="decision-api-guide">생활정보 API 연결 안내 ↗</button></div></details><section class="dt-section"><div class="dt-section-heading"><h3>시설 목록 <span>${num(rows.length)}곳</span></h3><button class="dt-link" data-action="decision-living-csv"${rows.length?'':' disabled'}>목록 CSV</button></div><div class="dt-result-list">${shown.map(({descriptor:d,feature:f})=>{const p=f.properties,url=safeUrl(p.sourceUrl||d.meta.sourceUrl||d.sourceUrl);return `<article class="dt-row living-card${selectedId===p.id?' is-focused':''}" data-living-card="${e(p.id)}"><div><h4>${e(p.name)}</h4><span class="living-kind" style="--living-color:${e(d.color)}">${e(d.title)}</span></div><p>${e(p.address||p.roadAddress||p.lotAddress||'주소 미제공 · 지도에서 위치 확인')}</p>${p.facilityType||p.registeredStatus?`<p>${e([p.facilityType,p.registeredStatus&&`원문 상태 ${p.registeredStatus}`].filter(Boolean).join(' · '))}</p>`:''}${Number.isFinite(p.capacity)||Number.isFinite(p.enrolled)?`<p>공시 정원 ${Number.isFinite(p.capacity)?num(p.capacity)+'명':'미제공'} · 현원 ${Number.isFinite(p.enrolled)?num(p.enrolled)+'명':'미제공'}<br><small>입소 가능 인원이 아닙니다. 실제 모집은 기관에 확인하세요.</small></p>`:''}${p.phone?`<p>기관 연락처 ${e(p.phone)}</p>`:''}${p.geometryMeaning?`<p class="living-data-date">${e(p.geometryMeaning)}</p>`:''}${p.operationalStatus?`<p class="living-data-date">${e(p.operationalStatus)}</p>`:''}<p class="living-data-date">자료 기준 ${e(p.sourceDate||livingSourceDate(d))}${!p.sourceDate&&!d.meta.sourceDate&&!d.sourceDate&&(p.collectedAt||d.meta.collectedAt||d.collectedAt)?` · 수집 ${e(livingCollectedDate(p.collectedAt||d.meta.collectedAt||d.collectedAt))}`:''}</p><div class="living-card-actions"><button data-action="decision-living-focus" data-id="${e(p.id)}">지도에서 보기</button>${hasPreset?`<button data-action="decision-living-review" data-id="${e(p.id)}">이 시설 주변 검토</button>`:''}${url?`<a href="${e(url)}" target="_blank" rel="noreferrer">원자료 ↗</a>`:''}</div></article>`;}).join('')||(!busy?'<p class="dt-empty">선택한 동네·종류·검색어에 해당하는 수록 위치가 없습니다. 검색 조건을 바꾸거나 자료 범위를 확인하세요.</p>':'')}</div>${rows.length>shown.length?`<button class="dt-add-site" data-action="decision-living-more">시설 30곳 더 보기 (${num(shown.length)} / ${num(rows.length)})</button>`:''}</section>${livingTopic==='care'?careDirectoryHtml(livingDirectory,{query:livingQuery,datasetId:livingDataset,scopeIsAll:scopeId==='all',limit:livingLimit}):''}<details class="dt-sources"><summary>자료 출처와 수록 범위</summary><ul>${livingData.map(d=>{const url=safeUrl(d.meta.sourceUrl||d.sourceUrl);return `<li><strong>${e(d.title)}</strong><span>${e(d.meta.sourceName||d.sourceName||'출처 미제공')} · ${e(livingSourceDate(d))}${d.meta.collectedAt||d.collectedAt?` · 수집 ${e(livingCollectedDate(d.meta.collectedAt||d.collectedAt))}`:''}</span><p>${e(d.meta.coverage||d.coverage||'공개 자료 중 위치를 검증한 기록입니다. 누락은 시설 부재를 뜻하지 않습니다.')}</p>${url?`<a href="${e(url)}" target="_blank" rel="noreferrer">공식 원자료 보기 ↗</a>`:''}</li>`;}).join('')||'<li>이 지역의 해당 자료를 연결하면 출처와 기준일을 표시합니다.</li>'}</ul><p class="dt-help">가정폭력·성폭력 피해자 보호시설 등 비공개 시설 위치는 수록하지 않습니다.</p></details></div>`,VIEW);
+    if(destroyed)return;
+    const scroll=host()?.scrollTop||0,config=LIVING_TOPICS[livingTopic];
+    api.show('돌봄·육아 · 생활안전지도',livingGuideHtml({
+      topic:livingTopic,topics:LIVING_TOPICS,data:livingData,rows:livingRows(),directory:livingDirectory,reference:livingReferences,
+      query:livingQuery,datasetId:livingDataset,scopeId,scopeName:scopeId==='all'?regionName()+' 전체':api.state.dongs?.find(f=>f.properties.dongId===scopeId)?.properties.dongName||'선택 동네',
+      regionId,regionName:regionName(),dongs:list(api.state.dongs),limit:livingLimit,selectedId,busy,error,hasPreset:presets().some(p=>p.id===config.preset),
+    }),VIEW);
     if(host())host().scrollTop=scroll;
+  }
+  function changeLivingDataset(value){
+    if(value!=='all'&&!livingData.some(d=>d.id===value)&&!LIVING_CARE_GROUPS.some(group=>value==='group:'+group.id))return;
+    livingDataset=value;livingLimit=10;selectedId='';paintLivingMap();renderLiving();
+  }
+  function changeLivingScope(value){
+    if(value!=='all'&&!list(api.state.dongs).some(f=>f.properties.dongId===value))return;
+    suppressScope=true;try{api.chooseDong?.(value,true);}finally{suppressScope=false;}
+    scopeId=value;livingLimit=10;selectedId='';paintLivingMap();renderLiving();
   }
 
   function conditionsHtml(){
@@ -280,7 +289,7 @@ export function installDecisionTwin(api){
     proposedSites=undefined;excludedServiceIds=[];sites=reviewSite?[siteInput(reviewSite)]:undefined;question=reviewSite?`${reviewSite.name} 주변의 공개 시설 여건을 비교합니다.`:'';interpretQuestion=false;planner=null;planNotice=null;result=null;ai=null;error='';showAll=false;selectedId='';scopeId=api.state.dong||'all';render();await calculate();
   }
   async function handleSubmit(event){
-    if(event.target.matches('#living-search')){event.preventDefault();livingQuery=String(new FormData(event.target).get('query')||'').trim().slice(0,100);livingLimit=30;paintLivingMap();renderLiving();return;}
+    if(event.target.matches('#living-search')){event.preventDefault();livingQuery=String(new FormData(event.target).get('query')||'').trim().slice(0,100);livingLimit=10;paintLivingMap();renderLiving();return;}
     if(!event.target.matches('#decision-conditions,#decision-question'))return;event.preventDefault();if(busy)return;
     if(event.target.id==='decision-question'){question=String(new FormData(event.target).get('question')||'').trim().slice(0,300);interpretQuestion=true;proposedSites=undefined;await calculate();return;}
     if(!event.target.reportValidity())return;
@@ -295,7 +304,10 @@ export function installDecisionTwin(api){
     registerAction('decision-living-map',button=>openLiving(button?.topic||button?.dataset?.topic||'care',button?.scopeId||button?.dataset?.scopeId||'')),
     registerAction('decision-living-topic',button=>openLiving(button.dataset.topic)),
     registerAction('decision-living-retry',()=>openLiving(livingTopic)),
-    registerAction('decision-living-more',()=>{livingLimit+=30;renderLiving();}),
+    registerAction('decision-living-more',()=>{livingLimit+=10;renderLiving();}),
+    registerAction('decision-living-kind',button=>changeLivingDataset(button.dataset.dataset)),
+    registerAction('decision-living-reset',()=>{livingQuery='';changeLivingDataset('all');}),
+    registerAction('decision-living-all',()=>changeLivingScope('all')),
     registerAction('decision-living-focus',button=>focusLiving(button.dataset.id)),
     registerAction('decision-living-review',button=>{const found=livingRows().find(({feature})=>feature.properties.id===button.dataset.id);if(!found)return;const p=found.feature.properties;return changePreset(LIVING_TOPICS[livingTopic].preset,'site',{id:'site-1',name:p.name,coordinates:found.feature.geometry.coordinates});}),
     registerAction('decision-living-compare',button=>changePreset(LIVING_TOPICS[livingTopic].preset,button.dataset.workflow||'coverage')),
@@ -322,13 +334,13 @@ export function installDecisionTwin(api){
     registerAction('decision-csv',()=>{if(!result||busy||error)return;download(cleanFilename(`${regionName()}온_검토위치_${new Date().toISOString().slice(0,10)}.csv`),decisionCsv(result),'text/csv;charset=utf-8');}),
   ];
   host()?.addEventListener('submit',handleSubmit);
-  const change=event=>{if(event.target.id==='decision-preset')changePreset(event.target.value);if(event.target.id==='living-dataset'){livingDataset=event.target.value;livingLimit=30;paintLivingMap();renderLiving();}if(event.target.id==='living-scope'){const next=event.target.value;suppressScope=true;try{api.chooseDong?.(next,true);}finally{suppressScope=false;}scopeId=next;livingLimit=30;paintLivingMap();renderLiving();}};host()?.addEventListener('change',change);
+  const change=event=>{if(event.target.id==='decision-preset')changePreset(event.target.value);if(event.target.id==='living-dataset')changeLivingDataset(event.target.value);if(event.target.id==='living-scope')changeLivingScope(event.target.value);};host()?.addEventListener('change',change);
   const toggle=event=>{if(event.target.matches?.('.dt-conditions'))conditionsOpen=event.target.open;};host()?.addEventListener('toggle',toggle,true);
   return {
     open,
     homeSummary(){return result?{title:currentPreset().title||decisionWorkflowTitle(workflow),covered:result.baseline?.covered,newlyCovered:result.scenario?.newlyCovered,scope:scopeName()}:null;},
     suspend(){suspended=true;controller?.abort();requestId++;busy=false;explaining=false;pick=null;document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);},
-    scopeChanged(){if(suspended||suppressScope||!regionId)return;if(living){scopeId=api.state.dong||'all';livingLimit=30;paintLivingMap();if(openNow())renderLiving();return;}cancelPick();scopeId=api.state.dong||'all';proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;ai=null;if(openNow())calculate();else{controller?.abort();requestId++;busy=false;api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);api.drawData();}},
+    scopeChanged(){if(suspended||suppressScope||!regionId)return;if(living){scopeId=api.state.dong||'all';livingLimit=10;paintLivingMap();if(openNow())renderLiving();return;}cancelPick();scopeId=api.state.dong||'all';proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;ai=null;if(openNow())calculate();else{controller?.abort();requestId++;busy=false;api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);api.drawData();}},
     onEvent(message){if(suspended)return false;
       if(message.type==='point'&&message.tool==='decision-site'){
         if(!pick)return true;const point=Array.isArray(message.point)?message.point.slice(0,2):null;

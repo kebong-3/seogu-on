@@ -1,0 +1,83 @@
+/* Resident facility finding. All rules stay within the living service. */
+.living-map{--dt-ink:#16324a;--dt-blue:#1769e8;--dt-line:#dce6ee;color:#16324a;background:#fff;line-height:1.65}
+.living-map button,.living-map input,.living-map select,.living-map summary{min-height:48px}
+.living-map button,.living-map input,.living-map select{border-radius:14px}
+.living-map button:focus-visible,.living-map input:focus-visible,.living-map select:focus-visible,.living-map summary:focus-visible,.living-map a:focus-visible{outline:3px solid #1769e8;outline-offset:3px}
+.living-map .living-topic-tabs{gap:8px;background:#f0f5f9;padding:5px;border-radius:18px}
+.living-map .living-topic-tabs button{border-color:transparent;background:transparent;color:#37556c}
+.living-map .living-topic-tabs button[aria-pressed=true]{background:#fff;border-color:#d5e3ef;color:#1769e8;box-shadow:0 2px 8px #16324a0a}
+.living-welcome{padding:14px 0 20px}
+.living-welcome .living-eyebrow{display:inline-block;font-size:13px;font-weight:750;color:#1769e8;margin-bottom:7px}
+.living-map .living-welcome h3{font-size:25px;line-height:1.3;letter-spacing:-.04em}
+.living-map .living-welcome p{margin-top:8px;color:#4c667a;font-size:14px}
+.living-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:20px}
+.living-map .living-category-grid button{padding:10px 5px;background:#f6f9fc;border:1px solid #e0e9f0;font-size:14px;color:#37536c}
+.living-map .living-category-grid button[aria-pressed=true]{background:#1769e8;border-color:#1769e8;color:#fff}
+.living-map .living-category-grid button:hover{border-color:#1769e8}
+.living-search{display:grid;gap:8px;margin:0 0 14px}
+.living-search>label{font-size:15px;font-weight:750}
+.living-search>div{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:7px}
+.living-map .living-search input{font-size:16px!important;min-width:0;background:#fff;border-color:#cad8e4;padding:12px}
+.living-map .living-search button{background:#1769e8;color:#fff;border-color:#1769e8}
+.living-search>small{font-size:12px;color:#526b7e}
+.living-map details{border-radius:18px;border-color:#dce6ee}
+.living-map summary{display:list-item;padding:13px 14px;font-size:14px;line-height:1.55}
+.living-map details[open]>summary{margin-bottom:12px}
+.living-map .living-refine{background:#fafcfe;margin:0 0 18px}
+.living-refine .living-filters{padding:0 14px 12px;gap:12px;grid-template-columns:1fr}
+.living-refine .living-filters label{font-size:14px}
+.living-map .living-refine .dt-help{font-size:12px!important;line-height:1.65;color:#526b7e}
+.living-results-summary{padding:16px;background:#effaf8;border:1px solid #cdece6;border-left:4px solid #13b8a6;border-radius:18px;margin:14px 0 10px}
+.living-map .living-results-summary>p{font-size:12px;color:#45685f;margin-bottom:3px}
+.living-map .living-results-summary h3{font-size:18px;line-height:1.55;font-weight:700}
+.living-results-summary h3 strong{color:#1769e8;white-space:nowrap}
+.living-results-summary>a{display:block;padding:10px 0 0;min-height:48px;font-size:13px;color:#1769e8;text-decoration:underline;text-underline-offset:3px}
+.living-filter-actions{display:flex;flex-wrap:wrap;gap:7px}
+.living-filter-actions:empty{display:none}
+.living-map .living-filter-actions button{font-size:12px;background:#fff;border-color:#cde5e0;padding:8px 10px}
+.living-map .living-coverage-note{font-size:12px;color:#536d7d;padding:0 3px;margin:10px 0 20px}
+.living-map .dt-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.living-map .dt-section-heading h3{font-size:18px}
+.living-order-note{font-size:12px;color:#63788a;text-align:right}
+.living-map .dt-result-list{gap:12px}
+.living-map .living-card{border:1px solid #dce6ee;padding:17px;border-radius:20px;background:#fff;box-shadow:0 4px 16px #16324a04}
+.living-map .living-card.is-focused{outline:3px solid #1769e8;outline-offset:2px}
+.living-map .living-card-heading{display:flex;gap:10px;align-items:flex-start}
+.living-map .living-card h4{font-size:17px;line-height:1.5;letter-spacing:-.02em}
+.living-map .living-kind{max-width:35%;font-size:12px;background:#edf5ff;color:#175bb2;border:0;border-radius:9px;padding:4px 7px;flex:none;line-height:1.5}
+.living-map .living-card-address{font-size:14px!important;line-height:1.65;color:#486277;margin:9px 0 5px}
+.living-dong,.living-location-state{display:inline-block;font-size:12px;color:#4b687b;background:#f2f6f9;border-radius:8px;padding:3px 7px;margin:3px 0 6px}
+.living-map .living-card-actions{display:grid;grid-template-columns:1fr 1.2fr;gap:8px;margin:13px 0 0}
+.living-map .living-card-actions button{font-size:14px;line-height:1.45;min-height:48px;padding:11px 8px;border-color:#cddbe8;color:#1769e8}
+.living-map .living-card-actions button:only-child{grid-column:1/-1}
+.living-map .living-card-actions .living-route-button{background:#1769e8;border-color:#1769e8;color:#fff}
+.living-map .living-card-details{background:#f8fafc;border:0;margin:13px 0 0;border-radius:12px}
+.living-map .living-card-details summary{font-size:12px;font-weight:600;color:#516b80;padding:13px 11px}
+.living-card-details p{font-size:13px;margin:0 11px 10px!important;line-height:1.7}
+.living-map .living-card .living-data-date{font-size:12px;color:#536c80}
+.living-map .living-source-link,.living-map .living-phone-link,.living-map .living-official-links a{display:flex;align-items:center;min-height:48px;font-size:13px;color:#1769e8;text-decoration:underline;text-underline-offset:3px;padding:10px 11px;overflow-wrap:anywhere}
+.living-map .living-review-button{font-size:12px;margin:8px 11px 12px}
+.living-map .dt-add-site{width:100%;min-height:48px;background:#f5f9fe;border:1px solid #cddff1;color:#1769e8;border-radius:16px;margin-top:13px}
+.living-map .living-empty{padding:22px 17px;background:#f7fafc;border-radius:20px;border:1px dashed #cad9e5}
+.living-map .living-empty h4{font-size:16px;margin-bottom:9px}
+.living-map .living-empty p{font-size:14px;color:#516b80;margin-bottom:14px}
+.living-empty>div{display:flex;flex-wrap:wrap;gap:8px}
+.living-map .living-empty button{background:#fff;color:#1769e8;font-size:13px}
+.living-address-directory{margin-top:26px;scroll-margin-top:16px}
+.living-map .living-address-directory>.dt-help{margin:0 0 14px;font-size:13px!important;color:#526b7e}
+.living-map .living-address-card{background:#fbfcfe}
+.living-map .living-address-card .living-kind{background:#eef3f6;color:#476479}
+.living-map .living-source-details{margin-top:22px}
+.living-source-details>p,.living-source-details li{font-size:13px;line-height:1.7}
+.living-map .living-source-details ul{padding-left:20px}
+.living-source-details li{padding:0 0 14px}
+.living-map .living-next{background:#f8fafc;margin-top:12px}
+.living-map .living-next>summary{font-size:13px;color:#516b80;padding:13px}
+.living-next-actions{padding:0 12px 12px}
+.living-map .living-route-guide{padding:0;background:#f7fbff}
+.living-map .living-route-guide p,.living-map .living-route-guide li{font-size:13px}
+.living-route-guide .living-official-links{display:grid;padding:0 3px}
+.living-route-guide>details{margin:12px}
+@media(min-width:1280px){.living-refine .living-filters{grid-template-columns:1fr 1fr}}
+@media(max-width:360px){.living-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.living-map .living-card{padding:14px}.living-map .living-card-actions{grid-template-columns:1fr}.living-map .living-card h4{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.living-map *{scroll-behavior:auto!important}}
