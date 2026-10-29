@@ -1,0 +1,75 @@
+/* Restore the established signature blue shell while retaining the resident tools. */
+html[data-ui-theme="day"]{--bg:#e4edf8;--panel:rgba(239,246,255,.97);--surface:#f8fbff;--surface-soft:#e7f0fc;--control:#dfeafb;--text:#153553;--muted:#4e6885;--line:#bacee7;--mint:#0752a7;--header:#0752a7;--shadow:0 8px 24px #13376a24,0 2px 4px #123b7414}
+html[data-ui-theme="sky"]{--bg:#e5f5fc;--panel:rgba(236,248,255,.98);--surface:#f6fcff;--surface-soft:#deeffa;--control:#d4eafa;--text:#153553;--muted:#4e6885;--line:#adcfe4;--mint:#0863a8}
+body .topbar{background:var(--bar-fill)!important;color:#fff;border-bottom:1px solid #248ed080;box-shadow:0 3px 14px #09284d35}
+body .topbar .brand-name,body .topbar .brand strong{color:#fff!important;text-shadow:0 2px 0 #062d6b!important}
+body .topbar .brand-on,body .topbar .brand strong .brand-on{color:#6be1c5!important}
+body .topbar .brand-colon{color:#69d5eb!important}
+body .topbar .brand-tagline{color:#d6eaff!important}
+body .topbar .brand-emblem{filter:drop-shadow(0 3px 3px #032b6466)}
+body .topbar .breadcrumbs button,body .topbar .appearance-open,body .topbar .region-menu-button,body .topbar .icon-button,body .topbar .resident-help-top{background:linear-gradient(145deg,#ffffff26,#ffffff0c)!important;color:#fff!important;border:1px solid #96c5ef66!important;box-shadow:inset 0 1px 0 #c8e8ff4d,0 3px 7px #06326b35!important}
+body .topbar .status-badge{background:#034f6866;color:#ddffef;border:1px solid #8aebc46b}
+body .topbar .status-badge.error{background:#8b431d66;color:#ffdcab;border-color:#eab478}
+body .district-panel,body .bottom-dock{background:var(--panel-fill)!important}
+body .sidebar-heading{background:linear-gradient(125deg,var(--surface),var(--control))!important}
+body .sidebar-tabs button[aria-selected="true"]{background:var(--bar-fill);color:#fff;box-shadow:0 3px 7px #123b7420}
+body .overview-card,body .overview-card.active{background:var(--bar-fill)!important;color:#fff!important;border-color:#53b1cf!important;box-shadow:0 4px 10px #0752a724!important}
+body .overview-card small,body .overview-card .icon{color:#e1f5ff!important}
+
+/* All eighteen names are visible without opening a second menu. */
+body .district-choice{margin:5px 0 14px;padding-bottom:8px}
+body .district-choice>summary{min-height:38px;font-size:15px;padding:4px 2px}
+body #sidebar-regions .dong-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:4px}
+body #sidebar-regions .dong-button,body #sidebar-regions .dong-button.active{display:flex;flex-direction:row;align-items:center;justify-content:center;min-height:42px;padding:5px 3px;gap:4px;border-radius:9px;font-size:14px;font-weight:750;line-height:1.3;white-space:nowrap}
+body #sidebar-regions .dong-button img{display:block;width:18px;height:20px;padding:0;border-radius:3px;object-fit:contain;flex:none}
+body #sidebar-regions .dong-button span{white-space:nowrap;overflow-wrap:normal}
+body .dong-context{font-size:11px;line-height:1.5;margin-top:7px}
+
+/* Large, native disclosure controls keep each purpose and its submenus together. */
+body details.home-start-group{display:block;margin:0 0 12px;padding:0;border:1px solid var(--line);border-radius:15px;background:var(--surface);overflow:clip;box-shadow:0 3px 10px #123b7410}
+body details.home-start-group>summary{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 22px;align-items:center;gap:5px 7px;min-height:92px;padding:15px 14px;list-style:none;cursor:pointer;background:var(--bar-fill);color:#fff;user-select:none}
+body details.home-start-group>summary::-webkit-details-marker{display:none}
+body details.home-start-group>summary>strong{grid-column:1;font-size:21px;font-weight:800;line-height:1.35;letter-spacing:-.65px;color:inherit}
+body details.home-start-group>summary>small{grid-column:1;font-size:13px;line-height:1.55;color:#dcefff;font-weight:500}
+body details.home-start-group>summary::after{content:'＋';grid-column:2;grid-row:1/3;font-size:24px;line-height:1;text-align:center;color:inherit}
+body details.home-start-group[open]>summary::after{content:'−'}
+body #administrative-services>summary{background:linear-gradient(120deg,#07507e,#087d8d)}
+body .home-start-content{padding:14px 12px}
+body .home-start-content .service-menu{display:grid;gap:10px;margin:0 0 12px}
+body .home-start-content .service-entry{min-height:90px;padding:13px 10px}
+body .home-start-content .service-entry strong{font-size:17px!important;line-height:1.5}
+body .home-start-content .service-entry small{font-size:13px!important;line-height:1.65}
+body .home-start-content .home-primary,body .home-start-content .home-workflows{display:grid;grid-template-columns:1fr;gap:9px}
+body .home-start-content .home-card{min-height:76px;padding:12px 10px}
+body .home-start-content .home-card strong{font-size:17px;line-height:1.45}
+body .home-start-content .home-card small{font-size:13px;line-height:1.6}
+body .home-start-content .administrative-tools,body[data-usage="resident"] .home-start-content .administrative-tools{margin:0 0 14px;padding:0;background:transparent;border:0}
+body .home-start-content .administrative-tools>p{font-size:13px}
+body .home-start-content .decision-start-more button,body .home-start-content .sidebar-tools button,body .home-start-content .sidebar-secondary button{min-height:48px;font-size:15px;line-height:1.5}
+body .resident-settings>summary{font-size:15px;min-height:44px;padding:10px 3px;cursor:pointer;color:var(--text)}
+body .resident-settings .resident-usage{margin-top:5px}
+
+/* The existing park, parking, welfare and walking shortcuts remain available. */
+@media(min-width:821px){
+ body .bottom-dock,body[data-usage="resident"] .bottom-dock,body[data-usage="work"] .bottom-dock{display:flex;left:376px;right:80px;bottom:40px;height:76px;padding:7px 10px;gap:8px}
+ body .bottom-dock .preset-buttons{display:flex;flex:1;min-width:0;justify-content:space-around;gap:4px;overflow-x:auto;scrollbar-width:thin}
+ body .bottom-dock .preset{min-width:52px;min-height:58px;font-size:12px;padding:5px;flex:none}
+ body .bottom-dock .preset span{font-size:12px}
+ body #map,body[data-usage="work"] #map{bottom:122px}
+ body .camera-controls{bottom:140px}
+ body.detail-open .bottom-dock{right:440px}
+ body.detail-open .bottom-dock .dock-label{display:none}
+ body.map-focus .bottom-dock{left:16px}
+}
+@media(max-width:820px){
+ body #app:not(.walking-guidance) .bottom-dock{display:flex!important;left:10px!important;right:10px;bottom:calc(102px + env(safe-area-inset-bottom,0px));height:64px;padding:4px 6px;gap:3px;z-index:12}
+ body .bottom-dock .dock-label,body .bottom-dock .dock-actions{display:none}
+ body .bottom-dock .preset-buttons{display:flex;flex:1;min-width:0;gap:3px;overflow-x:auto;scrollbar-width:thin}
+ body .bottom-dock .preset{flex:1 0 42px;min-width:42px;min-height:54px;font-size:11px;padding:3px}
+ body .bottom-dock .preset span{font-size:11px}
+ body #app:not(.walking-guidance) #map,body.detail-open #app:not(.walking-guidance) #map{bottom:calc(176px + env(safe-area-inset-bottom,0px))}
+ body #app:not(.walking-guidance) .camera-controls{bottom:calc(184px + env(safe-area-inset-bottom,0px))}
+ body.drawer-open #app .bottom-dock,body.detail-open #app .bottom-dock{display:none!important}
+ body #app.walking-guidance .bottom-dock{display:none!important}
+ body details.home-start-group>summary>strong{font-size:21px}
+}

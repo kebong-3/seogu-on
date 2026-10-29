@@ -181,7 +181,7 @@ installLifeApiGuide(api);
 walkUi=installWalkRoutes(api);
 fieldUi=installFieldOperations(api);
 readinessUi=installServiceReadiness(api);
-registerAction('service-menu',()=>document.querySelector('.service-menu')?.scrollIntoView({block:'start',behavior:'smooth'}));
+registerAction('service-menu',()=>{const group=document.getElementById('resident-services');if(group)group.open=true;group?.scrollIntoView({block:'start',behavior:'smooth'});});
 serviceNavigation=createServiceNavigation({state,decision:()=>decisionUi,walk:()=>walkUi,send:m=>view?.send(m),draw:drawData,cancelPending:()=>{stopTour();activeRequest++;enhancements?.pauseAnimations();enhancements?.scopeChanged();for(const [id,seq]of loadSequences){loadSequences.set(id,seq+1);const entry=state.entries.get(id);if(entry?.state==='loading')state.entries.set(id,{...entry,state:entry.features?.length?'loaded':'unloaded',error:'화면 전환으로 조회를 중지했습니다.'});}close();}});
 byId('app').addEventListener('change',e=>{try{enhancements.change(e);}catch(err){toast(err.message);}if(e.target.dataset.layer)toggleLayer(e.target.dataset.layer,e.target.checked);if(e.target.id==='focus-switch'){state.focus=e.target.checked;drawBounds();}if(e.target.id==='model-height')modelEdit();});
 byId('app').addEventListener('input',e=>{try{enhancements.input(e);}catch(err){toast(err.message);}if(['model-heading','model-scale'].includes(e.target.id))modelEdit();});
