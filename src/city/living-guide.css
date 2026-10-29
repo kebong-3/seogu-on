@@ -81,3 +81,216 @@
 @media(min-width:1280px){.living-refine .living-filters{grid-template-columns:1fr 1fr}}
 @media(max-width:360px){.living-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.living-map .living-card{padding:14px}.living-map .living-card-actions{grid-template-columns:1fr}.living-map .living-card h4{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.living-map *{scroll-behavior:auto!important}}
+
+
+/* Signature blue ties resident facilities and disaster information to the map shell. */
+.living-map,.resident-disaster{
+ --living-canvas:#eaf2fd;--living-surface:#f8fbff;--living-text:#163b60;
+ --living-muted:#48647f;--living-line:#b8cee8;--living-blue:#0752a7;
+ --living-blue-soft:#dfebfc;--living-accent:#08736b;--living-accent-fill:#08736b;
+ --living-accent-soft:#e0f2ee;--living-accent-line:#94c7bd;
+ --living-warning:#805615;--living-warning-soft:#fff3d9;--living-warning-line:#d7b264;
+ --dt-muted:var(--living-muted);
+}
+.living-map:has(.living-topic-tabs [data-topic="safety"][aria-pressed="true"]){
+ --living-accent:#0752a7;--living-accent-fill:#0752a7;
+ --living-accent-soft:#dfebfc;--living-accent-line:#a7c6e8;
+}
+html[data-ui-theme="night"] :is(.living-map,.resident-disaster){
+ --living-canvas:#142b47;--living-surface:#1c3858;--living-text:#edf5ff;
+ --living-muted:#b5cbe1;--living-line:#476b92;--living-blue:#a8ceff;
+ --living-blue-soft:#203f68;--living-accent:#a1e5d6;--living-accent-soft:#183f43;
+ --living-accent-line:#4c8d84;--living-warning:#ffe0a4;
+ --living-warning-soft:#4a391e;--living-warning-line:#a9884b;
+}
+html[data-ui-theme="night"] .living-map:has(.living-topic-tabs [data-topic="safety"][aria-pressed="true"]){
+ --living-accent:#a8ceff;--living-accent-soft:#203f68;--living-accent-line:#476b92;
+}
+#app .detail-panel:has(:is(.living-map,.resident-disaster)) .detail-head{
+ background:var(--bar-fill)!important;border-bottom:1px solid #68a5e6;color:#fff;
+}
+#app .detail-panel:has(:is(.living-map,.resident-disaster)) :is(#detail-title,#detail-eyebrow){color:#fff}
+#app .detail-panel:has(:is(.living-map,.resident-disaster)) .detail-head>button{
+ background:#ffffff21;border:1px solid #a4c8ed;color:#fff;border-radius:10px;
+}
+#app .detail-panel :is(.living-map,.resident-disaster){
+ background:var(--living-canvas);color:var(--living-text);padding:12px;border-radius:16px;
+}
+#app .detail-panel :is(.living-map,.resident-disaster) :is(h3,h4){color:var(--living-blue)}
+#app .detail-panel :is(.living-map,.resident-disaster) :is(p,small,label){color:var(--living-muted)}
+#app .detail-panel :is(.living-map,.resident-disaster) :is(button,input,select){
+ background:var(--living-surface);color:var(--living-text);border-color:var(--living-line);
+}
+#app .detail-panel :is(.living-map,.resident-disaster) input::placeholder{color:var(--living-muted);opacity:1}
+#app .detail-panel :is(.living-map,.resident-disaster) :is(button,input,select,summary,a):focus-visible{
+ outline:3px solid var(--living-blue);outline-offset:2px;
+}
+#app .detail-panel .living-map .living-topic-tabs{background:var(--living-blue-soft);border:1px solid var(--living-line)}
+#app .detail-panel .living-map .living-topic-tabs button{background:transparent;color:var(--living-muted)}
+#app .detail-panel .living-map .living-topic-tabs button[aria-pressed="true"]{
+ background:#0752a7;border-color:#0752a7;color:#fff;box-shadow:0 3px 8px #07398420;
+}
+#app .detail-panel .living-map .living-topic-tabs button[data-topic="care"][aria-pressed="true"]{background:#08736b;border-color:#08736b}
+#app .detail-panel .living-map .living-welcome{
+ padding:15px;margin-bottom:14px;background:var(--living-accent-soft);
+ border:1px solid var(--living-accent-line);border-left:4px solid var(--living-accent-fill);border-radius:14px;
+}
+#app .detail-panel .living-map .living-welcome .living-eyebrow{color:var(--living-accent)}
+#app .detail-panel .living-map .living-welcome h3{color:var(--living-blue);font-weight:800}
+#app .detail-panel .living-map .living-welcome p{margin-bottom:0}
+#app .detail-panel .living-map .living-category-grid{gap:6px}
+#app .detail-panel .living-map .living-category-grid button{background:var(--living-surface);border-color:var(--living-line);color:var(--living-text)}
+#app .detail-panel .living-map .living-category-grid button[aria-pressed="true"]{
+ background:var(--living-accent-fill);border-color:var(--living-accent-fill);color:#fff;
+}
+#app .detail-panel .living-map .living-search>label{color:var(--living-blue)}
+#app .detail-panel .living-map .living-search button{
+ background:#0752a7;border-color:#0752a7;color:#fff;font-weight:750;
+}
+#app .detail-panel .living-map .living-search>small{color:var(--living-muted)}
+#app .detail-panel .living-map :is(.living-refine,.living-card-details,.living-source-details,.living-next){
+ background:var(--living-surface);border:1px solid var(--living-line);
+}
+#app .detail-panel .living-map summary{color:var(--living-blue);font-weight:700}
+#app .detail-panel .living-map .dt-help{color:var(--living-muted)!important}
+#app .detail-panel .living-map .living-results-summary{
+ background:#123e70;border-color:#123e70;border-left-color:#61d5c4;color:#fff;
+}
+#app .detail-panel .living-map .living-results-summary :is(h3,strong){color:#fff}
+#app .detail-panel .living-map .living-results-summary h3 strong{color:#a5f1de}
+#app .detail-panel .living-map .living-results-summary>p{color:#d3e7fc}
+#app .detail-panel .living-map .living-results-summary>a{color:#d3e7fc}
+#app .detail-panel .living-map .living-results-summary .living-filter-actions button{
+ background:#ffffff17;border-color:#9ac5eb;color:#fff;
+}
+#app .detail-panel .living-map :is(.living-coverage-note,.living-order-note){color:var(--living-muted)}
+#app .detail-panel .living-map .dt-section-heading{border-bottom:2px solid var(--living-line);padding-bottom:9px}
+#app .detail-panel .living-map .dt-section-heading h3 span{color:var(--living-muted)}
+#app .detail-panel .living-map .living-card{
+ background:var(--living-surface);border-color:var(--living-line);
+ border-top:3px solid var(--living-accent-fill);box-shadow:none;
+}
+#app .detail-panel .living-map .living-card.is-focused{outline-color:var(--living-blue);background:var(--living-blue-soft)}
+#app .detail-panel .living-map .living-kind{
+ background:var(--living-accent-soft);color:var(--living-accent);border:1px solid var(--living-accent-line);
+}
+#app .detail-panel .living-map :is(.living-dong,.living-location-state){background:var(--living-blue-soft);color:var(--living-muted)}
+#app .detail-panel .living-map :is(.living-card-address,.living-data-date,.living-card small){color:var(--living-muted)}
+#app .detail-panel .living-map :is(.living-source-link,.living-phone-link,.living-official-links a){color:var(--living-blue)}
+#app .detail-panel .living-map .living-card-actions button{color:var(--living-blue)}
+#app .detail-panel .living-map .living-card-actions .living-route-button{
+ background:#0752a7;border-color:#0752a7;color:#fff;font-weight:750;
+}
+#app .detail-panel .living-map .dt-add-site{
+ background:var(--living-blue-soft)!important;color:var(--living-blue)!important;border-color:var(--living-line);
+}
+#app .detail-panel .living-map :is(.living-empty,.dt-empty){
+ background:var(--living-blue-soft);border-color:var(--living-line);color:var(--living-muted)!important;
+}
+#app .detail-panel .living-map .living-source-details li{color:var(--living-muted)}
+#app .detail-panel .living-map .living-source-details li>strong{color:var(--living-text)}
+#app .detail-panel .living-map .living-next-actions button:first-child{background:#0752a7;border-color:#0752a7;color:#fff}
+#app .detail-panel .living-map .living-route-guide{background:var(--living-blue-soft);border-color:var(--living-line)}
+#app .detail-panel .living-map .living-route-guide :is(p,li){color:var(--living-muted)}
+#app .detail-panel .living-map .living-route-guide>summary{color:var(--living-blue)}
+html[data-ui-theme="night"] #app .detail-panel .living-map .dt-error{background:#4c2b2d;border-color:#b97272}
+html[data-ui-theme="night"] #app .detail-panel .living-map .dt-error p{color:#ffdbd6}
+
+/* Official safe-return references stand apart from route calculation and facility counts. */
+#app .detail-panel .living-map .living-safe-return{
+ margin:0 0 18px;border:1px solid var(--living-line);border-radius:16px;
+ background:var(--living-blue-soft);overflow:hidden;
+}
+#app .detail-panel .living-map .living-safe-return-heading{
+ padding:14px;background:#123e70;color:#fff;
+}
+#app .detail-panel .living-map .living-safe-return-heading :is(h3,h4,strong){color:#fff}
+#app .detail-panel .living-map .living-safe-return-heading :is(p,small){color:#d3e7fc}
+#app .detail-panel .living-map .living-safe-return-actions{display:grid;gap:8px;padding:12px}
+#app .detail-panel .living-map .living-safe-return-actions :is(button,a){
+ display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 12px;
+ border:1px solid var(--living-line);border-radius:12px;background:var(--living-surface);
+ color:var(--living-blue);font-size:14px;font-weight:700;text-decoration:none;text-align:center;
+}
+#app .detail-panel .living-map .living-safe-return-actions .living-safe-return-primary{
+ background:#0752a7;border-color:#0752a7;color:#fff;
+}
+#app .detail-panel .living-map .living-safe-return-grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px;
+}
+#app .detail-panel .living-map .living-safe-return-card{
+ display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;padding:12px;
+ border:1px solid var(--living-line);border-radius:12px;background:var(--living-surface);
+ color:var(--living-text);text-align:left;overflow-wrap:anywhere;
+}
+#app .detail-panel .living-map .living-safe-return-card :is(h4,strong){color:var(--living-blue);font-size:15px;margin:0}
+#app .detail-panel .living-map .living-safe-return-card :is(p,small){color:var(--living-muted);font-size:12px;margin:0}
+#app .detail-panel .living-map .living-route-state{
+ display:inline-block;padding:3px 6px;border-radius:6px;background:var(--living-warning-soft);
+ color:var(--living-warning);font-size:11px;line-height:1.5;font-weight:650;
+}
+#app .detail-panel .living-map .living-safety-tips{display:grid;gap:8px;margin:0 0 18px}
+#app .detail-panel .living-map .living-safety-tips article{
+ border:1px solid var(--living-line);border-left:3px solid #0752a7;
+ border-radius:12px;padding:12px;background:var(--living-surface);
+}
+#app .detail-panel .living-map .living-safety-tips :is(h3,h4){color:var(--living-blue);margin:0 0 5px}
+#app .detail-panel .living-map .living-safety-tips p{margin:0;color:var(--living-muted)}
+#app .detail-panel .living-map .living-safe-return-sources{background:var(--living-surface);border:1px solid var(--living-line)}
+#app .detail-panel .living-map .living-safe-return-sources a{color:var(--living-blue)}
+
+/* Scenario selection is blue; amber remains reserved for limitations and hazards. */
+#app .detail-panel .resident-disaster>p:first-child{
+ background:var(--living-blue-soft);border-left:4px solid #0752a7;padding:12px;border-radius:12px;
+}
+#app .detail-panel .resident-disaster .scenario-grid{gap:8px;margin:14px 0 18px}
+#app .detail-panel .resident-disaster .scenario-card{
+ padding:14px 12px;background:var(--living-surface);border:1px solid var(--living-line);
+ box-shadow:none;gap:7px;min-height:100px;
+}
+#app .detail-panel .resident-disaster .scenario-card strong{color:var(--living-blue);font-size:17px;line-height:1.5}
+#app .detail-panel .resident-disaster .scenario-card small{color:var(--living-muted);font-size:13px;line-height:1.6}
+#app .detail-panel .resident-disaster .scenario-card.active{background:#0752a7;border-color:#68a5e6}
+#app .detail-panel .resident-disaster .scenario-card.active strong{color:#fff}
+#app .detail-panel .resident-disaster .scenario-card.active small{color:#d3e7fc}
+#app .detail-panel .resident-disaster .coverage-table{
+ background:var(--living-surface);border:1px solid var(--living-line);border-radius:13px;padding:0 12px;margin:10px 0;
+}
+#app .detail-panel .resident-disaster .coverage-table>div{padding:11px 0;border-color:var(--living-line)}
+#app .detail-panel .resident-disaster .coverage-table strong{color:var(--living-text);font-size:14px}
+#app .detail-panel .resident-disaster .coverage-table span{color:var(--living-muted);font-size:13px}
+#app .detail-panel .resident-disaster .primary{background:#0752a7;border-color:#0752a7;color:#fff;font-weight:750}
+#app .detail-panel .resident-disaster .secondary{background:var(--living-blue-soft);color:var(--living-blue);border-color:var(--living-line)}
+#app .detail-panel .resident-disaster .note.warning{
+ background:var(--living-warning-soft);color:var(--living-warning);border-color:var(--living-warning-line);
+ font-size:13px!important;line-height:1.75;
+}
+body[data-large-text="true"] #app .detail-panel .resident-disaster .note.warning{font-size:17px!important}
+body[data-large-text="true"] #app .detail-panel .living-map .living-safe-return-grid{grid-template-columns:1fr}
+@media(max-width:390px){
+ #app .detail-panel :is(.living-map,.resident-disaster){padding:9px}
+ #app .detail-panel .living-map .living-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #app .detail-panel .living-map .living-card{padding:13px}
+ #app .detail-panel .living-map .living-card-actions{grid-template-columns:1fr}
+ #app .detail-panel .living-map .living-safe-return-grid{grid-template-columns:1fr}
+ #app .detail-panel .resident-disaster .scenario-grid{grid-template-columns:1fr}
+}
+@media(forced-colors:active){
+ #app .detail-panel :is(.living-map,.resident-disaster) :is(button,input,select,summary,a):focus-visible{outline-color:Highlight}
+ #app .detail-panel .living-map .living-safe-return-card,#app .detail-panel .resident-disaster .scenario-card{border-color:CanvasText}
+}
+/* Safe-return cards retain their map actions at narrow panel widths. */
+#app .detail-panel .living-map .living-safe-return-heading .living-eyebrow{display:block;color:#9ce7db;font-size:12px;font-weight:750;margin-bottom:6px}
+#app .detail-panel .living-map .living-safe-return>.living-route-state{margin:12px 12px 0}
+#app .detail-panel .living-map .living-safe-return-card.is-selected{background:var(--living-blue-soft);border:2px solid var(--living-blue);padding:11px}
+#app .detail-panel .living-map .living-safe-return-card-actions{display:grid;gap:7px;width:100%;margin-top:auto;padding-top:5px}
+#app .detail-panel .living-map .living-safe-return-card-actions button{width:100%;font-size:13px;min-height:48px;padding:9px 7px}
+#app .detail-panel .living-map .living-safe-return-card-actions .living-route-button{background:#0752a7;border-color:#0752a7;color:#fff}
+#app .detail-panel .living-map .living-safe-return>.dt-help{margin-left:12px!important;margin-right:12px!important}
+#app .detail-panel .living-map .living-safe-return .living-safety-tips{margin:3px 12px 12px}
+#app .detail-panel .living-map .living-safety-tips>div{display:grid;gap:8px}
+#app .detail-panel .living-map .living-safety-tips article>strong{display:block;margin-bottom:5px;color:var(--living-blue)}
+#app .detail-panel .living-map .living-safe-return-shortcut{width:100%;background:var(--living-blue-soft);border-color:var(--living-line);color:var(--living-blue);margin:0 0 15px;font-weight:750}
+#app .detail-panel .living-map .living-reference-key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:0 12px 12px;font-size:11px;line-height:1.5;color:var(--living-muted)}
+.living-reference-key i{display:inline-block;width:16px;height:4px;margin:0 5px 3px 0;border-radius:3px}
+#app .detail-panel .living-map .living-safe-return-sources li>small{display:block;margin:5px 0;color:var(--living-muted);font-size:12px}

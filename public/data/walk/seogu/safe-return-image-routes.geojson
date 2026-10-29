@@ -1,0 +1,3174 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+    "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+    "sourceDate": "2026-08",
+    "publishedAt": "2026-08-24",
+    "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+    "sourceFile": "여성안심귀갓길(서부).show",
+    "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+    "alignmentSource": {
+      "name": "OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/copyright",
+      "license": "ODbL 1.0"
+    },
+    "regionId": "seogu",
+    "geometryStatus": "image-interpreted",
+    "coordinateAuthority": "image-georeferenced-not-official",
+    "routeCount": 6,
+    "symbolCoverage": "편집 가능한 원본 슬라이드 기호를 판독한 부분 목록입니다. 배경 JPEG에 합쳐진 기호까지 모두 수집한 전체 시설 수가 아닙니다.",
+    "calibrationReport": [
+      {
+        "name": "금호1",
+        "controls": 7,
+        "rmseMeters": 4.5,
+        "maxResidualMeters": 6.5,
+        "uncertaintyMeters": 20,
+        "segments": 4,
+        "symbols": 12,
+        "waypoints": 2
+      },
+      {
+        "name": "금호2",
+        "controls": 4,
+        "rmseMeters": 12.6,
+        "maxResidualMeters": 19.8,
+        "uncertaintyMeters": 65,
+        "segments": 4,
+        "symbols": 3,
+        "waypoints": 2
+      },
+      {
+        "name": "금호3",
+        "controls": 5,
+        "rmseMeters": 21.9,
+        "maxResidualMeters": 30.8,
+        "uncertaintyMeters": 50,
+        "segments": 12,
+        "symbols": 24,
+        "waypoints": 2
+      },
+      {
+        "name": "화정1",
+        "controls": 9,
+        "rmseMeters": 6.6,
+        "maxResidualMeters": 13.4,
+        "uncertaintyMeters": 25,
+        "segments": 6,
+        "symbols": 12,
+        "waypoints": 2
+      },
+      {
+        "name": "화정2",
+        "controls": 6,
+        "rmseMeters": 2.1,
+        "maxResidualMeters": 3.7,
+        "uncertaintyMeters": 20,
+        "segments": 4,
+        "symbols": 9,
+        "waypoints": 2
+      },
+      {
+        "name": "농성1",
+        "controls": 6,
+        "rmseMeters": 3.6,
+        "maxResidualMeters": 5.3,
+        "uncertaintyMeters": 20,
+        "segments": 5,
+        "symbols": 8,
+        "waypoints": 2
+      }
+    ],
+    "rebuildCommand": "python3 scripts/data/build-safe-return-image-routes.py",
+    "notes": [
+      "원본 슬라이드의 편집 가능한 제목 금호1·금호2·금호3·화정1·화정2·농성1을 기준으로 분류했습니다. 배경 이미지에 남은 이전 제목과 구분합니다.",
+      "금호3과 농성1의 벡터 빨간 선은 원본의 flipH·flipV·회전을 적용하여 복원했습니다.",
+      "사진 판독 구간은 공식 좌표·통행 가능·범죄 위험·안전 보장 판정이 아닙니다.",
+      "시설 기호 수·근접거리로 안전 점수를 만들지 않습니다.",
+      "OSM 도로 교차점은 도보 경유 후보의 지도상 근거이며 현재 현장 통행·보도·공사 여부는 별도 확인이 필요합니다."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8589246,
+              35.139634
+            ],
+            [
+              126.8606194,
+              35.1397467
+            ]
+          ],
+          [
+            [
+              126.8606194,
+              35.1397467
+            ],
+            [
+              126.8610582,
+              35.1354871
+            ]
+          ],
+          [
+            [
+              126.8590043,
+              35.1376945
+            ],
+            [
+              126.8626466,
+              35.1379278
+            ]
+          ],
+          [
+            [
+              126.8592189,
+              35.1354586
+            ],
+            [
+              126.8632406,
+              35.1355468
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 1,
+        "traceMethod": "red-raster-line-trace",
+        "sourceSlideSha256": "e5de25b55e6b6e724a0f930b5672b63938e953f65d38e4a88e92b7555ba82364",
+        "controlPointCount": 7,
+        "controlResidualRmseMeters": 4.5,
+        "controlResidualMaxMeters": 6.5,
+        "uncertaintyMeters": 20,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8606463,
+              35.1397938
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/436826320",
+            "osmNodeId": "436826320",
+            "osmWayId": "37399540",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 금화로115번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8610313,
+              35.1355078
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/436826350",
+            "osmNodeId": "436826350",
+            "osmWayId": "37399527",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 운천로32번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "수록 지도와 OSM 도로 교차점·부지 대표위치를 대조해 보정했습니다. 잔차는 통제점 맞춤값이며 실제 위치 정확도를 보장하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8595255,
+          35.1396385
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-1",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8606203,
+          35.1379881
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-2",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8617905,
+          35.1354378
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-3",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8631349,
+          35.13558
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-4",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8591966,
+          35.1396321
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-5",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8625155,
+          35.1378772
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-6",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8611324,
+          35.1349647
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-7",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8610155,
+          35.1377409
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-8",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV 표기 · 비상벨 없음",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8608945,
+          35.1376038
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-9",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8610936,
+          35.1354518
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-10",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8617201,
+          35.1388252
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-11",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-1-symbol-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8625116,
+          35.1382901
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-1-symbol-12",
+        "routeId": "seogu-safe-return-geumho-1",
+        "name": "금호1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 1,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-2",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8543351,
+              35.124545
+            ],
+            [
+              126.8611004,
+              35.1230218
+            ]
+          ],
+          [
+            [
+              126.8538759,
+              35.1235645
+            ],
+            [
+              126.8599624,
+              35.1221125
+            ]
+          ],
+          [
+            [
+              126.8624268,
+              35.1241193
+            ],
+            [
+              126.8600085,
+              35.1221451
+            ]
+          ],
+          [
+            [
+              126.858812,
+              35.1247476
+            ],
+            [
+              126.8571004,
+              35.1228378
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-2",
+        "routeId": "seogu-safe-return-geumho-2",
+        "name": "금호2",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 2,
+        "traceMethod": "red-raster-line-trace",
+        "sourceSlideSha256": "1c1589dd56ffbd2b88d71aeb69a2c0c3b526c8b92020c176ebce7f2661812f52",
+        "controlPointCount": 4,
+        "controlResidualRmseMeters": 12.6,
+        "controlResidualMaxMeters": 19.8,
+        "uncertaintyMeters": 65,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8588313,
+              35.1247316
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/436881935",
+            "osmNodeId": "436881935",
+            "osmWayId": "481133272",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 화개2로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8580288,
+              35.123714
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/715554198",
+            "osmNodeId": "715554198",
+            "osmWayId": "37403393",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 화개2로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "축소 JPEG 지도이며 명칭 대표위치 대조를 포함하므로 교차점만 사용한 다른 지도보다 오차 범위를 크게 표시합니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-2-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8560687,
+          35.1241672
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-2-symbol-1",
+        "routeId": "seogu-safe-return-geumho-2",
+        "name": "금호2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 2,
+        "uncertaintyMeters": 65,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-2-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.859331,
+          35.1243913
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-2-symbol-2",
+        "routeId": "seogu-safe-return-geumho-2",
+        "name": "금호2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 2,
+        "uncertaintyMeters": 65,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-2-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8547138,
+          35.1234141
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-2-symbol-3",
+        "routeId": "seogu-safe-return-geumho-2",
+        "name": "금호2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 2,
+        "uncertaintyMeters": 65,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8632071,
+              35.1229538
+            ],
+            [
+              126.8637622,
+              35.1233506
+            ]
+          ],
+          [
+            [
+              126.8637622,
+              35.1233506
+            ],
+            [
+              126.8692636,
+              35.1252971
+            ]
+          ],
+          [
+            [
+              126.868915,
+              35.1220212
+            ],
+            [
+              126.8692636,
+              35.1252971
+            ]
+          ],
+          [
+            [
+              126.8658061,
+              35.1210412
+            ],
+            [
+              126.8689142,
+              35.1220391
+            ]
+          ],
+          [
+            [
+              126.8645279,
+              35.1200404
+            ],
+            [
+              126.8658223,
+              35.121033
+            ]
+          ],
+          [
+            [
+              126.8617904,
+              35.1213145
+            ],
+            [
+              126.8635059,
+              35.1226975
+            ]
+          ],
+          [
+            [
+              126.8632071,
+              35.1229538
+            ],
+            [
+              126.8635068,
+              35.1226795
+            ]
+          ],
+          [
+            [
+              126.8617904,
+              35.1213145
+            ],
+            [
+              126.8645279,
+              35.1200404
+            ]
+          ],
+          [
+            [
+              126.8632286,
+              35.1224941
+            ],
+            [
+              126.8648085,
+              35.1218275
+            ]
+          ],
+          [
+            [
+              126.8648085,
+              35.1218275
+            ],
+            [
+              126.8658223,
+              35.121033
+            ]
+          ],
+          [
+            [
+              126.8630077,
+              35.120781
+            ],
+            [
+              126.8643328,
+              35.1220354
+            ]
+          ],
+          [
+            [
+              126.8643062,
+              35.1220522
+            ],
+            [
+              126.8690835,
+              35.1237828
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 3,
+        "traceMethod": "source-vector-connectors",
+        "sourceSlideSha256": "c847fad6431531eda4a58a49cff020f962d440160ffac5e5d5d31ec4a3f6fb41",
+        "controlPointCount": 5,
+        "controlResidualRmseMeters": 21.9,
+        "controlResidualMaxMeters": 30.8,
+        "uncertaintyMeters": 50,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8665701,
+              35.1229574
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/715554072",
+            "osmNodeId": "715554072",
+            "osmWayId": "37403120",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 풍암운리로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8633634,
+              35.1227034
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/436853009",
+            "osmNodeId": "436853009",
+            "osmWayId": "37401170",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 풍금로37번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "수록 지도와 OSM 도로 교차점·부지 대표위치를 대조해 보정했습니다. 잔차는 통제점 맞춤값이며 실제 위치 정확도를 보장하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8663658,
+          35.1235485
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-1",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8672212,
+          35.124509
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-2",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.867403,
+          35.1246467
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-3",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 로고젝터 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "logo-projector",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8684961,
+          35.1220014
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-4",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 로고젝터 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "logo-projector",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8641563,
+          35.1212331
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-5",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 로고젝터 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "logo-projector",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8633717,
+          35.1225009
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-6",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8651376,
+          35.1223959
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-7",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8663225,
+          35.1237347
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-8",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8666915,
+          35.122989
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-9",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8686022,
+          35.123654
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-10",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8688622,
+          35.1231489
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-11",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8684385,
+          35.1231289
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-12",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8683183,
+          35.1218818
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-13",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-14",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8679498,
+          35.1209034
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-14",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-15",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8659942,
+          35.1209404
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-15",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-16",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8645874,
+          35.1199621
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-16",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-17",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8632687,
+          35.1207833
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-17",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-18",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8639745,
+          35.1210953
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-18",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8637825,
+          35.1212793
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-19",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-20",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8631112,
+          35.1224886
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-20",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-21",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8644798,
+          35.1228115
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-21",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-22",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8640663,
+          35.1230519
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-22",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-23",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8652035,
+          35.123104
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-23",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-geumho-3-symbol-24",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8643365,
+          35.1219565
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-geumho-3-symbol-24",
+        "routeId": "seogu-safe-return-geumho-3",
+        "name": "금호3 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 3,
+        "uncertaintyMeters": 50,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8573688,
+              35.1489713
+            ],
+            [
+              126.8646148,
+              35.150091
+            ]
+          ],
+          [
+            [
+              126.8588281,
+              35.1498082
+            ],
+            [
+              126.8645878,
+              35.150815
+            ]
+          ],
+          [
+            [
+              126.8570813,
+              35.1501347
+            ],
+            [
+              126.8573738,
+              35.1490058
+            ]
+          ],
+          [
+            [
+              126.8587102,
+              35.1504177
+            ],
+            [
+              126.8589652,
+              35.1492568
+            ]
+          ],
+          [
+            [
+              126.8604937,
+              35.1507517
+            ],
+            [
+              126.8607997,
+              35.1495362
+            ]
+          ],
+          [
+            [
+              126.8643932,
+              35.1513422
+            ],
+            [
+              126.8645982,
+              35.150129
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 4,
+        "traceMethod": "red-raster-line-trace",
+        "sourceSlideSha256": "4bf22e2056a16512cdf7fad4e1d5bbd758c899c0799327554edf0083c639618e",
+        "controlPointCount": 9,
+        "controlResidualRmseMeters": 6.6,
+        "controlResidualMaxMeters": 13.4,
+        "uncertaintyMeters": 25,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8570926,
+              35.1501399
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/4923697749",
+            "osmNodeId": "4923697749",
+            "osmWayId": "572191000",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 상무대로868번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8646362,
+              35.1501014
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/1215641850",
+            "osmNodeId": "1215641850",
+            "osmWayId": "105563162",
+            "highwayType": "residential",
+            "verificationNote": "OSM 상무대로935번길·쌍촌로57번길 교차점. 도로 위치만 대조했으며 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "수록 지도와 OSM 도로 교차점·부지 대표위치를 대조해 보정했습니다. 잔차는 통제점 맞춤값이며 실제 위치 정확도를 보장하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8640437,
+          35.1500556
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-1",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8605677,
+          35.1501836
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-2",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8573651,
+          35.1488746
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-3",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8585392,
+          35.1504326
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-4",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8590069,
+          35.14872
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-5",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8586897,
+          35.148698
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-6",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8647656,
+          35.1494747
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-7",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8616625,
+          35.1488664
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-8",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.861632,
+          35.1496364
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-9",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV 표기 · 비상벨 없음",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.857891,
+          35.1485617
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-10",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8608412,
+          35.1489788
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-11",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-1-symbol-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8638571,
+          35.1508338
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-1-symbol-12",
+        "routeId": "seogu-safe-return-hwajeong-1",
+        "name": "화정1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 4,
+        "uncertaintyMeters": 25,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8714524,
+              35.1433555
+            ],
+            [
+              126.8741143,
+              35.143369
+            ]
+          ],
+          [
+            [
+              126.8729902,
+              35.1433777
+            ],
+            [
+              126.8720119,
+              35.1414159
+            ]
+          ],
+          [
+            [
+              126.8714265,
+              35.1432749
+            ],
+            [
+              126.8717461,
+              35.1428885
+            ],
+            [
+              126.8711415,
+              35.1417206
+            ]
+          ],
+          [
+            [
+              126.8736974,
+              35.1433417
+            ],
+            [
+              126.8739462,
+              35.1428124
+            ],
+            [
+              126.8731208,
+              35.1410433
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 5,
+        "traceMethod": "red-raster-line-trace",
+        "sourceSlideSha256": "65b6ce47447dd2c57bbcd3b8c5058190e8129f2bf754789e06444f08d7c15b70",
+        "controlPointCount": 6,
+        "controlResidualRmseMeters": 2.1,
+        "controlResidualMaxMeters": 3.7,
+        "uncertaintyMeters": 20,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8714403,
+              35.1433644
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/1215587199",
+            "osmNodeId": "1215587199",
+            "osmWayId": "544435750",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 이름 없는 도로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8719984,
+              35.1414148
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/1215586974",
+            "osmNodeId": "1215586974",
+            "osmWayId": "105560872",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 화정로138번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "수록 지도와 OSM 도로 교차점·부지 대표위치를 대조해 보정했습니다. 잔차는 통제점 맞춤값이며 실제 위치 정확도를 보장하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8716743,
+          35.1428216
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-1",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8740977,
+          35.1419533
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-2",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.872444,
+          35.1425062
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-3",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8713266,
+          35.142554
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-4",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · 로고젝터 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "logo-projector",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8714702,
+          35.1433422
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-5",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8724111,
+          35.1428006
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-6",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8735898,
+          35.1419767
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-7",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.871877,
+          35.1411894
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-8",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-hwajeong-2-symbol-9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.869986,
+          35.1401493
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-hwajeong-2-symbol-9",
+        "routeId": "seogu-safe-return-hwajeong-2",
+        "name": "화정2 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 5,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              126.8859191,
+              35.1526544
+            ],
+            [
+              126.8874664,
+              35.1506948
+            ]
+          ],
+          [
+            [
+              126.8874664,
+              35.1506948
+            ],
+            [
+              126.8886058,
+              35.151394
+            ]
+          ],
+          [
+            [
+              126.8862567,
+              35.1514111
+            ],
+            [
+              126.8878048,
+              35.1522356
+            ]
+          ],
+          [
+            [
+              126.8878012,
+              35.1522274
+            ],
+            [
+              126.8897108,
+              35.1503028
+            ]
+          ],
+          [
+            [
+              126.8896583,
+              35.1503034
+            ],
+            [
+              126.8903888,
+              35.1507782
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1",
+        "featureType": "safe-return-reference-route",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourcePosition": "police-map-red-stroke",
+        "sourceSlide": 6,
+        "traceMethod": "source-vector-connectors",
+        "sourceSlideSha256": "f4423c59239bbcfd48a859cdaf8ceaa41656dc1654a226892ddc0f54cbd4cfd6",
+        "controlPointCount": 6,
+        "controlResidualRmseMeters": 3.6,
+        "controlResidualMaxMeters": 5.3,
+        "uncertaintyMeters": 20,
+        "uncertaintyMeaning": "사진 판독 보조 비교에 쓰는 참고 거리이며 검증된 오차 상한·신뢰구간이 아닙니다.",
+        "publicRoadConfirmed": false,
+        "routeEligible": true,
+        "routingWaypoints": [
+          {
+            "coordinate": [
+              126.8877499,
+              35.1522437
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/1215578104",
+            "osmNodeId": "1215578104",
+            "osmWayId": "37402811",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 화정로309번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          },
+          {
+            "coordinate": [
+              126.8867278,
+              35.15163
+            ],
+            "accessVerification": "mapped-public-road",
+            "sourceUrl": "https://www.openstreetmap.org/node/1214419405",
+            "osmNodeId": "1214419405",
+            "osmWayId": "105429872",
+            "highwayType": "residential",
+            "verificationNote": "OSM에 대남대로462번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+          }
+        ],
+        "note": "경찰 공개 지도의 빨간 선을 사진·슬라이드에서 판독해 좌표에 맞춘 참고 구간입니다. 공식 구간 좌표가 아니며 위치 오차·도로 중심선과의 차이가 있습니다. 실제 안내선은 별도로 조회한 TMAP 보행경로입니다.",
+        "calibrationNote": "수록 지도와 OSM 도로 교차점·부지 대표위치를 대조해 보정했습니다. 잔차는 통제점 맞춤값이며 실제 위치 정확도를 보장하지 않습니다.",
+        "sourceAuxiliaryGeometry": {
+          "type": "MultiLineString",
+          "coordinates": [
+            [
+              [
+                126.8862615,
+                35.1530353
+              ],
+              [
+                126.8872708,
+                35.1527742
+              ]
+            ],
+            [
+              [
+                126.8872708,
+                35.1527742
+              ],
+              [
+                126.8878047,
+                35.1522274
+              ]
+            ]
+          ]
+        },
+        "sourceAuxiliaryNote": "원본에 파란색으로 그려진 보조 선분입니다. 범례에 의미가 명시되지 않아 빨간 지정길 선과 합치지 않고 별도 보관합니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8881451,
+          35.1524376
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-1",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV 표기 · 비상벨 없음",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.887628,
+          35.1523438
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-2",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV 표기 · 비상벨 없음",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8862614,
+          35.1530271
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-3",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.88573,
+          35.153033
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-4",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8866928,
+          35.1516746
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-5",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV 표기 · 비상벨 없음",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8877769,
+          35.1509477
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-6",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · CCTV·비상벨 표기",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "cctv-bell",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8865406,
+          35.1529775
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-7",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seogu-safe-return-nongseong-1-symbol-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.887845,
+          35.1507835
+        ]
+      },
+      "properties": {
+        "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+        "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+        "sourceDate": "2026-08",
+        "publishedAt": "2026-08-24",
+        "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+        "sourceFile": "여성안심귀갓길(서부).show",
+        "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403",
+        "id": "seogu-safe-return-nongseong-1-symbol-8",
+        "routeId": "seogu-safe-return-nongseong-1",
+        "name": "농성1 · 안심귀갓길 위치표지",
+        "featureType": "safe-return-reference-symbol",
+        "facilityType": "route-sign",
+        "regionId": "seogu",
+        "geometryStatus": "image-interpreted",
+        "sourcePosition": "image-interpreted",
+        "coordinateAuthority": "image-georeferenced-not-official",
+        "sourceSlide": 6,
+        "uncertaintyMeters": 20,
+        "routeEligible": false,
+        "operatingStatus": "not-verified",
+        "note": "경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다."
+      }
+    }
+  ]
+}

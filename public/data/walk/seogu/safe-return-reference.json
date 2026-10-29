@@ -28,7 +28,7 @@
     {
       "id": "seogu-safe-return-hwajeong-1",
       "name": "화정1",
-      "area": "상무역 남쪽·운천저수지 동쪽 골목 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
+      "area": "운천역 남쪽·운천저수지 동쪽 골목 주변. 공식 지도를 판독한 주변 설명이며 지정 구간의 시종점 주소가 아닙니다.",
       "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice"
     },
     {
@@ -45,3 +45,4 @@
     }
   ]
 }
+

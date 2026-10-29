@@ -1,6 +1,6 @@
 /** Service changes hide previous overlays while keeping imported/public records in memory. */
 const ENTRIES={
- 'decision-living-map':'living','decision-twin':'living','decision-inspection':'living',
+ 'decision-living-map':'living','decision-safe-return-map':'living','decision-twin':'living','decision-inspection':'living',
  'decision-site-review':'living','decision-preset':'living','decision-from-question':'living',
  'walk-routes':'walk','walk-mode':'walk',
  'service-readiness':'operations','field-operations':'operations',
@@ -21,3 +21,4 @@ export function createServiceNavigation({state,decision,walk,send,cancelPending=
   },
  };
 }
+

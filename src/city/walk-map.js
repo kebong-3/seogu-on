@@ -1,12 +1,14 @@
 import {WALK_ROUTE_COLORS} from './navigation-line-style.js';
 /** TMAP overlays stay outside the application's saved layers and report records. */
 export function createWalkMap({send,now=Date.now,schedule=setTimeout,cancel=clearTimeout,lifetimeMs=30*60*1000}) {
-  const ids=['walk-direct','walk-selected','walk-assessment','walk-points'];
+  const ids=['walk-direct','walk-selected','walk-assessment','walk-points','walk-safe-return-reference'];
   let layers=[],expiresAt=0,timer;
   const clear=()=>{cancel(timer);timer=undefined;layers=[];expiresAt=0;for(const id of ids)send({type:'layer',id,features:[],visible:false});};
   const replay=()=>{if(!layers.length)return;if(now()>=expiresAt){clear();return;}for(const layer of layers)send(layer);};
-  function paint(routes,activeId,points=[],assessmentFeatures=[]) {
+  function paint(routes,activeId,points=[],assessmentFeatures=[],referenceFeatures=[]) {
     clear();
+    const references=referenceFeatures.slice(0,500).filter(feature=>feature?.properties?.safeReturnReference===true&&['Point','LineString','MultiLineString'].includes(feature.geometry?.type));
+    if(references.length)layers.push({type:'layer',id:'walk-safe-return-reference',visible:true,features:references});
     const direct=routes.find(r=>r.role==='direct'),active=routes.find(r=>r.id===activeId)||direct||routes[0];
     const feature=(f,id,color)=>({...f,properties:{...f.properties,id,name:id,displayColor:color,sourceName:'TMAP 보행자 경로',ephemeral:true}});
     for(const [id,route,color]of [['walk-direct',direct,WALK_ROUTE_COLORS.direct],['walk-selected',active?.id!==direct?.id?active:null,WALK_ROUTE_COLORS.selected]]) {
@@ -23,3 +25,4 @@ export function createWalkMap({send,now=Date.now,schedule=setTimeout,cancel=clea
   }
   return {paint,replay,clear,destroy:clear};
 }
+

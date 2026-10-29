@@ -8,6 +8,7 @@ import {planWalkTrip} from './walk-trip-plan.js';
 import {walkServiceReadiness,recordWalkService} from './service-readiness.js';
 import {searchWalkPlaces} from './walk-place-search.js';
 import {rankWalkCandidates,walkDistance as distance,walkCandidateSupportsMode} from '../shared/walk-route-model.js';
+import {chooseSafeReturnCorridor,assessSafeReturnRoutes} from '../shared/safe-return-model.js';
 
 const ENDPOINT='https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1';
 const MAX_BODY=50*1024,MAX_UPSTREAM=1024*1024,MAX_DISTANCE=10000,TTL=30*60000;
@@ -38,7 +39,7 @@ function takeRequest(req,now){
   return true;
 }
 function input(body){
-  const keys=new Set(['regionId','mode','start','end','avoidStairs','viaIds','departureAt','shadowTiming','maxDetourMeters','maxDetourMinutes','includeLevels','navigation']);
+  const keys=new Set(['regionId','mode','start','end','avoidStairs','viaIds','departureAt','shadowTiming','maxDetourMeters','maxDetourMinutes','includeLevels','navigation','safeReturnId']);
   if(!plain(body)||Object.keys(body).some(key=>!keys.has(key)))throw bad(400,'INVALID_WALK_REQUEST','도보 요청에는 지역·출발·도착·검토유형·계단옵션·공개 후보 ID만 사용할 수 있습니다.');
   const regionId=registeredRegionId(body.regionId??'seogu'),mode=body.mode??'shade';
   if(!MODES.has(mode)||!xy(body.start)||!xy(body.end))throw bad(400,'INVALID_WALK_REQUEST','검토유형과 출발·도착의 경도·위도를 확인하세요.');
@@ -49,9 +50,10 @@ function input(body){
   if(body.departureAt!==undefined)seasonal.departureAt=departureTime(body.departureAt);
   for(const [key,max,label]of [['maxDetourMeters',3000,'추가 거리'],['maxDetourMinutes',60,'추가 시간']])if(body[key]!==undefined){if(typeof body[key]!=='number'||!Number.isFinite(body[key])||body[key]<0||body[key]>max)throw bad(400,'INVALID_WALK_REQUEST',`허용 ${label}는 0~${max} 범위의 숫자로 입력하세요.`);seasonal[key]=body[key];}
   if(body.navigation!==undefined&&typeof body.navigation!=='boolean')throw bad(400,'INVALID_WALK_REQUEST','길안내 재탐색 여부를 확인하세요.');
+  if(body.safeReturnId!==undefined&&(mode!=='safety'||typeof body.safeReturnId!=='string'||!/^[a-z0-9][a-z0-9-]{0,59}$/.test(body.safeReturnId)))throw bad(400,'INVALID_SAFE_RETURN_REFERENCE','안심귀가 참고구간은 안심시설 경유에서 수록된 구간 ID로 선택하세요.');
   const viaIds=body.viaIds;
   if(viaIds!==undefined&&(!Array.isArray(viaIds)||viaIds.length>(mode==='inspection'?3:2)||viaIds.some(id=>typeof id!=='string'||!id||id.length>240)||new Set(viaIds).size!==viaIds.length))throw bad(400,'INVALID_WALK_REQUEST',mode==='inspection'?'점검 경유지는 중복 없이 3곳까지 순서대로 선택하세요.':'비교할 경유 후보는 중복 없이 2곳까지 선택하세요.');
-  return {regionId,mode,start:[...body.start],end:[...body.end],avoidStairs:body.avoidStairs===true,navigation:body.navigation===true,...seasonal,...(viaIds===undefined?{}:{viaIds:[...viaIds]})};
+  return {regionId,mode,start:[...body.start],end:[...body.end],avoidStairs:body.avoidStairs===true,navigation:body.navigation===true,...seasonal,...(viaIds===undefined?{}:{viaIds:[...viaIds]}),...(body.safeReturnId===undefined?{}:{safeReturnId:body.safeReturnId})};
 }
 function departureTime(value){
   const match=typeof value==='string'&&value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?(Z|([+-])(\d{2}):(\d{2}))$/);
@@ -114,7 +116,8 @@ function validatedRoute(body,spec,request){
   if(!lines.length||distance(lines[0][0],request.start)>200||distance(lines.at(-1).at(-1),request.end)>200)throw bad(502,'TMAP_LOCATION_MISMATCH','출발·도착과 제공기관 경로 위치가 일치하는지 확인하지 못했습니다.');
   for(let index=1;index<lines.length;index++)if(distance(lines[index-1].at(-1),lines[index][0])>100)throw bad(502,'TMAP_LOCATION_MISMATCH','제공기관 도보경로의 선분이 연속되는지 확인하지 못했습니다.');
   for(const via of spec.via)if(!lines.some(line=>lineDistance(via.coordinate,line)<=100))throw bad(502,'TMAP_LOCATION_MISMATCH','선택한 공개 경유지 100m 이내에 제공기관 경로가 연결되는지 확인하지 못했습니다.');
-  return {id:spec.id,label:spec.label,role:spec.role,distanceMeters,durationSeconds,geojson:{type:'FeatureCollection',features},via:spec.via};
+  if(spec.corridorId&&spec.via.some(via=>!lines.some(line=>lineDistance(via.coordinate,line)<=35)))throw bad(502,'SAFE_RETURN_WAYPOINT_MISMATCH','안내 이미지의 도로 경유점과 TMAP 실제 보행경로가 충분히 가깝지 않아 이 경유안을 표시하지 않았습니다.');
+  return {id:spec.id,label:spec.label,role:spec.role,distanceMeters,durationSeconds,geojson:{type:'FeatureCollection',features},via:spec.via,...(spec.corridorId?{safeReturnId:spec.corridorId}:{} )};
 }
 async function fetchRoute(spec,request,context){
   takeCall(context.env,context.now);
@@ -178,32 +181,56 @@ export async function runWalkRoutes(body,options={}){
   if(!pointInRegion(request.start,pack.boundaries)||!pointInRegion(request.end,pack.boundaries))throw bad(400,'WALK_OUTSIDE_REGION','출발·도착은 선택한 지역의 실제 행정경계 안에서 지정하세요.');
   const directDistance=distance(request.start,request.end);
   if(directDistance<10||directDistance>MAX_DISTANCE)throw bad(400,'WALK_DISTANCE_LIMIT','출발·도착은 서로 10m 이상, 직선거리 10km 이내로 지정하세요.');
-  const eligible=pack.candidates.filter(candidate=>walkCandidateSupportsMode(candidate,request.mode)&&distance(request.start,candidate.coordinate)>=10&&distance(request.end,candidate.coordinate)>=10);
+  let safeReturnData=null;
+  if(request.mode==='safety')safeReturnData=await safetyData(request.regionId,options);
+  if(request.safeReturnId&&Array.isArray(safeReturnData?.corridors?.features)&&safeReturnData.corridors.features.length&&!safeReturnData.corridors.features.some(feature=>['LineString','MultiLineString'].includes(feature.geometry?.type)&&(feature.properties?.id||feature.id)===request.safeReturnId))throw bad(400,'INVALID_SAFE_RETURN_REFERENCE','선택 지역에 수록된 안심귀가 참고구간을 선택하세요.');
+  const corridorSpec=request.mode==='safety'?chooseSafeReturnCorridor(safeReturnData,{...request,boundaries:pack.boundaries,maxDistanceMeters:MAX_DISTANCE}):null;
+  const eligible=[...pack.candidates.filter(candidate=>walkCandidateSupportsMode(candidate,request.mode)&&distance(request.start,candidate.coordinate)>=10&&distance(request.end,candidate.coordinate)>=10),...(request.safeReturnId?corridorSpec?.via||[]:[])];
   let via=[];
   if(request.viaIds!==undefined){via=request.viaIds.map(id=>{const candidate=eligible.find(p=>p.id===id);if(!candidate)throw bad(400,'WALK_INVALID_VIA','이 지역의 공개 접근을 확인할 수 있는 경유 후보를 선택하세요. 비상벨 등 참고 위치는 경유할 수 없습니다.');return candidate;});}
   else if(!request.navigation&&request.mode!=='inspection')via=rankWalkCandidates(eligible,{start:request.start,end:request.end,mode:request.mode,limit:2,maxDetourMeters:request.maxDetourMeters}).map(candidate=>eligible.find(p=>p.id===candidate.id)).filter(Boolean).slice(0,2);
   if(new Set(via.map(candidate=>candidate.coordinate.join(','))).size!==via.length)throw bad(400,'WALK_INVALID_VIA','같은 위치의 공개 경유 후보를 중복 선택할 수 없습니다.');
   const specs=[{id:'direct',label:'직접 도보경로',role:'direct',via:[]}],warnings=[...baseWarnings,...(pack.limitations||[])];
-  if(request.navigation)specs.splice(0,specs.length,{id:'navigation',label:'현재 위치에서 도보 안내',role:via.length?'via':'direct',via});
+  if(request.navigation)specs.splice(0,specs.length,{id:'navigation',label:'현재 위치에서 도보 안내',role:via.length?'via':'direct',via,...(via.some(candidate=>candidate.category==='safe-return-road')?{corridorId:request.safeReturnId}:{} )});
   else if(request.mode==='inspection'&&via.length)specs.push({id:'inspection',label:'선택 순서대로 점검 경유',role:'via',via});
-  else for(const [index,candidate]of via.entries())specs.push({id:`via-${index+1}`,label:`${candidate.name} 경유`,role:'via',via:[candidate]});
+  else{
+    if(corridorSpec&&request.viaIds===undefined)specs.push(corridorSpec);
+    for(const [index,candidate]of via.slice(0,3-specs.length).entries())specs.push({id:`via-${index+1}`,label:`${candidate.name} 경유`,role:'via',via:[candidate]});
+  }
   const validSpecs=specs.filter(spec=>{let last=request.start,length=0;for(const p of spec.via){length+=distance(last,p.coordinate);last=p.coordinate;}length+=distance(last,request.end);if(length>MAX_DISTANCE){if(request.viaIds!==undefined)throw bad(400,'WALK_DISTANCE_LIMIT','선택한 경유지를 포함한 직선 이동거리 합계가 10km를 넘습니다.');warnings.push(`${spec.label}: 조회 거리 범위를 넘어 경유안에서 제외했습니다.`);return false;}return true;});
   const context={env,key,now,fetcher:options.fetcher||fetch,timeoutMs:Math.max(1,Math.min(7000,options.timeoutMs??7000)),deadline:Date.now()+18000};
   const outcomes=await Promise.allSettled(validSpecs.slice(0,3).map(spec=>fetchRoute(spec,request,context))),routes=[];
   for(const [index,outcome]of outcomes.entries()){if(outcome.status==='fulfilled')routes.push(outcome.value);else warnings.push(`${validSpecs[index].label}: ${outcome.reason?.message&&outcome.reason?.code?outcome.reason.message:'제공기관 경로를 받지 못했습니다.'} 직선 경로로 대체하지 않았습니다.`);}
   if(!routes.length){const failure=outcomes.find(outcome=>outcome.status==='rejected')?.reason;if(failure?.code)throw failure;throw bad(502,'TMAP_UNAVAILABLE','도보경로를 받지 못했습니다. 잠시 후 다시 조회하세요.');}
   if(request.avoidStairs)warnings.push('계단 제외 옵션을 제공기관에 요청했습니다. 실제 계단·공사·횡단시설과 이동약자 이용 가능 여부는 현장에서 확인하세요.');
-  if(!via.length)warnings.push(request.mode==='inspection'?'점검 경유지를 선택하지 않아 직접 도보경로만 조회했습니다.':'이번 조건에 맞는 경유 후보가 없어 직접 도보경로만 조회했습니다.');
+  if(!validSpecs.some(spec=>spec.via.length))warnings.push(request.mode==='inspection'?'점검 경유지를 선택하지 않아 직접 도보경로만 조회했습니다.':'이번 조건에 맞는 경유 후보가 없어 직접 도보경로만 조회했습니다.');
   routes.sort((a,b)=>a.role==='direct'?-1:b.role==='direct'?1:a.distanceMeters-b.distanceMeters||a.durationSeconds-b.durationSeconds);
   const seasonal=await applySeasonal(routes,request,options);
+  let safety=null;
+  if(request.mode==='safety'){
+    safety=assessSafeReturnRoutes({routes,data:safeReturnData,boundaries:pack.boundaries,safeReturnId:request.safeReturnId,maxDetourMeters:request.maxDetourMeters,maxDetourMinutes:request.maxDetourMinutes});
+    for(const route of routes)route.safety=safety.routes.find(result=>result.id===route.id);
+    warnings.push(...safety.assumptions);
+    if(request.safeReturnId&&!corridorSpec)warnings.push('선택한 안내 이미지의 도로 경유점을 지도와 대조하지 못했거나 거리 조건을 넘어서 별도 귀갓길 경유안을 만들지 않았습니다. 실제 TMAP 경로와 이미지 참고구간 근접만 구분해 표시합니다.');
+  }
   if(['shade','winter'].includes(request.mode)){
     warnings.push('그늘·일조는 선택한 날짜·시각의 건물 모형 추정이며, TMAP 경로는 이번에 조회한 보행망입니다. 선택일의 실제 도로·통행·날씨 상태를 예측하지 않습니다.');
     if(seasonal.status==='not-evaluated')warnings.push(seasonal.comparison.reason);
     if(request.mode==='winter')warnings.push('겨울 일조부족·결빙관리지점 근접은 확인할 주의정보입니다. 현재 결빙·노면온도·미끄러짐 확률을 산정하지 않습니다.');
   }
-  const result={ok:true,requestedAt:new Date(now).toISOString(),expiresAt:new Date(now+TTL).toISOString(),mode:request.mode,region:{id:pack.profile.id,name:pack.profile.name},routes,candidates:via,warnings,seasonal,limits:{...limits,dailyCallsPerInstance:dailyLimit(env)} };
+  const comparedCandidates=[...new Map(validSpecs.flatMap(spec=>spec.via).map(candidate=>[candidate.id,candidate])).values()];
+  const result={ok:true,requestedAt:new Date(now).toISOString(),expiresAt:new Date(now+TTL).toISOString(),mode:request.mode,region:{id:pack.profile.id,name:pack.profile.name},routes,candidates:comparedCandidates,warnings,seasonal,safety,limits:{...limits,dailyCallsPerInstance:dailyLimit(env)} };
   if(Buffer.byteLength(JSON.stringify(result))>3*1024*1024)throw bad(502,'TMAP_RESPONSE_TOO_LARGE','경로 비교 결과가 응답 크기 제한을 초과했습니다. 조회 거리를 줄여 주세요.');
   return result;
+}
+
+async function safetyData(regionId,options){
+  try{
+    const loader=options.loadSafeReturnData||(await import('./safe-return-data.js')).loadSafeReturnData;
+    const data=await loader({regionId,publicRoot:options.publicRoot});
+    if(data?.regionId!==regionId)throw Error('Safety reference region mismatch');
+    return data;
+  }catch{return {regionId,lights:null,cctv:null,corridors:null,metadata:{regionId,state:'not-connected',reason:'선택 지역의 안심귀가 참고자료 연결을 확인하지 못했습니다.'}};}
 }
 
 export async function handleWalkRoutes(req,res,options={}){
@@ -221,7 +248,8 @@ export async function handleWalkRoutes(req,res,options={}){
       if(url.searchParams.has('q')){respond(res,200,await searchWalkPlaces(url.searchParams.get('q'),pack,{env,fetcher:options.fetcher||fetch}));return;}
       let configured=false;try{configured=!!keyFor(env);}catch{}
       let safetyReferences=null;try{const loader=options.loadSafetyReferences||(await import('./seasonal-walk-data.js')).loadSafeReturnReferences;safetyReferences=await loader({regionId,publicRoot:options.publicRoot});}catch{}
-      respond(res,200,{ok:true,configured,region:{id:pack.profile.id,name:pack.profile.name},candidates:pack.candidates.slice(0,5000),candidateCount:pack.candidates.length,truncated:pack.candidates.length>5000,safetyReferences,warnings:[...baseWarnings,...(pack.limitations||[])],limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}});return;
+      const safeReturn=await safetyData(regionId,options);
+      respond(res,200,{ok:true,configured,region:{id:pack.profile.id,name:pack.profile.name},candidates:pack.candidates.slice(0,5000),candidateCount:pack.candidates.length,truncated:pack.candidates.length>5000,safetyReferences,safeReturn:{regionId,metadata:safeReturn.metadata,corridors:safeReturn.corridors},warnings:[...baseWarnings,...(pack.limitations||[])],limits:{...limits,dailyCallsPerInstance:dailyLimit(env)}});return;
     }
     if(!/^application\/json(?:\s*;|$)/i.test(String(req.headers?.['content-type']||'')))throw bad(415,'JSON_REQUIRED','도보경로 요청은 application/json으로 보내세요.');
     const body=await readBody(req,{maxBytes:MAX_BODY});
@@ -229,3 +257,4 @@ export async function handleWalkRoutes(req,res,options={}){
     const result=await runWalkRoutes(body,{...options,env});recordWalkService({ok:true,durationMs:Date.now()-requestStarted});respond(res,200,result);
   }catch(error){if(req.method==='POST')recordWalkService({ok:false,code:error.code,durationMs:Date.now()-requestStarted});respond(res,error.status||503,{ok:false,code:error.code||'WALK_UNAVAILABLE',error:error.code&&error.status?error.message:'도보경로 자료를 준비하지 못했습니다. 잠시 후 다시 조회하세요.'});}
 }
+

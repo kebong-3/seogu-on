@@ -16,7 +16,7 @@ const fixtures=[
 ];
 const saved={document:globalThis.document,fetch:globalThis.fetch,innerWidth:globalThis.innerWidth,localStorage:globalThis.localStorage};
 function setup({configured=true,post,search}={}){
-  const hostListeners=new Map(),nodes=new Map(),calls=[],paints=[],tools=[];let html='',clears=0,catalogueCandidates=structuredClone(fixtures),catalogueReferences=null;
+  const hostListeners=new Map(),nodes=new Map(),calls=[],paints=[],tools=[],frames=[];let html='',clears=0,catalogueCandidates=structuredClone(fixtures),catalogueReferences=null,catalogueSafeReturn=null;
   const host={scrollTop:0,addEventListener(type,handler){hostListeners.set(type,handler)},removeEventListener(type){hostListeners.delete(type)}};
   globalThis.document={hidden:false,getElementById(id){return id==='detail-body'?host:nodes.get(id)},addEventListener(){},removeEventListener(){}};
   globalThis.innerWidth=1366;
@@ -26,14 +26,124 @@ function setup({configured=true,post,search}={}){
     {id:'direct',role:'direct',label:'직접',distanceMeters:1200,durationSeconds:900,geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates:[request.start,request.end]},properties:{}}]},via:[]},
     {id:'via',role:'via',label:'시설 경유',distanceMeters:1500,durationSeconds:1080,geojson:{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates:[request.start,...(request.viaIds||['shade']).map(id=>fixtures.find(c=>c.id===id).coordinate),request.end]},properties:{}}]},via:(request.viaIds||['shade']).map(id=>fixtures.find(c=>c.id===id))},
   ],warnings:[]});
-  globalThis.fetch=async(url,options={})=>{calls.push({url,options});if(new URL(url,'https://local.invalid').searchParams.has('q'))return search?search(url):{ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[]})};if(!options.method)return {ok:true,json:async()=>({configured,region:{id:'seogu'},candidates:catalogueCandidates,safetyReferences:catalogueReferences})};const request=JSON.parse(options.body);return post?post(request,routeBody):{ok:true,json:async()=>routeBody(request)}};
-  const api={state,show(title,body,view){html=body;state.view=view},label(){return '서구 전체'},send(message){tools.push(message)},toast(){},paintWalkRoutes(routes,active,points,assessmentFeatures){paints.push({routes,active,points,assessmentFeatures})},clearWalkRoutes(){clears++},frameGeometry(){}};
+  globalThis.fetch=async(url,options={})=>{calls.push({url,options});if(new URL(url,'https://local.invalid').searchParams.has('q'))return search?search(url):{ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[]})};if(!options.method)return {ok:true,json:async()=>({configured,region:{id:'seogu'},candidates:catalogueCandidates,safetyReferences:catalogueReferences,safeReturn:catalogueSafeReturn})};const request=JSON.parse(options.body);return post?post(request,routeBody):{ok:true,json:async()=>routeBody(request)}};
+  const api={state,show(title,body,view){html=body;state.view=view},label(){return '서구 전체'},send(message){tools.push(message)},toast(){},paintWalkRoutes(routes,active,points,assessmentFeatures,referenceFeatures){paints.push({routes,active,points,assessmentFeatures,referenceFeatures})},clearWalkRoutes(){clears++},frameGeometry(geometry){frames.push(geometry)}};
   const ui=installWalkRoutes(api);
-  return {ui,api,calls,paints,tools,nodes,setCandidates(items){catalogueCandidates=items},setReferences(value){catalogueReferences=value},get html(){return html},get clears(){return clears},action:async(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),submit(field){return hostListeners.get('submit')({target:{dataset:{walkSearch:field}},preventDefault(){}})},input(id,value,extra={}){hostListeners.get('input')({target:{id,value,...extra}})},change(id,value,checked){hostListeners.get('change')({target:{id,value,checked}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
+  return {ui,api,calls,paints,tools,frames,nodes,setCandidates(items){catalogueCandidates=items},setReferences(value){catalogueReferences=value},setSafeReturn(value){catalogueSafeReturn=value},get html(){return html},get clears(){return clears},action:async(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),submit(field){return hostListeners.get('submit')({target:{dataset:{walkSearch:field}},preventDefault(){}})},input(id,value,extra={}){hostListeners.get('input')({target:{id,value,...extra}})},change(id,value,checked){hostListeners.get('change')({target:{id,value,checked}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
 }
 
 // Existing comparison scenarios explicitly choose the seasonal mode and example endpoints.
 async function openExample(env){await env.action('walk-routes',{mode:'shade'});await env.action('walk-example');}
+
+const RETURN_A='seogu-safe-return-geumho-1',RETURN_B='seogu-safe-return-hwajeong-1';
+function safeReturnCatalogue(){
+  const line=(id,name,coordinates)=>({type:'Feature',properties:{id,routeId:id,name,geometryStatus:'image-interpreted',uncertaintyMeters:35},geometry:{type:'LineString',coordinates}});
+  return {regionId:'seogu',metadata:{regionId:'seogu',geometryStatus:'image-interpreted'},corridors:{type:'FeatureCollection',metadata:{regionId:'seogu',sourceName:'공식 지도 이미지 판독',sourceDate:'2026-08'},features:[
+    line(RETURN_A,'금호1',[[126.8900126833,35.15202903],[126.885,35.154],[126.8777206,35.156420477]]),
+    {type:'Feature',properties:{id:'image-cctv-1',routeId:RETURN_A,routeName:'금호1',facilityType:'cctv-bell'},geometry:{type:'Point',coordinates:[126.885,35.154]}},
+    line(RETURN_B,'화정1',[[126.87,35.15],[126.875,35.153]]),
+  ]}};
+}
+
+test('safety entry explicitly selects a reviewed image corridor and paints it separately without querying TMAP',async()=>{
+  const env=setup();env.setSafeReturn(safeReturnCatalogue());
+  try{
+    await env.action('walk-routes',{mode:'safety',safeReturnId:RETURN_A});
+    assert.match(env.html,/안심귀가 길찾기/);assert.match(env.html,new RegExp(`<option value="${RETURN_A}" selected>`));
+    assert.match(env.html,/주황: 경찰지도 판독선/);assert.match(env.html,/청록·분홍: TMAP 실제 경로/);
+    assert.ok(env.calls.every(call=>!call.options.method),'opening or choosing an image corridor must not query a route');
+    const paint=env.paints.at(-1);assert.deepEqual(paint.routes,[]);assert.deepEqual(paint.assessmentFeatures,[]);
+    assert.equal(paint.referenceFeatures.length,2);assert.ok(paint.referenceFeatures.every(feature=>feature.properties.safeReturnId===RETURN_A&&feature.properties.referenceGeometry===true));
+    await env.action('walk-show-safe-return');assert.equal(env.frames.at(-1).features.length,1,'map framing uses the corridor line, not a CCTV point');
+    assert.ok(env.calls.every(call=>!call.options.method));
+    await env.action('walk-example');await env.action('walk-calculate');
+    const request=JSON.parse(env.calls.at(-1).options.body);
+    assert.equal(request.mode,'safety');assert.equal(request.safeReturnId,RETURN_A);assert.equal(request.maxDetourMeters,500);assert.equal(request.maxDetourMinutes,5);
+    assert.equal(request.departureAt,undefined);assert.equal(request.navigation,undefined);
+    const resultPaint=env.paints.at(-1);assert.equal(resultPaint.routes.length,2);assert.equal(resultPaint.active,'direct');assert.equal(resultPaint.referenceFeatures.length,2);
+  }finally{env.cleanup();}
+});
+
+test('safety entry refuses a foreign-region catalogue and malformed lines instead of selecting them',async()=>{
+  for(const kind of ['foreign-region','invalid-line']){
+    const data=safeReturnCatalogue();if(kind==='foreign-region')data.regionId='suncheon';else data.corridors.features[0].geometry.coordinates=[[126.89,35.15],[null,35.16]];
+    const env=setup();env.setSafeReturn(data);
+    try{
+      await env.action('walk-routes',{mode:'safety',safeReturnId:RETURN_A});
+      assert.match(env.html,/선택한 귀갓길 판독자료를 불러오지 못했어요/);
+      assert.doesNotMatch(env.html,new RegExp(`<option value="${RETURN_A}" selected>`));
+      assert.ok(env.calls.every(call=>!call.options.method));
+      assert.ok(env.paints.every(paint=>paint.referenceFeatures.every(feature=>feature.geometry?.type!=='LineString'||feature.geometry.coordinates.every(point=>point.every(Number.isFinite)))));
+    }finally{env.cleanup();}
+  }
+});
+
+test('changing the safety corridor invalidates a result and sends the new reference only on explicit calculation',async()=>{
+  const env=setup();env.setSafeReturn(safeReturnCatalogue());
+  try{
+    await env.action('walk-routes',{mode:'safety',safeReturnId:RETURN_A});await env.action('walk-example');await env.action('walk-calculate');
+    const requests=env.calls.length;env.change('walk-safe-return-choice',RETURN_B);
+    assert.equal(env.calls.length,requests);assert.doesNotMatch(env.html,/data-action="walk-select-route"/);
+    assert.ok(env.paints.at(-1).referenceFeatures.every(feature=>feature.properties.safeReturnId===RETURN_B));
+    env.change('walk-safe-return-choice','unknown-id');assert.equal(env.calls.length,requests);
+    await env.action('walk-calculate');assert.equal(JSON.parse(env.calls.at(-1).options.body).safeReturnId,RETURN_B);
+  }finally{env.cleanup();}
+});
+
+test('safety metrics distinguish unknown evidence and unknown detours from recorded zero without a safest claim',async()=>{
+  const env=setup({post:async(request,body)=>{
+    const response=body(request),unknown={status:'not-connected',nearMeters:null},zero={status:'partial-recorded-proximity',nearMeters:0};
+    response.routes[0].safety={metrics:{lighting:unknown,cctv:zero,corridor:unknown,detourMeters:null,detourSeconds:null,withinDetour:null}};
+    response.safety={routes:[{id:'via',metrics:{lighting:{nearMeters:120},cctv:{nearMeters:50},corridor:zero,detourMeters:300,detourSeconds:180,withinDetour:false}}],comparison:{preferredRouteId:'via'}};
+    return {ok:true,json:async()=>response};
+  }});env.setSafeReturn(safeReturnCatalogue());
+  try{
+    await env.action('walk-routes',{mode:'safety',safeReturnId:RETURN_A});await env.action('walk-example');await env.action('walk-calculate');
+    const selected=env.html.slice(env.html.indexOf('<button class="walk-route-card is-active"'),env.html.indexOf('</button>',env.html.indexOf('<button class="walk-route-card is-active"')));
+    assert.match(selected,/보안등 설치점 25m 주변<\/small><b>자료 미연결/);assert.match(selected,/CCTV 표시 30m 주변<\/small><b>0m/);
+    assert.match(selected,/기본길 대비 추가<\/small><b>비교 불가/);assert.doesNotMatch(selected,/\+0|기본길 대비 추가<\/small><b>0m/);
+    assert.match(env.html,/설정한 추가 거리·시간 한도 초과/);assert.doesNotMatch(env.html,/가장 안전|최고 안전|안전점수|추천 안전등급/);
+    assert.equal(env.paints.at(-1).active,'direct','an evidence comparison must not auto-select a claimed safest alternative');
+  }finally{env.cleanup();}
+});
+
+test('basic mode clears the safety overlay and selection, and leaving the service cannot repaint it',async()=>{
+  const env=setup();env.setSafeReturn(safeReturnCatalogue());
+  try{
+    await env.action('walk-routes',{mode:'safety',safeReturnId:RETURN_A});const before=env.clears;
+    await env.action('walk-mode',{mode:'basic'});assert.ok(env.clears>before);assert.doesNotMatch(env.html,/walk-safety-context/);
+    await env.action('walk-example');await env.action('walk-calculate');const request=JSON.parse(env.calls.at(-1).options.body);
+    assert.equal(request.navigation,true);assert.equal(request.safeReturnId,undefined);assert.deepEqual(env.paints.at(-1).referenceFeatures,[]);
+    await env.action('walk-mode',{mode:'safety'});const cleared=env.clears,painted=env.paints.length;
+    env.ui.suspend();env.api.state.view='resilience';env.ui.onEvent({type:'ready'});
+    assert.ok(env.clears>cleared);assert.equal(env.paints.length,painted);
+  }finally{env.cleanup();}
+});
+
+test('GPS rerouting preserves the corridor and upcoming road stop from the selected automatic alternative',async()=>{
+  const descriptor=Object.getOwnPropertyDescriptor(globalThis,'navigator');let receive,cleared=0;
+  Object.defineProperty(globalThis,'navigator',{configurable:true,value:{geolocation:{watchPosition(success){receive=success;return 17},clearWatch(){cleared++}}}});
+  const stop={id:`safe-return-road:${RETURN_A}:0`,name:'판독 도로 경유점',category:'safe-return-road',coordinate:[126.885,35.154]};
+  const env=setup({post:async(request,body)=>{
+    const response=body({...request,viaIds:[]}),route={...response.routes[1],id:request.navigation?'navigation':'via',safeReturnId:RETURN_A,via:[stop],geojson:{type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:[request.start,stop.coordinate,request.end]}}]}};
+    response.routes=request.navigation?[route]:[response.routes[0],route];
+    return {ok:true,json:async()=>response};
+  }});env.setSafeReturn(safeReturnCatalogue());
+  try{
+    await env.action('walk-routes',{mode:'safety'});await env.action('walk-example');await env.action('walk-calculate');
+    assert.equal(JSON.parse(env.calls.at(-1).options.body).safeReturnId,undefined,'the initial request leaves corridor choice automatic');
+    await env.action('walk-select-route',{id:'via'});await env.action('walk-nav-start');assert.equal(typeof receive,'function');
+    receive({coords:{longitude:fixtures[0].coordinate[0],latitude:fixtures[0].coordinate[1],accuracy:5},timestamp:Date.now()});
+    await env.action('walk-nav-reroute');
+    const requests=env.calls.filter(call=>call.options.method==='POST').map(call=>JSON.parse(call.options.body));
+    assert.equal(requests.length,2);assert.equal(requests[1].safeReturnId,RETURN_A);assert.deepEqual(requests[1].viaIds,[stop.id]);assert.equal(requests[1].navigation,true);
+    assert.equal(env.paints.at(-1).active,'navigation');
+    await env.action('walk-nav-stop');assert.ok(cleared>0);
+  }finally{
+    env.cleanup();
+    if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;
+  }
+});
 
 test('place search requires choosing a result before routing, and preserves searched points on catalogue refresh',async()=>{
   const item={id:'search:seogu:0',name:'장난감도서관',address:'서구 경열로 33',coordinate:[126.852,35.151],sourceName:'브이월드 장소·주소 검색'};

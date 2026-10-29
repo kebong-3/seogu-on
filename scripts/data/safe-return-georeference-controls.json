@@ -1,0 +1,1694 @@
+{
+  "version": 1,
+  "canvas": [
+    960,
+    720
+  ],
+  "source": {
+    "sourceName": "광주경찰청·서부경찰서 여성안심귀갓길 지도 6개소",
+    "sourceUrl": "https://www.gjpolice.go.kr/cop/bbs/selectBoardArticle.do?bbsId=BBSMSTR_000000000742&nttId=58903&r=gjpolice",
+    "sourceDate": "2026-08",
+    "publishedAt": "2026-08-24",
+    "attachmentUrl": "https://www.gjpolice.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000030728&fileSn=0",
+    "sourceFile": "여성안심귀갓길(서부).show",
+    "sourceFileSha256": "b0fc9dbf658add4c67e9c1f92de6e486df887b96c93eb05cf6c4277557c51403"
+  },
+  "routes": [
+    {
+      "key": "geumho1",
+      "id": "seogu-safe-return-geumho-1",
+      "name": "금호1",
+      "slide": 1,
+      "minimumUncertaintyMeters": 20,
+      "controls": [
+        {
+          "pixel": [
+            601.4,
+            80.8
+          ],
+          "coordinate": [
+            126.8606463,
+            35.1397938
+          ],
+          "label": "금부로·금화로115번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826320",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            620.3,
+            278.2
+          ],
+          "coordinate": [
+            126.8608268,
+            35.1377835
+          ],
+          "label": "운천로56번길·금화로115번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/825410820",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            642.7,
+            515.2
+          ],
+          "coordinate": [
+            126.8610313,
+            35.1355078
+          ],
+          "label": "운천로32번길·금화로115번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826350",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            461.5,
+            288.6
+          ],
+          "coordinate": [
+            126.859014,
+            35.1376615
+          ],
+          "label": "운천로·운천로56번길 동쪽 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/6902932554",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            481.8,
+            516.6
+          ],
+          "coordinate": [
+            126.8592112,
+            35.1354719
+          ],
+          "label": "운천로·운천로32번길 동쪽 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/6902938050",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            780.0,
+            267.8
+          ],
+          "coordinate": [
+            126.8625832,
+            35.1379016
+          ],
+          "label": "운천로56번길·금화로149번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826315",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            833.6,
+            510.9
+          ],
+          "coordinate": [
+            126.8632955,
+            35.1355524
+          ],
+          "label": "운천로32번길·금화로149번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826308",
+          "controlType": "mapped-road-junction"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            453.2,
+            90.9
+          ],
+          [
+            601.4,
+            80.8
+          ]
+        ],
+        [
+          [
+            601.4,
+            80.8
+          ],
+          [
+            642.7,
+            515.2
+          ]
+        ],
+        [
+          [
+            461.5,
+            288.6
+          ],
+          [
+            780,
+            267.8
+          ]
+        ],
+        [
+          [
+            481.8,
+            516.6
+          ],
+          [
+            833.6,
+            510.9
+          ]
+        ]
+      ],
+      "traceMethod": "red-raster-line-trace",
+      "icons": [
+        {
+          "pixel": [
+            505.7732,
+            90.9278
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            602.6804,
+            260.0
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            706.8041,
+            520.8248
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            824.33,
+            507.4227
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            476.9999,
+            91.3147
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            768.5635,
+            272.8431
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            649.551,
+            568.4924
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            637.4285,
+            285.5051
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            626.9366,
+            299.3835
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            645.8218,
+            518.8248
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            698.3335,
+            175.5906
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            767.9419,
+            230.7659
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "e5de25b55e6b6e724a0f930b5672b63938e953f65d38e4a88e92b7555ba82364",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8606463,
+            35.1397938
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826320",
+          "osmNodeId": "436826320",
+          "osmWayId": "37399540",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 금화로115번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8610313,
+            35.1355078
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/436826350",
+          "osmNodeId": "436826350",
+          "osmWayId": "37399527",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 운천로32번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    },
+    {
+      "key": "geumho2",
+      "id": "seogu-safe-return-geumho-2",
+      "name": "금호2",
+      "slide": 2,
+      "minimumUncertaintyMeters": 65,
+      "controls": [
+        {
+          "pixel": [
+            252.1,
+            97.1
+          ],
+          "coordinate": [
+            126.85576365,
+            35.12506513
+          ],
+          "label": "광주중학교 지도 명칭 위치·TMAP 대표위치 대조",
+          "controlType": "named-place-position",
+          "sourceUrl": "https://seogu-on.vercel.app/api/walk-routes?region=seogu"
+        },
+        {
+          "pixel": [
+            328.3,
+            166.5
+          ],
+          "coordinate": [
+            126.85640249,
+            35.12489849
+          ],
+          "label": "화개초등학교 지도 명칭 위치·TMAP 대표위치 대조",
+          "controlType": "named-place-position",
+          "sourceUrl": "https://seogu-on.vercel.app/api/walk-routes?region=seogu"
+        },
+        {
+          "pixel": [
+            654,
+            607
+          ],
+          "coordinate": [
+            126.8606244,
+            35.12214888
+          ],
+          "label": "스피드메이트 지도 명칭 위치·TMAP 대표위치 대조",
+          "controlType": "named-place-position",
+          "sourceUrl": "https://seogu-on.vercel.app/api/walk-routes?region=seogu"
+        },
+        {
+          "pixel": [
+            508,
+            227
+          ],
+          "coordinate": [
+            126.8588313,
+            35.1247316
+          ],
+          "label": "풍금로·화개2로 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436881935",
+          "controlType": "mapped-road-junction"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            147.9,
+            143.4
+          ],
+          [
+            693.4,
+            507.2
+          ]
+        ],
+        [
+          [
+            111.3,
+            259.4
+          ],
+          [
+            602.1,
+            597.3
+          ]
+        ],
+        [
+          [
+            799.8,
+            397.3
+          ],
+          [
+            605.8,
+            594.2
+          ]
+        ],
+        [
+          [
+            508.4,
+            227
+          ],
+          [
+            371.3,
+            432.9
+          ]
+        ]
+      ],
+      "calibrationNote": "축소 JPEG 지도이며 명칭 대표위치 대조를 포함하므로 교차점만 사용한 다른 지도보다 오차 범위를 크게 표시합니다.",
+      "traceMethod": "red-raster-line-trace",
+      "icons": [
+        {
+          "pixel": [
+            287.6804,
+            235.0
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            550.3471,
+            286.0
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            178.847,
+            299.4983
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "1c1589dd56ffbd2b88d71aeb69a2c0c3b526c8b92020c176ebce7f2661812f52",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8588313,
+            35.1247316
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/436881935",
+          "osmNodeId": "436881935",
+          "osmWayId": "481133272",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 화개2로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8580288,
+            35.123714
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/715554198",
+          "osmNodeId": "715554198",
+          "osmWayId": "37403393",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 화개2로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    },
+    {
+      "key": "geumho3",
+      "id": "seogu-safe-return-geumho-3",
+      "name": "금호3",
+      "slide": 3,
+      "minimumUncertaintyMeters": 45,
+      "controls": [
+        {
+          "pixel": [
+            520.6779661016949,
+            278.9631650750341
+          ],
+          "coordinate": [
+            126.8657815,
+            35.1232929
+          ],
+          "label": "운리초등학교 지도 중심·OSM 학교 부지 대표위치 대조",
+          "controlType": "mapped-site-representative",
+          "sourceUrl": "https://www.openstreetmap.org/way/1156833024"
+        },
+        {
+          "pixel": [
+            275.70621468926555,
+            431.21418826739426
+          ],
+          "coordinate": [
+            126.8629929,
+            35.1216074
+          ],
+          "label": "운리중학교 지도 중심·OSM 학교 부지 대표위치 대조",
+          "controlType": "mapped-site-representative",
+          "sourceUrl": "https://www.openstreetmap.org/way/1150103650"
+        },
+        {
+          "pixel": [
+            653.5593220338983,
+            376.2073669849932
+          ],
+          "coordinate": [
+            126.8677615,
+            35.1224975
+          ],
+          "label": "풍암고등학교 지도 중심·OSM 학교 부지 대표위치 대조",
+          "controlType": "mapped-site-representative",
+          "sourceUrl": "https://www.openstreetmap.org/way/1155179244"
+        },
+        {
+          "pixel": [
+            393.22033898305085,
+            365.4024556616644
+          ],
+          "coordinate": [
+            126.8642699,
+            35.1227719
+          ],
+          "label": "운리어린이공원 지도 중심·OSM 공원 부지 대표위치 대조",
+          "controlType": "mapped-site-representative",
+          "sourceUrl": "https://www.openstreetmap.org/way/277766757"
+        },
+        {
+          "pixel": [
+            337.17514124293785,
+            524.5293315143247
+          ],
+          "coordinate": [
+            126.863493,
+            35.1210962
+          ],
+          "label": "새누리어린이공원 지도 중심·OSM 공원 부지 대표위치 대조",
+          "controlType": "mapped-site-representative",
+          "sourceUrl": "https://www.openstreetmap.org/way/544952449"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            310.5554,
+            308.8888
+          ],
+          [
+            355.0,
+            267.7777
+          ]
+        ],
+        [
+          [
+            355.0001,
+            267.7777
+          ],
+          [
+            788.3333,
+            80.6185
+          ]
+        ],
+        [
+          [
+            749.4444,
+            442.2221
+          ],
+          [
+            788.3318,
+            80.6185
+          ]
+        ],
+        [
+          [
+            505.0,
+            534.6667
+          ],
+          [
+            749.4443,
+            440.2223
+          ]
+        ],
+        [
+          [
+            402.3333,
+            639.0
+          ],
+          [
+            506.222,
+            535.6659
+          ]
+        ],
+        [
+          [
+            194.8395,
+            483.3333
+          ],
+          [
+            332.7776,
+            338.8889
+          ]
+        ],
+        [
+          [
+            310.5553,
+            308.8889
+          ],
+          [
+            332.7778,
+            340.8889
+          ]
+        ],
+        [
+          [
+            194.8395,
+            483.3335
+          ],
+          [
+            402.3333,
+            639.0
+          ]
+        ],
+        [
+          [
+            310.5555,
+            360.0
+          ],
+          [
+            430.5555,
+            442.2223
+          ]
+        ],
+        [
+          [
+            430.5555,
+            442.2223
+          ],
+          [
+            506.2221,
+            535.666
+          ]
+        ],
+        [
+          [
+            287.2222,
+            548.8889
+          ],
+          [
+            394.4445,
+            416.6664
+          ]
+        ],
+        [
+          [
+            392.4445,
+            414.6664
+          ],
+          [
+            768.8881,
+            247.6667
+          ]
+        ]
+      ],
+      "traceMethod": "source-vector-connectors",
+      "icons": [
+        {
+          "pixel": [
+            557.4568,
+            259.4453
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            627.2222,
+            157.3677
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            641.8083,
+            143.0352
+          ],
+          "facilityType": "logo-projector",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            716.9163,
+            442.2223
+          ],
+          "facilityType": "logo-projector",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            377.8585,
+            504.7457
+          ],
+          "facilityType": "logo-projector",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            321.6666,
+            359.9999
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            458.1148,
+            380.8852
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            554.7816,
+            238.5601
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            580.6664,
+            323.2213
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            731.1263,
+            259.4453
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            749.4444,
+            316.8341
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            716.5403,
+            316.8341
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            702.7064,
+            454.5547
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            670.6043,
+            561.1668
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            519.21,
+            546.8344
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            406.6545,
+            648.0001
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            307.4566,
+            549.9984
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            363.2724,
+            519.0781
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            349.0625,
+            497.666
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            301.4322,
+            359.9999
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            408.6545,
+            331.3351
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            377.4824,
+            302.5016
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            465.79,
+            302.6702
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            394.4445,
+            425.4435
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "c847fad6431531eda4a58a49cff020f962d440160ffac5e5d5d31ec4a3f6fb41",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8665701,
+            35.1229574
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/715554072",
+          "osmNodeId": "715554072",
+          "osmWayId": "37403120",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 풍암운리로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8633634,
+            35.1227034
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/436853009",
+          "osmNodeId": "436853009",
+          "osmWayId": "37401170",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 풍금로37번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    },
+    {
+      "key": "hwajeong1",
+      "id": "seogu-safe-return-hwajeong-1",
+      "name": "화정1",
+      "slide": 4,
+      "minimumUncertaintyMeters": 20,
+      "controls": [
+        {
+          "pixel": [
+            333,
+            318.9
+          ],
+          "coordinate": [
+            126.8570926,
+            35.1501399
+          ],
+          "label": "상무대로·상무대로868번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/4923697749",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            348.6,
+            423.1
+          ],
+          "coordinate": [
+            126.8573618,
+            35.1490238
+          ],
+          "label": "운천로184번길·상무대로868번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641980",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            423.5,
+            290.9
+          ],
+          "coordinate": [
+            126.858701,
+            35.1504071
+          ],
+          "label": "상무대로·상무대로884번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/4923697750",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            437,
+            398.1
+          ],
+          "coordinate": [
+            126.8589813,
+            35.1492688
+          ],
+          "label": "운천로184번길·상무대로884번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641391",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            522.6,
+            258
+          ],
+          "coordinate": [
+            126.8604934,
+            35.1506976
+          ],
+          "label": "상무대로·상무대로902번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/4923697767",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            538.9,
+            370.2
+          ],
+          "coordinate": [
+            126.8607902,
+            35.1495425
+          ],
+          "label": "운천로184번길·상무대로902번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641883",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            739.2,
+            199
+          ],
+          "coordinate": [
+            126.8644132,
+            35.1514614
+          ],
+          "label": "상무대로·상무대로935번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/436852564",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            749.7,
+            247.6
+          ],
+          "coordinate": [
+            126.8645502,
+            35.1507085
+          ],
+          "label": "쌍촌로65번길·상무대로935번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641332",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            750.8,
+            314.6
+          ],
+          "coordinate": [
+            126.8646362,
+            35.1501014
+          ],
+          "label": "쌍촌로57번길·상무대로935번길 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641850",
+          "controlType": "mapped-road-junction"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            348.3,
+            426.3
+          ],
+          [
+            750.8,
+            314.6
+          ]
+        ],
+        [
+          [
+            429.7,
+            347.2
+          ],
+          [
+            749.7,
+            247.6
+          ]
+        ],
+        [
+          [
+            333,
+            318.9
+          ],
+          [
+            348.6,
+            423.1
+          ]
+        ],
+        [
+          [
+            423.5,
+            290.9
+          ],
+          [
+            437,
+            398.1
+          ]
+        ],
+        [
+          [
+            522.6,
+            258
+          ],
+          [
+            538.9,
+            370.2
+          ]
+        ],
+        [
+          [
+            739.2,
+            199
+          ],
+          [
+            749.9,
+            311.1
+          ]
+        ]
+      ],
+      "traceMethod": "red-raster-line-trace",
+      "icons": [
+        {
+          "pixel": [
+            719.1031,
+            318.5154
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            526.3917,
+            310.5155
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            348.0412,
+            435.2577
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            414.0207,
+            289.7044
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            439.017,
+            447.756
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            586.1141,
+            430.6025
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            421.4077,
+            450.1429
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            758.8202,
+            371.4983
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            586.3823,
+            431.2577
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            585.1141,
+            359.9999
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            377.0375,
+            463.6412
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            540.8899,
+            421.7595
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            709.1856,
+            246.6666
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "4bf22e2056a16512cdf7fad4e1d5bbd758c899c0799327554edf0083c639618e",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8570926,
+            35.1501399
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/4923697749",
+          "osmNodeId": "4923697749",
+          "osmWayId": "572191000",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 상무대로868번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8646362,
+            35.1501014
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215641850",
+          "osmNodeId": "1215641850",
+          "osmWayId": "105563162",
+          "highwayType": "residential",
+          "verificationNote": "OSM 상무대로935번길·쌍촌로57번길 교차점. 도로 위치만 대조했으며 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    },
+    {
+      "key": "hwajeong2",
+      "id": "seogu-safe-return-hwajeong-2",
+      "name": "화정2",
+      "slide": 5,
+      "minimumUncertaintyMeters": 20,
+      "controls": [
+        {
+          "pixel": [
+            312.0,
+            250
+          ],
+          "coordinate": [
+            126.8714403,
+            35.1433644
+          ],
+          "label": "월드컵4강로71번길·서쪽 갈림길",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587199",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            406.15384615384613,
+            252
+          ],
+          "coordinate": [
+            126.8730175,
+            35.1433591
+          ],
+          "label": "월드컵4강로71번길·화정로138번길",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587126",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            348.9230769230769,
+            459
+          ],
+          "coordinate": [
+            126.8719984,
+            35.1414148
+          ],
+          "label": "화정로138번길 남쪽 교차점",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215586974",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            294.46153846153845,
+            426
+          ],
+          "coordinate": [
+            126.8711535,
+            35.1417173
+          ],
+          "label": "서쪽 갈림길·화정로138번길",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587351",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            312.0,
+            265
+          ],
+          "coordinate": [
+            126.8714396,
+            35.143211
+          ],
+          "label": "서쪽 갈림길 도로 굽이",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587164",
+          "controlType": "mapped-road-junction"
+        },
+        {
+          "pixel": [
+            450.46153846153845,
+            255
+          ],
+          "coordinate": [
+            126.8736743,
+            35.1433535
+          ],
+          "label": "월드컵4강로71번길·동쪽 갈림길",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587092",
+          "controlType": "mapped-road-junction"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            312,
+            250.3
+          ],
+          [
+            476.3,
+            253.5
+          ]
+        ],
+        [
+          [
+            406.9,
+            250.6
+          ],
+          [
+            348.9,
+            459.3
+          ]
+        ],
+        [
+          [
+            310.5,
+            258.9
+          ],
+          [
+            330.7,
+            300.9
+          ],
+          [
+            294.8,
+            425.1
+          ]
+        ],
+        [
+          [
+            450.6,
+            255.7
+          ],
+          [
+            466.6,
+            312.9
+          ],
+          [
+            417.8,
+            501.2
+          ]
+        ]
+      ],
+      "traceMethod": "red-raster-line-trace",
+      "icons": [
+        {
+          "pixel": [
+            326.3453,
+            307.9513
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            311.8471,
+            251.4843
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            370.5871,
+            311.2195
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            476.9999,
+            405.3002
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            374.2424,
+            343.1148
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            305.2104,
+            336.0356
+          ],
+          "facilityType": "logo-projector",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            313.1153,
+            251.7525
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            371.8553,
+            311.4878
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            445.6166,
+            401.9133
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            340.8435,
+            483.3565
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            225.3795,
+            591.604
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "65b6ce47447dd2c57bbcd3b8c5058190e8129f2bf754789e06444f08d7c15b70",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8714403,
+            35.1433644
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215587199",
+          "osmNodeId": "1215587199",
+          "osmWayId": "544435750",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 이름 없는 도로(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8719984,
+            35.1414148
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215586974",
+          "osmNodeId": "1215586974",
+          "osmWayId": "105560872",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 화정로138번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    },
+    {
+      "key": "nongseong1",
+      "id": "seogu-safe-return-nongseong-1",
+      "name": "농성1",
+      "slide": 6,
+      "minimumUncertaintyMeters": 20,
+      "controls": [
+        {
+          "pixel": [
+            480,
+            198.89
+          ],
+          "coordinate": [
+            126.8859536,
+            35.1526563
+          ],
+          "label": "화정로293번길·대남대로472번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/1214419369"
+        },
+        {
+          "pixel": [
+            540.59895,
+            313.82981
+          ],
+          "coordinate": [
+            126.8867278,
+            35.15163
+          ],
+          "label": "화정로293번길·대남대로462번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/1214419405"
+        },
+        {
+          "pixel": [
+            623.78,
+            245.84
+          ],
+          "coordinate": [
+            126.8877499,
+            35.1522437
+          ],
+          "label": "화정로309번길·대남대로462번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215578104"
+        },
+        {
+          "pixel": [
+            598.33,
+            423.33
+          ],
+          "coordinate": [
+            126.8874243,
+            35.1507122
+          ],
+          "label": "화정로293번길·대남대로450번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/1214419359"
+        },
+        {
+          "pixel": [
+            685,
+            341.11
+          ],
+          "coordinate": [
+            126.8886232,
+            35.1513806
+          ],
+          "label": "화정로309번길·대남대로450번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/1217232221"
+        },
+        {
+          "pixel": [
+            769.44,
+            465.78
+          ],
+          "coordinate": [
+            126.8897394,
+            35.1503014
+          ],
+          "label": "화정로309번길·화정로310번길 교차점",
+          "controlType": "mapped-road-junction",
+          "sourceUrl": "https://www.openstreetmap.org/node/2739004110"
+        }
+      ],
+      "pixelLines": [
+        [
+          [
+            480.0004,
+            198.8888
+          ],
+          [
+            598.3333,
+            423.3332
+          ]
+        ],
+        [
+          [
+            598.3332,
+            423.3332
+          ],
+          [
+            685.0001,
+            341.1111
+          ]
+        ],
+        [
+          [
+            506.0,
+            342.1111
+          ],
+          [
+            623.7777,
+            244.8889
+          ]
+        ],
+        [
+          [
+            623.5114,
+            245.8378
+          ],
+          [
+            769.4446,
+            465.7777
+          ]
+        ],
+        [
+          [
+            765.4446,
+            465.7778
+          ],
+          [
+            821.0001,
+            410.0
+          ]
+        ]
+      ],
+      "auxiliaryPixelLines": [
+        [
+          [
+            506.0,
+            154.4444
+          ],
+          [
+            582.9724,
+            183.3332
+          ]
+        ],
+        [
+          [
+            582.9722,
+            183.3333
+          ],
+          [
+            623.7777,
+            245.8378
+          ]
+        ]
+      ],
+      "traceMethod": "source-vector-connectors",
+      "icons": [
+        {
+          "pixel": [
+            649.6666,
+            221.1189
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            610.2814,
+            232.6079
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            506.0,
+            155.3906
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            465.5018,
+            155.3906
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            539.1669,
+            311.1111
+          ],
+          "facilityType": "cctv",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            621.9385,
+            393.7204
+          ],
+          "facilityType": "cctv-bell",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            527.2817,
+            160.7775
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        },
+        {
+          "pixel": [
+            627.1666,
+            412.6056
+          ],
+          "facilityType": "route-sign",
+          "sourcePosition": "slide-symbol-center"
+        }
+      ],
+      "sourceSlideSha256": "f4423c59239bbcfd48a859cdaf8ceaa41656dc1654a226892ddc0f54cbd4cfd6",
+      "routingWaypoints": [
+        {
+          "coordinate": [
+            126.8877499,
+            35.1522437
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/1215578104",
+          "osmNodeId": "1215578104",
+          "osmWayId": "37402811",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 화정로309번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        },
+        {
+          "coordinate": [
+            126.8867278,
+            35.15163
+          ],
+          "accessVerification": "mapped-public-road",
+          "sourceUrl": "https://www.openstreetmap.org/node/1214419405",
+          "osmNodeId": "1214419405",
+          "osmWayId": "105429872",
+          "highwayType": "residential",
+          "verificationNote": "OSM에 대남대로462번길(residential)로 수록된 교차점. 실제 통행·보도·공사 상태는 확인하지 않음."
+        }
+      ]
+    }
+  ]
+}

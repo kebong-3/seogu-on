@@ -37,10 +37,41 @@ export function livingFacilityRows(data,{query='',datasetId='all',scope=null}={}
  }).sort((a,b)=>String(a.feature.properties?.name||'').localeCompare(String(b.feature.properties?.name||''),'ko-KR'));
 }
 
-export function safeReturnGuide(reference){
+function returnRouteFeatures(geometry,route){
+ if(geometry?.type!=='FeatureCollection')return [];
+ return items(geometry?.features).filter(feature=>{
+  const p=feature?.properties||{};
+  return typeof route.id==='string'&&route.id&&(p.routeId===route.id||p.id===route.id)||typeof route.name==='string'&&route.name&&p.name===route.name;
+ });
+}
+function returnRouteLine(feature){
+ const geometry=feature?.geometry,lines=geometry?.type==='LineString'?[geometry.coordinates]:geometry?.type==='MultiLineString'?geometry.coordinates:null;
+ return Array.isArray(lines)&&lines.length>0&&lines.every(line=>Array.isArray(line)&&line.length>1&&line.every(point)&&line.some(p=>p[0]!==line[0][0]||p[1]!==line[0][1]));
+}
+function returnArea(route){return String(route.area||'').split('공식 지도를 판독한 주변 설명이며')[0].trim();}
+
+/** Image-interpreted lines remain visibly distinct from official surveyed coordinates. */
+export function safeReturnGuide(reference,geometry,{selectedId='all',busy=false}={}){
+ if(!reference?.routes?.length)return '';
+ const routes=reference.routes,hasLines=routes.some(route=>returnRouteFeatures(geometry,route).some(returnRouteLine));
+ return `<section class="living-safe-return" aria-labelledby="living-safe-return-heading">
+ <div class="living-safe-return-heading"><span class="living-eyebrow">여성안심 · 귀가 준비</span><h3 id="living-safe-return-heading">안심귀갓길부터 살펴보세요</h3><p>지정길 주변을 지도에서 보고, 안심시설을 함께 살피는 도보경로를 비교해요.</p></div>
+ <span class="living-route-state">공식지도 판독 · 위치오차 가능</span>
+ <div class="living-safe-return-actions"><button class="living-safe-return-primary" data-action="walk-routes" data-mode="safety">안심귀가 길찾기 ↗</button><button data-action="decision-safe-return-map" data-id="all"${hasLines?'':' disabled'}>지정길 ${num(routes.length)}곳 지도 보기</button></div><div class="living-reference-key" aria-label="귀갓길 지도 범례"><span><i style="background:#f18720"></i>사진 판독 귀갓길</span><span><i style="background:#2358d5"></i>CCTV·비상벨 표시</span><span><i style="background:#9b3c74"></i>CCTV 표시</span><span><i style="background:#a56a14"></i>위치표지·로고젝터</span></div>
+ <div class="living-safe-return-grid">${routes.map(route=>{
+  const traced=returnRouteFeatures(geometry,route).some(returnRouteLine),focused=selectedId===route.id;
+  return `<article class="living-safe-return-card${focused?' is-selected':''}"><div><h4>${e(route.name)}</h4><span class="living-route-state">${traced?'지도 판독 구간':busy?'구간 확인 중':'구간선 확인 중'}</span></div><p>${e(returnArea(route)||'주변 위치를 지도에서 확인하세요.')}</p><div class="living-safe-return-card-actions"><button data-action="decision-safe-return-map" data-id="${e(route.id)}" aria-label="${e(route.name)} 판독 구간 지도 보기"${traced?'':' disabled'}>구간 지도</button><button class="living-route-button" data-action="walk-routes" data-mode="safety" data-safe-return-id="${e(route.id)}" aria-label="${e(route.name)} 주변 안심귀가 길찾기"${traced?'':' disabled'}>이 주변 길찾기 ↗</button></div></article>`;
+ }).join('')}</div>
+ ${!hasLines?`<p class="dt-help">${busy?'귀갓길 구간을 불러오고 있어요.':'지정길 구간선 자료를 아직 불러오지 못했어요. 일반 안심시설 경유 길찾기는 이용할 수 있어요.'}</p>`:''}
+ <section class="living-safety-tips" aria-labelledby="living-safety-tips-heading"><h4 id="living-safety-tips-heading">이 정보를 함께 보면 좋아요</h4><div><article><strong>CCTV 위치</strong><p>귀가 전에 경로 주변의 CCTV 설치 위치를 미리 살펴봐요.</p></article><article><strong>보안등 위치</strong><p>보안등이 수록된 구간을 비교하고, 현장에서 밝은 길을 선택하는 데 참고해요.</p></article><article><strong>도움 요청 지점</strong><p>도움이 필요할 때 찾을 경찰관서와 공개 비상벨 위치를 알아둬요.</p></article></div><p class="dt-help">설치 위치는 현재 촬영 범위·밝기·작동 여부와 다를 수 있어요. 시설 개수로 안전등급을 매기거나 현재 안전을 보장하지 않아요.</p></section>
+ </section>`;
+}
+
+export function safeReturnSources(reference,geometry){
  if(!reference?.routes?.length)return '';
  const official=url(reference.sourceUrl),attachment=url(reference.attachmentUrl);
- return `<details class="living-route-guide"><summary>여성안심 귀갓길 공식 지도 · ${reference.routes.length}개소</summary><p>광주경찰청이 2026년 8월 공개한 서부경찰서 지정길입니다. 정확한 구간 좌표를 확보하지 못해 이 지도에 경로선으로 표시하지 않습니다.</p><div class="living-official-links">${official?`<a href="${e(official)}" target="_blank" rel="noopener noreferrer">경찰청 공식 안내·지도 열기 ↗</a>`:''}${attachment?`<a href="${e(attachment)}" target="_blank" rel="noopener noreferrer">공식 지도 내려받기 (.show) ↗</a>`:''}</div><ul>${reference.routes.map(r=>`<li><strong>${e(r.name)}</strong> · ${e(r.area||'공식 지도를 확인하세요.')}</li>`).join('')}</ul><details><summary>정확한 구간 자료를 받으려면</summary><p>서구청 양성아동복지과 또는 광주서부경찰서 여성안심귀갓길 담당자에게 자료를 요청하세요. 공공데이터포털의 데이터 제공 신청이나 정보공개청구로도 요청할 수 있습니다.</p><p>요청 자료: 최신 구간명·관리번호, 시작점·종료점·경유점, 지정·변경일, 좌표계가 명시된 GeoJSON/SHP 또는 경위도 CSV, 공개·재이용 범위.</p><p>현재 비상벨·보안등 위치와 도보 경로는 공식 지정길 또는 안전도 판정이 아닙니다.</p></details></details>`;
+ const note=typeof geometry?.metadata?.note==='string'?geometry.metadata.note:'';
+ return `<details class="living-route-guide living-safe-return-sources"><summary>여성안심귀갓길 출처·지도 판독 기준</summary><p>광주경찰청이 2026년 8월 공개한 서부경찰서 지정길 ${num(reference.routes.length)}곳을 참고했습니다. 구간선은 제공된 공식 지도 이미지의 도로·건물 위치를 대조해 옮긴 판독 자료이며, 제공기관의 측량좌표가 아닙니다.</p><p>위치오차가 있을 수 있고 실제 도로·출입구·통행조건은 현장에서 확인해야 해요. TMAP에서 조회한 보행경로는 이 판독 구간선과 구분해 표시합니다.</p>${note?`<p>${e(note)}</p>`:''}${geometry?.metadata?.symbolCoverage?`<p>${e(geometry.metadata.symbolCoverage)}</p>`:''}${url(geometry?.metadata?.alignmentSource?.url)?`<p>도로 대조: <a href="${e(url(geometry.metadata.alignmentSource.url))}" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors · ODbL 1.0</a></p>`:''}<div class="living-official-links">${official?`<a href="${e(official)}" target="_blank" rel="noopener noreferrer">경찰청 공식 안내·지도 열기 ↗</a>`:''}${attachment?`<a href="${e(attachment)}" target="_blank" rel="noopener noreferrer">공식 지도 내려받기 (.show) ↗</a>`:''}</div><ul>${reference.routes.map(route=>{const link=url(route.sourceUrl),trace=returnRouteFeatures(geometry,route).find(returnRouteLine),band=trace?.properties?.uncertaintyMeters,aux=trace?.properties?.sourceAuxiliaryNote;return `<li><strong>${e(route.name)}</strong> · ${e(returnArea(route)||'공식 지도를 확인하세요.')}${Number.isFinite(band)?`<small>사진 판독 비교폭 ${e(band)}m · 측량 정확도나 보장 오차범위가 아닙니다.</small>`:''}${aux?`<p>${e(aux)} 경로 비교에는 빨간 구간선만 사용합니다.</p>`:''}${link&&link!==official?` <a href="${e(link)}" target="_blank" rel="noopener noreferrer">구간 원문 ↗</a>`:''}</li>`;}).join('')}</ul><details><summary>최신 원좌표·운영 상태를 확인하려면</summary><p>서구청 양성아동복지과 또는 광주서부경찰서 담당자에게 최신 지정·변경일과 좌표계가 명시된 구간 자료를 확인하세요. CCTV·보안등·비상벨의 현재 작동·관리 상태는 각각의 관리기관 확인이 필요해요.</p></details></details>`;
 }
 
 export function careDirectoryRows(directory,{query='',datasetId='all'}={}){
@@ -85,13 +116,14 @@ export function livingFacilityCard({descriptor:d,feature:f},{selectedId='',regio
  ${hasPreset?`<button class="living-review-button" data-action="decision-living-review" data-id="${e(p.id)}">담당자용 · 이 시설 주변 검토</button>`:''}</details></article>`;
 }
 
-export function livingGuideHtml({topic='care',topics={},data=[],rows=[],directory=null,reference=null,query='',datasetId='all',scopeId='all',scopeName='',regionId='',regionName='서구',dongs=[],limit=10,selectedId='',busy=false,error='',hasPreset=false}={}){
+export function livingGuideHtml({topic='care',topics={},data=[],rows=[],directory=null,reference=null,safeReturnGeometry=null,selectedSafeReturnId='all',query='',datasetId='all',scopeId='all',scopeName='',regionId='',regionName='서구',dongs=[],limit=10,selectedId='',busy=false,error='',hasPreset=false}={}){
  const care=topic==='care',addressRows=care?careDirectoryRows(directory,{query,datasetId}):[],selected=rows.find(row=>row.feature.properties.id===selectedId),shown=(selected?[selected,...rows.filter(row=>row!==selected)]:rows).slice(0,limit),missing=data.filter(d=>d.error),hasFilter=!!query||datasetId!=='all';
  const mappedExtra=items(directory?.entries).filter(r=>point(r.coordinates)).length,addressExtra=careDirectoryRows(directory).length;
  const hasCategoryData=data.some(d=>!d.error&&livingDatasetMatches(d.id,datasetId));
  const category=LIVING_CARE_GROUPS.find(group=>`group:${group.id}`===datasetId)?.label||data.find(d=>d.id===datasetId)?.title||'전체 종류';
- return `<div class="decision-twin living-map" aria-busy="${busy}">
- <nav class="living-topic-tabs" aria-label="생활정보 분야">${Object.entries(topics).map(([id,c])=>`<button data-action="decision-living-topic" data-topic="${e(id)}" aria-pressed="${topic===id}">${e(c.label)}</button>`).join('')}</nav>
+ return `<div class="decision-twin living-map" data-living-topic="${e(topic)}" aria-busy="${busy}">
+ <nav class="living-topic-tabs" aria-label="생활정보 분야">${Object.entries(topics).sort(([a],[b])=>Number(b==='safety')-Number(a==='safety')).map(([id,c])=>`<button data-action="decision-living-topic" data-topic="${e(id)}" aria-pressed="${topic===id}">${e(c.label)}</button>`).join('')}</nav>
+ ${care?(regionId==='seogu'?'<button class="living-safe-return-shortcut" data-action="decision-living-topic" data-topic="safety">여성안심 귀갓길·귀가 길찾기 ↗</button>':''):safeReturnGuide(reference,safeReturnGeometry,{selectedId:selectedSafeReturnId,busy})}
  <section class="living-welcome"><span class="living-eyebrow">${e(scopeName||regionName+' 전체')}</span><h3>${care?'어떤 시설을 찾으세요?':'우리 동네 안심시설 찾기'}</h3><p>${care?'시설을 고르고, 지도와 길찾기로 이어가세요.':'비상벨·보안등·경찰관서의 공개 위치를 살펴보세요.'}</p></section>
  ${care?`<div class="living-category-grid" role="group" aria-label="찾을 시설 종류"><button data-action="decision-living-kind" data-dataset="all" aria-pressed="${datasetId==='all'}">전체</button>${LIVING_CARE_GROUPS.map(group=>`<button data-action="decision-living-kind" data-dataset="group:${group.id}" aria-pressed="${datasetId===`group:${group.id}`}">${e(group.label)}</button>`).join('')}</div>`:''}
  <form id="living-search" class="living-search"><label for="living-query">이름이나 동네로 찾기</label><div><input id="living-query" name="query" value="${e(query)}" maxlength="100" placeholder="예: 풍암동, 장난감도서관" autocomplete="off" aria-describedby="living-search-hint"><button type="submit">찾기</button></div><small id="living-search-hint">시설 이름·동 이름·도로명을 입력해 주세요.</small></form>
@@ -103,7 +135,8 @@ export function livingGuideHtml({topic='care',topics={},data=[],rows=[],director
  <section class="dt-section living-map-results" aria-labelledby="living-map-heading"><div class="dt-section-heading"><h3 id="living-map-heading">${care?'시설 목록':'안심시설 목록'}</h3><span class="living-order-note">${busy?'가져오는 중':hasCategoryData?`이름순 · ${num(Math.min(limit,rows.length))} / ${num(rows.length)}`:'자료 확인 필요'}</span></div><div class="dt-result-list">
  ${shown.map(row=>livingFacilityCard(row,{selectedId,regionId,topic,hasPreset})).join('')||(!busy?`<div class="living-empty"><h4>${addressRows.length?'주소 목록에서 먼저 확인해 주세요':'조건에 맞는 수록 시설을 찾지 못했어요'}</h4><p>${addressRows.length?'아래 시설은 주소는 있지만 지도 위치가 아직 확인되지 않았어요.':'시설이 없다는 뜻은 아니에요. 이름을 짧게 입력하거나 다른 종류를 골라 보세요.'}</p><div>${hasFilter?'<button data-action="decision-living-reset">검색 조건 지우기</button>':''}${scopeId!=='all'?`<button data-action="decision-living-all">${e(regionName)} 전체에서 찾기</button>`:'<button data-action="decision-living-retry">목록 다시 불러오기</button>'}</div></div>`:'')}
  </div>${rows.length>shown.length?`<button class="dt-add-site" data-action="decision-living-more" aria-label="지도시설 10곳 더 보기">시설 10곳 더 보기 (${num(shown.length)} / ${num(rows.length)})</button>`:''}</section>
- ${care?careDirectoryHtml(directory,{query,datasetId,scopeIsAll:scopeId==='all',limit,regionName}):safeReturnGuide(reference)}
+ ${care?careDirectoryHtml(directory,{query,datasetId,scopeIsAll:scopeId==='all',limit,regionName}):''}
  <details class="dt-sources living-source-details"><summary>자료 출처·수록 범위 확인</summary><p>공식 공개자료에서 확인한 시설이에요. 모든 시설을 빠짐없이 담은 목록은 아니며, 현재 운영 여부는 기관에 확인해 주세요. 지도 위치는 건물 대표점일 수 있어요.</p>${directory&&care?`<p>어린이집 외 추가자료 ${num(mappedExtra+addressExtra)}곳: 지도 ${num(mappedExtra)}곳·주소 ${num(addressExtra)}곳. 주소 위치를 임의로 추정하지 않아요.</p>`:''}${missing.length?`<p>자료 확인이 필요한 종류 ${num(missing.length)}종</p><ul>${missing.map(d=>`<li>${e(d.title)} · ${e(d.error)}</li>`).join('')}</ul><p>연결되지 않은 자료는 시설 0곳을 뜻하지 않아요.</p>`:''}<ul>${data.map(d=>`<li><strong>${e(d.title)}</strong>${evidenceHtml({},d)}<p>${e(d.meta?.coverage||d.coverage||'공개 자료 중 위치를 검증한 기록입니다. 누락은 시설 부재를 뜻하지 않습니다.')}</p></li>`).join('')}</ul><button data-action="decision-living-csv"${rows.length?'':' disabled'}>현재 지도 목록 CSV 저장</button><p class="dt-help">가정폭력·성폭력 피해자 보호시설 등 비공개 시설 위치는 수록하지 않습니다.</p></details>
- <details class="living-next"><summary>담당자용 · 점검·보완안 검토</summary><p>${care?'시설 주변의 활동공간과 프로그램 연계 후보지를 비교하세요.':'공개 안전시설을 함께 보며 점검할 위치와 추가 설치안을 비교하세요.'}</p><div class="living-next-actions">${hasPreset?`<button data-action="decision-living-compare" data-workflow="coverage">${care?'주변 활동공간 연계안':'비상벨 추가안'} 비교</button><button data-action="decision-living-compare" data-workflow="inspection">현장 점검 후보 보기</button><button data-action="decision-living-compare" data-workflow="site">사업 후보지 A·B 비교</button>`:'<span class="dt-help">이 지역의 비교용 자료 연결 후 검토할 수 있어요.</span>'}<button data-action="decision-api-guide">생활정보 API 연결 안내 ↗</button></div></details></div>`;
+ <details class="living-next"><summary>담당자용 · 점검·보완안 검토</summary><p>${care?'시설 주변의 활동공간과 프로그램 연계 후보지를 비교하세요.':'공개 안전시설을 함께 보며 점검할 위치와 추가 설치안을 비교하세요.'}</p><div class="living-next-actions">${hasPreset?`<button data-action="decision-living-compare" data-workflow="coverage">${care?'주변 활동공간 연계안':'비상벨 추가안'} 비교</button><button data-action="decision-living-compare" data-workflow="inspection">현장 점검 후보 보기</button><button data-action="decision-living-compare" data-workflow="site">사업 후보지 A·B 비교</button>`:'<span class="dt-help">이 지역의 비교용 자료 연결 후 검토할 수 있어요.</span>'}<button data-action="decision-api-guide">생활정보 API 연결 안내 ↗</button></div></details>${care?'':safeReturnSources(reference,safeReturnGeometry)}</div>`;
 }
+

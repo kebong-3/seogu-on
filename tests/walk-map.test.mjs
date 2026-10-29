@@ -17,8 +17,16 @@ test('selected facility detour is overlaid with the direct reference in distinct
 test('clear wipes viewer and pending-message geometry rather than only hiding it',()=>{
  const h=harness(),pending=new PendingMessages();h.map.paint([route('a','direct')],'a');for(const m of h.sent)pending.add(m);h.sent.length=0;
  h.map.clear();for(const m of h.sent)pending.add(m);
- assert.equal(h.sent.length,4);assert.ok(h.sent.every(m=>m.visible===false&&m.features.length===0));
+ assert.deepEqual(h.sent.map(m=>m.id),['walk-direct','walk-selected','walk-assessment','walk-points','walk-safe-return-reference']);assert.ok(h.sent.every(m=>m.visible===false&&m.features.length===0));
  assert.ok(pending.drain().every(m=>m.features.length===0));h.sent.length=0;h.map.replay();assert.equal(h.sent.length,0);
+});
+
+test('image references keep their own provenance and color and are cleared with the temporary route layers',()=>{
+ const h=harness(),reference={type:'Feature',geometry:{type:'LineString',coordinates:[[126.89,35.15],[126.88,35.16]]},properties:{id:'image-reference',name:'판독선',displayColor:'#f18720',safeReturnReference:true,coordinateAuthority:'image-georeferenced-not-official'}};
+ const original=structuredClone(reference);h.map.paint([route('a','direct')],'a',[],[],[reference]);
+ const shown=h.sent.find(m=>m.id==='walk-safe-return-reference'&&m.visible);assert.equal(shown.features[0].properties.displayColor,'#f18720');assert.equal(shown.features[0].properties.coordinateAuthority,'image-georeferenced-not-official');assert.deepEqual(reference,original);
+ h.sent.length=0;h.map.clear();assert.ok(h.sent.some(m=>m.id==='walk-safe-return-reference'&&!m.visible&&!m.features.length));
+ h.sent.length=0;h.map.replay();assert.equal(h.sent.length,0);
 });
 
 test('map replay independently expires geometry within thirty minutes',()=>{
@@ -47,3 +55,4 @@ test('seasonal sample segments have separate model colors and expire with provid
  h.sent.length=0;h.setTime(30*60*1000);h.map.replay();
  assert.ok(h.sent.some(m=>m.id==='walk-assessment'&&!m.visible&&m.features.length===0));
 });
+

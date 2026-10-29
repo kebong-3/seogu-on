@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {careDirectoryHtml,careDirectoryRows,safeReturnGuide,livingFacilityRows,livingFacilityCard,livingRouteDestination,livingGuideHtml,LIVING_CARE_GROUPS} from '../src/city/living-guide.js';
+import {careDirectoryHtml,careDirectoryRows,safeReturnGuide,safeReturnSources,livingFacilityRows,livingFacilityCard,livingRouteDestination,livingGuideHtml,LIVING_CARE_GROUPS} from '../src/city/living-guide.js';
 import {installDecisionTwin} from '../src/city/decision-twin.js';
 import {runRegisteredAction} from '../src/city/actions.js';
 import {loadWalkCandidates} from '../server/walk-candidates.js';
@@ -22,10 +22,43 @@ test('unlocated directory follows name/address and dataset filters without assig
  const html=careDirectoryHtml(data,{query:'길 2',datasetId:'parenting',scopeIsAll:false});assert.match(html,/센터B/);assert.doesNotMatch(html,/센터A|지도에서 보기/);assert.match(html,/서구 전체/);
  assert.equal(careDirectoryRows(data,{datasetId:'childcare'}).length,0);
 });
-test('official return-home guide exposes the actual source and requests geometry instead of creating a line',async()=>{
- const ref=await read('/data/walk/seogu/safe-return-reference.json'),html=safeReturnGuide(ref);
- assert.equal(ref.routes.length,6);assert.equal(ref.geometryAvailable,false);assert.match(html,/\.show/);assert.match(html,/GeoJSON\/SHP/);assert.match(html,/광주서부경찰서/);
+test('return-home guide prioritizes route actions and keeps official source and image-interpretation scope at the bottom',async()=>{
+ const ref=await read('/data/walk/seogu/safe-return-reference.json'),html=safeReturnGuide(ref),sources=safeReturnSources(ref);
+ assert.equal(ref.routes.length,6);assert.equal(ref.geometryAvailable,false);
+ assert.match(html,/안심귀가 길찾기/);assert.match(html,/공식지도 판독 · 위치오차 가능/);
+ assert.doesNotMatch(html,/href=|GeoJSON|좌표를 확보하지 못해/);
+ assert.match(sources,/\.show/);assert.match(sources,/측량좌표가 아닙니다/);assert.match(sources,/광주서부경찰서/);
+ assert.match(sources,new RegExp(ref.sourceUrl.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replaceAll('&','&amp;')));
+ for(const route of ref.routes)assert.match(html,new RegExp(`data-action="decision-safe-return-map" data-id="${route.id}"[^>]* disabled`));
  assert.doesNotMatch(safeReturnGuide({routes:[{name:'<script>alert(1)</script>'}]}),/<script>/);
+});
+
+test('only a matched finite nondegenerate line enables a return-home map and route action',()=>{
+ const ref={routes:[{id:'route-a',name:'구간 A'},{id:'route-b',name:'구간 B'}]},feature=(routeId,geometry)=>({type:'Feature',properties:{routeId},geometry});
+ const geo={type:'FeatureCollection',features:[feature('route-a',{type:'LineString',coordinates:[[126.85,35.15],[126.851,35.151]]}),feature('different-id',{type:'LineString',coordinates:[[126.85,35.15],[126.86,35.16]]})]};
+ const html=safeReturnGuide(ref,geo,{selectedId:'route-a'});
+ assert.match(html,/class="living-safe-return-card is-selected"/);
+ assert.match(html,/data-action="decision-safe-return-map" data-id="route-a" aria-label="구간 A 판독 구간 지도 보기">/);
+ assert.match(html,/data-safe-return-id="route-a" aria-label="구간 A 주변 안심귀가 길찾기">/);
+ assert.match(html,/data-safe-return-id="route-b"[^>]* disabled/);
+ for(const geometry of [null,{type:'Point',coordinates:[126.85,35.15]},{type:'LineString',coordinates:[[126.85,35.15]]},{type:'LineString',coordinates:[[126.85,35.15],[126.85,35.15]]},{type:'LineString',coordinates:[[126.85,35.15],[NaN,35.16]]},{type:'MultiLineString',coordinates:[]}]){
+  const invalid=safeReturnGuide(ref,{type:'FeatureCollection',features:[feature('route-a',geometry)]});
+  assert.match(invalid,/data-safe-return-id="route-a"[^>]* disabled/);
+ }
+});
+
+test('safety content begins with return-home planning while detailed sources follow all other tools',()=>{
+ const reference={sourceUrl:'https://example.gov/source',routes:[{id:'route-a',name:'구간 A',area:'공공도로 주변'}]};
+ const html=livingGuideHtml({topic:'safety',topics:{care:{label:'돌봄·육아'},safety:{label:'여성안심·생활안전'}},reference});
+ assert.ok(html.indexOf('data-topic="safety"')<html.indexOf('data-topic="care"'));
+ assert.ok(html.indexOf('living-safe-return"')<html.indexOf('id="living-search"'));
+ assert.ok(html.indexOf('living-safe-return"')<html.indexOf('living-map-results'));
+ assert.ok(html.indexOf('living-safe-return-sources')>html.indexOf('담당자용 · 점검·보완안 검토'));
+ assert.match(html,/CCTV 위치/);assert.match(html,/보안등 위치/);assert.match(html,/도움 요청 지점/);assert.match(html,/안전등급을 매기거나 현재 안전을 보장하지 않아요/);
+ const care=livingGuideHtml({topic:'care',regionId:'seogu',topics:{care:{label:'돌봄·육아'},safety:{label:'여성안심·생활안전'}},reference});
+ assert.match(care,/living-safe-return-shortcut/);assert.match(care,/어떤 시설을 찾으세요/);
+ assert.doesNotMatch(care,/living-safe-return-grid/);
+ assert.doesNotMatch(livingGuideHtml({topic:'care',regionId:'suncheon'}),/living-safe-return-shortcut/);
 });
 
 const rectangle=(west,east)=>({type:'Polygon',coordinates:[[[west,35],[east,35],[east,36],[west,36],[west,35]]]});
@@ -97,7 +130,7 @@ test('empty and unconnected states distinguish missing records from absent facil
 test('resident output escapes source material, refuses credential and script URLs, and keeps no fake verification date',()=>{
  const record={id:'unsafe',name:'<img src=x onerror=alert(1)>',address:'<script>bad</script>',category:'돌봄',sourceName:'공식',sourceUrl:'https://user:password@example.org',coordinates:null};
  const html=careDirectoryHtml({entries:[record]});assert.doesNotMatch(html,/<img|<script|href="https:\/\/user:password|2026-10-27/);assert.match(html,/자료 기준 미제공/);
- const guide=safeReturnGuide({routes:[{name:'길'}],sourceUrl:'javascript:alert(1)',attachmentUrl:'https://secret:password@example.org/map.show'});
+ const guide=safeReturnGuide({routes:[{name:'길'}],sourceUrl:'javascript:alert(1)',attachmentUrl:'https://secret:password@example.org/map.show'})+safeReturnSources({routes:[{name:'길',sourceUrl:'javascript:bad'}],sourceUrl:'javascript:alert(1)',attachmentUrl:'https://secret:password@example.org/map.show'});
  assert.doesNotMatch(guide,/href="(?:javascript:|https:\/\/secret:password)/);
 });
 
@@ -146,3 +179,4 @@ test('living controller connects category, verified dong search, scope reset, pa
   assert.ok(env.calls.every(path=>path.startsWith('/data/decision/seogu/')));
  }finally{env.cleanup();}
 });
+

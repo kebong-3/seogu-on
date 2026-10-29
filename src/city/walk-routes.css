@@ -198,3 +198,20 @@ body[data-large-text="true"] #app .detail-panel .walk-routes .walk-steps li{font
 #app .detail-panel .walk-routes .walk-search-details>summary{min-height:38px;font-size:12px;color:var(--walk-blue);cursor:pointer}
 #app .detail-panel .walk-routes .walk-match-note{background:var(--walk-warning-soft);color:var(--walk-warning);border-radius:5px;padding:3px 5px}
 #app .detail-panel .walk-routes .walk-selected-source{display:block;margin-top:5px;color:var(--walk-muted);font-size:12px}
+
+#app .detail-panel .walk-routes .walk-safety-context{padding:14px;margin:14px 0;border:1px solid var(--walk-line);border-top:4px solid #0752a7;border-radius:16px;background:var(--walk-blue-soft)}
+#app .detail-panel .walk-routes .walk-safety-context h3{margin:3px 0 8px;font-size:19px}
+#app .detail-panel .walk-routes .walk-safety-context>p{font-size:13px;margin:8px 0}
+#app .detail-panel .walk-routes .walk-safety-context>label{display:grid;gap:5px;margin:10px 0;font-size:13px;font-weight:700;color:var(--walk-blue)}
+#app .detail-panel .walk-routes .walk-safety-eyebrow{font-size:12px;font-weight:750;color:var(--walk-blue)}
+#app .detail-panel .walk-routes .walk-safety-key{display:grid;gap:5px;font-size:12px;color:var(--walk-text);margin:8px 0}
+.walk-safety-key i{display:inline-block;width:24px;height:4px;margin:0 6px 3px 0;border-radius:3px}
+.walk-reference-line{background:#f18720}.walk-actual-line{background:#00afc7}
+#app .detail-panel .walk-routes .walk-safety-card-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%;margin:6px 0}
+#app .detail-panel .walk-routes .walk-safety-card-metrics>span{display:grid;gap:4px;align-content:start;min-width:0;padding:9px;background:var(--walk-blue-soft);border:1px solid var(--walk-line);border-radius:10px}
+#app .detail-panel .walk-routes .walk-route-card .walk-safety-card-metrics small,#app .detail-panel .walk-routes .walk-route-card.is-active .walk-safety-card-metrics small{font-size:11px;line-height:1.45;color:var(--walk-muted)}
+#app .detail-panel .walk-routes .walk-safety-card-metrics b{font-size:16px;line-height:1.35;color:var(--walk-blue)}
+#app .detail-panel .walk-routes .walk-safety-detour{padding:5px 7px;background:var(--walk-warning-soft);color:var(--walk-warning);font-size:12px;border-radius:7px}
+#app .detail-panel .walk-routes .walk-safety-missing{color:var(--walk-muted);font-size:12px}
+#app .detail-panel .walk-routes .walk-route-card.is-active .walk-safety-missing{color:#dcecff}
+@media(max-width:390px){#app .detail-panel .walk-routes .walk-safety-context{padding:10px}#app .detail-panel .walk-routes .walk-safety-card-metrics>span{padding:7px}}

@@ -1,11 +1,12 @@
 import {livingGuideHtml,livingFacilityRows,LIVING_CARE_GROUPS} from './living-guide.js';
+import {safeReturnMapFeatures} from './safe-return-display.js';
 import {registerAction} from './actions.js';
 import {decisionPurposeHtml} from './decision-purpose.js';
 import {frameFor} from './camera.js';
 import {inside,locateDong} from './geometry.js';
 import {escapeDecisionHtml as e, decisionWorkflowTitle, decisionSources, decisionAiText, decisionCsv, decisionReportHtml} from './decision-report.js';
 
-const VIEW='decision-twin',LAYER='decision-twin-results';
+const VIEW='decision-twin',LAYER='decision-twin-results',SAFE_RETURN_LAYER='safe-return-reference';
 const LIVING_TOPICS={care:{title:'돌봄·육아 생활지도',label:'돌봄·육아',preset:'childcare',intro:'어린이집·돌봄센터·수유실·도서관·장난감·놀이시설을 종류별로 찾으세요. 여성안심 탭에서 주변 생활안전시설도 볼 수 있습니다.',fallback:['childcare','kindergarten','kindergartens','childcare-centres','care-centres','childcare-official']},safety:{title:'여성안심 생활지도',label:'여성안심·생활안전',preset:'women-safety',intro:'공개된 비상벨·보안등·경찰관서 등의 위치와 자료 기준일을 함께 보고 현장 점검을 준비하세요.',fallback:['emergency-bells','emergency-bell','police','police-official','security-lights','security-light','toilets','toilet','cctv']}};
 const LIVING_COLORS=['#be5382','#1d7f78','#6f5ab4','#b17813','#2f69ac','#963d54'];
 const COLORS={covered:'#687f96',uncovered:'#a74862',new:'#008575',lost:'#bd344b',service:'#bd7a17',proposed:'#205bd4'};
@@ -37,7 +38,7 @@ export function installDecisionTwin(api){
   let regionId='',workflow='coverage',scopeId='all',presetId='',radiusM=null,maxNew=3,proposedSites,excludedServiceIds=[],sites,question='';
   let result=null,manifest=null,ai=null,busy=false,explaining=false,error='',mapMode='scenario',pick=null,requestId=0,controller=null,suppressScope=false,destroyed=false;
   let conditionsOpen=false,selectedId='',showAll=false,interpretQuestion=false,planner=null,planNotice=null;
-  let suspended=false,livingDirectory=null,livingReferences=null;
+  let suspended=false,livingDirectory=null,livingReferences=null,livingSafeReturnGeometry=null,livingSafeReturnId='all';
   let living=false,livingTopic='care',livingData=[],livingQuery='',livingDataset='all',livingLimit=10;
   const host=()=>document.getElementById('detail-body');
   const openNow=()=>api.state.view===VIEW;
@@ -53,6 +54,7 @@ export function installDecisionTwin(api){
   const cleanFilename=value=>String(value).replace(/[\\/:*?"<>|]/g,'_').slice(0,100);
 
   function reset(){
+    clearSafeReturnMap();livingSafeReturnGeometry=null;livingSafeReturnId='all';
     controller?.abort();requestId++;regionId=api.state.regionProfile?.id||'seogu';scopeId=api.state.dong||'all';
     living=false;livingData=[];livingQuery='';livingDataset='all';livingLimit=10;
     presetId='';radiusM=null;maxNew=3;proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;manifest=null;ai=null;error='';question='';pick=null;busy=false;explaining=false;showAll=false;selectedId='';interpretQuestion=false;planner=null;planNotice=null;
@@ -113,7 +115,7 @@ export function installDecisionTwin(api){
     if(requestedScope&&(requestedScope==='all'||list(api.state.dongs).some(f=>f.properties.dongId===requestedScope))&&api.state.dong!==requestedScope){suppressScope=true;try{api.chooseDong?.(requestedScope,true);}finally{suppressScope=false;}}
     if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
     controller?.abort();const sequence=++requestId;controller=new AbortController();const activeController=controller;
-    livingDirectory=null;livingReferences=null;living=true;livingTopic=Object.hasOwn(LIVING_TOPICS,topic)?topic:'care';livingQuery='';livingDataset='all';livingLimit=10;livingData=[];selectedId='';error='';busy=true;scopeId=api.state.dong||'all';pick=null;document.body.classList.remove('decision-picking');renderLiving();
+    clearSafeReturnMap();livingSafeReturnGeometry=null;livingSafeReturnId='all';livingDirectory=null;livingReferences=null;living=true;livingTopic=Object.hasOwn(LIVING_TOPICS,topic)?topic:'care';livingQuery='';livingDataset='all';livingLimit=10;livingData=[];selectedId='';error='';busy=true;scopeId=api.state.dong||'all';pick=null;document.body.classList.remove('decision-picking');renderLiving();
     const timer=setTimeout(()=>activeController.abort(),25000);
     const read=async path=>{const response=await fetch(path,{signal:activeController.signal});if(!response.ok)throw Error(`자료를 불러오지 못했습니다 (${response.status}).`);return response.json();};
     try{
@@ -122,7 +124,11 @@ export function installDecisionTwin(api){
       const body=await read(`/data/decision/${regionId}/manifest.json`);
       if(body.regionId!==regionId||!Array.isArray(body.datasets))throw Error('선택 지역과 자료의 지역이 일치하지 않습니다.');
       manifest=body;const config=LIVING_TOPICS[livingTopic];
-      if(regionId==='seogu'){const path=livingTopic==='care'?'/data/decision/seogu/care-directory.json':'/data/walk/seogu/safe-return-reference.json';try{const extra=await read(path);if(sequence!==requestId)return;if(livingTopic==='care')livingDirectory=extra;else livingReferences=extra;}catch(cause){if(cause.name==='AbortError')throw cause;}}
+      if(regionId==='seogu'){
+        const path=livingTopic==='care'?'/data/decision/seogu/care-directory.json':'/data/walk/seogu/safe-return-reference.json';
+        try{const extra=await read(path);if(sequence!==requestId)return;if(livingTopic==='care')livingDirectory=extra;else livingReferences=extra;}catch(cause){if(cause.name==='AbortError')throw cause;}
+        if(livingTopic==='safety')try{const geometry=await read('/data/walk/seogu/safe-return-image-routes.geojson');if(sequence!==requestId)return;if(geometry.metadata?.regionId==='seogu'&&Array.isArray(geometry.features)){livingSafeReturnGeometry=geometry;if(openNow()){paintSafeReturnMap();renderLiving();}}}catch(cause){if(cause.name==='AbortError')throw cause;}
+      }
       const descriptors=body.datasets.filter(d=>d.topic===livingTopic||Array.isArray(d.topics)&&d.topics.includes(livingTopic)||config.fallback.includes(d.id)).sort((a,b)=>livingTopic==='care'?Number(a.id==='childcare')-Number(b.id==='childcare'):0);
       const loaded=await Promise.all(descriptors.map(async(d,index)=>{
         const item={...d,color:d.color||LIVING_COLORS[index%LIVING_COLORS.length],meta:{},features:[],error:''};
@@ -152,7 +158,22 @@ export function installDecisionTwin(api){
     if(suspended||!living)return;
     const features=livingRows().map(({feature})=>feature);
     api.state.isolate=false;api.state.selected=null;
-    api.state.entries.set(LAYER,{state:'loaded',title:LIVING_TOPICS[livingTopic].title,features,metadata:{regionId,mode:'living',topic:livingTopic}});api.state.enabled.add(LAYER);api.drawData();
+    api.state.entries.set(LAYER,{state:'loaded',title:LIVING_TOPICS[livingTopic].title,features,metadata:{regionId,mode:'living',topic:livingTopic}});api.state.enabled.add(LAYER);api.drawData();paintSafeReturnMap();
+  }
+  function clearSafeReturnMap(){api.send?.({type:'layer',id:SAFE_RETURN_LAYER,features:[],visible:false});}
+  function paintSafeReturnMap(){
+    const features=!suspended&&living&&livingTopic==='safety'?safeReturnMapFeatures(livingSafeReturnGeometry,livingSafeReturnId):[];
+    api.send?.({type:'layer',id:SAFE_RETURN_LAYER,features,visible:features.length>0});
+  }
+  async function focusSafeReturn(id='all'){
+    suspended=false;
+    if(!living||livingTopic!=='safety'||!livingSafeReturnGeometry)await openLiving('safety');
+    if(destroyed||suspended||!living||livingTopic!=='safety')return;
+    const features=safeReturnMapFeatures(livingSafeReturnGeometry,id),lines=features.filter(feature=>feature.geometry.type!=='Point');
+    if(!lines.length){api.toast?.('귀갓길 지도 판독자료를 다시 확인해 주세요.');return;}
+    livingSafeReturnId=id;
+    if(scopeId!=='all'){suppressScope=true;try{api.chooseDong?.('all',false);scopeId='all';}finally{suppressScope=false;}}
+    api.pauseMotion?.();paintLivingMap();renderLiving();api.frameGeometry?.({type:'FeatureCollection',features:lines});
   }
   function focusLiving(id){
     const found=livingRows().find(({feature})=>feature.properties.id===id);if(!found)return;
@@ -167,7 +188,7 @@ export function installDecisionTwin(api){
     if(destroyed)return;
     const scroll=host()?.scrollTop||0,config=LIVING_TOPICS[livingTopic];
     api.show('돌봄·육아 · 생활안전지도',livingGuideHtml({
-      topic:livingTopic,topics:LIVING_TOPICS,data:livingData,rows:livingRows(),directory:livingDirectory,reference:livingReferences,
+      topic:livingTopic,topics:LIVING_TOPICS,data:livingData,rows:livingRows(),directory:livingDirectory,reference:livingReferences,safeReturnGeometry:livingSafeReturnGeometry,selectedSafeReturnId:livingSafeReturnId,
       query:livingQuery,datasetId:livingDataset,scopeId,scopeName:scopeId==='all'?regionName()+' 전체':api.state.dongs?.find(f=>f.properties.dongId===scopeId)?.properties.dongName||'선택 동네',
       regionId,regionName:regionName(),dongs:list(api.state.dongs),limit:livingLimit,selectedId,busy,error,hasPreset:presets().some(p=>p.id===config.preset),
     }),VIEW);
@@ -275,7 +296,7 @@ export function installDecisionTwin(api){
     if(innerWidth<=820)api.close();api.toast('선택 구역 안에서 지도 위치를 클릭하세요. 클릭하면 바로 다시 비교합니다.');
   }
   async function open(next='coverage',draft=''){
-    living=false;
+    clearSafeReturnMap();living=false;
     if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
     const changed=workflow!==next;workflow=['coverage','inspection','site'].includes(next)?next:'coverage';
     if(changed){radiusM=workflow==='site'?500:presets().find(p=>p.id===presetId)?.radiusM??null;result=null;ai=null;error='';showAll=false;planner=null;planNotice=null;interpretQuestion=false;question='';proposedSites=undefined;sites=undefined;excludedServiceIds=[];pick=null;selectedId='';}
@@ -283,7 +304,7 @@ export function installDecisionTwin(api){
     scopeId=api.state.dong||'all';render();await calculate();
   }
   async function changePreset(id,nextWorkflow=workflow,reviewSite=null){
-    if(busy)return;living=false;
+    if(busy)return;clearSafeReturnMap();living=false;
     if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
     workflow=nextWorkflow;presetId=String(id||'');radiusM=workflow==='site'?500:presets().find(p=>p.id===presetId)?.radiusM??null;
     proposedSites=undefined;excludedServiceIds=[];sites=reviewSite?[siteInput(reviewSite)]:undefined;question=reviewSite?`${reviewSite.name} 주변의 공개 시설 여건을 비교합니다.`:'';interpretQuestion=false;planner=null;planNotice=null;result=null;ai=null;error='';showAll=false;selectedId='';scopeId=api.state.dong||'all';render();await calculate();
@@ -303,6 +324,7 @@ export function installDecisionTwin(api){
   const offs=[
     registerAction('decision-living-map',button=>openLiving(button?.topic||button?.dataset?.topic||'care',button?.scopeId||button?.dataset?.scopeId||'')),
     registerAction('decision-living-topic',button=>openLiving(button.dataset.topic)),
+    registerAction('decision-safe-return-map',button=>focusSafeReturn(button.dataset.id||'all')),
     registerAction('decision-living-retry',()=>openLiving(livingTopic)),
     registerAction('decision-living-more',()=>{livingLimit+=10;renderLiving();}),
     registerAction('decision-living-kind',button=>changeLivingDataset(button.dataset.dataset)),
@@ -339,9 +361,10 @@ export function installDecisionTwin(api){
   return {
     open,
     homeSummary(){return result?{title:currentPreset().title||decisionWorkflowTitle(workflow),covered:result.baseline?.covered,newlyCovered:result.scenario?.newlyCovered,scope:scopeName()}:null;},
-    suspend(){suspended=true;controller?.abort();requestId++;busy=false;explaining=false;pick=null;document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);},
+    suspend(){suspended=true;clearSafeReturnMap();controller?.abort();requestId++;busy=false;explaining=false;pick=null;document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);},
     scopeChanged(){if(suspended||suppressScope||!regionId)return;if(living){scopeId=api.state.dong||'all';livingLimit=10;paintLivingMap();if(openNow())renderLiving();return;}cancelPick();scopeId=api.state.dong||'all';proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;ai=null;if(openNow())calculate();else{controller?.abort();requestId++;busy=false;api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);api.drawData();}},
     onEvent(message){if(suspended)return false;
+      if(message.type==='select'&&message.layer===SAFE_RETURN_LAYER&&living){const feature=safeReturnMapFeatures(livingSafeReturnGeometry,livingSafeReturnId).find(item=>item.properties.id===String(message.id));if(feature)focusSafeReturn(feature.properties.safeReturnId);return true;}
       if(message.type==='point'&&message.tool==='decision-site'){
         if(!pick)return true;const point=Array.isArray(message.point)?message.point.slice(0,2):null;
         if(!point||point.length!==2||!point.every(Number.isFinite)||!api.state.scope||!inside(point,api.state.scope)){api.toast('선택 구역 안의 위치를 정해 주세요.');return true;}
@@ -361,6 +384,7 @@ export function installDecisionTwin(api){
       }
       if(message.type==='ready'&&living)paintLivingMap();else if(message.type==='ready'&&result)paintMap();return false;
     },
-    destroy(){destroyed=true;controller?.abort();requestId++;offs.forEach(off=>off());host()?.removeEventListener('submit',handleSubmit);host()?.removeEventListener('change',change);host()?.removeEventListener('toggle',toggle,true);document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);},
+    destroy(){destroyed=true;clearSafeReturnMap();controller?.abort();requestId++;offs.forEach(off=>off());host()?.removeEventListener('submit',handleSubmit);host()?.removeEventListener('change',change);host()?.removeEventListener('toggle',toggle,true);document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);},
   };
 }
+
