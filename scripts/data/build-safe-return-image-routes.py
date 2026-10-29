@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Rebuild image-interpreted police reference linework; no API calls or dependencies.
+"""Rebuild image-interpreted police reference linework; no API calls.
 
 The controls JSON retains 960x720 slide pixels, matched positions and source IDs.
 Affine calibration residuals measure agreement of those controls, NOT official
 survey accuracy. Native OSM road waypoints are kept separate from image geometry.
 Usage: python3 scripts/data/build-safe-return-image-routes.py [controls.json] [output.geojson]
+Requires the project's Node runtime (NODE_BINARY may override node on PATH).
 """
-import json, math, sys
+import json, math, os, subprocess, sys
 from pathlib import Path
 
 R=6378137.0
@@ -66,5 +67,9 @@ for route in data['routes']:
         features.append({'type':'Feature','id':fid,'geometry':{'type':'Point','coordinates':unproject(transform(item['pixel']))},'properties':{**source,'id':fid,'routeId':route['id'],'name':route['name']+' · '+names[item['facilityType']],'featureType':'safe-return-reference-symbol','facilityType':item['facilityType'],'regionId':'seogu','geometryStatus':'image-interpreted','sourcePosition':'image-interpreted','coordinateAuthority':'image-georeferenced-not-official','sourceSlide':route['slide'],'uncertaintyMeters':uncertainty,'routeEligible':False,'operatingStatus':'not-verified','note':'경찰 지도에 그려진 기호의 판독 위치입니다. 실제 설치 좌표·현재 작동·시야·신고 연결·현재 조도를 확인한 자료가 아닙니다. 안내 경유점으로 자동 사용하지 않습니다.'}})
     report.append({'name':route['name'],'controls':len(errors),'rmseMeters':round(rmse,1),'maxResidualMeters':round(max(errors),1),'uncertaintyMeters':uncertainty,'segments':len(route['pixelLines']),'symbols':len(icons),'waypoints':len(route['routingWaypoints'])})
 output={'type':'FeatureCollection','metadata':{**source,'alignmentSource':ALIGNMENT_SOURCE,'regionId':'seogu','geometryStatus':'image-interpreted','coordinateAuthority':'image-georeferenced-not-official','routeCount':len(data['routes']),'symbolCoverage':'편집 가능한 원본 슬라이드 기호를 판독한 부분 목록입니다. 배경 JPEG에 합쳐진 기호까지 모두 수집한 전체 시설 수가 아닙니다.','calibrationReport':report,'rebuildCommand':'python3 scripts/data/build-safe-return-image-routes.py','notes':['원본 슬라이드의 편집 가능한 제목 금호1·금호2·금호3·화정1·화정2·농성1을 기준으로 분류했습니다. 배경 이미지에 남은 이전 제목과 구분합니다.','금호3과 농성1의 벡터 빨간 선은 원본의 flipH·flipV·회전을 적용하여 복원했습니다.','사진 판독 구간은 공식 좌표·통행 가능·범죄 위험·안전 보장 판정이 아닙니다.','시설 기호 수·근접거리로 안전 점수를 만들지 않습니다.','OSM 도로 교차점은 도보 경유 후보의 지도상 근거이며 현재 현장 통행·보도·공사 여부는 별도 확인이 필요합니다.']},'features':features}
+# Use the same boundary rule as ingest/CI so regeneration cannot drop dong fields.
+# Ambiguous/outside points remain unassigned; image geometry and uncertainty are unchanged.
+assigned=subprocess.run([os.environ.get('NODE_BINARY','node'),str(ROOT/'scripts/data/assign-dongs.mjs'),'--collection-stdin'],input=json.dumps(output,ensure_ascii=False),capture_output=True,text=True,check=True)
+output=json.loads(assigned.stdout)
 OUTPUT.parent.mkdir(parents=True,exist_ok=True);OUTPUT.write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2));print('wrote',OUTPUT)

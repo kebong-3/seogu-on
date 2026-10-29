@@ -29,17 +29,27 @@ def ck(n,ok,detail=None):
  print('CHECK',n,ok,flush=True)
  results.append({'name':n,'passed':bool(ok),'detail':detail})
  if not ok:raise AssertionError(n+' '+str(detail or ''))
+def open_home(p):
+ # Follow the actual visible home route. The former #show-panels is hidden on mobile.
+ if p.locator('#district-panel').is_visible():return
+ home=p.locator('.resident-nav [data-resident-service="home"]:visible, .resident-context:visible, #show-panels:visible').first
+ home.click();p.wait_for_selector('#district-panel',state='visible')
+
 def click(p,s):
- # v0.6 moved graphics into appearance and 2D climate into the native-sun panel.
+ # Nested detail controls must be opened by a user-visible route, never a DOM click.
+ if s=='#show-panels':
+  open_home(p);return
  if s=='[data-action=graphics]' and not p.locator(s).count():click(p,'[data-action=appearance]')
  if s=='[data-action=climate]' and not p.locator(s).count():click(p,'[data-action=native-sun]')
- # Tools now live in a collapsed menu; use the visible route rather than a hidden duplicate.
- if not p.locator(s+':visible').count() and p.locator('#home-more-list').locator(s).count():
-  if not p.locator('#district-panel').is_visible():
-   if p.locator('#detail-panel').is_visible():p.locator('[data-action=close-detail]').click()
-   p.locator('#show-panels').click()
-  if p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
+ if not p.locator(s+':visible').count() and p.locator('#district-panel').locator(s).count():
+  open_home(p)
+  if p.locator('#sidebar-regions').locator(s).count() and not p.locator('#sidebar-regions').is_visible():p.locator('#tab-regions').click()
+  for group in ['#administrative-services','#resident-services','.resident-settings']:
+   parent=p.locator(group)
+   if parent.locator(s).count() and parent.get_attribute('open') is None:parent.locator(':scope > summary').click()
+  if p.locator('#home-more-list').locator(s).count() and p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
  p.locator(s+':visible').first.click();p.wait_for_timeout(100)
+
 def count(p,t):return int(re.search(r'\d+',p.locator('#'+t+'-count').inner_text()).group())
 def infra(p,id):click(p,'[data-action=infra]');click(p,f'[data-action=infra-select][data-id="{id}"]')
 def boot(p):

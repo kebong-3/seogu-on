@@ -1126,11 +1126,11 @@
     "boundary": "public/data/admin-dongs.geojson (기준일 2026-07-01) 18개 행정동 합집합",
     "meaning": "자동 점검 결과입니다. 찾아낸 항목을 고치거나 지우지 않았고, 현장 확인을 뜻하지 않습니다. 면 도형이 경계에 걸치는 것(partlyOutsideDistrict)은 오류가 아닐 수 있습니다.",
     "totals": {
-      "files": 68,
-      "features": 11940,
+      "files": 69,
+      "features": 12014,
       "coincidentPointGroups": 650,
       "duplicateIds": 0,
-      "sameNameWithin30m": 231,
+      "sameNameWithin30m": 232,
       "outsideDistrict": 0,
       "partlyOutsideDistrict": 0,
       "suspiciousCoordinates": 0,
@@ -5471,6 +5471,61 @@
         "sameNameWithin30m": {
           "count": 0,
           "examples": []
+        },
+        "outsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "partlyOutsideDistrict": {
+          "count": 0,
+          "examples": []
+        },
+        "suspiciousCoordinates": {
+          "count": 0,
+          "examples": []
+        },
+        "missingNames": {
+          "count": 0,
+          "examples": []
+        },
+        "missingSourceName": {
+          "count": 0,
+          "examples": []
+        },
+        "pointsWithoutDong": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "public/data/walk/seogu/safe-return-image-routes.geojson": {
+        "state": "has-data",
+        "features": 74,
+        "points": 68,
+        "sourceDate": "2026-08",
+        "sourceDateRange": null,
+        "collectedAt": null,
+        "featuresWithoutSourceDate": 0,
+        "duplicateIds": {
+          "count": 0,
+          "examples": []
+        },
+        "coincidentPoints": {
+          "groups": 0,
+          "groupsWithSameName": 0,
+          "examples": []
+        },
+        "sameNameWithin30m": {
+          "count": 1,
+          "examples": [
+            {
+              "name": "금호3 · CCTV·비상벨 표기",
+              "ids": [
+                "seogu-safe-return-geumho-3-symbol-18",
+                "seogu-safe-return-geumho-3-symbol-19"
+              ],
+              "meters": 27
+            }
+          ]
         },
         "outsideDistrict": {
           "count": 0,

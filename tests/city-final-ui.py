@@ -25,8 +25,27 @@ results=[]
 def ck(name,ok,detail=None):
  results.append({'name':name,'passed':bool(ok),'detail':detail});print(name,bool(ok),flush=True)
  if not ok:raise AssertionError(name+' '+str(detail))
-def click(p,selector):
- p.locator(selector).first.evaluate('(e)=>e.click()');p.wait_for_timeout(80)
+def open_home(p):
+ # Follow the actual visible home route. The former #show-panels is hidden on mobile.
+ if p.locator('#district-panel').is_visible():return
+ home=p.locator('.resident-nav [data-resident-service="home"]:visible, .resident-context:visible, #show-panels:visible').first
+ home.click();p.wait_for_selector('#district-panel',state='visible')
+
+def click(p,s):
+ # Nested detail controls must be opened by a user-visible route, never a DOM click.
+ if s=='#show-panels':
+  open_home(p);return
+ if s=='[data-action=graphics]' and not p.locator(s).count():click(p,'[data-action=appearance]')
+ if s=='[data-action=climate]' and not p.locator(s).count():click(p,'[data-action=native-sun]')
+ if not p.locator(s+':visible').count() and p.locator('#district-panel').locator(s).count():
+  open_home(p)
+  if p.locator('#sidebar-regions').locator(s).count() and not p.locator('#sidebar-regions').is_visible():p.locator('#tab-regions').click()
+  for group in ['#administrative-services','#resident-services','.resident-settings']:
+   parent=p.locator(group)
+   if parent.locator(s).count() and parent.get_attribute('open') is None:parent.locator(':scope > summary').click()
+  if p.locator('#home-more-list').locator(s).count() and p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
+ p.locator(s+':visible').first.click();p.wait_for_timeout(100)
+
 def boot(p):
  p.set_default_timeout(7000);p.emulate_media(reduced_motion='reduce');p.set_content(HTML);p.evaluate(LOADER,{'sources':SOURCES,'fixtures':FIXTURES});p.wait_for_selector('#start-card:not([hidden])');click(p,'#start-card [data-engine=boundary]');p.wait_for_selector('.boundary-canvas')
 def input_(p,id,value):
@@ -47,12 +66,13 @@ with sync_playwright() as pw:
   ck('Real Canvas clicks collect route points','2개 지점' in p.locator('#editor-count').inner_text(),p.locator('#editor-count').inner_text())
   click(p,'[data-action=editor-undo]');ck('Undo removes only last vertex','1개 지점' in p.locator('#editor-count').inner_text());p.mouse.click(coords[-1]['x'],coords[-1]['y']);p.wait_for_timeout(100)
   click(p,'[data-action=editor-save]');ck('Registered geometry moves to record collection','기록 보관함' in p.locator('#detail-title').inner_text());ck('No default times silently claim work complete','1항목' in p.locator('#detail-body').inner_text());ck('Line count is visible for operational route','1개' in p.locator('#line-count').inner_text())
-  click(p,'[data-action=records-save]');ck('Explicit save uses versioned payload',p.evaluate('window.__fixtureStorage.size')==1)
+  other_storage=p.evaluate("Object.fromEntries([...window.__fixtureStorage].filter(([key])=>key!=='seo-on.public-operations.v1'))")
+  click(p,'[data-action=records-save]');saved_record=p.evaluate("window.__fixtureStorage.get('seo-on.public-operations.v1')");payload=json.loads(saved_record);ck('Explicit save uses versioned payload',payload.get('format')=='seo-on-public-operations' and payload.get('schema')==1 and len(payload.get('layers',[]))==1)
   click(p,'[data-action=records-load]');ck('Restore succeeds with state validation','다시 검사' in p.locator('#toast').inner_text())
   with p.expect_download() as dl:click(p,'[data-action=records-layer]')
   data=json.loads(Path(dl.value.path()).read_text());ck('Export is actual GeoJSON not UI state only',data['features'][0]['geometry']['type'] in ['LineString','MultiLineString']);ck('Missing timestamps remain unknown',data['features'][0]['properties']['status']=='unknown')
-  click(p,'[data-action=records-delete]');ck('Stored records require confirmation before delete',p.evaluate('window.__fixtureStorage.size')==1)
-  p.locator('#records-delete-confirm').check();click(p,'[data-action=records-delete]');ck('Explicit delete clears storage only',p.evaluate('window.__fixtureStorage.size')==0)
+  click(p,'[data-action=records-delete]');ck('Stored records require confirmation before delete',p.evaluate("window.__fixtureStorage.get('seo-on.public-operations.v1')")==saved_record)
+  p.locator('#records-delete-confirm').check();click(p,'[data-action=records-delete]');ck('Explicit delete clears storage only',not p.evaluate("window.__fixtureStorage.has('seo-on.public-operations.v1')") and p.evaluate("Object.fromEntries([...window.__fixtureStorage].filter(([key])=>key!=='seo-on.public-operations.v1'))")==other_storage)
   p.screenshot(path=str(OUT/'record-workflow-NOT-3D.png'))
   click(p,'[data-action=infra]');click(p,'[data-action=infra-select][data-id=school]');ck('After editing, solo school removes route layer',not p.locator('[data-layer=infra-snow-routes]').is_checked());ck('School source unchanged','52' in p.locator('#point-count').inner_text());p.screenshot(path=str(OUT/'school-and-source-NOT-3D.png'))
   ck('Desktop application has no JS exceptions',not errors,errors)

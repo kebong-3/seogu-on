@@ -190,6 +190,7 @@ export function pickMap(results) {
 
 function buildResponse(mode, outcome, extra = {}) {
   const brief = briefFromResults(outcome.results);
+  const nearbyComparisons = outcome.results.filter(item => item.tool === 'compare_nearby' && item.result?.ok).map(item => item.result.data);
   return {
     ok: true,
     mode,
@@ -198,6 +199,7 @@ function buildResponse(mode, outcome, extra = {}) {
     map: pickMap(outcome.results),
     ...mergeEvidence(outcome.results),
     ...(brief ? {brief} : {}),
+    ...(nearbyComparisons.length ? {nearbyComparisons} : {}),
     ...extra,
   };
 }
@@ -230,6 +232,8 @@ export async function answerQuestion(input, ctx = {}) {
   // precompute=false는 내부 테스트에서 기존 자유질문 도구선택 경로를 따로 검증할 때만 사용한다.
   const preparedOutcome = ctx.precompute === false ? null : await prepareOutcome(input, {...ctx, env, now});
   const preparedCtx = {...ctx, env, preparedOutcome};
+  // 해석하지 못한 공간 조건을 모델이 다른 범위의 도구로 우회하지 않도록 보존한다.
+  if (preparedOutcome?.intent === 'unsupported_conditions') return rulesResponse(input, preparedCtx, 'UNSUPPORTED_QUERY_CONDITIONS');
   const config=modelConfig(env);
   if(config.error)return rulesResponse(input,preparedCtx,'LLM_BAD_REQUEST');
   const {key,model,provider,baseUrl,reasoningEffort}=config;

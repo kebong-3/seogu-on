@@ -49,6 +49,7 @@ test('실자료: 모든 도구가 약속한 모양으로 답한다', async () =>
     ['find_facilities', { category: first, place: dong, radiusM: 800 }],
     ['nearest', { category: second, place: dong, n: 5 }],
     ['coverage_gap', { target: first, service: second, radiusM: 150, limit: 200 }],
+    ['compare_nearby', { target: '학교', service: '그늘막', dong: '풍암동', radiusM: 200 }],
     ['compare_dongs', { categories: [first, second], perKm2: true }],
     ['flood_history', {}],
     ['flood_history', { dong }],

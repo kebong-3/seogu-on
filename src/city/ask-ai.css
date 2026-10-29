@@ -149,3 +149,11 @@
 
 .detail-panel .ask-panel :is(p,li,dt,dd,small,label,h4){font-size:14px;line-height:1.65}.detail-panel .ask-panel .ask-text{font-size:15px}
 .detail-panel .ask-panel .ask-row input{font-size:16px;min-height:44px}
+
+.ask-nearby{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-soft)}
+.ask-nearby-scroll{overflow-x:auto;margin-top:10px;max-height:360px;border:1px solid var(--line);border-radius:8px}
+.ask-nearby table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.55;background:var(--surface)}
+.ask-nearby caption{text-align:left;padding:9px;color:var(--muted);font-size:13px}
+.ask-nearby :is(th,td){padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ask-nearby thead th{background:var(--control);font-weight:750}.ask-nearby th[scope="row"]{font-weight:600;overflow-wrap:anywhere}
+.ask-nearby td{white-space:nowrap}.ask-nearby-scroll:focus-visible{outline:3px solid var(--text);outline-offset:3px}

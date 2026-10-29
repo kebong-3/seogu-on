@@ -452,6 +452,50 @@ function coverageGap(store, args) {
   };
 }
 
+/** 대상마다 같은 반경을 적용한다. 동 경계는 대상만 좁히며 이웃 동의 서비스도 포함한다. */
+function compareNearby(store, args) {
+  const target = resolveCategory(store, args.target, 'target');
+  const service = resolveCategory(store, args.service, 'service');
+  const radiusM = numberArg(args, 'radiusM', { min: 10, max: 3000, def: 150 });
+  const limit = numberArg(args, 'limit', { min: 1, max: 200, def: 50, integer: true });
+  const dong = optionalDong(store, args);
+  const scope = `${dong?.name || '서구 전체'} · '${target.title}'별 '${service.title}' · 직선 반경 ${fmt(radiusM)}m`;
+  const conditions = {
+    target: { category: target.id, title: target.title },
+    service: { category: service.id, title: service.title },
+    radiusM, dongName: dong?.name ?? null,
+  };
+  if (!target.connected || !service.connected) {
+    const missing = !target.connected ? target : service;
+    const result = notConnectedResult(store, missing, { ...conditions, role: missing === target ? 'target' : 'service' });
+    return { ...result, summary: `${scope}: ${result.summary}` };
+  }
+  const targets = dong ? target.sites.filter(site => site.dongId === dong.id) : target.sites;
+  const rows = targets.map(site => {
+    // 같은 자료를 비교할 경우 대상 자신을 주변 서비스로 세지 않는다.
+    const distances = byDistance(service.sites.filter(other => target !== service || other.id !== site.id), site);
+    const near = distances.filter(item => item.distanceM <= radiusM);
+    return { ...siteRow(site), nearbyCount: near.length,
+      nearestServiceM: distances.length ? Math.round(distances[0].distanceM) : null };
+  }).sort((a, b) => a.nearbyCount - b.nearbyCount || a.name.localeCompare(b.name, 'ko'));
+  const covered = rows.filter(row => row.nearbyCount > 0).length;
+  const shown = rows.slice(0, limit);
+  return {
+    ok: true,
+    summary: `${scope} 조건으로 수록 대상 ${fmt(rows.length)}곳을 비교했습니다. 반경 안에 서비스가 수록된 대상은 ${fmt(covered)}곳, 수록되지 않은 대상은 ${fmt(rows.length - covered)}곳입니다.`
+      + (rows.length > shown.length ? ` 비교표는 ${fmt(shown.length)}곳만 표시합니다.` : '')
+      + ' 서비스가 적게 수록된 대상부터 표시하며 실제 시설 부재나 설치 우선순위를 뜻하지 않습니다.',
+    data: { ...conditions, targets: rows.length, covered, uncovered: rows.length - covered,
+      returned: shown.length, truncated: rows.length > shown.length, rows: shown },
+    map: mapOf(dong ? { dongId: dong.id } : undefined, shown),
+    sources: sourcesOf(store, [target, service], { withDongs: true }),
+    caveats: [datasetCaveat(target), datasetCaveat(service), CAVEAT_PARTIAL, CAVEAT_STRAIGHT, CAVEAT_DONG,
+      '대상 시설만 선택 동으로 좁혔으며, 서비스 시설은 이웃 동에 있어도 반경 안이면 셉니다.',
+      '최근접 거리는 반경 밖 서비스까지 포함한 수록 자료의 최소 직선거리입니다. 수록 지점이 없으면 미확인으로 표시합니다.',
+      '비교 반경은 이번 질문의 가정이며 법정 설치기준이 아닙니다. 같은 서비스가 여러 대상 반경에 포함될 수 있으므로 행별 건수를 합해 전체 시설 수로 쓰지 마세요.'],
+  };
+}
+
 function compareDongs(store, args) {
   if (!Array.isArray(args.categories) || !args.categories.length || args.categories.length > 8) {
     throw new SpatialError('INVALID_ARGUMENT', 'categories 는 1~8개의 분류 이름 배열이어야 합니다.');
@@ -491,7 +535,9 @@ function compareDongs(store, args) {
   const unit = perKm2 ? '곳/㎢' : '곳';
   return {
     ok: true,
-    summary: `${fmt(rows.length)}개 동의 ${connected.map(d => `'${d.title}'`).join(', ')} 수록 지점 비교: '${sortBy.title}' 기준 ${top.dongName} ${fmt(key(top))}${unit}${unit.endsWith('곳') ? '으로' : '로'} 가장 많고 ${bottom.dongName} ${fmt(key(bottom))}${unit}로 가장 적습니다(부분 자료 기준).`
+    summary: (rows.length === 1
+      ? `${top.dongName}의 수록 지점 비교: ${connected.map(d => `'${d.title}' ${fmt(perKm2 ? top.perKm2[d.id] : top.counts[d.id])}${unit}`).join(', ')}입니다(부분 자료 기준).`
+      : `${fmt(rows.length)}개 동의 ${connected.map(d => `'${d.title}'`).join(', ')} 수록 지점 비교: '${sortBy.title}' 기준 ${top.dongName} ${fmt(key(top))}${unit}${unit.endsWith('곳') ? '으로' : '로'} 가장 많고 ${bottom.dongName} ${fmt(key(bottom))}${unit}로 가장 적습니다(부분 자료 기준).`)
       + (missing.length ? ` ${missing.map(d => `'${d.title}'`).join(', ')}은(는) 미연결이라 값이 없습니다.` : ''),
     data: {
       categories: datasets.map(d => ({ category: d.id, title: d.title, connected: d.connected, state: d.state })),
@@ -889,6 +935,20 @@ const REGISTRY = [
     },
     ['target', 'service'],
     coverageGap,
+  ),
+  tool(
+    'compare_nearby',
+    '시설별 주변 서비스 비교',
+    '선택 동의 대상 시설마다 같은 직선 반경 안의 서비스 수록 건수와 최근접 거리를 비교합니다. 학교 주변 그늘막 200m 비교는 target=학교, service=그늘막, radiusM=200입니다. 대상은 dong으로 좁히되 서비스는 이웃 동도 포함합니다. 시설 수준·안전·설치 우선순위 판정이 아닙니다.',
+    {
+      target: { type: 'string', description: `비교의 기준 대상 시설. ${CATEGORY_HELP}` },
+      service: { type: 'string', description: `대상 주변에서 셀 서비스 시설. ${CATEGORY_HELP}` },
+      dong: { type: 'string', description: `대상을 이 동으로 좁힘. ${DONG_HELP}` },
+      radiusM: { type: 'number', description: '각 대상 주변의 직선 반경(m), 기본 150', minimum: 10, maximum: 3000, default: 150 },
+      limit: { type: 'integer', description: '비교표의 최대 대상 수. 집계는 전체 대상 기준.', minimum: 1, maximum: 200, default: 50 },
+    },
+    ['target', 'service'],
+    compareNearby,
   ),
   tool(
     'compare_dongs',

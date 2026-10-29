@@ -197,6 +197,9 @@ function detailLine(tool, data) {
   if (tool === 'nearest' && data.rows?.length) {
     return `가까운 순: ${names(data.rows, r => `${r.name}(약 ${fmt(r.distanceM)}m)`)}.`;
   }
+  if (tool === 'compare_nearby' && data.rows?.length) {
+    return `대상별 반경 안 수록 건수${data.rows.length > 5 ? ' 일부' : ''}: ${names(data.rows, r => `${r.name} ${fmt(r.nearbyCount)}곳`)}. 대상별 전체 결과는 비교표에서 확인하세요.`;
+  }
   if (tool === 'find_facilities' && data.rows?.length) {
     return `수록 지점${data.rows.length > 5 ? ' 일부' : ''}: ${names(data.rows, r => (r.distanceM === undefined ? r.name : `${r.name}(약 ${fmt(r.distanceM)}m)`))}.`;
   }
@@ -271,9 +274,28 @@ async function runGap(run, q) {
 async function runCompare(run, q) {
   const args = { categories: q.categories.slice(0, 8).map(c => c.dataset.id) };
   if (RE.density.test(q.compact)) args.perKm2 = true;
-  if (q.namedDongs.length >= 2) args.dongs = q.namedDongs.map(d => d.name);
+  // 단일 동을 명시했을 때도 전체 동 집계로 바꾸지 않는다.
+  if (q.namedDongs.length) args.dongs = q.namedDongs.map(d => d.name);
   await run.call('compare_dongs', args);
   return true;
+}
+
+/** '학교 주변 그늘막', '학교별 그늘막'에서 주변의 기준과 세는 서비스를 구분한다. */
+function nearbyRoles(q) {
+  if (q.categories.length !== 2) return null;
+  const target = q.categories.find(c => /^(?:의|에서)?(?:주변|근처|인근|부근|별|마다|반경|\d+(?:\.\d+)?(?:km|킬로미터|m|미터))/.test(q.compact.slice(c.end)));
+  return target ? { target, service: q.categories.find(c => c !== target) } : null;
+}
+
+async function runNearbyComparison(run, q, roles) {
+  const radiusM = q.radiusM ?? 150;
+  await perDong(run, 'compare_nearby', { target: roles.target.dataset.id, service: roles.service.dataset.id, radiusM }, q.dongs);
+  if (!q.radiusM) run.notes.push('반경을 말하지 않아 각 대상 주변 직선 150m를 가정했습니다. 다른 반경을 적어 다시 비교할 수 있습니다.');
+}
+
+function unsupportedConditions(run, q) {
+  run.notes.push(`요청한 조건(${q.text})을 함께 적용하는 방법을 확인하지 못했습니다. 동·반경 조건을 버리고 전체 동 집계로 바꾸지 않았습니다. '풍암동 학교 주변 그늘막 반경 200m 비교'처럼 기준 대상과 주변 시설, 하나의 반경을 적어 주세요.`);
+  return 'unsupported_conditions';
 }
 
 async function runFlood(run, q) {
@@ -428,7 +450,17 @@ async function dispatch(run, q) {
   if (plain && has(RE.where) && await runLocate(run, q)) return 'locate';
   if (q.categories.length) {
     if (has(RE.gap) && await runGap(run, q)) return 'coverage_gap';
-    if (has(RE.compare)) return (await runCompare(run, q)) && 'compare_dongs';
+    if (has(RE.compare) || (has(RE.near) && q.categories.length >= 2 && !has(RE.nearest))) {
+      // 반경이 여러 개이거나 0이면 하나를 임의로 고르지 않는다.
+      const radii = [...q.text.toLowerCase().matchAll(new RegExp(RE.radius.source, 'g'))].map(match => parseRadius(match[0]));
+      if (radii.some(radius => radius === null) || new Set(radii).size > 1) return unsupportedConditions(run, q);
+      const roles = nearbyRoles(q);
+      if (roles) { await runNearbyComparison(run, q, roles); return 'compare_nearby'; }
+      // 명시한 시설 주변의 한 분류 검색도 동별 집계로 바꾸지 않는다.
+      if (q.place && q.categories.length === 1) return (await runFind(run, q)) && 'find_facilities';
+      if (q.radiusM || has(RE.near) || q.place) return unsupportedConditions(run, q);
+      return (await runCompare(run, q)) && 'compare_dongs';
+    }
     if (has(RE.nearest)) return (await runNearest(run, q)) && 'nearest';
     return (await runFind(run, q)) && 'find_facilities';
   }

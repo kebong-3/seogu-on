@@ -41,10 +41,17 @@ MEASURE = '''() => {
   const ribbon = document.querySelector('.live-ribbon');
   return { scrollWidth: document.documentElement.scrollWidth, iw, outside, small,
     ribbon: [ribbon.scrollWidth, ribbon.clientWidth], readings: [...ribbon.querySelectorAll('.live-reading')].map(e => box('#' + (e.querySelector('strong').id))).filter(Boolean).length,
-    dock: box('.bottom-dock'), camera: box('.camera-controls'), panel: box('#district-panel'), detail: box('#detail-panel'), opener: box('#show-panels'),
+    dock: box('.bottom-dock'), camera: box('.camera-controls'), panel: box('#district-panel'), detail: box('#detail-panel'), opener: box('.resident-nav [data-resident-service=home]') || box('#show-panels'),
     primary: [...document.querySelectorAll('.home-primary .home-card')].filter(visible).map(e => e.dataset.action),
     workflows: [...document.querySelectorAll('.home-workflows .home-card')].filter(visible).map(e => e.dataset.action) };
 }'''
+
+
+def open_home(page):
+    if page.is_visible('#district-panel'):
+        return
+    page.locator('.resident-nav [data-resident-service=home]:visible, .resident-context:visible, #show-panels:visible').first.click()
+    page.wait_for_selector('#district-panel', state='visible')
 
 
 def overlap(a, b):
@@ -71,11 +78,16 @@ def run(page, base, width, height):
     compact = width <= COMPACT
     if compact:
         check(f'{tag}: side panel starts closed with an opener button', m['panel'] is None and m['opener'] is not None, [m['panel'], m['opener']])
-        page.click('#show-panels')
+        open_home(page)
         page.wait_for_timeout(250)
         m = page.evaluate(MEASURE)
         check(f'{tag}: open drawer hides dock and camera buttons instead of overlapping', m['panel'] and m['dock'] is None and m['camera'] is None, [m['dock'], m['camera']])
         check(f'{tag}: drawer fits the viewport', m['panel'][0] >= 0 and m['panel'][2] <= width, m['panel'])
+    # Current design deliberately groups administrative tools under a native disclosure.
+    check(f'{tag}: administrative tools start collapsed', page.get_attribute('#administrative-services', 'open') is None)
+    page.click('#administrative-services > summary')
+    m = page.evaluate(MEASURE)
+    check(f'{tag}: administrative disclosure opens through its visible summary', page.get_attribute('#administrative-services', 'open') is not None)
     check(f'{tag}: secondary work entry points remain reachable below the primary task', m['primary'] == ['civic-review', 'ask-ai', 'infra'], m['primary'])
     check(f'{tag}: seasonal response and field checks remain in their own menu', m['workflows'] == ['heat-plan', 'cold-plan', 'icing-plan', 'flood-plan', 'school-plan'], m['workflows'])
     check(f'{tag}: side panel list scrolls independently', page.evaluate("(() => { const e = document.getElementById('sidebar-scroll'); return getComputedStyle(e).overflowY === 'auto' && e.scrollHeight > e.clientHeight; })()"))
@@ -109,7 +121,7 @@ def run(page, base, width, height):
     page.click('[data-action=close-detail]')
     for kind in ['cold', 'icing', 'flood', 'school']:
         if compact and not page.is_visible('#district-panel'):
-            page.click('#show-panels')
+            open_home(page)
         page.click(f'.home-workflows [data-action={kind}-plan]')
         page.select_option('#admin-plan-form [name=scopeId]', 'all')
         page.click('[data-action=admin-plan-load]')
@@ -125,7 +137,7 @@ def run(page, base, width, height):
         check(f'{tag}: {kind} report fits viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.click('[data-action=close-detail]')
     if compact and not page.is_visible('#district-panel'):
-        page.click('#show-panels')
+        open_home(page)
     page.click('.home-workflows [data-action=heat-plan]')
 
     # 기존 그림자 검토 기능도 계속 도달할 수 있다.

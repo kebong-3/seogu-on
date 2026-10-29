@@ -34,8 +34,27 @@ results=[]
 def ck(name,ok,detail=None):
  results.append({'name':name,'passed':bool(ok),'detail':detail});print(name,bool(ok),flush=True)
  if not ok:raise AssertionError(name+' '+str(detail))
-def click(p,selector):
- p.locator(selector).first.evaluate('(e)=>e.click()');p.wait_for_timeout(80)
+def open_home(p):
+ # Follow the actual visible home route. The former #show-panels is hidden on mobile.
+ if p.locator('#district-panel').is_visible():return
+ home=p.locator('.resident-nav [data-resident-service="home"]:visible, .resident-context:visible, #show-panels:visible').first
+ home.click();p.wait_for_selector('#district-panel',state='visible')
+
+def click(p,s):
+ # Nested detail controls must be opened by a user-visible route, never a DOM click.
+ if s=='#show-panels':
+  open_home(p);return
+ if s=='[data-action=graphics]' and not p.locator(s).count():click(p,'[data-action=appearance]')
+ if s=='[data-action=climate]' and not p.locator(s).count():click(p,'[data-action=native-sun]')
+ if not p.locator(s+':visible').count() and p.locator('#district-panel').locator(s).count():
+  open_home(p)
+  if p.locator('#sidebar-regions').locator(s).count() and not p.locator('#sidebar-regions').is_visible():p.locator('#tab-regions').click()
+  for group in ['#administrative-services','#resident-services','.resident-settings']:
+   parent=p.locator(group)
+   if parent.locator(s).count() and parent.get_attribute('open') is None:parent.locator(':scope > summary').click()
+  if p.locator('#home-more-list').locator(s).count() and p.locator('#home-more-toggle').get_attribute('aria-expanded')!='true':p.locator('#home-more-toggle').click()
+ p.locator(s+':visible').first.click();p.wait_for_timeout(100)
+
 def boot(p):
  p.set_default_timeout(7000);p.emulate_media(reduced_motion='reduce');p.set_content(HTML);p.evaluate(LOADER,{'sources':SOURCES,'fixtures':FIXTURES});p.wait_for_selector('#start-card:not([hidden])');click(p,'#start-card [data-engine=boundary]');p.wait_for_selector('.boundary-canvas')
 def input_(p,id,value):
