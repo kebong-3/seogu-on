@@ -45,3 +45,6 @@ desktop.ini
 .idea/
 .vscode/
 *.log
+
+# Local validation outputs and anonymous staff measurement exports
+outputs/

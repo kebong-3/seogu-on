@@ -31,6 +31,7 @@ const TOOL_TITLES = {
   nearest: '가장 가까운 시설',
   coverage_gap: '서비스 사각지대 분석',
   compare_dongs: '동별 비교표',
+  compare_nearby: '시설별 주변 서비스 비교',
   flood_history: '과거 침수피해 기록',
   sun_position: '태양 고도·방위',
   work_brief: '업무별 공간검토',
@@ -128,6 +129,7 @@ function sourceUrl(source) {
 }
 
 const MODE_NOTICES = {
+  UNSUPPORTED_QUERY_CONDITIONS: '질문의 공간 조건을 모두 적용할 수 없어 계산을 진행하지 않았습니다. 조건을 확인해 다시 질문해 주세요.',
   LLM_NOT_CONFIGURED: 'AI 모델이 아직 연결되지 않아 수록 자료를 직접 계산한 결과입니다.',
   LLM_TIMEOUT: 'AI 응답이 늦어 수록 자료를 직접 계산한 결과를 먼저 보여드립니다.',
   LLM_QUOTA: 'AI 사용량 한도로 수록 자료를 직접 계산한 결과를 보여드립니다.',
@@ -161,6 +163,11 @@ export function reviewMemo(view) {
     if (brief.missingData?.length) lines.push('', '□ 아직 없는 판단 근거', ...brief.missingData.map(item => `- ${item}`));
   }
   if (view.features?.length) lines.push('', '□ 결과 지점 (수록 자료 기준)', ...view.features.map(f => `- ${f.properties.name}${f.properties.distanceM === undefined ? '' : ` · 직선거리 약 ${Number(f.properties.distanceM).toLocaleString('ko-KR')}m`}`));
+  for (const comparison of result.nearbyComparisons || []) {
+    lines.push('', `□ 시설별 주변 비교: ${comparison.dongName || '서구 전체'} · ${comparison.target.title}별 ${comparison.service.title} · 직선 반경 ${comparison.radiusM}m`,
+      `대상 ${comparison.targets}곳 중 ${comparison.returned}곳 표시${comparison.truncated ? ' (일부 목록)' : ''}`,
+      ...(comparison.rows || []).map(row => `- ${row.name}: 반경 안 수록 ${row.nearbyCount}곳 · 최근접 직선거리 ${row.nearestServiceM === null ? '미확인' : `약 ${row.nearestServiceM}m`}`));
+  }
   if (result.steps?.length) lines.push('', '□ 실제 조회 내역', ...result.steps.map(step => `- ${TOOL_TITLES[step.tool] || step.tool} · ${describeArgs(step.args)}: ${step.summary}${step.ok === false ? ' (조회 미완료)' : ''}`));
   if (result.sources?.length) lines.push('', '□ 출처와 기준일', ...result.sources.map(source => `- ${source.name} · ${dateText(source)}${sourceUrl(source) ? ` · ${sourceUrl(source)}` : ''}`));
   lines.push('', '□ 자료의 한계', ...(result.caveats || []).map(item => `- ${item}`), '- 수록 건수는 지역 전체 시설 수가 아닙니다. 현장·운영 여부와 최신 자료를 담당자가 확인해야 합니다.');
@@ -241,10 +248,19 @@ export function answerSummaryHtml(view) {
   if (!facts.length) facts.push(`수록 자료의 결과 지점 ${(view.features || []).length}곳 · 연결한 출처 ${(result.sources || []).length}개. 지역 전체 현황을 뜻하지 않습니다.`);
   const missing = unavailableScope ? [unavailableScope === 'different-region' ? '질문에 나온 다른 지역의 자료를 현재 지역 자료와 섞어 조회하지 않았습니다.' : '질문한 분야의 공식 자료와 기준일이 현재 지역에 연결되어 있지 않습니다.'] : [...new Set([...(result.brief?.missingData || []), ...(result.brief?.review?.missingData || [])])].slice(0, 2);
   if (!missing.length) missing.push(spaceQuestion(view) ? '실제 운영조건·예약·법정공휴일·정원은 담당자 확인이 필요합니다.' : '원자료 기준일 이후의 변동과 현장 상태는 별도 확인이 필요합니다.');
-  const next = unavailableScope ? unavailableScope === 'different-region' ? '지역 메뉴에서 현재 적용할 수 있는 지역을 확인하고, 해당 지역으로 전환해 질문하세요.' : '현재 지역에 연결한 자료 범위를 확인한 뒤 질문을 수정하세요.' : result.brief?.nextActions?.[0] || (spaceQuestion(view) ? '질문의 요일·시간을 확인한 뒤 실제 공간을 선택해 현재 현황과 변경안을 비교하세요.' : '결과 지점을 지도에서 확인하고 필요한 현장 확인사항을 검토노트에 남기세요.');
+  const next = unavailableScope ? unavailableScope === 'different-region' ? '지역 메뉴에서 현재 적용할 수 있는 지역을 확인하고, 해당 지역으로 전환해 질문하세요.' : '현재 지역에 연결한 자료 범위를 확인한 뒤 질문을 수정하세요.' : result.brief?.nextActions?.[0] || (spaceQuestion(view) ? '질문의 요일·시간을 확인한 뒤 실제 공간을 선택해 현재 현황과 변경안을 비교하세요.' : (view.features || []).length ? '결과 지점을 지도에서 확인하고 필요한 현장 확인사항을 검토노트에 남기세요.' : '지도에 표시할 결과 지점이 없습니다. 조회 근거와 자료 범위를 확인하고 질문을 구체화하세요.');
   const action = unavailableScope ? `<button class="primary ask-prepare" data-action="${unavailableScope === 'different-region' ? 'region-chooser' : 'region-info'}">${unavailableScope === 'different-region' ? '적용할 지역 확인 →' : '현재 지역 자료 범위 확인 →'}</button>` : spaceQuestion(view) ? '<button class="primary ask-prepare" data-action="ask-prepare-space">이 조건으로 비교 준비 →</button>' : '<button class="primary ask-prepare" data-action="civic-save-result">검토노트에 저장</button>';
   const sources = (result.sources || []).map(source => `<span>${sourceUrl(source) ? `<a href="${esc(sourceUrl(source))}" target="_blank" rel="noopener noreferrer">${esc(source.name)} ↗</a>` : esc(source.name)} · ${esc(dateText(source))}</span>`).join('');
   return `<section class="ask-decision-summary" aria-label="검토 핵심"><div><h3>자료로 확인한 사실</h3><ul>${facts.map(value => `<li>${esc(value)}</li>`).join('')}</ul></div><div><h3>아직 확인할 핵심</h3><ul>${missing.map(value => `<li>${esc(value)}</li>`).join('')}</ul></div><div><h3>다음 행동</h3><p>${esc(next)}</p>${action}</div></section><div class="ask-source-strip" aria-label="출처와 기준일"><strong>출처·기준일</strong>${sources || '<span>제공되지 않음 · 원자료 확인 필요</span>'}</div>`;
+}
+
+/** AI 설명과 별개로 서버가 계산한 조건과 행별 값을 보여 준다. */
+export function nearbyComparisonHtml(comparisons = []) {
+  return comparisons.map(comparison => `<section class="ask-nearby" aria-label="시설별 주변 비교"><h3>${esc(comparison.dongName || '서구 전체')} · ${esc(comparison.target.title)}별 주변 비교</h3>`
+    + `<p class="ask-scope">적용 조건: ${esc(comparison.service.title)} · 직선 반경 <strong>${esc(comparison.radiusM)}m</strong></p>`
+    + `<p class="small">수록 대상 ${esc(comparison.targets)}곳 중 ${esc(comparison.returned)}곳 표시${comparison.truncated ? ' · 일부 목록' : ''}. 대상만 선택 동으로 좁히며, 이웃 동의 서비스도 반경 안이면 포함합니다.</p>`
+    + (comparison.rows?.length ? `<div class="ask-nearby-scroll" tabindex="0" role="region" aria-label="시설별 건수와 최근접 거리"><table><caption>${esc(comparison.service.title)} 수록 자료 비교 · 전체 시설 현황 아님</caption><thead><tr><th scope="col">대상 시설</th><th scope="col">반경 안 수록</th><th scope="col">최근접 직선거리</th></tr></thead><tbody>${comparison.rows.map(row => `<tr><th scope="row">${esc(row.name)}</th><td>${esc(row.nearbyCount)}곳</td><td>${row.nearestServiceM === null ? '미확인' : `약 ${esc(row.nearestServiceM)}m`}</td></tr>`).join('')}</tbody></table></div>` : '<p class="small">이 조건에 해당하는 대상 지점이 자료에 수록되어 있지 않습니다. 실제 시설이 없다는 뜻은 아닙니다.</p>')
+    + '<p class="small">최근접 거리는 반경 밖도 포함합니다. 수록 0곳은 실제 시설 부재를 뜻하지 않으며, 보행 경로·현재 운영 상태는 별도 확인해야 합니다.</p></section>').join('');
 }
 
 /** 답 영역 HTML. status: idle | loading | done | error */
@@ -264,7 +280,7 @@ export function answerHtml(view) {
   const summary = `<div class="ask-result-summary" aria-label="실제 조회 결과"><span>조회 완료 <b>${queried}건</b></span><span>출처 <b>${(result.sources || []).length}개</b></span><span>결과 지점 <b>${(view.features || []).length}곳</b></span></div>`;
   return `<article class="ask-answer"><header><span class="ask-question-echo">${esc(view.question)}</span>${badgeHtml(result)}</header>`
     + `<p class="small ask-query-scope">질문 당시 선택 구역: ${esc(view.queryScope || view.regionName || '선택 지역 전체')}</p>${view.restored ? `<p class="small ask-notice">저장한 결과를 열었습니다. 작성: ${esc(view.completedAt || '미기록')} · 현재 자료로 다시 조회한 결과가 아닙니다.</p>` : ''}${summary}${failed ? `<p class="small ask-notice">조회하지 못한 항목 ${failed}건은 아래 근거에서 확인하세요.</p>` : ''}`
-    + `${answerSummaryHtml(view)}<details class="ask-details ask-full-answer"${String(result.answer || '').length <= 400 ? ' open' : ''}><summary>${result.mode === 'llm' ? 'AI 설명 전체' : '규칙 기반 조회 결과 전체'}</summary><p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `${ANALYSIS_ROLES[result.analysisPath] ? `<p class="small ask-ai-role">${esc(ANALYSIS_ROLES[result.analysisPath])}</p>` : ''}<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}</details>`
+    + `${answerSummaryHtml(view)}${nearbyComparisonHtml(result.nearbyComparisons)}<details class="ask-details ask-full-answer"${String(result.answer || '').length <= 400 ? ' open' : ''}><summary>${result.mode === 'llm' ? 'AI 설명 전체' : '규칙 기반 조회 결과 전체'}</summary><p class="ask-text">${esc(result.answer)}</p>${notice}${result.mode === 'llm' ? `${ANALYSIS_ROLES[result.analysisPath] ? `<p class="small ask-ai-role">${esc(ANALYSIS_ROLES[result.analysisPath])}</p>` : ''}<p class="small">응답 모델: ${esc(result.model || '미기록')}${result.modelRecovered ? ' · 사용 가능한 모델로 자동 복구' : ''}</p>` : ''}</details>`
     + `<div class="ask-export-actions">${portableRegion(view) ? '' : '<button class="primary" data-action="civic-save-result">검토노트에 저장</button>'}<button class="secondary" data-action="ask-copy">검토메모 복사</button><button class="secondary" data-action="ask-download">검토메모 저장</button></div></article>`
     + briefHtml(result.brief)
     + listHtml(view.features || [], view.drawn || 0, view)

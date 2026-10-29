@@ -1,6 +1,6 @@
 {
   "version": "0.7.0",
-  "scope": "Source and recorded tests; excludes self, UPDATE_MANIFEST, generated dist/runtime. Deployment state is verified separately.",
+  "scope": "Historical v0.7.0 inventory; not the current release. Current exact-source inventory is source-manifest.json in the Challenge reproducible evidence CI artifact.",
   "files": [
     {
       "path": ".env.example",
@@ -1997,5 +1997,6 @@
       "bytes": 1914,
       "sha256": "a63b712828dbc28345745158c059de343d297e408dae9a3e1223d15526a1a569"
     }
-  ]
+  ],
+  "historical": true
 }

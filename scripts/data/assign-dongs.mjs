@@ -23,18 +23,30 @@ function assignFeature(feature, index) {
   return true;
 }
 
+/** Reusable for generated Seo-gu collections; coordinates and non-dong attributes are preserved. */
+export function assignCollectionDongs(collection, index) {
+  if (collection?.type !== 'FeatureCollection' || !Array.isArray(collection.features)) {
+    throw new Error('행정동 배정에는 FeatureCollection이 필요합니다.');
+  }
+  if (collection.metadata?.regionId && collection.metadata.regionId !== 'seogu') {
+    throw new Error('서구 행정동을 다른 지역 자료에 배정할 수 없습니다.');
+  }
+  let assigned = 0, mismatched = 0;
+  for (const feature of collection.features) {
+    const outcome = assignFeature(feature, index);
+    if (outcome === true) assigned++;
+    else if (outcome === 'mismatch') mismatched++;
+  }
+  return { assigned, mismatched };
+}
+
 export function assignDongs(root, { check = false } = {}) {
   const index = loadDongIndex(root);
   const report = [];
   for (const file of facilityFiles(root)) {
     const path = resolve(root, file);
     const collection = JSON.parse(readFileSync(path, 'utf8'));
-    let assigned = 0, mismatched = 0;
-    for (const feature of collection.features || []) {
-      const outcome = assignFeature(feature, index);
-      if (outcome === true) assigned++;
-      else if (outcome === 'mismatch') mismatched++;
-    }
+    const { assigned, mismatched } = assignCollectionDongs(collection, index);
     if (assigned && !check) writeFileSync(path, serializeCollection(collection));
     if (assigned || mismatched) report.push({ file, assigned, mismatched });
   }
@@ -43,6 +55,13 @@ export function assignDongs(root, { check = false } = {}) {
 
 function main() {
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+  // Generation pipeline: no filesystem mutation, only the submitted collection is enriched.
+  if (process.argv.includes('--collection-stdin')) {
+    const collection = JSON.parse(readFileSync(0, 'utf8'));
+    assignCollectionDongs(collection, loadDongIndex(root));
+    process.stdout.write(JSON.stringify(collection));
+    return;
+  }
   const check = process.argv.includes('--check');
   const report = assignDongs(root, { check });
   if (!report.length) return console.log('모든 점 시설에 행정동이 붙어 있습니다.');
