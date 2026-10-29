@@ -10,6 +10,19 @@ test('without a search key, searches name and address across public endpoint can
   assert.equal(result.providerAvailable,false);assert.deepEqual(result.items.map(item=>item.id),['facility']);
   await assert.rejects(()=>searchWalkPlaces('a',pack,{env:{}}),{code:'WALK_SEARCH_QUERY'});
 });
+
+test('a road building number never matches another street, an apartment unit or a longer building number',async()=>{
+  const candidates=[
+    {...pack.candidates[0],id:'exact',address:'광주 서구 내방로 111'},
+    {...pack.candidates[0],id:'unit',address:'광주 서구 내방로251번길 10 101동 111호'},
+    {...pack.candidates[0],id:'longer',address:'광주 서구 내방로 1110'},
+    {...pack.candidates[0],id:'subnumber',address:'광주 서구 내방로 111-1'},
+  ];
+  for(const query of ['내방로 111','내방로111','내방로１１１']){
+    const result=await searchWalkPlaces(query,{...pack,candidates},{env:{}});
+    assert.deepEqual(result.items.map(item=>item.id),['exact']);
+  }
+});
 test('upstream search uses fixed regional URLs, rejects out-of-region points and deduplicates provider results',async()=>{
   const calls=[],fetcher=async url=>{calls.push(new URL(url));return new Response(JSON.stringify({response:{status:'OK',result:{items:[{title:'검색 시설',address:{road:'서구 경열로 33'},point:{x:'126.86',y:'35.16'}},{title:'구 밖',point:{x:'129',y:'35'}},{title:'잘못된 좌표',point:{x:'oops',y:'35'}}]}}}));};
   const result=await searchWalkPlaces('검색',pack,{env:{VWORLD_API_KEY:'test-server-key',VWORLD_DOMAIN:'https://example.org'},fetcher});

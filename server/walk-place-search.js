@@ -39,6 +39,11 @@ function normalizedMatch(query,candidate,regionId,aliases=false){
 }
 
 function matchDetails(query,candidate,regionId,{provider=false}={}){
+  // A street/building number must match contiguously, never a unit number on another street.
+  if(looksLikeAddress(query.normalize('NFKC'))){
+    const term=aliasText(query).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    if(!new RegExp(term+'(?![\\d-])','u').test(aliasText(candidate.address)))return provider?{matchType:'provider',aliasMatch:false,approximate:true,matchNote:'외부 주소검색의 비슷한 후보입니다. 도로명·건물번호가 맞는지 확인해 주세요.'}:null;
+  }
   const direct=[candidate.name,candidate.address].some(value=>typeof value==='string'&&value.toLowerCase().includes(query.toLowerCase()));
   if(direct)return {matchType:'direct',aliasMatch:false,approximate:false,matchNote:'수록 명칭·주소에 검색어가 포함됩니다.'};
   if(normalizedMatch(query,candidate,regionId))return {matchType:'normalized',aliasMatch:false,approximate:false,matchNote:'문자·띄어쓰기를 정리해 찾은 결과입니다. 실제 명칭·주소를 확인해 주세요.'};
