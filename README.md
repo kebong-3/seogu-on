@@ -130,6 +130,7 @@ sh start-seoguon.sh
 | Google 계열 AI | `AI_PROVIDER`, `AI_MODEL`, `GEMINI_API_KEY` | [AI 연결 안내](docs/AI_PANEL.md)의 설정에 따라 사용 |
 | Upstage Solar | `AI_PROVIDER`, `AI_MODEL`, `UPSTAGE_API_KEY` | [Solar 연결 안내](docs/SOLAR_SETUP.md)에 따라 공급자와 모델을 함께 설정 |
 | 기관의 호환 모델 서버 | `AI_PROVIDER`, `AI_MODEL`, `AI_API_BASE`, `AI_API_KEY` | 지원 규격·접근권한을 갖춘 모델 서버 연결 |
+| AI 호출 제한 | `ASK_DAILY_LIMIT` | 기본 300회, `0`이면 AI 호출 중지 · 서버 인스턴스별 임시 제한이며 제공기관의 사용량 한도도 함께 확인 |
 | 기상·공공자료 | `DATA_GO_KR_SERVICE_KEY`, `KMA_SERVICE_KEY` 등 | 서비스별 활용신청·인증 조건 확인 |
 | 재난안전 자료 | `SAFETYDATA_KEYS_JSON`, 개별 `SAFETYDATA_…_KEY` 등 | 서비스별 승인·허용 IP 등 확인 |
 | 생활도보길 | `TMAP_API_KEY` 또는 `TMAP_APP_KEY` | 보행경로·장소·주소 검색 이용권한 확인 |
