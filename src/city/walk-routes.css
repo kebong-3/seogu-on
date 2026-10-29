@@ -186,7 +186,7 @@ body[data-large-text="true"] #app .detail-panel .walk-routes .walk-steps li{font
 #app .detail-panel .walk-routes .walk-assessment-legend>p{color:var(--walk-muted)}
 
 /* The route panel and search evidence retain the city identity at a glance. */
-#app .detail-panel:has(.walk-routes) .detail-head{background:var(--bar-fill);border-bottom:1px solid #68a5e6;color:#fff}
+#app .detail-panel:has(.walk-routes) .detail-head{background:var(--bar-fill)!important;border-bottom:1px solid #68a5e6;color:#fff}
 #app .detail-panel:has(.walk-routes) :is(#detail-title,#detail-eyebrow){color:#fff}
 #app .detail-panel:has(.walk-routes) .detail-head>button{background:#ffffff21;border:1px solid #a4c8ed;color:#fff;border-radius:10px}
 #app .detail-panel .walk-routes .walk-search-intro{display:grid;gap:4px;margin:10px 0 12px;padding:10px;border:1px solid var(--walk-line);border-radius:11px;background:var(--walk-surface)}
