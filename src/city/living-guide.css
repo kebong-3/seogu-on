@@ -243,12 +243,18 @@ html[data-ui-theme="night"] #app .detail-panel .living-map .dt-error p{color:#ff
 #app .detail-panel .resident-disaster>p:first-child{
  background:var(--living-blue-soft);border-left:4px solid #0752a7;padding:12px;border-radius:12px;
 }
+#app .detail-panel .resident-disaster{--scenario-blue-fill:#d5e5fa;--scenario-teal-fill:#cde9e5}
+html[data-ui-theme="night"] #app .detail-panel .resident-disaster{--scenario-blue-fill:#203f68;--scenario-teal-fill:#1b464c}
 #app .detail-panel .resident-disaster .scenario-grid{gap:8px;margin:14px 0 18px}
 #app .detail-panel .resident-disaster .scenario-card{
- padding:14px 12px;background:var(--living-surface);border:1px solid var(--living-line);
- box-shadow:none;gap:7px;min-height:100px;
+ --scenario-fill:var(--scenario-blue-fill);--scenario-accent:var(--living-blue);--scenario-heading:var(--living-blue);
+ padding:14px 12px;background:var(--scenario-fill);border:1px solid var(--living-line);
+ border-left:5px solid var(--scenario-accent);box-shadow:none;gap:7px;min-height:100px;
 }
-#app .detail-panel .resident-disaster .scenario-card strong{color:var(--living-blue);font-size:17px;line-height:1.5}
+#app .detail-panel .resident-disaster .scenario-card:is([data-id="slope"],[data-id="heat"],[data-id="school"]){
+ --scenario-fill:var(--scenario-teal-fill);--scenario-accent:var(--living-accent);--scenario-heading:var(--living-accent);
+}
+#app .detail-panel .resident-disaster .scenario-card strong{color:var(--scenario-heading);font-size:17px;line-height:1.5}
 #app .detail-panel .resident-disaster .scenario-card small{color:var(--living-muted);font-size:13px;line-height:1.6}
 #app .detail-panel .resident-disaster .scenario-card.active{background:#0752a7;border-color:#68a5e6}
 #app .detail-panel .resident-disaster .scenario-card.active strong{color:#fff}
