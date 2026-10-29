@@ -14,3 +14,61 @@
 .detail-panel .walk-routes .walking-navigation.is-preview{background:#fffaf0;border:2px dashed #d7aa49;box-shadow:none}.walking-navigation.is-preview .walking-nav-heading>span{color:#805a20;background:#ffedc8}.detail-panel .walk-routes .walking-preview-banner{background:#fff0ce;border-radius:13px;padding:10px;margin:12px 0;color:#79551d;font-size:13px}.walking-preview-banner>strong{display:block}.walking-navigation.is-preview .walking-next{background:#71562d}.walking-navigation.is-preview .walking-next>span{color:#ffedc8}.detail-panel .walk-routes .walking-preview-next{background:#80602d;color:white;border-color:#80602d}
 #app.walking-guidance .walk-routes>.walk-entry,#app.walking-guidance .walk-routes>.walk-notice,#app.walking-guidance .walk-routes>.walk-subtitle,#app.walking-guidance .walk-results>:not(#walk-navigation){display:none!important}#app.walking-guidance .walk-steps{margin-bottom:8px}#app.walking-guidance .walking-navigation{margin-top:0!important}#app.walking-guidance .detail-panel{border-radius:22px}#app.walking-guidance .walking-nav-actions{grid-template-columns:1fr 1fr}#app.walking-guidance .walking-reroute{grid-column:1/-1}
 @media(max-width:820px){#app.walking-guidance .detail-panel{bottom:calc(var(--footer-h,0px) + 8px + env(safe-area-inset-bottom,0px));max-height:52dvh}#app.walking-guidance .detail-panel .walking-next>strong{font-size:23px}.walking-nav-actions button{min-width:0}#app.walking-guidance .walking-navigation{padding:12px!important;border-radius:18px!important}.walking-nav-heading>strong{font-size:17px}}
+
+
+/* Guidance keeps the selected route prominent without flattening every card to white. */
+#app .detail-panel .walk-routes .walking-navigation{
+ background:var(--walk-blue-soft);border:1px solid var(--walk-line);border-top:4px solid #0752a7;
+ color:var(--walk-text);box-shadow:none;
+}
+#app .detail-panel .walk-routes .walking-nav-heading>strong{color:var(--walk-blue);font-weight:800}
+#app .detail-panel .walk-routes .walking-nav-heading>span{
+ background:var(--walk-surface);color:var(--walk-muted);border:1px solid var(--walk-line);
+}
+#app .detail-panel .walk-routes :is(.walking-nav-hint,.walking-permission-note,.walking-nav-privacy){color:var(--walk-muted)}
+#app .detail-panel .walk-routes .walking-next{background:#073984;color:#fff}
+#app .detail-panel .walk-routes .walking-next>span{color:#cce7ff}
+#app .detail-panel .walk-routes .walking-next>strong{color:#fff}
+#app .detail-panel .walk-routes .walking-progress{gap:8px}
+#app .detail-panel .walk-routes .walking-progress>span{
+ background:var(--walk-surface);color:var(--walk-muted);border:1px solid var(--walk-line);
+ border-radius:12px;padding:10px;
+}
+#app .detail-panel .walk-routes .walking-progress b{color:var(--walk-blue);font-weight:800}
+#app .detail-panel .walk-routes .walking-progress>span:last-child{border:0;background:transparent;padding:0 3px}
+#app .detail-panel .walk-routes .walking-progress>span:last-child>b{color:var(--walk-muted)}
+#app .detail-panel .walk-routes button.walking-start{
+ background:#0752a7;border-color:#0752a7;color:#fff;font-size:16px;font-weight:800;
+ box-shadow:0 4px 10px #07398424;
+}
+#app .detail-panel .walk-routes button.walking-start:hover:not(:disabled){background:#073984}
+#app .detail-panel .walk-routes button.walking-preview{background:transparent;color:var(--walk-blue);text-decoration:underline;text-underline-offset:3px}
+#app .detail-panel .walk-routes .walking-nav-actions>button[aria-pressed="true"]{
+ background:var(--walk-teal-soft);border-color:var(--walk-teal-line);color:var(--walk-teal);
+}
+#app .detail-panel .walk-routes .walking-nav-status{
+ background:var(--walk-surface);border-left:4px solid #08736b;color:var(--walk-text);
+}
+#app .detail-panel .walk-routes :is(.walking-nav-settings,.walking-steps){border-color:var(--walk-line)}
+#app .detail-panel .walk-routes :is(.walking-nav-settings,.walking-steps)>summary{color:var(--walk-blue);font-weight:700}
+#app .detail-panel .walk-routes .walking-nav-options button[aria-pressed="true"]{
+ background:var(--walk-teal-soft);border-color:var(--walk-teal-line);color:var(--walk-teal);
+}
+#app .detail-panel .walk-routes .walking-steps li{color:var(--walk-text)}
+#app .detail-panel .walk-routes .walking-steps li span{color:var(--walk-muted)}
+#app .detail-panel .walk-routes .walking-navigation.is-preview{
+ background:var(--walk-warning-soft);border:2px dashed var(--walk-warning-line);
+}
+#app .detail-panel .walk-routes .walking-navigation.is-preview .walking-nav-heading>strong{color:var(--walk-warning)}
+#app .detail-panel .walk-routes .walking-navigation.is-preview .walking-nav-heading>span,
+#app .detail-panel .walk-routes .walking-preview-banner{
+ background:var(--walk-warning-soft);border-color:var(--walk-warning-line);color:var(--walk-warning);
+}
+#app .detail-panel .walk-routes .walking-navigation.is-preview .walking-next{background:#715022}
+#app .detail-panel .walk-routes .walking-navigation.is-preview .walking-next>span{color:#ffe6bd}
+#app .detail-panel .walk-routes .walking-navigation.is-preview .walking-preview-next{background:#715022;border-color:#715022;color:#fff}
+@media(max-width:390px){
+ #app .detail-panel .walk-routes .walking-navigation{padding:12px}
+ #app .detail-panel .walk-routes .walking-progress{grid-template-columns:1fr}
+ #app .detail-panel .walk-routes .walking-progress>span:last-child{grid-column:auto}
+}

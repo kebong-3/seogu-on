@@ -58,6 +58,29 @@ test('search evidence stays accessible outside the selection button and after ch
   }finally{env.cleanup();}
 });
 
+test('TMAP general places outside the catalogue can be selected without inventing source dates',async()=>{
+  const item={id:'search:seogu:tmap-cafe',name:'상무 카페',address:'광주 서구 상무대로 1',coordinate:[126.852,35.151],sourceName:'TMAP 장소검색',searchProvider:'tmap'};
+  const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[item],providers:[{name:'TMAP 장소검색',status:'available'}],notice:'TMAP에서 찾은 장소입니다.'})})});
+  try{
+    await env.action('walk-routes');env.nodes.set('walk-start-query',{value:'상무 카페'});await env.submit('start');
+    assert.match(env.html,/TMAP 장소검색<\/strong>/);assert.match(env.html,/서구 안 · 1곳/);
+    assert.match(env.html,/TMAP 검색 결과 · 실제 출입구/);assert.doesNotMatch(env.html,/원자료 링크 미제공/);
+    await env.action('walk-choose-place',{field:'start',index:'0'});
+    assert.match(env.html,/출발지: 상무 카페/);assert.match(env.html,/walk-selected-source">TMAP 장소검색/);
+    await env.action('walk-example');
+    assert.ok(env.calls.every(call=>!call.options.method),'search and selection must not automatically request a paid route');
+  }finally{env.cleanup();}
+});
+
+test('empty search preserves the provider permission failure instead of claiming only no matching places',async()=>{
+  const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items:[],providers:[{name:'TMAP 장소검색',status:'unavailable'}],notice:'TMAP 장소검색: 키·서비스 이용 권한 확인 필요.'})})});
+  try{
+    await env.action('walk-routes');env.nodes.set('walk-end-query',{value:'상무 카페'});await env.submit('end');
+    assert.match(env.html,/검색된 장소가 없어요/);assert.match(env.html,/키·서비스 이용 권한 확인 필요/);
+    assert.match(env.html,/walk-place-notice" role="status"/);
+  }finally{env.cleanup();}
+});
+
 test('missing or unsafe search evidence URLs are never made into clickable links',async()=>{
   const items=[{id:'unsafe',name:'잘못된 링크',coordinate:[126.852,35.151],sourceUrl:'javascript:alert(1)'},{id:'credential',name:'인증주소',coordinate:[126.853,35.151],sourceUrl:'https://private:secret@example.gov/source'},{id:'missing',name:'원문 미제공',coordinate:[126.854,35.151]}];
   const env=setup({search:async()=>({ok:true,json:async()=>({ok:true,region:{id:'seogu'},items})})});try{
@@ -399,3 +422,4 @@ test('closing the panel or choosing on the map invalidates a pending one-shot lo
     }finally{env.cleanup();}
   }
 });
+

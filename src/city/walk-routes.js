@@ -90,7 +90,7 @@ export function installWalkRoutes(api){
   const expanded=new Set();let entrySequence=0;
   let result=null,activeId='',expires=0,expiryTimer=null,pick='',error='',notice='',loading=false,busy=false,destroyed=false,suspended=false;
   let catalogueController=null,cataloguePromise=null,routeController=null,catalogueSequence=0,routeSequence=0;
-  const searches={start:{query:'',items:[],busy:false,notice:'',sequence:0},end:{query:'',items:[],busy:false,notice:'',sequence:0}};
+  const searches={start:{query:'',items:[],busy:false,notice:'',providers:[],sequence:0},end:{query:'',items:[],busy:false,notice:'',providers:[],sequence:0}};
   let navigation=null,locateSequence=0,locating=false,tripPlan=null,planQuestion='',planning=false,planController=null,planSequence=0;
   let departure=currentDeparture(),departureExample=false,shadowTiming='walk-time',maxDetourMeters=500,maxDetourMinutes=5,safetyReferences=null,includeLevels=false,assessmentFeatures=[];
   const host=()=>document.getElementById('detail-body');
@@ -113,7 +113,7 @@ export function installWalkRoutes(api){
     if(message)notice=message;updateStep();host()?.querySelector?.('.walk-results')?.remove?.();
   }
   function cancelPick(){pick='';api.send?.({type:'stop'});}
-  function clearSearch(field){const search=searches[field];search.controller?.abort();search.controller=null;search.sequence++;search.busy=false;search.items=[];search.notice='';}
+  function clearSearch(field){const search=searches[field];search.controller?.abort();search.controller=null;search.sequence++;search.busy=false;search.items=[];search.notice='';search.providers=[];}
   function reset(){
     entrySequence++;expanded.clear();basic=true;mode='shade';
     for(const field of ['start','end']){clearSearch(field);searches[field].query='';}
@@ -191,7 +191,15 @@ export function installWalkRoutes(api){
   }
   function pointSearchHtml(field){
     const search=searches[field],selected=field==='start'?start:end,label=field==='start'?'출발지':'도착지';
-    return `<form class="walk-place-search" data-walk-search="${field}"><label class="walk-sr-only" for="walk-${field}-query">${label} 장소명 또는 주소 검색</label><input id="walk-${field}-query" type="search" maxlength="100" autocomplete="off" enterkeyhint="search" placeholder="장소명·도로명주소 검색" value="${e(search.query)}"${disabled()}><button type="submit"${disabled()}${search.busy?' disabled':''}>${search.busy?'검색 중':'검색'}</button></form>${search.notice?`<p class="walk-help walk-place-notice" role="status">${e(search.notice)}</p>`:''}${search.items.length?`<ul class="walk-place-results" aria-label="${label} 검색 결과">${search.items.map((item,index)=>`<li><button data-action="walk-choose-place" data-field="${field}" data-index="${index}"><strong>${e(item.name)}</strong><span>${e(item.address||'주소 미제공')}</span><small>${e(item.sourceName||'공개 수록시설')} · ${label}로 선택</small></button><small class="walk-search-source">기준 ${e(item.sourceDate||'미제공')}${safeUrl(item.sourceUrl)?` · <a href="${e(safeUrl(item.sourceUrl))}" target="_blank" rel="noopener noreferrer">원자료 보기</a>`:' · 원자료 링크 미제공'}</small></li>`).join('')}</ul>`:''}${selected?`<p class="walk-point-selected" id="walk-${field}-selected"><strong>${label}: ${e(selected.name)}</strong>${selected.address?`<br>${e(selected.address)}`:''}${safeUrl(selected.sourceUrl)?`<br><a href="${e(safeUrl(selected.sourceUrl))}" target="_blank" rel="noopener noreferrer">선택 시설 원자료</a> · 기준 ${e(selected.sourceDate||'미제공')}`:''}</p>`:''}`;
+    const available=search.providers.filter(provider=>provider.status==='available').map(provider=>provider.name);
+    const hasFailure=search.providers.some(provider=>provider.status==='unavailable');
+    const resultSummary=search.items.length?`<p class="walk-search-summary" role="status"><strong>${e(available.join(' · ')||'수록시설 검색')}</strong><span>${e(regionName())} 안 · ${search.items.length}곳</span></p>`:'';
+    const searchNotice=search.notice?(available.length&&search.items.length&&!hasFailure?`<details class="walk-search-details"><summary>검색 범위·자료 안내</summary><p class="walk-help walk-place-notice">${e(search.notice)}</p></details>`:`<p class="walk-help walk-place-notice" role="status">${e(search.notice)}</p>`):'';
+    const results=search.items.length?`<ul class="walk-place-results" aria-label="${label} 검색 결과">${search.items.map((item,index)=>{
+      const evidence=item.searchProvider==='tmap'?'TMAP 검색 결과 · 실제 출입구를 확인하세요.':`기준 ${e(item.sourceDate||'미제공')}${safeUrl(item.sourceUrl)?` · <a href="${e(safeUrl(item.sourceUrl))}" target="_blank" rel="noopener noreferrer">원자료 보기</a>`:' · 원자료 링크 미제공'}`;
+      return `<li><button data-action="walk-choose-place" data-field="${field}" data-index="${index}"><strong>${e(item.name)}</strong><span>${e(item.address||'주소 미제공')}</span><small>${e(item.sourceName||'공개 수록시설')} · ${label}로 선택</small>${item.approximate?'<small class="walk-match-note">비슷한 검색 후보 · 명칭·주소 확인</small>':''}</button><small class="walk-search-source">${evidence}</small></li>`;
+    }).join('')}</ul>`:'';
+    return `<form class="walk-place-search" data-walk-search="${field}" aria-busy="${search.busy}"><label class="walk-sr-only" for="walk-${field}-query">${label} 장소명 또는 주소 검색</label><input id="walk-${field}-query" type="search" maxlength="100" autocomplete="off" enterkeyhint="search" placeholder="가게·건물·도로명주소 검색" aria-describedby="walk-search-scope" value="${e(search.query)}"${disabled()}><button type="submit"${disabled()}${search.busy?' disabled':''}>${search.busy?'검색 중':'검색'}</button></form>${resultSummary}${results}${searchNotice}${selected?`<p class="walk-point-selected" id="walk-${field}-selected"><strong>${label}: ${e(selected.name)}</strong>${selected.address?`<br>${e(selected.address)}`:''}${selected.sourceName?`<small class="walk-selected-source">${e(selected.sourceName)}</small>`:''}${safeUrl(selected.sourceUrl)?`<br><a href="${e(safeUrl(selected.sourceUrl))}" target="_blank" rel="noopener noreferrer">선택 시설 원자료</a> · 기준 ${e(selected.sourceDate||'미제공')}`:''}</p>`:''}`;
   }
   async function searchPoint(field){
     if(!['start','end'].includes(field)||busy||loading||destroyed)return;
@@ -205,7 +213,8 @@ export function installWalkRoutes(api){
       if(regionOf(body)&&regionOf(body)!==regionId)throw Error('선택 지역과 검색 결과의 지역이 달라 표시하지 않았어요.');
       const boundary=api.state.district||api.state.scope;
       search.items=list(body.items).filter(item=>item&&typeof item.id==='string'&&typeof item.name==='string'&&xy(item.coordinate)&&boundary&&inside(item.coordinate,boundary)).slice(0,30);
-      search.notice=search.items.length?(body.notice||'위치를 확인하고 출발지·도착지로 선택하세요.'):'선택 지역에서 검색된 위치가 없어요. 도로명과 건물번호로 검색하거나 지도에서 선택해 주세요.';
+      search.providers=list(body.providers).filter(provider=>provider&&typeof provider.name==='string'&&['available','unavailable','not-configured','not-requested'].includes(provider.status));
+      search.notice=(search.items.length?'':'검색된 장소가 없어요. ')+(typeof body.notice==='string'?body.notice:search.items.length?'위치를 확인하고 출발지·도착지로 선택하세요.':'동명·지점명 또는 도로명과 건물번호를 더 입력해 주세요.');
     }catch(cause){if(seq!==search.sequence||destroyed)return;const terms=search.query.toLowerCase().split(/\s+/);search.items=candidates.filter(c=>c.routeEligible!==false&&terms.every(term=>`${c.name} ${c.address||''}`.toLowerCase().includes(term))).slice(0,20);search.notice=search.items.length?'장소 검색 연결이 지연되어 수록시설 결과를 표시해요.':'장소 검색 연결이 지연되고 있어요. 수록시설 목록이나 지도에서 위치를 선택해 주세요.';}
     finally{clearTimeout(timer);if(seq===search.sequence&&!destroyed){search.busy=false;search.controller=null;if(openNow())render();}}
   }
@@ -271,7 +280,7 @@ export function installWalkRoutes(api){
   }
   function updateStep(){const el=host()?.querySelector?.('.walk-steps');if(el)el.innerHTML=stepItems();}
   function pointFieldsHtml(){
-    return `<section class="walk-points"><h3>어디로 걸어갈까요?</h3><p class="walk-help">장소명이나 주소를 검색해 선택하세요.</p>${['start','end'].map((field,i)=>`<div class="walk-point-field"><label for="walk-${field}-query"><span class="walk-point-dot ${field}">${i===0?'출발':'도착'}</span></label><div class="walk-endpoint-input">${pointSearchHtml(field)}${field==='start'?`<button class="walking-locate" data-action="walk-current-start"${disabled()}${locating?' disabled':''}>${locating?'현재 위치 확인 중…':'현재 위치에서 출발'}</button><p class="walk-location-note">누르면 기기의 위치 사용을 요청해요.</p>`:''}${disclosure(`point-${field}`,'walk-point-alternatives','지도·시설목록에서 선택',`<button data-action="walk-pick" data-field="${field}"${disabled()}>지도에서 선택</button><label class="walk-sr-only" for="walk-${field}-choice">${field==='start'?'출발지':'도착지'} 수록시설 선택</label><select id="walk-${field}-choice"${disabled()}>${pointOptions(field)}</select>`)}</div></div>`).join('')}<div class="walk-point-tools"><button class="walk-text-button" data-action="walk-swap"${disabled()}>출발·도착 바꾸기 ⇄</button><button class="walk-text-button" data-action="walk-example"${disabled()}>예시로 해보기</button></div>${sample?'<p class="walk-example-note"><strong>예시 장소</strong> 내가 고른 출발·도착이 아니에요. 실제 이동할 장소로 바꿔 주세요.</p>':''}</section>`;
+    return `<section class="walk-points"><h3>어디로 걸어갈까요?</h3><p class="walk-search-intro" id="walk-search-scope"><strong>가게·건물도 TMAP에서 찾아요</strong><span>장소명·주소 검색 · ${e(regionName())} 안의 출발·도착 선택</span></p>${['start','end'].map((field,i)=>`<div class="walk-point-field"><label for="walk-${field}-query"><span class="walk-point-dot ${field}">${i===0?'출발':'도착'}</span></label><div class="walk-endpoint-input">${pointSearchHtml(field)}${field==='start'?`<button class="walking-locate" data-action="walk-current-start"${disabled()}${locating?' disabled':''}>${locating?'현재 위치 확인 중…':'현재 위치에서 출발'}</button><p class="walk-location-note">누르면 기기의 위치 사용을 요청해요.</p>`:''}${disclosure(`point-${field}`,'walk-point-alternatives','지도·시설목록에서 선택',`<button data-action="walk-pick" data-field="${field}"${disabled()}>지도에서 선택</button><label class="walk-sr-only" for="walk-${field}-choice">${field==='start'?'출발지':'도착지'} 수록시설 선택</label><select id="walk-${field}-choice"${disabled()}>${pointOptions(field)}</select>`)}</div></div>`).join('')}<div class="walk-point-tools"><button class="walk-text-button" data-action="walk-swap"${disabled()}>출발·도착 바꾸기 ⇄</button><button class="walk-text-button" data-action="walk-example"${disabled()}>예시로 해보기</button></div>${sample?'<p class="walk-example-note"><strong>예시 장소</strong> 내가 고른 출발·도착이 아니에요. 실제 이동할 장소로 바꿔 주세요.</p>':''}</section>`;
   }
   function conditionHtml(){
     const current=MODES.find(m=>m.id===mode),label=basic?'기본 길찾기':current.label;
@@ -397,3 +406,4 @@ export function installWalkRoutes(api){
     destroy(){navigation?.destroy();destroyed=true;for(const field of ['start','end'])clearSearch(field);catalogueController?.abort();catalogueSequence++;clearResult();cancelPick();offs.forEach(off=>off());host()?.removeEventListener('toggle',toggle,true);host()?.removeEventListener('change',change);host()?.removeEventListener('submit',submit);host()?.removeEventListener('input',input);document.removeEventListener?.('visibilitychange',visibility);},
   };
 }
+

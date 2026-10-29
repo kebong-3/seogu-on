@@ -21,6 +21,107 @@ test('provider failure preserves matching local results and never exposes upstre
   assert.equal(result.providerAvailable,false);assert.equal(result.items[0].id,'facility');assert.doesNotMatch(JSON.stringify(result),/secret provider/);
 });
 
+const poiResponse=(pois,total=pois.length)=>new Response(JSON.stringify({searchPoiInfo:{totalCount:String(total),pois:{poi:pois}}}));
+test('a TMAP key alone searches ordinary POIs beyond the app catalogue using a private header and regional coordinates',async()=>{
+  const calls=[],fetcher=async(url,options)=>{calls.push({url:new URL(url),options});return poiResponse([
+    {id:'coffee',name:'동네 카페',frontLon:'126.86',frontLat:'35.16',noorLon:'126.87',noorLat:'35.17',upperAddrName:'광주',middleAddrName:'서구',roadName:'상무대로',firstBuildNo:'123',secondBuildNo:'2',lowerBizName:'카페'},
+    {id:'outside',name:'다른 도시 카페',frontLon:'129',frontLat:'35.16'},
+    {id:'bad',name:'좌표 없는 카페',frontLon:'',frontLat:''},
+  ]);};
+  const result=await searchWalkPlaces('카페',pack,{env:{TMAP_API_KEY:'private-tmap-key'},fetcher});
+  assert.equal(calls.length,1);const {url,options}=calls[0];
+  assert.equal(url.origin,'https://apis.openapi.sk.com');assert.equal(url.pathname,'/tmap/pois');
+  assert.equal(url.searchParams.get('searchType'),'all');assert.equal(url.searchParams.get('searchKeyword'),'카페');
+  assert.equal(url.searchParams.get('count'),'100');assert.equal(url.searchParams.get('reqCoordType'),'WGS84GEO');
+  assert.equal(url.searchParams.get('resCoordType'),'WGS84GEO');assert.equal(url.searchParams.get('centerLon'),'127');
+  assert.ok(Number(url.searchParams.get('radius'))<=33);assert.equal(url.searchParams.has('appKey'),false);
+  assert.equal(options.headers.appKey,'private-tmap-key');assert.equal(options.redirect,'error');
+  assert.equal(result.items.length,1);assert.equal(result.items[0].name,'동네 카페');
+  assert.equal(result.items[0].address,'광주 서구 상무대로 123-2');assert.deepEqual(result.items[0].coordinate,[126.86,35.16]);
+  assert.equal(result.items[0].sourceName,'TMAP 장소검색');assert.equal(result.items[0].searchProvider,'tmap');assert.equal(result.items[0].routeEligible,true);
+  assert.equal(result.providerAvailable,true);assert.equal(result.providers.find(p=>p.id==='tmap-poi').status,'available');
+  assert.equal(result.providers.find(p=>p.id==='tmap-address').status,'not-requested');assert.equal(result.scope.withinRegion,true);
+  assert.doesNotMatch(JSON.stringify(result),/private-tmap-key|appKey/);
+});
+
+test('TMAP_APP_KEY alias works and provider entrance coordinates fall back only to a valid supplied POI center',async()=>{
+  const result=await searchWalkPlaces('아파트',pack,{env:{TMAP_APP_KEY:'alias-key'},fetcher:async(url,options)=>{
+    assert.equal(options.headers.appKey,'alias-key');return poiResponse([{name:'우리 아파트',frontLon:'0',frontLat:'0',noorLon:'126.87',noorLat:'35.17',newAddressList:{newAddress:[{fullAddress:'광주광역시 서구 상무대로 123'}]}}]);
+  }});
+  assert.deepEqual(result.items[0].coordinate,[126.87,35.17]);assert.equal(result.items[0].address,'광주광역시 서구 상무대로 123');
+});
+
+test('road and parcel address search uses TMAP geocoding, accepts exact supplied addresses and never substitutes nearby or dong centroid matches',async()=>{
+  const calls=[],fetcher=async(url,options)=>{
+    const target=new URL(url);calls.push(target);assert.equal(options.headers.appKey,'private-tmap-key');
+    if(target.pathname==='/tmap/pois')return poiResponse([]);
+    assert.equal(target.pathname,'/tmap/geo/fullAddrGeo');assert.equal(target.searchParams.get('addressFlag'),'F00');assert.equal(target.searchParams.get('coordType'),'WGS84GEO');
+    return new Response(JSON.stringify({coordinateInfo:{totalCount:'6',coordinate:[
+      {newMatchFlag:'N51',newLonEntr:'126.86',newLatEntr:'35.16',newLon:'126.85',newLat:'35.15',city_do:'광주광역시',gu_gun:'서구',newRoadName:'경열로',newBuildingIndex:'33',newBuildingName:'일반 건물'},
+      {matchFlag:'M11',lon:'126.87',lat:'35.17',city_do:'광주광역시',gu_gun:'서구',legalDong:'농성동',bunji:'33-1'},
+      {matchFlag:'M33',lon:'126.88',lat:'35.18',city_do:'광주광역시',gu_gun:'서구',legalDong:'농성동'},
+      {newMatchFlag:'N52',newLon:'126.89',newLat:'35.19',city_do:'광주광역시',gu_gun:'서구',newRoadName:'경열로',newBuildingIndex:'35'},
+      {matchFlag:'M41',lon:'126.89',lat:'35.19',city_do:'광주광역시',gu_gun:'서구',legalDong:'농성동',buildingName:'건물명만 일치'},
+      {newMatchFlag:'N51',newLon:'126.89',newLat:'35.19',city_do:'광주광역시',gu_gun:'서구',newRoadName:'경열로'},
+    ]}}));
+  };
+  const result=await searchWalkPlaces('경열로３３',pack,{env:{TMAP_API_KEY:'private-tmap-key'},fetcher});
+  assert.equal(calls.length,2);assert.equal(calls.find(url=>url.pathname.includes('fullAddrGeo')).searchParams.get('fullAddr'),'광주광역시 서구 경열로33');
+  const geocoded=result.items.filter(item=>item.sourceName==='TMAP 주소검색');assert.equal(geocoded.length,2);
+  assert.deepEqual(geocoded[0].coordinate,[126.86,35.16]);assert.equal(geocoded[0].address,'광주광역시 서구 경열로 33');
+  assert.equal(geocoded[1].name,'광주광역시 서구 농성동 33-1');assert.ok(geocoded.every(item=>item.matchType==='address'&&!item.approximate));
+});
+
+test('provider query supports the declared regional spelling without rewriting the actual returned name or address',async()=>{
+  const result=await searchWalkPlaces('전남광주통합특별시 서구 카페',pack,{env:{TMAP_API_KEY:'key'},fetcher:async url=>{
+    assert.equal(new URL(url).searchParams.get('searchKeyword'),'광주광역시 서구 카페');return poiResponse([{name:'카페 원명',frontLon:'126.86',frontLat:'35.16',upperAddrName:'광주광역시',middleAddrName:'서구',roadName:'경열로',firstBuildNo:'33'}]);
+  }});
+  assert.equal(result.items[0].name,'카페 원명');assert.equal(result.items[0].address,'광주광역시 서구 경열로 33');
+});
+
+test('an explicitly supplied other city address is not rewritten or admitted into the supported route region',async()=>{
+  const result=await searchWalkPlaces('서울 중구 을지로 65',pack,{env:{TMAP_API_KEY:'key'},fetcher:async url=>{
+    const target=new URL(url);if(target.pathname==='/tmap/pois')return poiResponse([]);
+    assert.equal(target.searchParams.get('fullAddr'),'서울 중구 을지로 65');
+    return new Response(JSON.stringify({coordinateInfo:{totalCount:'1',coordinate:[{newMatchFlag:'N51',newLon:'126.98',newLat:'37.56',city_do:'서울특별시',gu_gun:'중구',newRoadName:'을지로',newBuildingIndex:'65'}]}}));
+  }});
+  assert.deepEqual(result.items,[]);assert.equal(result.scope.withinRegion,true);
+});
+
+test('ordinary TMAP POIs are not crowded out by twenty matching catalogue records and the result cap is explicit',async()=>{
+  const many={...pack,candidates:Array.from({length:20},(_,i)=>({...pack.candidates[0],id:'local-'+i,name:'공원 수록시설 '+i,coordinate:[126.85+i/10000,35.15]}))};
+  const result=await searchWalkPlaces('공원',many,{env:{TMAP_API_KEY:'key'},fetcher:async()=>poiResponse(Array.from({length:15},(_,i)=>({name:'동네 공원 '+i,frontLon:126.86+i/10000,frontLat:35.16})),150)});
+  assert.equal(result.items.length,30);assert.equal(result.items.slice(0,15).every(item=>item.searchProvider==='tmap'),true);
+  assert.equal(result.truncated,true);assert.equal(result.resultLimit,30);assert.match(result.notice,/상위 30개/);
+});
+
+test('TMAP authentication failures are explicit, preserve catalogue results and keep raw upstream details private',async()=>{
+  const result=await searchWalkPlaces('장난감',pack,{env:{TMAP_API_KEY:'private-tmap-key'},fetcher:async()=>new Response('private upstream detail',{status:403})});
+  assert.equal(result.providerAvailable,false);assert.equal(result.providers.find(p=>p.id==='tmap-poi').code,'AUTH_REJECTED');
+  assert.equal(result.items[0].id,'facility');assert.match(result.notice,/키·서비스 이용 권한/);
+  assert.doesNotMatch(JSON.stringify(result),/private-tmap-key|private upstream detail/);
+});
+
+test('VWorld secondary results remain explicit when TMAP fails; a successful TMAP search avoids unnecessary secondary requests',async()=>{
+  const env={TMAP_API_KEY:'key',VWORLD_API_KEY:'v-key',VWORLD_DOMAIN:'https://example.org'},calls=[];
+  const fallback=await searchWalkPlaces('카페',pack,{env,fetcher:async url=>{
+    const target=new URL(url);calls.push(target);if(target.origin==='https://apis.openapi.sk.com')return new Response('',{status:429});
+    return new Response(JSON.stringify({response:{status:'OK',result:{items:[{title:'카페 대체 검색',address:{road:'서구 경열로 33'},point:{x:'126.86',y:'35.16'}}]}}}));
+  }});
+  assert.equal(calls.length,4);assert.equal(fallback.providers.find(p=>p.id==='tmap-poi').code,'UPSTREAM_LIMIT');
+  assert.equal(fallback.providers.find(p=>p.id==='vworld').status,'available');assert.equal(fallback.items[0].searchProvider,'vworld');assert.match(fallback.notice,/TMAP 장소검색: 제공기관 호출 한도/);
+  let requests=0;const success=await searchWalkPlaces('카페',pack,{env,fetcher:async()=>{requests++;return poiResponse([{name:'카페',frontLon:'126.86',frontLat:'35.16'}]);}});
+  assert.equal(requests,1);assert.equal(success.providers.find(p=>p.id==='vworld').status,'not-requested');
+});
+
+test('invalid TMAP keys and malformed upstream responses never invent points or expose configuration',async()=>{
+  let calls=0;const invalid=await searchWalkPlaces('카페',pack,{env:{TMAP_API_KEY:'key\nsecret'},fetcher:async()=>{calls++;throw Error('must not call');}});
+  assert.equal(calls,0);assert.deepEqual(invalid.items,[]);assert.equal(invalid.providers.find(p=>p.id==='tmap-poi').code,'CONFIG_INVALID');
+  const malformed=await searchWalkPlaces('카페',pack,{env:{TMAP_API_KEY:'key'},fetcher:async()=>new Response(JSON.stringify({unexpected:'secret detail'}))});
+  assert.deepEqual(malformed.items,[]);assert.equal(malformed.providerAvailable,false);assert.equal(malformed.providers.find(p=>p.id==='tmap-poi').code,'UNAVAILABLE');
+  assert.doesNotMatch(JSON.stringify([invalid,malformed]),/key\\nsecret|secret detail/);
+});
+
 // These named records are isolated unit fixtures; production output always uses stored records.
 const namedPack={...pack,candidates:[
   {id:'toy',name:'광주시청 장난감도서관',address:'전남광주통합특별시 서구 내방로 111',coordinate:[126.85,35.15],routeEligible:true},
@@ -180,3 +281,4 @@ test('catalogue and search preserve only validated source identity pairs for fac
   assert.doesNotMatch(JSON.stringify(item.sourceRefs),/private-extra|coordinate|sourceName|secret/);
  }
 });
+
