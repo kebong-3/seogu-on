@@ -21,3 +21,17 @@ test('map category and analysis entry transitions also suspend stale service ove
  nav.enter('decision-living-map');nav.enter('preset');nav.enter('decision-preset');nav.enter('walk-routes');
  assert.equal(pauses,4);
 });
+
+test('returning home suspends the family map while closing or widening its panel preserves it',()=>{
+ const state={enabled:new Set(),entries:new Map()},events=[];
+ const family={suspend(){events.push('suspend-family')}};
+ const nav=createServiceNavigation({state,decision:()=>null,walk:()=>null,family:()=>family,send:()=>{},cancelPending:()=>events.push('close-panel')});
+ assert.equal(nav.enter('family-outings'),true);
+ events.length=0;
+ assert.equal(nav.enter('family-map-wide'),false);
+ assert.equal(nav.enter('close-detail'),false);
+ assert.deepEqual(events,[],'panel-only actions retain the family markers and viewport');
+ assert.equal(nav.enter('resident-home'),true);
+ assert.deepEqual(events,['close-panel','suspend-family'],'home completes family cleanup before its registered handler opens home');
+ assert.equal(nav.enter('resident-home'),false,'repeated home entry does not repeat cleanup');
+});

@@ -1,5 +1,6 @@
 /** Service changes hide previous overlays while keeping imported/public records in memory. */
 const ENTRIES={
+ 'resident-home':'home',
  'decision-living-map':'living','decision-safe-return-map':'living','decision-twin':'living','decision-inspection':'living',
  'decision-site-review':'living','decision-preset':'living','decision-from-question':'living',
  'family-outings':'family',
