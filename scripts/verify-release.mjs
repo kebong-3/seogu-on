@@ -36,6 +36,8 @@ try{
  await route('/data/city/infra/school.geojson',200,b=>JSON.parse(b).features.length===104);
  await route('/data/city/model/buildings.geojson',200,b=>JSON.parse(b).features.length===5779);
  await route('/data/release.json',200,b=>JSON.parse(b).version===expectedVersion);
+ await route('/data/family/gwangju-outings.geojson',200,b=>{const data=JSON.parse(b);return data.features.length===86&&data.metadata.coverage.mappedDestinations===data.features.filter(f=>f.geometry).length;});
+ await route('/src/city/family-outings.js',200,(_,r)=>r.headers.get('content-type').includes('javascript'));
  await route('/data/city/civic-index.json',200,b=>JSON.parse(b).matchedDongCount===18);
  await route('/api/city-config',200,b=>JSON.parse(b).version===expectedVersion&&!b.includes('VWORLD_BROWSER_KEY='));
  await route('/brand/seogu-ci.png',200,(_,r)=>r.headers.get('content-type').includes('image'));

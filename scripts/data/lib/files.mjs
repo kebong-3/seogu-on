@@ -1,9 +1,9 @@
-// Legacy Seo-gu ingest/audit scope. Region and decision packs have their own validators.
+// Legacy Seo-gu ingest/audit scope. Region, decision and Gwangju family packs have their own build validators.
 // Never assign Seo-gu dong IDs or check a second region against Seo-gu geometry.
 import { readdirSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 
-const SKIP = [/admin-dongs\.geojson$/, /district\.geojson$/, /[\\/]model[\\/]/, /[\\/]templates[\\/]/, /[\\/]regions[\\/]/, /[\\/]decision[\\/]/, /-template\.geojson$/];
+const SKIP = [/admin-dongs\.geojson$/, /district\.geojson$/, /[\\/]model[\\/]/, /[\\/]templates[\\/]/, /[\\/]regions[\\/]/, /[\\/]decision[\\/]/, /[\\/]family[\\/]/, /-template\.geojson$/];
 
 function walk(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry =>

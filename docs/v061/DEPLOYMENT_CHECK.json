@@ -1,12 +1,12 @@
 {
   "mode": "Local built files + local HTTP; external API credentials absent; NOT GPU/Vercel",
-  "checks": 66,
-  "passed": 66,
+  "checks": 68,
+  "passed": 68,
   "results": [
     {
       "name": "All public JSON/GeoJSON parse",
       "passed": true,
-      "detail": "133 files; invalid=0"
+      "detail": "146 files; invalid=0"
     },
     {
       "name": "No font files bundled",
@@ -85,6 +85,16 @@
     },
     {
       "name": "/data/release.json",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/data/family/gwangju-outings.geojson",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "/src/city/family-outings.js",
       "passed": true,
       "detail": "HTTP 200"
     },

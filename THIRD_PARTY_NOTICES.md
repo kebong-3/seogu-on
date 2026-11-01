@@ -96,3 +96,10 @@ API응답의 원본수치·단위·시각·점검플래그를 보존합니다. �
 ## v0.6.1 자체 브랜드와 출처 UI
 
 `public/brand/seogu-on-symbol.svg`는 자체 제작 도시 심벌이며, `seogu-on-wordmark.svg`는 ‘서구:온’ 전용 벡터 워드마크입니다. 기존 정당·지도제공기관의 로고를 복제하거나 해당 기관의 공식 후원을 표시한 것이 아닙니다. 글꼴 바이너리는 배포하지 않습니다. 기존 18개 동 BI 및 첨부 서구 CI 파일은 그대로 보존합니다. 긴 지도 출처 띠는 하단 출처 팝오버로 이동했고 OpenStreetMap 링크와 SDK 자체 출처는 유지합니다.
+
+
+## v0.18 육아 나들이지도
+
+`public/data/family/gwangju-outings.geojson`은 사용자 제공 안내책자에서 추출한 장소명·원문 주소와 짧게 재서술한 소개, 편집 활동 제안 및 공개 위치 대조자료를 함께 담습니다. 원본 책자의 사진·삽화는 재게시하지 않았으며 책자의 권리가 앱의 MIT 라이선스로 바뀌지 않습니다. 위치 출처와 개별 원문 URL, 대조 방법·날짜를 레코드마다 유지합니다.
+
+OpenStreetMap 시설점·공원 도형에서 얻은 대표 좌표 및 해당 파생 데이터에는 **© OpenStreetMap contributors / ODbL 1.0**이 적용됩니다. 원본 객체 링크를 `coordinateSource.url`에 보존하고 이 파일을 공개 다운로드 가능한 형태로 제공합니다. 출처: https://www.openstreetmap.org/copyright · 라이선스: https://opendatacommons.org/licenses/odbl/1-0/ . 다른 공공·기관·지도 출처는 해당 제공기관의 조건과 개별 출처 표시를 유지하며, 코드의 MIT를 원자료 이용허락으로 해석하지 않습니다.

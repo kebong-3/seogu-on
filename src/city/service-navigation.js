@@ -2,18 +2,19 @@
 const ENTRIES={
  'decision-living-map':'living','decision-safe-return-map':'living','decision-twin':'living','decision-inspection':'living',
  'decision-site-review':'living','decision-preset':'living','decision-from-question':'living',
+ 'family-outings':'family',
  'walk-routes':'walk','walk-mode':'walk',
  'service-readiness':'operations','field-operations':'operations',
  resilience:'disaster','resilience-preset':'disaster',
  preset:'explore','infra-select':'explore','clear-layers':'explore',
 };
-export function createServiceNavigation({state,decision,walk,send,cancelPending=()=>{},draw=()=>{}}){
+export function createServiceNavigation({state,decision,walk,family=()=>null,send,cancelPending=()=>{},draw=()=>{}}){
  let current=null;
  return {
   enter(action){
    const next=ENTRIES[action];if(!next||next===current)return false;
    current=next;
-   cancelPending();decision()?.suspend?.();walk()?.suspend?.();
+   cancelPending();decision()?.suspend?.();walk()?.suspend?.();family()?.suspend?.();
    send({type:'stop'});send({type:'clear-analysis'});
    for(const id of state.enabled){send({type:'raster',id,visible:false});}
    state.enabled.clear();state.activePreset=null;state.selected=null;state.isolate=false;

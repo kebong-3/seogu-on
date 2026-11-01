@@ -4,7 +4,7 @@ const KEY='seoon:experience:v1';
 export function normalizeExperience(value){return {usage:value?.usage==='work'?'work':'resident',largeText:value?.largeText===true,reducedMotion:value?.reducedMotion===true};}
 export function experienceService(action){
  if(action==='resident-home')return 'home';
- if(action==='decision-living-map'||action==='decision-living-review')return 'care';
+ if(action==='decision-living-map'||action==='decision-living-review'||action==='family-outings')return 'care';
  if(action==='walk-routes'||action==='walk-mode')return 'walk';
  if(action==='resilience'||action==='resilience-preset')return 'disaster';
  if(['field-operations','decision-twin','decision-site-review','space-twin','pilot-measure'].includes(action))return 'work';
@@ -16,6 +16,7 @@ export function sidebarTabTarget(current,key){
  return ['ArrowLeft','ArrowRight'].includes(key)?(current==='tab-regions'?'layers':'regions'):null;
 }
 export function panelEvidenceLabel(service,kind){
+ if(kind==='family-outings')return '육아지도 · 아이와 갈 곳 찾기';
  if(kind==='field-operations'||kind==='pilot-measure')return '개인 기록 · 기관 접수·공유와 구분';
  if(kind==='resident-help'||kind==='resident-twin')return '서구온 이용 안내';
  return {care:'공개자료 · 현재 운영은 별도 확인',walk:'도보경로 · 계절 결과는 계산 추정',disaster:'관측·과거자료를 구분해 확인',work:'검토용 계산 · 사용자 가정 포함'}[service]||'선택한 정보';

@@ -1,4 +1,5 @@
 import {navigationLineStyle} from './navigation-line-style.js';
+import {familyViewGeometry} from './family-map-extent.js';
 import {createSunController} from './sun-engine.js';
 import {applyQuality,displayOptions,setBuildingStyle,applyBaseBrightness} from './graphics.js';
 import {parseKst} from './solar.js';
@@ -16,6 +17,7 @@ const region=window.SEO_REGION||{name:'서구',center:[126.855,35.14],range:1600
 let sunController=null,dongLabels=null;
 let buildingStyleResult=null,renderFrames=0,renderFailed=false;
 let quality='balanced',visual=displayOptions(),lastBoundary,cleanStats=null;
+let familyExtent=null;
 let viewer,map,C,director,ready=false,queued=[],admin,scope,dong='all',currentPose,selectionMode=null,profileStart=null;
 let registry=new Map(),sources=new Map(),imagery=new Map(),boundarySource,maskSource,analysisSource,modelSource,selectedEntity;
 let model=null,modelUrl=null,modelLocation=null,modelSequence=0,hiddenFeatures=new Map(),sampleSequence=0,focusOn=true;
@@ -38,7 +40,7 @@ async function init(){if(ready||!window.Cesium||(!clean&&!window.ws3d?.viewer))r
  director=new CameraDirector({read:readPose,write:writePose,onChange:s=>tell('motion',{state:s}),reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
  for(const event of ['pointerdown','wheel','touchstart'])viewer.scene.canvas.addEventListener(event,()=>{director.stop();tell('interaction');},{passive:true});
  const handler=new C.ScreenSpaceEventHandler(viewer.scene.canvas);handler.setInputAction(click,C.ScreenSpaceEventType.LEFT_CLICK);
- viewer.camera.moveEnd.addEventListener(()=>{const pose=readPose();currentPose=pose;tell('pose',{pose});if(admin&&outsideRegionView(pose.center,admin))director.fly(frameFor(admin,'overview'),{duration:900,arch:false});});
+ viewer.camera.moveEnd.addEventListener(()=>{const pose=readPose();currentPose=pose;tell('pose',{pose});if(admin&&outsideRegionView(pose.center,familyExtent||admin))director.fly(frameFor(admin,'overview'),{duration:900,arch:false});});
  if(!clean){buildingStyleResult=setBuildingStyle(map,'detailed');tell('building-style-result',buildingStyleResult);}
  viewer.scene.postRender?.addEventListener(()=>{renderFrames++;});
  viewer.scene.renderError?.addEventListener(()=>{renderFailed=true;tell('error',{message:'3D 렌더링 중 오류가 발생했습니다. 선명도를 낮추거나 다른 지도 모드로 전환하세요.'});});
@@ -63,8 +65,8 @@ function addGeometry(ds,f,style){const g=f.geometry,p=f.properties||{},base=`${s
 async function boundaries(m){lastBoundary=m;visual=displayOptions(m.visual||visual);sampleSequence++;selectionMode=null;profileStart=null;admin=m.district;scope=m.scope;dong=m.dong||'all';focusOn=m.focus!==false;clearOwned(boundarySource);clearOwned(maskSource);
  for(const f of m.features){const selected=f.properties.dongId===dong;const style={layer:'dong',color:f.properties.color,alpha: dong==='all'?visual.boundaryOpacity:selected?Math.min(.18,visual.boundaryOpacity+.04):.005,width:selected?4:1.5};addGeometry(boundarySource,f,style);}
  /* 동 이름표: 선택 동의 이름을 먼저 배치하고 자리가 부족한 이름은 확대 시 다시 표시한다(dong-labels-3d.js). */
- dongLabels?.set(m.features.map(f=>({...f,properties:{...f.properties,labelPoint:f.properties.labelPoint||representative(f.geometry)}})),{dong,visible:visual.labels});
- if(focusOn){const g=maskGeometry(scope);if(g)addGeometry(maskSource,{geometry:g,properties:{id:'outside'}},{layer:'mask',color:'#091c2a',alpha:visual.maskOpacity,width:0});}
+ dongLabels?.set(m.features.map(f=>({...f,properties:{...f.properties,labelPoint:f.properties.labelPoint||representative(f.geometry)}})),{dong,visible:visual.labels&&!familyExtent});
+ if(focusOn&&!familyExtent){const g=maskGeometry(scope);if(g)addGeometry(maskSource,{geometry:g,properties:{id:'outside'}},{layer:'mask',color:'#091c2a',alpha:visual.maskOpacity,width:0});}
  if(!m.visualOnly){for(const [id,item]of imagery){viewer.imageryLayers.remove(item,true);imagery.delete(id);}for(const l of (m.rasters||[]))toggleRaster(l,true);}
  requestRender();
 }
@@ -100,6 +102,7 @@ function modelMatrix(p,heading=0,height=0){const c=C.Cartographic.fromDegrees(..
 async function placeModel(point){const sequence=++modelSequence;try{if(!modelUrl)throw Error('먼저 GLB 파일을 선택하세요.');if(model)viewer.scene.primitives.remove(model);const opts={url:modelUrl,modelMatrix:modelMatrix(point),scale:1};const created=C.Model.fromGltfAsync?await C.Model.fromGltfAsync(opts):C.Model.fromGltf(opts);if(sequence!==modelSequence){created.destroy?.();return;}model=created;viewer.scene.primitives.add(model);if(model.readyPromise)await model.readyPromise;if(sequence!==modelSequence)return;modelLocation=point;clearOwned(modelSource);modelSource.entities.add({position:C.Cartesian3.fromDegrees(...point),label:{text:'가상 배치안 · 실제 건물 아님',font:'13px sans-serif',showBackground:true,pixelOffset:new C.Cartesian2(0,-35),heightReference:C.HeightReference.CLAMP_TO_GROUND,disableDepthTestDistance:Number.POSITIVE_INFINITY}});tell('tool-result',{kind:'model-placed',point,note:'가상 배치안입니다. 회전·배율·높이 조절이 가능합니다.'});requestRender();}catch(e){tell('tool-result',{kind:'model-placed',error:e.message||'모델 표시 실패'});}}
 async function handle(m){switch(m.type){
  case'boundaries':await boundaries(m);break;
+ case'family-extent':{const enabled=m.active===true&&(region.id==='seogu'||!region.id);if(enabled===!!familyExtent)break;familyExtent=enabled?familyViewGeometry():null;const prior=lastBoundary;if(prior){await boundaries({...prior,visualOnly:true});lastBoundary=prior;}break;}
  case'layer':renderLayer(m);break;
  case'raster':toggleRaster(m.id,m.visible);break;
  case'camera':director.fly(m.pose,{duration:m.duration??1900,arch:m.arch!==false,orbitAfter:m.orbitAfter===true});break;

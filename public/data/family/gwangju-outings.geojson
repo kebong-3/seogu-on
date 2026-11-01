@@ -1,0 +1,5171 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "schemaVersion": 1,
+    "title": "서구온 육아지도 · 아이와 나들이",
+    "collectedAt": "2026-11-01",
+    "sourceDescription": "제공된 「광주에서 함께 놀 지도」 42개 항목과 「우리 동네 유아숲체험원」 45개 항목, 장소별 소개 사진을 반영했습니다. 같은 장소 3곳을 통합하고 누정 묶음을 3곳으로 나누어 총 86곳을 정리했습니다.",
+    "geographicArea": "광주 5개 구",
+    "defaultDistrict": "서구",
+    "scope": "family-outings-only",
+    "coverage": {
+      "cultureListRows": 42,
+      "forestListRows": 45,
+      "mergedDuplicates": 3,
+      "splitAdditionalDestinations": 2,
+      "destinations": 86,
+      "mappedDestinations": 84,
+      "pendingLocations": 2,
+      "byDistrict": {
+        "북구": 32,
+        "동구": 5,
+        "남구": 12,
+        "서구": 17,
+        "광산구": 20
+      }
+    },
+    "coordinatePolicy": "주소가 맞는 공개 시설 좌표 또는 이름이 확인된 시설·공원 대표점만 표시합니다. 주소가 충돌하거나 근거가 없는 좌표는 표시하지 않습니다. 대표점은 실제 출입구·주차장이나 현재 개방 상태를 보증하지 않습니다.",
+    "informationPolicy": "활동 제안은 시설의 운영 프로그램과 구분합니다. 시간·요금·주차·유모차 접근 등 확인하지 못한 사항을 사실로 채우지 않고 공식 안내를 연결합니다. 출입 확인이 필요한 장소는 일반 길찾기를 제한합니다.",
+    "attributions": [
+      {
+        "title": "사용자가 제공한 육아지도·안내책자 사진",
+        "use": "장소명·원문 주소·소개 활동. 책자 사진과 그림은 재게시하지 않음."
+      },
+      {
+        "title": "광주관광·산림청 숲교육포털·공공데이터포털 및 각 시설 공식 누리집",
+        "use": "시설 주소·소개·공개 대표 좌표. 각 장소의 출처 참조."
+      },
+      {
+        "title": "한국학중앙연구원 광주문화예술인문스토리플랫폼",
+        "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/대문",
+        "use": "명칭과 주소를 대조한 공개 장소 좌표."
+      },
+      {
+        "title": "© OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright",
+        "license": "ODbL 1.0",
+        "use": "이름이 확인된 시설점·공원 도형 대표점. 개별 원본 객체 링크를 보존."
+      }
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "culture-01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8670986,
+          35.2340451
+        ]
+      },
+      "properties": {
+        "id": "culture-01",
+        "name": "광주시민의숲",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 추암로의 시민의숲입니다. 아이와 숲 풍경을 관찰하며 야외에서 시간을 보내고 싶을 때 살펴보세요.",
+        "address": "북구 추암로 190",
+        "sourceAddress": "북구 추암로 190",
+        "activities": [
+          "나무의 잎 모양 비교하기",
+          "새소리를 듣고 표현하기",
+          "가족과 짧게 산책하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 1,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주시민의숲",
+            "originalAddress": "북구 추암로 190",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "forest-map",
+            "number": 6,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "광주시민의숲",
+            "originalAddress": "북구 추암로 190",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 광주시민의숲",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/광주시민의숲",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 광주시민의숲 북구 추암로 190"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8498472,
+          35.2300105
+        ]
+      },
+      "properties": {
+        "id": "culture-02",
+        "name": "국립광주과학관",
+        "district": "북구",
+        "category": "science",
+        "environment": "indoor",
+        "summary": "과학 전시를 살펴보고 과학관의 교육·체험 정보를 찾아볼 수 있는 곳입니다.",
+        "address": "북구 첨단과기로 235",
+        "sourceAddress": "북구 첨단과기로 235",
+        "activities": [
+          "관심 있는 과학 전시 고르기",
+          "관찰한 현상을 그림으로 기록하기",
+          "대상 연령에 맞는 체험 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "방문할 전시관과 체험의 대상 연령, 예약 여부를 공식 누리집에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 2,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "국립광주과학관",
+            "originalAddress": "북구 첨단과기로 235",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 국립광주과학관",
+          "url": "https://www.openstreetmap.org/node/6930999809",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "국립광주과학관 공식 누리집",
+            "url": "https://www.sciencecenter.or.kr/",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.sciencecenter.or.kr/",
+        "informationEvidenceNote": "공식 과학관 검색 색인의 주소 및 국립중앙과학관 전국과학관길라잡이에서 확인. 직접 페이지 열기는 도구에서 실패하여 링크 응답 정상 여부는 별도 확인 필요.",
+        "mapQuery": "광주 국립광주과학관 북구 첨단과기로 235"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8557398,
+          35.2186581
+        ]
+      },
+      "properties": {
+        "id": "culture-03",
+        "name": "광주 어린이교통공원",
+        "district": "북구",
+        "category": "experience",
+        "environment": "mixed",
+        "summary": "어린이가 현장 체험을 통해 교통질서와 교통안전을 배우는 공원입니다.",
+        "address": "북구 임방울대로 877",
+        "sourceAddress": "북구 임방울대로 877",
+        "activities": [
+          "횡단보도 건너는 순서 익히기",
+          "교통표지의 뜻 찾아보기",
+          "예약한 교통안전교육 참여하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "공원 방문과 체험교육 신청은 다를 수 있으니 어린이교통공원 교육 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 3,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주 어린이교통공원",
+            "originalAddress": "북구 임방울대로 877",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주어린이교통공원",
+          "url": "https://www.openstreetmap.org/way/788173973",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주교통문화연수원 — 어린이교통공원",
+            "url": "https://www.gtci.or.kr/gtci/",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gtci.or.kr/gtci/home/content.do?menu=434",
+        "mapQuery": "광주 광주 어린이교통공원 북구 임방울대로 877"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-04",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9167264,
+          35.1886954
+        ]
+      },
+      "properties": {
+        "id": "culture-04",
+        "name": "빛고을국민안전체험관",
+        "district": "북구",
+        "category": "experience",
+        "environment": "indoor",
+        "summary": "화재·지진·생활안전 등 상황별 안전 체험과 어린이를 위한 새싹안전 체험을 운영합니다.",
+        "address": "북구 능안로30번길 3",
+        "sourceAddress": "북구 능안로 30번길 3",
+        "activities": [
+          "생활 속 위험 상황 찾아보기",
+          "체험에서 배운 대처 방법 말해보기",
+          "대상 연령에 맞는 안전체험 신청하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "사전예약과 체험별 대상 연령을 먼저 확인하고, 보호자 동반 기준에 맞춰 신청하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 4,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "빛고을국민안전체험관",
+            "originalAddress": "북구 능안로 30번길 3",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 빛고을국민안전체험관",
+          "url": "https://www.openstreetmap.org/way/1037273965",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "빛고을국민안전체험관 이용안내",
+            "url": "https://www.gwangju.go.kr/gjsafe119/contentsView.do?pageId=gjsafe22",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/gjsafe119/contentsView.do?pageId=gjsafe22",
+        "correctionNote": "원본 주소의 띄어쓰기를 공식 표기 능안로30번길 3으로 정규화.",
+        "noticeLabel": "체험 사전예약",
+        "mapQuery": "광주 빛고을국민안전체험관 북구 능안로30번길 3"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-05",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8986505,
+          35.201856
+        ]
+      },
+      "properties": {
+        "id": "culture-05",
+        "name": "남도향토음식박물관",
+        "district": "북구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "남도 음식문화를 전시하고 어린이 음식문화·전통음식 체험을 안내하는 박물관입니다.",
+        "address": "북구 설죽로 477",
+        "sourceAddress": "북구 설죽로 477",
+        "activities": [
+          "우리 지역 음식 이름 알아보기",
+          "음식 재료의 색과 모양 살펴보기",
+          "예약한 음식문화 체험 참여하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "전시 관람과 음식 만들기 체험의 신청 방법이 다르므로 체험 메뉴의 대상과 예약을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 5,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "남도향토음식박물관",
+            "originalAddress": "북구 설죽로 477",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 남도향토음식박물관",
+          "url": "https://www.openstreetmap.org/node/10559076826",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "남도향토음식박물관 관람안내",
+            "url": "https://gbfmc.or.kr/menu.es?mid=a40201000000",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://gbfmc.or.kr/menu.es?mid=a40201000000",
+        "mapQuery": "광주 남도향토음식박물관 북구 설죽로 477"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-06",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8891,
+          35.223
+        ]
+      },
+      "properties": {
+        "id": "culture-06",
+        "name": "우치공원 동물원",
+        "district": "북구",
+        "category": "experience",
+        "environment": "outdoor",
+        "summary": "여러 동물을 살펴보며 자연을 배울 수 있는 동물원입니다.",
+        "address": "북구 우치로 677",
+        "sourceAddress": "북구 우치로 677",
+        "activities": [
+          "동물의 생김새 비교하기",
+          "안내판에서 동물의 서식지 찾기",
+          "관찰한 동물 그려보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "동물원 관람 구역과 주변 놀이시설은 이용 조건이 다를 수 있으니 방문 시설의 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 6,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "우치공원 동물원",
+            "originalAddress": "북구 우치로 677",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주 우치공원 동물원",
+          "url": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=42b9dc25-81a9-47f4-8bc8-0fd79bddd65a",
+          "method": "한국관광공사 공개 상세페이지 HTML의 getContentList에서 관찰된 POST /call cmd=TOUR_CONTENT_BODY_DETAIL 응답 body.detail.mapX,mapY 직접 추출. 시설명과 주소 일치.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "관광공사가 제공하는 시설 대표 좌표이며 실제 출입문 좌표는 별도 검증하지 않음.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주관광 — 우치공원",
+            "url": "https://tour.gwangju.go.kr/home/tour/info/sports.cs?act=view&infoId=87",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=42b9dc25-81a9-47f4-8bc8-0fd79bddd65a",
+        "mapQuery": "광주 우치공원 동물원 북구 우치로 677"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-07",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9309748,
+          35.1889242
+        ]
+      },
+      "properties": {
+        "id": "culture-07",
+        "name": "광주솔로몬로파크",
+        "district": "북구",
+        "category": "experience",
+        "environment": "indoor",
+        "summary": "모의국회·모의법정·과학수사·선거 등 체험을 통해 생활 속 법을 배우는 법교육 테마공원입니다.",
+        "address": "북구 오문로 244",
+        "sourceAddress": "북구 오문로 244",
+        "activities": [
+          "생활 속 약속 이야기하기",
+          "체험 공간의 역할 알아보기",
+          "공정한 규칙을 함께 정해보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "법체험과 별도 법연수·캠프의 대상 연령 및 신청 방법을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 7,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주솔로몬파크",
+            "originalAddress": "북구 오문로 244",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주솔로몬로파크",
+          "url": "https://www.openstreetmap.org/way/1032924245",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "광주솔로몬파크"
+        ],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "법무부 광주솔로몬로파크 소개",
+            "url": "https://solomon.lawnorder.go.kr/gj/front/intro_grt.do",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://solomon.lawnorder.go.kr/gj/front/intro_grt.do",
+        "correctionNote": "첨부 원문의 광주솔로몬파크를 공식 명칭 광주솔로몬로파크로 정정.",
+        "mapQuery": "광주 광주솔로몬로파크 북구 오문로 244"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-08",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.88479123379545,
+          35.18090711072878
+        ]
+      },
+      "properties": {
+        "id": "culture-08",
+        "name": "중외공원 생태예술놀이터",
+        "district": "북구",
+        "category": "experience",
+        "environment": "outdoor",
+        "summary": "중외공원 안에서 만나는 야외 생태·예술 놀이터입니다. 공원 산책과 놀이를 함께 계획할 수 있습니다.",
+        "address": "북구 하서로 52",
+        "sourceAddress": "북구 하서로 52",
+        "activities": [
+          "현장 안내에 맞춰 놀이하기",
+          "주변 자연의 색 찾아보기",
+          "놀이 후 가까운 미술관 살펴보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "방문할 공간과 프로그램의 대상 연령, 예약 및 보호자 동반 조건을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 8,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "중외공원 생태예술놀이터",
+            "originalAddress": "북구 하서로 52",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "중외공원 생태예술놀이터",
+          "url": "https://place.map.kakao.com/606985326",
+          "method": "카카오맵 공개 장소 HTML의 title·og:description으로 시설명과 지번 확인; og:image staticmap 주소의 srs=wgs84 및 m=경도,위도 직접 추출. 공개 방문기의 장소 링크(itemId=606985326) 좌표와도 일치.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "카카오맵에 등록된 생태예술놀이터 위치입니다. 중외공원 안에서 숲곤충세상 안내 표지를 따라 이동하세요.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-11"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 중외공원 생태예술놀이터 북구 하서로 52"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-09",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8886428,
+          35.1841681
+        ]
+      },
+      "properties": {
+        "id": "culture-09",
+        "name": "광주역사민속박물관",
+        "district": "북구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "광주·전남의 생활문화와 민속을 전시하고 어린이 교육과 세시행사를 안내합니다.",
+        "address": "북구 서하로 48-25",
+        "sourceAddress": "북구 서하로 48-25",
+        "activities": [
+          "옛 생활 도구 찾아보기",
+          "지금 쓰는 물건과 비교하기",
+          "가족의 옛날 이야기 나누기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "방문일의 휴관 공지와 어린이 교육 신청 내용을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 9,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주역사민속박물관",
+            "originalAddress": "북구 서하로 48-25",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주시립민속박물관",
+          "url": "https://www.openstreetmap.org/node/368733972",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주역사민속박물관 공식 누리집",
+            "url": "https://www.gwangju.go.kr/gjhfm/",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/gjhfm/",
+        "mapQuery": "광주 광주역사민속박물관 북구 서하로 48-25"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9225092,
+          35.172568
+        ]
+      },
+      "properties": {
+        "id": "culture-10",
+        "name": "말바우시장",
+        "district": "북구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "북구 동문대로에 자리한 전통시장입니다. 아이와 시장의 물건과 사람들의 일상을 살펴보는 나들이를 계획해 보세요.",
+        "address": "북구 동문대로85번길 62",
+        "sourceAddress": "북구 동문대로85번길 62",
+        "activities": [
+          "제철 식재료 찾아보기",
+          "물건값을 보며 숫자 읽기",
+          "시장 예절과 인사 연습하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "방문하려는 점포의 영업 여부를 확인하고 시장 골목에서는 아이와 함께 이동하세요. 혼잡한 시간과 차량이 지나는 구간을 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 10,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "전통시장(말바우시장)",
+            "originalAddress": "북구 동문대로85번길 62",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 말바우시장",
+          "url": "https://www.openstreetmap.org/way/899920861",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "전통시장(말바우시장)"
+        ],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 말바우시장 북구 동문대로85번길 62"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8856781,
+          35.1830444
+        ]
+      },
+      "properties": {
+        "id": "culture-11",
+        "name": "광주미술관",
+        "district": "북구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "미술 전시를 관람하고 미술관의 어린이 전시공간과 교육·문화 프로그램을 찾아볼 수 있습니다.",
+        "address": "북구 하서로 52",
+        "sourceAddress": "북구 하서로 52",
+        "activities": [
+          "마음에 드는 작품 고르기",
+          "그림 속 색과 모양 찾아보기",
+          "작품을 보고 떠오른 이야기 나누기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "본관과 다른 분관의 위치를 구분하고, 어린이 전시·교육의 현재 운영 정보를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 11,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주미술관",
+            "originalAddress": "북구 하서로 52",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주광역시 시립 미술관",
+          "url": "https://www.openstreetmap.org/way/105686368",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "광주시립미술관"
+        ],
+        "relatedIds": [
+          "culture-08"
+        ],
+        "informationSources": [
+          {
+            "title": "광주미술관 관람안내",
+            "url": "https://gjartmuse.jeonnam-gwangju.go.kr/co/contentsView.php?lang=kor&pageID=artmuse0901000000",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://gjartmuse.jeonnam-gwangju.go.kr/co/contentsView.php?lang=kor&pageID=artmuse0901000000",
+        "correctionNote": "원문 광주미술관을 유지. 구 URL artmuse.gwangju.go.kr이 현재 gjartmuse.jeonnam-gwangju.go.kr로 이동하고 직접 열람한 제목·메뉴·찾아오시는길이 모두 광주미술관으로 표기됨. 과거 광주시립미술관 표기는 검색 별칭으로 보존.",
+        "mapQuery": "광주 광주미술관 북구 하서로 52"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8824695,
+          35.1893903
+        ]
+      },
+      "properties": {
+        "id": "culture-12",
+        "name": "국립광주박물관 어린이박물관",
+        "district": "북구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "어린이의 문화체험과 학습을 위한 전시·체험 공간입니다.",
+        "address": "북구 하서로 110",
+        "sourceAddress": "북구 하서로 110",
+        "activities": [
+          "전시 속 옛 물건 살펴보기",
+          "안내된 체험에 참여하기",
+          "발견한 것을 그림으로 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "개인은 온라인 사전예약을 권장하며 단체는 사전예약이 필요합니다. 보호자 포함 예약과 유모차 이용 조건도 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 12,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "국립광주박물관 어린이박물관",
+            "originalAddress": "북구 하서로 110",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 어린이 박물관",
+          "url": "https://www.openstreetmap.org/way/471448128",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "국립광주박물관 어린이박물관 관람신청",
+            "url": "https://gwangju.museum.go.kr/prog/experience/child/sub01_03/list.do",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://gwangju.museum.go.kr/prog/experience/child/sub01_03/list.do",
+        "informationEvidenceNote": "박물관 전체 안내와 어린이박물관 안내에서 휴관일·예약 설명이 다르게 검색되어 어린이박물관의 실제 관람신청 페이지를 우선함. 시간·요금은 앱 데이터에 고정하지 않음.",
+        "noticeLabel": "어린이박물관 예약 확인",
+        "mapQuery": "광주 국립광주박물관 어린이박물관 북구 하서로 110"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9979102,
+          35.1841506
+        ]
+      },
+      "properties": {
+        "id": "culture-13",
+        "name": "광주호 호수생태원",
+        "district": "북구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "호숫가의 식물과 생물을 관찰하고 주제가 있는 산책길을 걸을 수 있는 생태공원입니다.",
+        "address": "북구 충효샘길 7",
+        "sourceAddress": "북구 충효샘길 7",
+        "activities": [
+          "산책길에서 식물 관찰하기",
+          "물가의 생물을 멀리서 살펴보기",
+          "계절별 풍경 사진 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "생태원 안내 동선을 따르고, 해설·체험 참여 여부와 방문 공지를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 13,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주호 호수생태원",
+            "originalAddress": "북구 충효샘길 7",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주호호수생태원",
+          "url": "https://www.openstreetmap.org/way/479409309",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주관광 — 광주호 호수생태원",
+            "url": "https://tour.gwangju.go.kr/home/tour/info/nature.cs?act=view&infoId=2",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/nature.cs?act=view&infoId=2",
+        "mapQuery": "광주 광주호 호수생태원 북구 충효샘길 7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-14-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.0031092,
+          35.1857481
+        ]
+      },
+      "properties": {
+        "id": "culture-14-1",
+        "name": "환벽당",
+        "district": "북구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "광주호 상류의 자연과 어우러진 전통 누정으로, 호남의 누정 문화를 살펴볼 수 있습니다.",
+        "address": "북구 환벽당길 10",
+        "sourceAddress": "북구 환벽당길 10",
+        "activities": [
+          "정자의 모양 살펴보기",
+          "주변 풍경을 말로 표현하기",
+          "안내판에서 역사 이야기 찾기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "환벽당·취가정·풍암정은 서로 다른 장소입니다. 선택한 정자의 위치와 관람 동선을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 14,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "누정·가사문화공간(환벽당, 취가정, 풍암정)",
+            "originalAddress": "북구 환벽당길 10 / 환벽당길 42-2 / 풍암제길 117",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 환벽당",
+          "url": "https://www.openstreetmap.org/way/1210541834",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "누정·가사문화공간(환벽당, 취가정, 풍암정)"
+        ],
+        "relatedIds": [
+          "culture-14-2",
+          "culture-14-3"
+        ],
+        "informationSources": [
+          {
+            "title": "광주 어린이시청 — 문화가 숨쉬는 곳",
+            "url": "https://www.gwangju.go.kr/child/contentsView.do?pageId=child35",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/child/contentsView.do?pageId=child35",
+        "mapQuery": "광주 환벽당 북구 환벽당길 10"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-14-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.004868,
+          35.1847992
+        ]
+      },
+      "properties": {
+        "id": "culture-14-2",
+        "name": "취가정",
+        "district": "북구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "김덕령 장군을 기리기 위해 세운 정자로, 지역의 역사와 누정 문화를 살펴볼 수 있습니다.",
+        "address": "북구 환벽당길 42-2",
+        "sourceAddress": "북구 환벽당길 42-2",
+        "activities": [
+          "정자와 주변 풍경 관찰하기",
+          "인물 이야기를 함께 읽기",
+          "전통 건축의 지붕 모양 찾아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "환벽당과 주소가 다르므로 취가정의 진입 위치를 확인하고 국가유산 관람 안내를 따라주세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 14,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "누정·가사문화공간(환벽당, 취가정, 풍암정)",
+            "originalAddress": "북구 환벽당길 10 / 환벽당길 42-2 / 풍암제길 117",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 취가정",
+          "url": "https://www.openstreetmap.org/way/1210559257",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "누정·가사문화공간(환벽당, 취가정, 풍암정)"
+        ],
+        "relatedIds": [
+          "culture-14-1",
+          "culture-14-3"
+        ],
+        "informationSources": [
+          {
+            "title": "국가유산포털 — 취가정",
+            "url": "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?ccbaCpno=3412400300000",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?ccbaCpno=3412400300000",
+        "mapQuery": "광주 취가정 북구 환벽당길 42-2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-14-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9932302,
+          35.16045930000001
+        ]
+      },
+      "properties": {
+        "id": "culture-14-3",
+        "name": "풍암정",
+        "district": "북구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "김덕보가 무등산 원효계곡에 지은 정자로, 자연 속 누정과 지역의 역사 이야기를 만나는 곳입니다.",
+        "address": "북구 풍암제길 117",
+        "sourceAddress": "북구 풍암제길 117",
+        "activities": [
+          "정자가 바라보는 풍경 살펴보기",
+          "자연 속 소리를 들어보기",
+          "지역의 역사 이야기 읽기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "환벽당·취가정과 떨어진 장소이므로 풍암제길 주소를 확인하세요. 현장 접근·관람 조건은 방문 전에 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 14,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "누정·가사문화공간(환벽당, 취가정, 풍암정)",
+            "originalAddress": "북구 환벽당길 10 / 환벽당길 42-2 / 풍암제길 117",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 풍암정",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/풍암정",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "누정·가사문화공간(환벽당, 취가정, 풍암정)"
+        ],
+        "relatedIds": [
+          "culture-14-1",
+          "culture-14-2"
+        ],
+        "informationSources": [
+          {
+            "title": "광주 어린이시청 — 문화가 숨쉬는 곳",
+            "url": "https://www.gwangju.go.kr/child/contentsView.do?pageId=child35",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/child/contentsView.do?pageId=child35",
+        "mapQuery": "광주 풍암정 북구 풍암제길 117"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-15",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.0105383004,
+          35.1755879376378
+        ]
+      },
+      "properties": {
+        "id": "culture-15",
+        "name": "무등산반디마을 평촌",
+        "district": "북구",
+        "category": "experience",
+        "environment": "outdoor",
+        "summary": "북구 평촌길의 반디마을입니다. 마을과 자연을 살펴보는 체험 나들이를 알아볼 수 있는 곳입니다.",
+        "address": "북구 평촌길 15",
+        "sourceAddress": "북구 평촌길 15",
+        "activities": [
+          "마을 주변 풍경 관찰하기",
+          "신청 가능한 생태체험 알아보기",
+          "곤충과 서식지에 대해 이야기하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "반딧불이 관찰 등 체험은 계절과 마을 운영 일정에 따라 달라져요. 참여 가능한 프로그램과 예약을 먼저 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 15,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "무등산반디마을 평촌",
+            "originalAddress": "북구 평촌길 15",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주 평촌마을",
+          "url": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=964ccc77-33fc-41d7-9f44-2d83b54290e6",
+          "method": "한국관광공사 공개 상세페이지 HTML의 getContentList에서 관찰된 POST /call cmd=TOUR_CONTENT_BODY_DETAIL 응답 body.detail.mapX,mapY 직접 추출. 시설명과 주소 일치.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "관광공사가 제공하는 시설 대표 좌표이며 실제 출입문 좌표는 별도 검증하지 않음.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "noticeLabel": "체험 일정·예약 확인",
+        "website": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=964ccc77-33fc-41d7-9f44-2d83b54290e6",
+        "mapQuery": "광주 무등산반디마을 평촌 북구 평촌길 15"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-16",
+      "geometry": null,
+      "properties": {
+        "id": "culture-16",
+        "name": "무등산국립공원 평두메습지",
+        "district": "북구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "무등산국립공원 안의 생태보전 가치가 높은 묵논습지로, 공식자료에서 국립공원 특별보호구역으로 안내된 곳입니다.",
+        "address": "북구 화암동 530 일원",
+        "sourceAddress": "북구 화암동 530 일원",
+        "activities": [
+          "공식 해설·탐방 가능 여부 알아보기",
+          "습지가 생물에게 필요한 이유 이야기하기",
+          "허용된 프로그램에서 생태 관찰하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "자유롭게 들어가는 공원으로 안내하지 않습니다. 출입·탐방·해설 가능 여부와 허용 동선은 국립공원사무소에 먼저 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 16,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "무등산국립공원 평두메습지",
+            "originalAddress": "북구 화암동 530 일원",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "unverified",
+        "coordinateSource": null,
+        "positionNote": "정확한 지도 위치를 확인하고 있어요.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "환경부 — 무등산 평두메습지 람사르 습지 등록 자료",
+            "url": "https://www.me.go.kr/home/web/board/read.do?boardCategoryId=&boardId=1675310&boardMasterId=1&decorator=&maxIndexPages=10&maxPageItems=10&menuId=&orgCd=&pagerOffset=1620&searchKey=&searchValue=",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.me.go.kr/home/web/board/read.do?boardCategoryId=&boardId=1675310&boardMasterId=1&decorator=&maxIndexPages=10&maxPageItems=10&menuId=&orgCd=&pagerOffset=1620&searchKey=&searchValue=",
+        "informationEvidenceNote": "2024-05-13 환경부 원문은 2020년부터 특별보호구역으로 지정·관리한다고 명시. 현재 자유출입 허용·유아 동반 방문 가능은 확인하지 못함. 화암동 530은 첨부 지번이며 입구 좌표가 아님. 단축 쿼리 URL은 도구에서 실패했고 위 전체 URL 원문은 열람 성공.",
+        "directionPolicy": "confirm-first",
+        "noticeLabel": "특별보호구역 · 출입 확인",
+        "recommendedForImmediateVisit": false,
+        "mapQuery": "광주 무등산국립공원 평두메습지 북구 화암동 530 일원"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-17",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9187356,
+          35.1483573
+        ]
+      },
+      "properties": {
+        "id": "culture-17",
+        "name": "전일빌딩245",
+        "district": "동구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "5·18의 역사와 기록을 살펴보고 문화공간을 이용할 수 있는 전일빌딩245입니다.",
+        "address": "동구 금남로 245",
+        "sourceAddress": "동구 금남로 245",
+        "activities": [
+          "층별 전시 안내 살펴보기",
+          "광주의 역사 기록 읽기",
+          "관람 후 궁금한 점 이야기하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "원본 지도에 함께 적힌 옛 전남도청은 다른 건물입니다. 전일빌딩245의 층별 관람과 문화해설 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 17,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "옛 전남도청(전일빌딩 245)",
+            "originalAddress": "동구 금남로 245",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 전일빌딩245",
+          "url": "https://www.openstreetmap.org/way/471090813",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "전일빌딩",
+          "전일빌딩 245"
+        ],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "전일빌딩245 관람안내",
+            "url": "https://www.gwangju.go.kr/jeonil/contentsView.do?pageId=jeonil22",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/jeonil/contentsView.do?pageId=jeonil22",
+        "correctionNote": "금남로245 주소에 맞춰 전일빌딩245로 정정. 옛 전남도청은 문화전당로38의 다른 시설이며 같은 장소의 별칭으로 검색 확대하지 않도록 conflictAliases로 별도 관리 권장.",
+        "conflictNames": [
+          "옛 전남도청(전일빌딩 245)"
+        ],
+        "mapQuery": "광주 전일빌딩245 동구 금남로 245"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-18",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.92809503071997,
+          35.15090323714615
+        ]
+      },
+      "properties": {
+        "id": "culture-18",
+        "name": "푸른길공원",
+        "district": "동구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "동명동 구간의 푸른길공원입니다. 도심 속 선형 공원을 따라 아이와 짧은 산책을 계획해 보세요.",
+        "address": "동구 동명동 284-16",
+        "sourceAddress": "동구 동명동 284-16",
+        "activities": [
+          "산책길의 나무 관찰하기",
+          "걷고 싶은 짧은 구간 정하기",
+          "주변 풍경을 그림으로 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "동명동 구간의 푸른길 문화샘터를 안내 거점으로 표시했어요. 계단·도로 횡단 구간을 살펴보고 아이에게 맞는 짧은 산책 동선을 정하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 18,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "푸른길공원",
+            "originalAddress": "동구 동명동 284-16",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "푸른길공원",
+          "url": "https://gwangjufolly.org/bbs/board.php?bo_table=ko_folly1_fo&wr_id=1",
+          "method": "광주폴리 공식 푸른길 문화샘터 소개 페이지 HTML의 Kakao markerPosition LatLng를 직접 추출. 공식 본문이 농장다리와 푸른길 연결 계단·쉼터임을 설명. 동명동284-16 푸른길 소개 기사도 이 폴리 시설을 설명함.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "동명동 푸른길공원의 푸른길 문화샘터(농장다리) 안내 거점입니다. 표시 지점에서 공원 산책로로 이어집니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-36"
+        ],
+        "informationSources": [],
+        "website": "https://gwangjufolly.org/bbs/board.php?bo_table=ko_folly1_fo&wr_id=1",
+        "mapQuery": "광주 푸른길공원 동구 동명동 284-16"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9276581,
+          35.1486788
+        ]
+      },
+      "properties": {
+        "id": "culture-19",
+        "name": "동구인문학당",
+        "district": "동구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "근대가옥을 활용해 주민의 인문 활동과 문화 프로그램을 지원하는 공간입니다.",
+        "address": "동구 동계천로 168-5",
+        "sourceAddress": "동구 동계천로 168-5",
+        "activities": [
+          "공간의 건축 모습 살펴보기",
+          "참여 가능한 문화 프로그램 찾기",
+          "오늘의 질문을 가족과 나누기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "어린이가 참여할 수 있는 프로그램의 대상과 신청 방법을 확인한 뒤 방문하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 19,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "동구인문학당",
+            "originalAddress": "동구 동계천로 168-5",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 동구 인문학당",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/동구_인문학당",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "환경교육통합시스템 — 동구 인문학당",
+            "url": "https://gjeec.or.kr/educationRoadView.es?mid=a10907000000&ter_seq=45",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://gjeec.or.kr/educationRoadView.es?mid=a10907000000&ter_seq=45",
+        "informationEvidenceNote": "공식 환경교육통합시스템의 운영시간·휴무일 칸이 뒤바뀐 것으로 보여 시간·휴무 정보를 옮기지 않음.",
+        "mapQuery": "광주 동구인문학당 동구 동계천로 168-5"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-20",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9202,
+          35.14683
+        ]
+      },
+      "properties": {
+        "id": "culture-20",
+        "name": "국립아시아문화전당 어린이문화원",
+        "district": "동구",
+        "category": "experience",
+        "environment": "indoor",
+        "summary": "어린이 체험과 전시·교육을 만날 수 있는 국립아시아문화전당의 어린이 공간입니다.",
+        "address": "동구 문화전당로 38",
+        "sourceAddress": "동구 문화전당로 38",
+        "activities": [
+          "연령에 맞는 체험 공간 고르기",
+          "아시아의 다양한 문화 살펴보기",
+          "관람한 내용을 이야기로 만들기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "어린이문화원 안에서도 공간별 이용 방식이 다릅니다. 어린이체험관은 원하는 날짜와 회차의 예약 현황을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 20,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "국립아시아문화전당 어린이문화원",
+            "originalAddress": "동구 문화전당로 38",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "국립아시아문화전당 어린이문화원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/국립아시아문화전당_어린이문화원",
+          "method": "한국학중앙연구원 광주문화예술인문스토리플랫폼 시설명·주소·위도·경도 직접 확인.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "어린이문화원이 있는 ACC 단지 대표 위치예요. 방문 전 어린이문화원 입구와 예약 안내를 확인하세요.",
+        "aliases": [
+          "ACC",
+          "ACC 어린이문화원"
+        ],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "국립아시아문화전당 어린이체험관 예약",
+            "url": "https://www.acc.go.kr/child/contents.do?PID=020104",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.acc.go.kr/child/contents.do?PID=020104",
+        "noticeLabel": "체험관 회차·예약 확인",
+        "mapQuery": "광주 국립아시아문화전당 어린이문화원 동구 문화전당로 38"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-21",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.915601,
+          35.1426024
+        ]
+      },
+      "properties": {
+        "id": "culture-21",
+        "name": "양림역사문화마을",
+        "district": "남구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "남구 양림동의 역사문화마을입니다. 마을의 건축과 골목 풍경을 살펴보고 가까운 펭귄마을도 함께 알아볼 수 있습니다.",
+        "address": "남구 천변좌로446번길 7",
+        "sourceAddress": "남구 천변좌로446번길 7",
+        "activities": [
+          "안내된 골목길 따라 걷기",
+          "오래된 건물의 모양 살펴보기",
+          "마을 안내판의 이야기 읽기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "마을은 주민의 생활공간이에요. 공개된 관람 동선을 이용하고 개별 건물의 관람·해설 가능 여부를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 21,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "양림역사문화마을",
+            "originalAddress": "남구 천변좌로446번길 7",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 양림동역사문화마을",
+          "url": "https://www.openstreetmap.org/node/5460663824",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-23"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 양림역사문화마을 남구 천변좌로446번길 7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-22",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9129518,
+          35.1415396
+        ]
+      },
+      "properties": {
+        "id": "culture-22",
+        "name": "광주사직공원",
+        "district": "남구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "남구 사직길의 공원입니다. 도심 가까운 공원에서 나무와 계절 풍경을 관찰하는 산책을 준비해 보세요.",
+        "address": "남구 사직길 49-1",
+        "sourceAddress": "남구 사직길 49-1",
+        "activities": [
+          "나무 그늘의 모양 관찰하기",
+          "가족 산책 코스 정하기",
+          "계절의 색 찾아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 22,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주사직공원",
+            "originalAddress": "남구 사직길 49-1",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "forest-map",
+            "number": 5,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "광주사직공원",
+            "originalAddress": "남구 사직길 49",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주사직공원",
+          "url": "https://www.openstreetmap.org/way/483685289",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 광주사직공원 남구 사직길 49-1"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-23",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9168614,
+          35.1402479
+        ]
+      },
+      "properties": {
+        "id": "culture-23",
+        "name": "펭귄마을",
+        "district": "남구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "양림동의 골목 문화공간입니다. 마을 풍경과 장식을 살펴보며 아이와 이야기를 나눌 수 있습니다.",
+        "address": "남구 천변좌로446번길 7",
+        "sourceAddress": "남구 천변좌로446번길 7",
+        "activities": [
+          "골목의 재미있는 장식 찾아보기",
+          "마음에 드는 풍경 그리기",
+          "주민 생활을 존중하며 걷기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "주민의 생활공간을 존중하며 관람하세요. 사진 촬영과 개별 전시·체험의 운영 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 23,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "펭귄마을",
+            "originalAddress": "남구 천변좌로446번길 7",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 양림동 펭귄마을",
+          "url": "https://www.openstreetmap.org/way/503210073",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-21"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 펭귄마을 남구 천변좌로446번길 7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-24",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8655706,
+          35.109274
+        ]
+      },
+      "properties": {
+        "id": "culture-24",
+        "name": "광주김치타운",
+        "district": "남구",
+        "category": "experience",
+        "environment": "indoor",
+        "summary": "김치의 역사·재료·종류 등을 전시하는 김치박물관과 김치 체험 프로그램이 있는 곳입니다.",
+        "address": "남구 김치로 60",
+        "sourceAddress": "남구 김치로 60",
+        "activities": [
+          "김치 재료와 종류 살펴보기",
+          "우리 집 김치 이야기 나누기",
+          "신청 가능한 만들기 체험 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "박물관 관람과 김치 만들기 체험은 구분해 확인하세요. 체험은 개인·단체 대상과 사전신청 조건이 프로그램마다 다릅니다.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 24,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주김치타운",
+            "originalAddress": "남구 김치로 60",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 광주김치타운",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/광주김치타운",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주김치타운 김치박물관 이용안내",
+            "url": "https://www.gwangju.go.kr/kimchitown/contentsView.do?pageId=kimchitown118",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/kimchitown/contentsView.do?pageId=kimchitown118",
+        "mapQuery": "광주 광주김치타운 남구 김치로 60"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-25",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.880651,
+          35.0886761
+        ]
+      },
+      "properties": {
+        "id": "culture-25",
+        "name": "광주시립수목원",
+        "district": "남구",
+        "category": "park",
+        "environment": "mixed",
+        "summary": "식물과 자연을 살펴보고 야외 공간과 전시온실을 둘러볼 수 있는 공공 수목원입니다.",
+        "address": "남구 도동길 142",
+        "sourceAddress": "남구 도동길 142",
+        "activities": [
+          "식물 이름표 읽기",
+          "잎과 꽃의 모양 비교하기",
+          "야외와 온실의 식물 차이 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "야외와 방문자센터·전시온실의 개방 조건을 구분해 확인하고 임시 통제 공지를 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 25,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주시립수목원",
+            "originalAddress": "남구 도동길 142",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주광역시립수목원",
+          "url": "https://www.openstreetmap.org/way/1011110642",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주시립수목원 관람안내",
+            "url": "https://www.gwangju.go.kr/envi/contentsView.do?pageId=envi297",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/envi/contentsView.do?pageId=envi297",
+        "mapQuery": "광주 광주시립수목원 남구 도동길 142"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-26",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8660766,
+          35.0857923
+        ]
+      },
+      "properties": {
+        "id": "culture-26",
+        "name": "빛고을공예창작촌",
+        "district": "남구",
+        "category": "culture",
+        "environment": "mixed",
+        "summary": "남구 포충로의 공예 문화공간입니다. 공예 작품과 체험 안내를 살펴보며 만들기 나들이를 준비해 보세요.",
+        "address": "남구 포충로 937",
+        "sourceAddress": "남구 포충로 937",
+        "activities": [
+          "공예 재료의 종류 알아보기",
+          "작품의 모양과 무늬 관찰하기",
+          "참여 가능한 만들기 체험 문의하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "전시·공연·체험의 운영일과 대상 연령, 신청 방법을 시설 안내에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 26,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "빛고을공예창작촌",
+            "originalAddress": "남구 포충로 937",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 빛고을공예창작촌",
+          "url": "https://www.openstreetmap.org/way/1423855007",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "noticeLabel": "체험 프로그램 확인",
+        "mapQuery": "광주 빛고을공예창작촌 남구 포충로 937"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-27",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7609,
+          35.06694
+        ]
+      },
+      "properties": {
+        "id": "culture-27",
+        "name": "영산강문화관",
+        "district": "남구",
+        "category": "science",
+        "environment": "mixed",
+        "summary": "남구 승촌보길의 영산강문화관입니다. 강과 물에 관한 전시·문화 정보를 살펴볼 수 있는 곳입니다.",
+        "address": "남구 승촌보길 90",
+        "sourceAddress": "남구 승촌보길 90",
+        "activities": [
+          "강과 물의 역할 이야기하기",
+          "관람 가능한 전시 살펴보기",
+          "주변 강변 풍경 관찰하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "전시와 체험의 대상 연령, 예약·이용 조건을 시설 안내에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 27,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "영산강문화관",
+            "originalAddress": "남구 승촌보길 90",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 영산강 문화관",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/영산강_문화관",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 영산강문화관 남구 승촌보길 90"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-28",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.836287,
+          35.0694322
+        ]
+      },
+      "properties": {
+        "id": "culture-28",
+        "name": "고싸움놀이테마공원",
+        "district": "남구",
+        "category": "culture",
+        "environment": "mixed",
+        "summary": "남구의 고싸움놀이를 주제로 한 문화공간입니다. 지역 전통놀이의 모습과 이야기를 알아보는 나들이를 계획해 보세요.",
+        "address": "남구 고싸움로 2",
+        "sourceAddress": "남구 고싸움로 2",
+        "activities": [
+          "고싸움놀이의 모습 알아보기",
+          "함께하는 놀이의 약속 이야기하기",
+          "이용 가능한 체험 프로그램 살펴보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "전시·공연·체험의 운영일과 대상 연령, 신청 방법을 시설 안내에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 28,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "고싸움놀이테마공원",
+            "originalAddress": "남구 고싸움로 2",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 고싸움놀이테마공원",
+          "url": "https://www.openstreetmap.org/way/931403808",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 고싸움놀이테마공원 남구 고싸움로 2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-29",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8598243,
+          35.1320275
+        ]
+      },
+      "properties": {
+        "id": "culture-29",
+        "name": "빛고을국악전수관",
+        "district": "서구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "판소리·가야금·장구·대금 등 우리 전통음악을 만나고 국악 체험을 알아볼 수 있는 문화공간입니다.",
+        "address": "서구 풍금로 182",
+        "sourceAddress": "서구 풍금로 182",
+        "activities": [
+          "국악 감상하기",
+          "판소리·가야금·장구·대금 등 전통예술 만나기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "공연과 국악 강좌·체험의 대상 및 일정이 달라요. 참여하고 싶은 프로그램의 예약·신청 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 29,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "전남광주통합특별시 서구 빛고을국악전수관",
+            "originalAddress": "서구 풍금로 182",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "20261101_101201.jpg",
+            "page": 64,
+            "originalName": "빛고을국악전수관",
+            "originalAddress": "서구 풍금로 182",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 빛고을국악전수관",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/sports.cs?act=view&infoId=313",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "전남광주통합특별시 서구 빛고을국악전수관"
+        ],
+        "relatedIds": [
+          "forest-09"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 페이지 myMarkerLat/myMarkerLng에서 추출. 첨부 주소와 일치.",
+          "프로그램 참여는 해당 기관의 일정과 예약 조건 확인이 필요."
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/sports.cs?act=view&infoId=313",
+        "mapQuery": "광주 빛고을국악전수관 서구 풍금로 182"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-30",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.821363,
+          35.110035
+        ]
+      },
+      "properties": {
+        "id": "culture-30",
+        "name": "서창감성조망대",
+        "district": "서구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "서창들녘과 영산강, 도심이 어우러진 풍경을 바라보는 전망공간입니다. 계절마다 달라지는 자연의 색을 느껴보세요.",
+        "address": "서구 서창동 1044-17 일원",
+        "sourceAddress": "서구 서창동 1044-17 일원",
+        "activities": [
+          "들녘·영산강·도심 풍경 보기",
+          "계절에 따라 달라지는 자연의 색 관찰하기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "조망대의 진입로와 현장 안내를 확인하고 아이와 함께 난간 안쪽의 허용된 공간을 이용하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 30,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "서창감성조망대",
+            "originalAddress": "서구 서창동 1044-17 일원",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "20261101_101156.jpg",
+            "page": 66,
+            "originalName": "서창 감성조망대",
+            "originalAddress": "서구 서창동 1044-17 일원",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 서창감성조망대",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/village/002.cs?act=view&infoId=1448",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "서창 감성조망대"
+        ],
+        "relatedIds": [
+          "culture-31"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "사용자 사진 QR코드의 연결 페이지와 일치.",
+          "공식 페이지 myMarkerLat/myMarkerLng에서 추출."
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/village/002.cs?act=view&infoId=1448",
+        "mapQuery": "광주 서창감성조망대 서구 서창동 1044-17 일원"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-31",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8306597,
+          35.1154157
+        ]
+      },
+      "properties": {
+        "id": "culture-31",
+        "name": "서창한옥문화관",
+        "district": "서구",
+        "category": "culture",
+        "environment": "mixed",
+        "summary": "한옥의 아름다움과 우리 전통문화를 만나는 공간입니다. 책자에 소개된 다도·한복·전통놀이 등 체험의 운영 일정을 확인해 보세요.",
+        "address": "서구 눌재로 420",
+        "sourceAddress": "서구 눌재로 420",
+        "activities": [
+          "사자탈놀이",
+          "다도 체험",
+          "한복 체험",
+          "전통놀이"
+        ],
+        "activitySource": "provided",
+        "visitNote": "다도·한복·전통놀이 등 체험은 일정과 신청 조건에 따라 달라요. 가족 참여 가능 여부와 예약을 먼저 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 31,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "서창한옥문화관",
+            "originalAddress": "서구 눌재로 420",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "20261101_101151.jpg",
+            "page": 68,
+            "originalName": "서창한옥문화관",
+            "originalAddress": "서구 눌재로 420",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 서창한옥문화관",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/lodge.cs?act=view&infoId=70",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-30"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 페이지 myMarkerLat/myMarkerLng에서 추출. 첨부 주소와 일치.",
+          "기존 공공시설 데이터의 동일 주소 건물 좌표 [126.8301340092, 35.11523537]와 약 50m 차이. 넓은 시설의 관광 대표 위치를 채택.",
+          "체험 내용과 일정은 운영기관에 확인."
+        ],
+        "website": "http://www.schanok.or.kr/",
+        "mapQuery": "광주 서창한옥문화관 서구 눌재로 420"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-32",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.881858,
+          35.12979872
+        ]
+      },
+      "properties": {
+        "id": "culture-32",
+        "name": "어린이생태학습도서관",
+        "district": "서구",
+        "category": "library",
+        "environment": "indoor",
+        "summary": "숲과 생태를 주제로 한 책과 전시·체험을 통해 자연을 배우는 어린이 도서관입니다.",
+        "address": "서구 풍암공원로 8",
+        "sourceAddress": "서구 풍암공원로 8",
+        "activities": [
+          "생태 주제 책 읽기",
+          "자연·생태 전시와 체험 프로그램 만나기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "도서관 휴관일과 생태 전시·독서·체험 프로그램 신청 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 32,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "어린이생태학습도서관",
+            "originalAddress": "서구 풍암공원로 8",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "20261101_101145.jpg",
+            "page": 70,
+            "originalName": "어린이생태학습도서관",
+            "originalAddress": "서구 풍암공원로 8",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도서관표준데이터 서구어린이생태학습도서관",
+          "url": "https://www.data.go.kr/data/15013109/standard.do",
+          "sourceDate": "2026-08-06",
+          "method": "official-dataset-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "서구어린이생태학습도서관",
+          "서구 어린이생태학습도서관"
+        ],
+        "relatedIds": [
+          "forest-38"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "기존 public/data/layers/libraries.geojson에서 시설명과 주소가 정확히 일치하는 레코드를 재사용.",
+          "public/data/decision/seogu/care-libraries.geojson의 환경교육 기관 자료에도 동일 좌표가 등록되어 있음."
+        ],
+        "website": "https://www.seogu.gwangju.kr/library/",
+        "mapQuery": "광주 어린이생태학습도서관 서구 풍암공원로 8"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-33",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.87972222222221,
+          35.1475
+        ]
+      },
+      "properties": {
+        "id": "culture-33",
+        "name": "전남광주통합특별시교육청",
+        "district": "서구",
+        "category": "science",
+        "environment": "indoor",
+        "summary": "첨부 지도에 소개된 교육행정기관 청사입니다.",
+        "address": "서구 화운로 93",
+        "sourceAddress": "서구 화운로 93",
+        "activities": [
+          "참여 가능한 교육행사 알아보기",
+          "방문 목적과 견학 가능 여부 문의하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "상시 어린이 체험·견학 운영 여부는 확인되지 않았습니다. 기관 방문이나 견학을 원하면 사전에 교육청에 문의하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 33,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "전남광주통합특별시교육청",
+            "originalAddress": "서구 화운로 93",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "행정안전부 국민안전24 민방위대피소 광주광역시 교육청 지하 1층",
+          "url": "https://www.safekorea.go.kr/safekorea-kor/flsm/flsm/facilitiesSafteyMap.do?baseMapNm=naver&menuSn=2",
+          "sourceDate": null,
+          "method": "official-building-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "교육청안내 — 찾아오시는길",
+            "url": "https://gen.go.kr/sub/page.php?page_code=introduce_06_05",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://gen.go.kr/sub/page.php?page_code=introduce_06_05",
+        "phone": "062-380-4500",
+        "positionEvidenceNotes": [
+          "기존 public/data/city/official/civil-defense-shelter.geojson, sourceId S200300206, id civil-defense-shelter:4bd20a15a9425c.",
+          "시설명 및 화운로93 주소 일치. 원문 DMS 126도52분47초,35도8분51초에서 변환된 건물 좌표.",
+          "수집일은 2026-10-05. 데이터 기준일은 제공되지 않음.",
+          "교육행정기관의 위치 안내이며 일반 나들이 시설의 상시 개방이나 체험 운영을 뜻하지 않음. 방문 목적과 참여 가능 프로그램을 먼저 확인."
+        ],
+        "informationEvidenceNote": "공식 찾아오시는길에서 기관·주소는 확인했으나 상시 자유견학 안내는 찾지 못함. 따라서 체험시설 또는 예약 없는 가족 나들이 장소로 분류하지 않음. 현재 페이지 직접 열기는 타임아웃.",
+        "directionPolicy": "confirm-first",
+        "noticeLabel": "기관 방문 · 사전 문의",
+        "recommendedForImmediateVisit": false,
+        "mapQuery": "광주 전남광주통합특별시교육청 서구 화운로 93"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-34",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.84222,
+          35.155925
+        ]
+      },
+      "properties": {
+        "id": "culture-34",
+        "name": "광주에너지파크 해담마루",
+        "district": "서구",
+        "category": "science",
+        "environment": "mixed",
+        "summary": "에너지와 환경을 주제로 한 해담마루와 야외 공원을 함께 살펴볼 수 있는 공간입니다.",
+        "address": "서구 상무공원로 131",
+        "sourceAddress": "서구 상무공원로 131",
+        "activities": [
+          "우리 집 에너지 사용 이야기하기",
+          "전시에서 에너지의 종류 찾아보기",
+          "체험·해설 신청 방법 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "실내 해담마루와 야외 공원의 이용 조건이 달라요. 전시·해설·체험의 예약과 대상 연령을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 34,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "광주에너지파크 해담마루",
+            "originalAddress": "서구 상무공원로 131",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 광주에너지파크",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/sports.cs?act=view&infoId=1239",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-17"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 관광페이지 myMarkerLat/myMarkerLng에서 추출.",
+          "운영기관 오시는 길에서 상무공원로131 주소 교차 확인. 실내 해담마루와 야외시설의 이용 조건은 운영안내 확인."
+        ],
+        "website": "https://gjepark.or.kr/",
+        "mapQuery": "광주 광주에너지파크 해담마루 서구 상무공원로 131"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-35",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.857606,
+          35.15319
+        ]
+      },
+      "properties": {
+        "id": "culture-35",
+        "name": "5·18 유아숲체험원",
+        "district": "서구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "나무와 흙, 꽃과 곤충을 가까이에서 만나는 숲놀이 공간입니다. 관찰하고 몸을 움직이는 자연 놀이를 준비해 보세요.",
+        "address": "서구 내방로 152",
+        "sourceAddress": "서구 내방로 152",
+        "activities": [
+          "나무·흙·꽃·곤충 관찰하기",
+          "숲에서 몸을 움직이며 놀이하기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "공원 산책과 숲체험 프로그램 참여는 구분해 확인하세요. 기관·가족별 신청 가능 여부와 운영 일정을 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 35,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "5·18 유아숲체험원",
+            "originalAddress": "서구 내방로 152",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          },
+          {
+            "sourceId": "forest-map",
+            "number": 2,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "5·18 유아숲체험원",
+            "originalAddress": "서구 내방로 152",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "20261101_101223.jpg",
+            "page": 76,
+            "originalName": "5·18 유아숲체험원",
+            "originalAddress": "서구 내방로 152",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "한국산림복지진흥원 국공립 유아숲체험원 위치정보",
+          "url": "https://www.bigdata-forest.kr/product/KFS003401",
+          "sourceDate": "2021-12-21",
+          "method": "official-dataset-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-01"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "산림빅데이터거래소 공개 데이터 미리보기 80행: 5.18기념공원유아숲체험원, 주소 내방로152, 위도35.15319,경도126.857606.",
+          "좌표 데이터 갱신일 2021-12-21. 현장 재측량 또는 2026년 입구 확인으로 표시하면 안 됨.",
+          "5·18기념공원과 같은 주소여도 별도 숲체험 장소이므로 독립 목적지로 유지.",
+          "2026년 자연와락 프로그램 자료에서도 5·18 유아숲 활동 운영이 언급됨. 체험 일정/예약은 별도 확인."
+        ],
+        "website": "https://gwangju.childcare.go.kr/ccef/community/data/DataImgSl.jsp?BBSGB=450&BID=440275&flag=Sl",
+        "mapQuery": "광주 5·18 유아숲체험원 서구 내방로 152"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-36",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.792016,
+          35.136735
+        ]
+      },
+      "properties": {
+        "id": "culture-36",
+        "name": "1913송정역시장",
+        "district": "광산구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "송정역 가까이에 있는 전통시장입니다. 가게와 시장 풍경을 둘러보며 아이와 생활 속 배움을 나눠 보세요.",
+        "address": "광산구 송정로8번길 13",
+        "sourceAddress": "광산구 송정로8번길 13",
+        "activities": [
+          "시장 간판 읽어보기",
+          "사고 싶은 물건의 가격 살펴보기",
+          "상인에게 인사하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "점포별 영업일과 시간을 확인하고 아이와 함께 시장 골목을 걸어보세요. 송정역 주변 교통과 혼잡한 구간을 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 36,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "전통시장(1913송정역시장)",
+            "originalAddress": "광산구 송정로8번길 13",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 송정1913시장",
+          "url": "https://www.openstreetmap.org/node/5921820585",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "전통시장(1913송정역시장)"
+        ],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 1913송정역시장 광산구 송정로8번길 13"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-37",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8515526,
+          35.192732
+        ]
+      },
+      "properties": {
+        "id": "culture-37",
+        "name": "마한유적체험관",
+        "district": "광산구",
+        "category": "culture",
+        "environment": "indoor",
+        "summary": "광주 신창동 유적과 마한의 생활문화를 살펴보고 체험·교육 정보를 확인할 수 있는 곳입니다.",
+        "address": "광산구 북문대로 396-2",
+        "sourceAddress": "광산구 북문대로 396-2",
+        "activities": [
+          "옛사람들의 생활 모습 알아보기",
+          "전시된 유물의 쓰임 짐작하기",
+          "대상에 맞는 체험교육 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "임시휴관 공지와 단체 관람·체험교육 예약 여부를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 37,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "마한유적체험관",
+            "originalAddress": "광산구 북문대로 396-2",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 마한 유적체험관",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/마한_유적체험관",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "광주 신창동 마한유적체험관"
+        ],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광주 신창동 마한유적체험관 관람 안내",
+            "url": "https://www.gwangju.go.kr/gjhfm/contentsView.do?pageId=gjhfm68",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://www.gwangju.go.kr/gjhfm/contentsView.do?pageId=gjhfm68",
+        "mapQuery": "광주 마한유적체험관 광산구 북문대로 396-2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-38",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8126459,
+          35.1951532
+        ]
+      },
+      "properties": {
+        "id": "culture-38",
+        "name": "광주유아교육진흥원",
+        "district": "광산구",
+        "category": "experience",
+        "environment": "indoor",
+        "summary": "유아와 보호자를 위한 가족체험 및 유아 단체체험 프로그램을 안내하는 교육기관입니다.",
+        "address": "광산구 장덕로 34",
+        "sourceAddress": "광산구 장덕로 34",
+        "activities": [
+          "신청 가능한 가족체험 고르기",
+          "체험 주제를 미리 이야기하기",
+          "체험 뒤 새로 알게 된 것 나누기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "가족체험 공지의 대상 연령·신청일·참여 조건을 확인하고 예약하세요. 단체체험과 가족체험을 구분해 선택하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 38,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "전남광주통합특별시교육청광주유아교육진흥원",
+            "originalAddress": "광산구 장덕로 34",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 광주광역시 유아교육진흥원",
+          "url": "https://www.openstreetmap.org/way/548368153",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [
+          "전남광주통합특별시교육청광주유아교육진흥원",
+          "광주광역시교육청유아교육진흥원"
+        ],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "전남광주통합특별시교육청광주유아교육진흥원 공지사항",
+            "url": "https://g-iedu.jge.go.kr/home/board/1",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://g-iedu.jge.go.kr/home/board/1",
+        "informationEvidenceNote": "기존 iedu.gen.go.kr 검색 자료와 신규 g-iedu.jge.go.kr의 최신 2026년 12월 가족체험 공지 색인을 확인. 직접 열기는 두 도메인 모두 도구에서 타임아웃. 링크를 현재 신청 가능 확정으로 표현하지 않음.",
+        "noticeLabel": "가족체험 사전신청 확인",
+        "mapQuery": "광주 광주유아교육진흥원 광산구 장덕로 34"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-39",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.722183197508,
+          35.149814147124
+        ]
+      },
+      "properties": {
+        "id": "culture-39",
+        "name": "송산목장",
+        "district": "광산구",
+        "category": "experience",
+        "environment": "outdoor",
+        "summary": "광산구 가삼안길의 목장 체험 공간입니다. 가족 체험을 원하는 경우 예약 가능한 프로그램부터 확인해 보세요.",
+        "address": "광산구 가삼안길 68-100",
+        "sourceAddress": "광산구 가삼안길 68-100",
+        "activities": [
+          "예약한 목장 체험 참여하기",
+          "동물을 돌보는 방법 알아보기",
+          "체험 후 동물의 특징 그려보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "체험 목장이므로 방문 가능한 프로그램과 예약 여부를 먼저 확인하세요. 동물 접촉과 먹이 주기는 운영자의 안내를 따라주세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 39,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "송산목장",
+            "originalAddress": "광산구 가삼안길 68-100",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "송산목장",
+          "url": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=7c4ee29a-a6f2-49c0-a621-e1ac01a78407",
+          "method": "한국관광공사 공개 상세페이지 HTML의 getContentList에서 관찰된 POST /call cmd=TOUR_CONTENT_BODY_DETAIL 응답 body.detail.mapX,mapY 직접 추출. 시설명과 주소 일치.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "관광공사가 제공하는 시설 대표 좌표이며 실제 출입문 좌표는 별도 검증하지 않음.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "noticeLabel": "방문·체험 예약 확인",
+        "website": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=7c4ee29a-a6f2-49c0-a621-e1ac01a78407",
+        "mapQuery": "광주 송산목장 광산구 가삼안길 68-100"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-40",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8079,
+          35.17118
+        ]
+      },
+      "properties": {
+        "id": "culture-40",
+        "name": "고려인마을",
+        "district": "광산구",
+        "category": "culture",
+        "environment": "mixed",
+        "summary": "광산구 월곡동의 고려인마을입니다. 마을과 지원기관의 문화 안내를 통해 이웃의 역사와 생활문화를 알아볼 수 있습니다.",
+        "address": "광산구 산정공원로28번길 35",
+        "sourceAddress": "광산구 산정공원로28번길 35",
+        "activities": [
+          "고려인의 역사 이야기 읽기",
+          "문화행사·해설 참여 가능 여부 문의하기",
+          "마을의 다양한 언어 찾아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "마을은 주민 생활공간이며 안내 주소는 지원기관의 위치예요. 해설·체험·기관 방문은 운영기관에 먼저 문의하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 40,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "고려인마을(전남광주 고려인종합지원센터)",
+            "originalAddress": "광산구 산정공원로28번길 35",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "고려인마을(고려인종합지원센터)",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/고려인종합지원센터",
+          "method": "한국학중앙연구원 광주문화예술인문스토리플랫폼의 기본 정보 위도·경도 및 동일 주소 확인.",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 고려인마을은 여러 장소를 포함함. 이 좌표는 첨부자료에 명시된 고려인종합지원센터를 마을 안내 거점으로 사용함.",
+        "aliases": [
+          "고려인마을(전남광주 고려인종합지원센터)"
+        ],
+        "relatedIds": [],
+        "informationSources": [],
+        "website": "https://www.koreancoop.com/sub.php?PID=0105",
+        "phone": "062-961-1925",
+        "mapQuery": "광주 고려인마을 광산구 산정공원로28번길 35"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-41",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7797799,
+          35.1486171
+        ]
+      },
+      "properties": {
+        "id": "culture-41",
+        "name": "이야기꽃도서관",
+        "district": "광산구",
+        "category": "library",
+        "environment": "indoor",
+        "summary": "그림책을 특화해 자료와 전시·독서문화 프로그램을 만날 수 있는 도서관입니다.",
+        "address": "광산구 선운중앙로67번길 6",
+        "sourceAddress": "광산구 선운중앙로67번길 6",
+        "activities": [
+          "아이와 그림책 고르기",
+          "그림 속 이야기를 상상하기",
+          "신청 가능한 독서 프로그램 살펴보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "책 읽기 방문과 별도 독서문화 프로그램 신청을 구분하고, 방문일 휴관 공지를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 41,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "이야기꽃도서관",
+            "originalAddress": "광산구 선운중앙로67번길 6",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 이야기꽃도서관",
+          "url": "https://www.openstreetmap.org/node/4644318229",
+          "method": "공개 시설점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [
+          {
+            "title": "광산구 이야기꽃도서관 공식 누리집",
+            "url": "https://newlib.gwangsan.go.kr/IG",
+            "checkedAt": "2026-11-01"
+          }
+        ],
+        "website": "https://newlib.gwangsan.go.kr/IG",
+        "mapQuery": "광주 이야기꽃도서관 광산구 선운중앙로67번길 6"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "culture-42",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7770496,
+          35.1474784
+        ]
+      },
+      "properties": {
+        "id": "culture-42",
+        "name": "황룡친수공원",
+        "district": "광산구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "광산구 선암동의 황룡강 주변 공원입니다. 강변 풍경을 보며 야외 산책을 계획할 수 있는 곳입니다.",
+        "address": "광산구 선암동 241-31",
+        "sourceAddress": "광산구 선암동 241-31",
+        "activities": [
+          "강변 풍경 관찰하기",
+          "짧은 가족 산책 구간 정하기",
+          "계절에 따라 달라진 색 찾아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "물가·전망 구간에서는 안내된 길을 이용하고 날씨와 현장 통제 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "culture-map",
+            "number": 42,
+            "filename": "20261101_101026.jpg",
+            "page": null,
+            "originalName": "황룡친수공원",
+            "originalAddress": "광산구 선암동 241-31",
+            "collection": "culture-map",
+            "label": "광주에서 함께 놀 지도 — 지역별 장소 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 황룡친수공원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/황룡친수공원",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 황룡친수공원 광산구 선암동 241-31"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.858156,
+          35.1570531
+        ]
+      },
+      "properties": {
+        "id": "forest-01",
+        "name": "5·18 기념공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "자연 속에서 쉬고 이야기를 나누는 열린 공원입니다. 꽃과 풍경을 관찰하는 가족 나들이를 준비해 보세요.",
+        "address": "서구 내방로 152 / 쌍촌동 1268",
+        "sourceAddress": "서구 쌍촌동 1268",
+        "activities": [
+          "꽃 도장 찍어보기",
+          "자연 풍경을 액자에 담아보기",
+          "올챙이 탐색하기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 1,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "5·18 기념공원",
+            "originalAddress": "서구 쌍촌동 1268",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010656).png",
+            "page": 40,
+            "originalName": "5.18 기념공원",
+            "originalAddress": "광주광역시 서구 쌍촌동 1268",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 5·18기념공원",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/history.cs?act=view&infoId=218",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "5.18 기념공원"
+        ],
+        "relatedIds": [
+          "culture-35"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 관광페이지 myMarkerLat/myMarkerLng에서 추출. 공원의 대표 지점.",
+          "최신 전국도시공원 표준데이터의 공원명 5·18 기념,지번 쌍촌동1268,도로명 내방로152도 일치."
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/history.cs?act=view&infoId=218",
+        "mapQuery": "광주 5·18 기념공원 서구 내방로 152 / 쌍촌동 1268"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.85818912901588,
+          35.21472514475235
+        ]
+      },
+      "properties": {
+        "id": "forest-03",
+        "name": "거징이쉼터",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 신용동의 쉼터입니다. 가까운 야외 공간에서 아이와 주변 자연을 살펴보는 산책을 계획해 보세요.",
+        "address": "북구 신용동 368",
+        "sourceAddress": "북구 신용동 368",
+        "activities": [
+          "나무와 풀의 색 찾아보기",
+          "쉼터에서 들리는 소리 구분하기",
+          "짧게 걷고 쉬기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 3,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "거징이쉼터",
+            "originalAddress": "북구 신용동 368",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "한국관광공사 거징이쉼터",
+          "url": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=81d5cc12-e427-44d9-98b2-9d24226aae59",
+          "method": "관광공사 공개 시설 상세정보 mapX/mapY; 명칭·주소 일치, OSM 시설점과 교차 확인",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "관광공사가 제공하는 쉼터 대표 위치이며 실제 출입구와 다를 수 있어요.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "website": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=81d5cc12-e427-44d9-98b2-9d24226aae59",
+        "mapQuery": "광주 거징이쉼터 북구 신용동 368"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-04",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8016768288,
+          35.1787343002
+        ]
+      },
+      "properties": {
+        "id": "forest-04",
+        "name": "경암근린공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 하남동의 근린공원입니다. 동네 공원에서 걷고 자연을 관찰하고 싶을 때 살펴보세요.",
+        "address": "전남광주통합특별시 광산구 하남대로54번안길 133",
+        "sourceAddress": "광산구 하남동 663",
+        "activities": [
+          "산책하며 잎 모양 찾아보기",
+          "나무 그늘 관찰하기",
+          "가족과 걷기 놀이하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 4,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "경암근린공원",
+            "originalAddress": "광산구 하남동 663",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 경암",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00100"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 경암근린공원 전남광주통합특별시 광산구 하남대로54번안길 133"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-07",
+      "geometry": null,
+      "properties": {
+        "id": "forest-07",
+        "name": "광주천변공원",
+        "district": "서구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "첨부 숲·공원 목록에 실린 광주천변공원입니다. 책자 주소와 실제 공원 위치가 맞지 않아 정확한 방문 구간을 확인하고 있습니다.",
+        "address": "",
+        "sourceAddress": "서구 칠성로 35번길 19",
+        "activities": [
+          "정확한 산책 구간을 확인한 뒤 방문 계획하기",
+          "광주천 주변 자연에 대해 이야기하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "책자 주소가 어린이집 주소와 겹쳐 지도 위치를 확정하지 않았어요. 정확한 공원명과 출입 구간을 확인한 뒤 방문해 주세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 7,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "광주천변공원",
+            "originalAddress": "서구 칠성로 35번길 19",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "unverified",
+        "coordinateSource": null,
+        "positionNote": "첨부의 칠성로35번길 19는 공원 위치로 사용할 수 없어 좌표를 비워 두었습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "첨부의 서구 칠성로35번길19는 공식 어린이집 정보공개에서 삼삼어린이집으로 확인됨.",
+          "따라서 해당 주소를 자동 지오코딩하면 공원이 아닌 어린이집에 핀이 찍힐 위험이 있어 채택하지 않음.",
+          "전국도시공원 데이터의 천변 항목은 지번 양동346인데 도로명/좌표는 농성동 상무대로1171번길15로 엇갈려 역시 배제.",
+          "목록에는 자료 원문 주소를 보존하되 위치 확인 중으로 표시하고 정확한 공원 구간을 확인하기 전에는 길찾기 좌표를 만들지 않음."
+        ],
+        "directionPolicy": "search-only",
+        "noticeLabel": "책자 주소 재확인 중",
+        "mapQuery": "광주 서구 광주천변공원"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-08",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.87037195227332,
+          35.12144603108478
+        ]
+      },
+      "properties": {
+        "id": "forest-08",
+        "name": "금당산 유아숲체험원",
+        "district": "서구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "금당산의 유아숲체험원입니다. 숲길을 걷고 나무와 자연물을 관찰하는 놀이를 해볼 수 있습니다.",
+        "address": "서구 풍암동 산95-45",
+        "sourceAddress": "서구 풍암동 929",
+        "activities": [
+          "가을 나무 관찰하기",
+          "나뭇조각 리듬놀이",
+          "편백나무 아래에서 뛰어놀기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "숲교육포털의 유아숲 위치를 기준으로 표시했어요. 책자 지번과 차이가 있으므로 체험원 진입 위치와 프로그램 이용 조건을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 8,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "금당산 유아숲체험원",
+            "originalAddress": "서구 풍암동 929",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010553).png",
+            "page": 28,
+            "originalName": "금당산",
+            "originalAddress": "광주광역시 서구 풍암동 929",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 금당산 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EA%B8%88%EB%8B%B9%EC%82%B0&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "금당산"
+        ],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 지도 fn_mapMarker 함수의 시설명 금당산유아숲체험원 좌표.",
+          "첨부 풍암동929와 현재 숲교육포털의 산95-45가 다름. 첨부 주소는 자료 주소로 보존하고 실제 목적지는 공식 숲체험원 위치로 안내.",
+          "일반 금당산 정상이나 산 전체 중심점과 구별해야 함."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EA%B8%88%EB%8B%B9%EC%82%B0&pageIndex=1",
+        "mapQuery": "광주 금당산 유아숲체험원 서구 풍암동 산95-45",
+        "activityNote": "책자에 실린 활동을 바탕으로 현장 규칙에 맞게 표현했습니다. 자연물을 꺾거나 채집하기보다 떨어진 재료를 이용해 주세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-09",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.86024228567163,
+          35.13178284999999
+        ]
+      },
+      "properties": {
+        "id": "forest-09",
+        "name": "마재근린공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "서구 마재로의 근린공원입니다. 아이와 동네 자연을 살펴보며 산책하기 좋은 목적지로 책자에 소개되어 있습니다.",
+        "address": "서구 마재로 3",
+        "sourceAddress": "서구 마재로 3",
+        "activities": [
+          "나무와 풀 관찰하기",
+          "산책하며 계절의 색 찾기",
+          "공원에서 함께 쉬기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 9,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "마재근린공원",
+            "originalAddress": "서구 마재로 3",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 마재근린공원 명칭이 지정된 공원 경계",
+          "url": "https://www.openstreetmap.org/way/375190554",
+          "sourceDate": "2026-09-26",
+          "method": "osm-polygon-representative",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-29"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "기존 public/data/city/park-areas.geojson의 실제 named polygon labelPoint를 사용. 주소 좌표를 추측한 값이 아님.",
+          "OSM 데이터 기준 2026-09-26,수집 2026-09-27. ODbL1.0 출처 표시 필요.",
+          "에어코리아 공공 안내의 마재근린공원 앞 버스정류장 주소도 마재로3.",
+          "최신 공원 표준데이터 마재 레코드는 금호동789와 치평동 상무자유로73/좌표가 엇갈려 사용하지 않음."
+        ],
+        "mapQuery": "광주 마재근린공원 서구 마재로 3"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8876638,
+          35.1943195
+        ]
+      },
+      "properties": {
+        "id": "forest-10",
+        "name": "매곡산",
+        "district": "북구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "북구 매곡동의 산입니다. 아이의 걷기 수준과 탐방로를 먼저 살펴보고 짧은 숲길 나들이를 계획해 보세요.",
+        "address": "북구 매곡동 산111-2",
+        "sourceAddress": "북구 매곡동 산111-2",
+        "activities": [
+          "허용된 길에서 숲 소리 듣기",
+          "나뭇잎의 모양 관찰하기",
+          "산책한 풍경 그리기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "산 전체의 대표 위치예요. 실제 산책로 입구와 개방된 길을 확인하고 아이의 걷기 수준에 맞춰 코스를 정하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 10,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "매곡산",
+            "originalAddress": "북구 매곡동 산111-2",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 매곡산",
+          "url": "https://www.openstreetmap.org/relation/9027256",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "directionPolicy": "search-only",
+        "noticeLabel": "산 위치 · 탐방로 입구 확인",
+        "mapQuery": "광주 북구 매곡산 등산로"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9967,
+          35.18095
+        ]
+      },
+      "properties": {
+        "id": "forest-11",
+        "name": "무등산 생태탐방원",
+        "district": "북구",
+        "category": "experience",
+        "environment": "mixed",
+        "summary": "무등산의 자연과 생태를 배우는 탐방원입니다. 운영하는 생태체험의 대상과 예약 일정을 살펴보세요.",
+        "address": "북구 충효동 805-3",
+        "sourceAddress": "북구 충효동 805-3",
+        "activities": [
+          "생태탐방 프로그램 알아보기",
+          "해설과 함께 자연 관찰하기",
+          "탐방 후 발견한 것 기록하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "방문할 공간과 프로그램의 대상 연령, 예약 및 보호자 동반 조건을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 11,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "무등산 생태탐방원",
+            "originalAddress": "북구 충효동 805-3",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 무등산생태탐방원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/무등산생태탐방원",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 무등산 생태탐방원 북구 충효동 805-3"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8402872,
+          35.2101753
+        ]
+      },
+      "properties": {
+        "id": "forest-12",
+        "name": "무양서원",
+        "district": "광산구",
+        "category": "culture",
+        "environment": "outdoor",
+        "summary": "광산구 산월로의 전통 서원입니다. 건축과 주변 풍경을 살펴보며 지역의 역사 이야기를 나눌 수 있습니다.",
+        "address": "광산구 산월로 21번길 26",
+        "sourceAddress": "광산구 산월로 21번길 26",
+        "activities": [
+          "서원의 지붕과 문 모양 살펴보기",
+          "안내판의 이야기 읽기",
+          "조용히 주변 풍경 관찰하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "전시·공연·체험의 운영일과 대상 연령, 신청 방법을 시설 안내에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 12,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "무양서원",
+            "originalAddress": "광산구 산월로 21번길 26",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 무양서원",
+          "url": "https://www.openstreetmap.org/way/555465513",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 무양서원 광산구 산월로 21번길 26"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9155251,
+          35.18404553
+        ]
+      },
+      "properties": {
+        "id": "forest-13",
+        "name": "문화근린공원",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 문흥동의 근린공원입니다. 공원을 산책하고 같은 이름의 유아숲 공간도 함께 살펴볼 수 있습니다.",
+        "address": "전남광주통합특별시 북구 문흥동 1009-1",
+        "sourceAddress": "북구 문흥동 1009-1",
+        "activities": [
+          "나무와 풀의 모양 비교하기",
+          "가족과 짧은 산책길 정하기",
+          "계절 풍경 사진 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 13,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "문화근린공원",
+            "originalAddress": "북구 문흥동 1009-1",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 문화근린공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-08-06",
+          "recordId": "29170-00042"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-14"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 문화근린공원 전남광주통합특별시 북구 문흥동 1009-1"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-14",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.915525138643,
+          35.1840432043319
+        ]
+      },
+      "properties": {
+        "id": "forest-14",
+        "name": "문화근린공원 유아숲",
+        "district": "북구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "문화근린공원의 유아숲 공간입니다. 일반 공원 산책과 숲체험 프로그램의 이용 안내를 나누어 확인하세요.",
+        "address": "북구 문흥동 1009-1",
+        "sourceAddress": "북구 대천로 86",
+        "activities": [
+          "숲에서 들리는 소리 찾기",
+          "떨어진 잎의 모양 비교하기",
+          "신청 가능한 숲체험 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "숲길 이용과 예약형 숲체험은 다를 수 있어요. 아이의 걷기 수준에 맞는 구간과 체험 일정을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 14,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "문화근린공원 유아숲",
+            "originalAddress": "북구 대천로 86",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 문화근린공원 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EB%AC%B8%ED%99%94%EA%B7%BC%EB%A6%B0&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 대표 위치",
+        "aliases": [],
+        "relatedIds": [
+          "forest-13"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "숲교육포털 fn_mapMarker 명시값. 인천 남동문화근린공원은 제외하고 전남광주 북구 문흥동 항목을 선택.",
+          "첨부 도로명 대천로86은 문화근린공원 주소. 동일 공원 내부의 숲체험원 좌표로 문화근린공원 전체와 구분."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EB%AC%B8%ED%99%94%EA%B7%BC%EB%A6%B0&pageIndex=1",
+        "mapQuery": "광주 문화근린공원 유아숲 북구 문흥동 1009-1"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-15",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8796804,
+          35.217929
+        ]
+      },
+      "properties": {
+        "id": "forest-15",
+        "name": "본촌생태어린이공원",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 본촌동의 생태어린이공원입니다. 아이와 동네에서 자연을 관찰하는 야외 나들이를 계획해 보세요.",
+        "address": "전남광주통합특별시 북구 본촌동 2849",
+        "sourceAddress": "북구 본촌동 2849",
+        "activities": [
+          "풀과 나무의 색 찾아보기",
+          "작은 생물을 눈으로 관찰하기",
+          "자연을 그려보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 15,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "본촌생태어린이공원",
+            "originalAddress": "북구 본촌동 2849",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 본촌생태어린이공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-08-06",
+          "recordId": "29170-00089"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 본촌생태어린이공원 전남광주통합특별시 북구 본촌동 2849"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-16",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8619842,
+          35.1896672
+        ]
+      },
+      "properties": {
+        "id": "forest-16",
+        "name": "산동교친수공원",
+        "district": "북구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "북구 동림동의 강변 공원입니다. 물가의 풍경을 보며 걷는 산책을 준비할 수 있습니다.",
+        "address": "북구 동림동 130-15",
+        "sourceAddress": "북구 동림동 130-15",
+        "activities": [
+          "강의 흐름 멀리서 살펴보기",
+          "물가 주변 새 관찰하기",
+          "걷고 쉴 구간 정하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "물가·전망 구간에서는 안내된 길을 이용하고 날씨와 현장 통제 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 16,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "산동교친수공원",
+            "originalAddress": "북구 동림동 130-15",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주문화예술인문스토리플랫폼 · 산동교친수공원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/산동교친수공원",
+          "method": "시설 이름·주소와 문화장소 기본정보 좌표 대조",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "자료의 시설 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 산동교친수공원 북구 동림동 130-15"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-17",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.841631,
+          35.153607
+        ]
+      },
+      "properties": {
+        "id": "forest-17",
+        "name": "상무시민공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "숲과 조각이 어우러진 공원입니다. 넓은 야외 공간에서 자연을 관찰하고 아이와 숲놀이를 즐겨보세요.",
+        "address": "서구 상무공원로 101 / 치평동 1162",
+        "sourceAddress": "서구 치평동 1162",
+        "activities": [
+          "나무와 풀 관찰하며 뛰놀기",
+          "소나무 숨바꼭질",
+          "다양한 새 만나기",
+          "떨어진 자연물로 꽃팔찌 만들기",
+          "숲 소리 듣기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 17,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "상무시민공원",
+            "originalAddress": "서구 치평동 1162",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010606).png",
+            "page": 31,
+            "originalName": "상무시민공원",
+            "originalAddress": "광주광역시 서구 치평동 1162",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010625).png",
+            "page": 35,
+            "originalName": "상무시민공원",
+            "originalAddress": "광주광역시 서구 치평동 1162",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 상무시민공원",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=1168",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-34"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 관광페이지 myMarkerLat/myMarkerLng에서 추출. 첨부의 상무시민공원과 일치.",
+          "에너지파크 해담마루는 공원 북측 별도 목적지로 표시."
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=1168",
+        "mapQuery": "광주 상무시민공원 서구 상무공원로 101 / 치평동 1162",
+        "activityNote": "책자에 실린 활동을 바탕으로 현장 규칙에 맞게 표현했습니다. 자연물을 꺾거나 채집하기보다 떨어진 재료를 이용해 주세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-18",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8360692,
+          35.1938288
+        ]
+      },
+      "properties": {
+        "id": "forest-18",
+        "name": "생태휴양공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 신창동의 생태휴양공원입니다. 주변 자연을 살펴보며 가족이 쉬어가는 나들이를 계획해 보세요.",
+        "address": "광산구 신창동 1262",
+        "sourceAddress": "광산구 신창동 1262",
+        "activities": [
+          "자연의 소리 들어보기",
+          "나뭇잎 색 비교하기",
+          "산책하며 풍경 관찰하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 18,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "생태휴양공원",
+            "originalAddress": "광산구 신창동 1262",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 생태휴양공원",
+          "url": "https://www.openstreetmap.org/way/961763163",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 생태휴양공원 광산구 신창동 1262"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7994819,
+          35.1455736
+        ]
+      },
+      "properties": {
+        "id": "forest-19",
+        "name": "송정공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 송정공원로의 공원입니다. 산책할 구간과 진입 위치를 살펴보고 아이와 야외 활동을 준비해 보세요.",
+        "address": "광산구 송정공원로 8-23",
+        "sourceAddress": "광산구 송정공원로 8-23",
+        "activities": [
+          "나무와 그늘 관찰하기",
+          "가족 산책길 정하기",
+          "마음에 드는 풍경 그리기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 19,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "송정공원",
+            "originalAddress": "광산구 송정공원로 8-23",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "한국학중앙연구원 광주문화예술인문스토리플랫폼 송정공원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/%EC%86%A1%EC%A0%95%EA%B3%B5%EC%9B%90",
+          "sourceDate": null,
+          "method": "institutional-poi-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 대표 위치",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "AKS 기본 정보 표에 명시된 위경도. 첨부 주소 송정공원로8-23과 정확히 일치.",
+          "광주시 환경 공원 소개에서도 같은 주소를 사용함. 금봉산·송정공원 남측 대표 위치.",
+          "국가공원표준자료 좌표는 신촌동산95-9/10을 기준으로 더 북쪽에 있으므로 첨부와 주소가 정확히 일치하는 대표점 채택."
+        ],
+        "website": "https://www.gwangju.go.kr/envi/contentsView.do?pageId=envi30",
+        "mapQuery": "광주 송정공원 광산구 송정공원로 8-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-20",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9432133,
+          35.1797199
+        ]
+      },
+      "properties": {
+        "id": "forest-20",
+        "name": "시화문화마을 각화제",
+        "district": "북구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "시화문화마을 주변 각화제의 풍경을 살펴보는 목적지입니다. 저수지와 마을은 방문 동선을 구분해 확인하세요.",
+        "address": "북구 각화대로 81 일대 / 각화제",
+        "sourceAddress": "북구 각화대로 81",
+        "activities": [
+          "허용된 산책길에서 물가 관찰하기",
+          "풍경을 짧은 문장으로 표현하기",
+          "주변 문화 안내 살펴보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "물가·전망 구간에서는 안내된 길을 이용하고 날씨와 현장 통제 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 20,
+            "filename": "20261101_101035.jpg",
+            "page": 92,
+            "originalName": "시화문화마을 각화제",
+            "originalAddress": "북구 각화대로 81",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 각화제 저수지",
+          "url": "https://www.openstreetmap.org/way/485033334",
+          "sourceDate": null,
+          "method": "osm-reservoir-representative",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "각화제 위치 표시 · 산책로 입구는 지도에서 확인",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "gwangju-osm-more.json의 실제 각화제 natural=water,water=reservoir 경계 center.",
+          "지도 위치 설명용 저수지 대표점으로 물속에 해당할 수 있어 절대 차량·도보 길찾기의 좌표 목적지로 전달하지 말 것.",
+          "길찾기는 각화제 또는 시화문화마을 명칭 검색으로 연결하여 지도 서비스에서 접근 지점을 선택.",
+          "첨부 각화대로81은 시화문화마을 공식 관광 안내 주소이며, 공식 관광지도 [126.9393477,35.179903]는 마을 서측 대표점. 각화제 자체 좌표와 구분."
+        ],
+        "directionPolicy": "search-only",
+        "noticeLabel": "각화제 산책 진입로 확인",
+        "mapQuery": "광주 북구 각화제",
+        "website": "https://tour.gwangju.go.kr/home/tour/info/village/002.cs?act=view&infoId=252"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-21",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8132443,
+          35.19713378
+        ]
+      },
+      "properties": {
+        "id": "forest-21",
+        "name": "신완공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 장덕동의 공원입니다. 아이와 동네 자연을 살펴보며 걷고 쉴 장소로 알아보세요.",
+        "address": "전남광주통합특별시 광산구 장덕동 1048",
+        "sourceAddress": "광산구 장덕동 1048",
+        "activities": [
+          "그늘과 햇볕 비교하기",
+          "공원에서 계절의 색 찾기",
+          "가족과 짧게 걷기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 21,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "신완공원",
+            "originalAddress": "광산구 장덕동 1048",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 신완",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00084"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 신완공원 전남광주통합특별시 광산구 장덕동 1048"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-22",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8389853,
+          35.1984279
+        ]
+      },
+      "properties": {
+        "id": "forest-22",
+        "name": "신창가족공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 왕버들로의 가족공원입니다. 함께 걷고 자연을 관찰하는 가까운 야외 나들이를 계획해 보세요.",
+        "address": "광산구 왕버들로251번길 66",
+        "sourceAddress": "광산구 왕버들로251번길 66",
+        "activities": [
+          "가족 산책길 정하기",
+          "잎의 모양 비교하기",
+          "공원 풍경 그리기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 22,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "신창가족공원",
+            "originalAddress": "광산구 왕버들로251번길 66",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 신창가족공원",
+          "url": "https://www.openstreetmap.org/way/1033763005",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 신창가족공원 광산구 왕버들로251번길 66"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-23",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8429910525,
+          35.2238422809
+        ]
+      },
+      "properties": {
+        "id": "forest-23",
+        "name": "쌍암공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "도심 가까이에서 자연을 만나는 쌍암공원입니다. 잎과 꽃을 관찰하며 아이와 자연 놀이를 준비해 보세요.",
+        "address": "전남광주통합특별시 광산구 첨단중앙로 182번길39",
+        "sourceAddress": "광산구 쌍암동 653-1",
+        "activities": [
+          "떨어진 잎으로 나비 모양 만들기",
+          "토끼풀꽃 관찰하기",
+          "손등 네잎클로버 놀이"
+        ],
+        "activitySource": "provided",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 23,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "쌍암공원",
+            "originalAddress": "광산구 쌍암동 653-1",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010638).png",
+            "page": 37,
+            "originalName": "쌍암공원",
+            "originalAddress": "광주광역시 광산구 쌍암동 653-1",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 쌍암",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00033"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 쌍암공원 전남광주통합특별시 광산구 첨단중앙로 182번길39",
+        "activityNote": "책자에 실린 활동을 바탕으로 현장 규칙에 맞게 표현했습니다. 자연물을 꺾거나 채집하기보다 떨어진 재료를 이용해 주세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-24",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8255041,
+          35.1847365
+        ]
+      },
+      "properties": {
+        "id": "forest-24",
+        "name": "아름공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 수완로의 아름공원입니다. 동네 공원에서 산책하고 아이와 자연을 살펴보는 시간을 계획해 보세요.",
+        "address": "전남광주통합특별시 광산구 수완로9번길 29-1",
+        "sourceAddress": "광산구 수완로9번길 29-1",
+        "activities": [
+          "나뭇잎 색 찾아보기",
+          "산책하며 재미있는 모양 찾기",
+          "자연의 소리 듣기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 24,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "아름공원",
+            "originalAddress": "광산구 수완로9번길 29-1",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 아름",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00096"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 아름공원 전남광주통합특별시 광산구 수완로9번길 29-1"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-25",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8792537,
+          35.14159896
+        ]
+      },
+      "properties": {
+        "id": "forest-25",
+        "name": "염주근린공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "서구 화정동의 염주근린공원입니다. 아이와 걷고 주변 나무를 관찰하는 가까운 나들이 장소입니다.",
+        "address": "서구 염화로134번길 18 / 화정동 843",
+        "sourceAddress": "서구 화정동 843",
+        "activities": [
+          "산책길의 나무 살펴보기",
+          "계절에 따라 달라진 풍경 찾기",
+          "공원에서 함께 쉬기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 25,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "염주근린공원",
+            "originalAddress": "서구 화정동 843",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 염주 근린공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "sourceDate": "2026-08-06",
+          "method": "official-dataset-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "2026-08-06 서구청 제공 MANAGE_NO29140-00001,공원구분 근린공원,지번 화정동843과 첨부 주소가 정확히 일치.",
+          "같은 데이터에 염주라는 이름의 어린이공원(화정동895)이 따로 있으므로 혼동 금지.",
+          "명칭이 일치하는 OSM 공원 경계 way486772712 대표점 [126.87883014975588,35.14207935]와 수십 m 이내로 교차 확인. 공식 데이터 대표좌표 채택."
+        ],
+        "mapQuery": "광주 염주근린공원 서구 염화로134번길 18 / 화정동 843"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-26",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.863365314308,
+          35.1896967528221
+        ]
+      },
+      "properties": {
+        "id": "forest-26",
+        "name": "영산강대상공원 유아숲체험원",
+        "district": "북구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "영산강대상공원의 유아숲체험원입니다. 숲놀이와 자연 관찰을 계획할 때 체험 운영 안내를 함께 확인하세요.",
+        "address": "북구 북문대로272번길 16",
+        "sourceAddress": "북구 북문대로 272번길 16",
+        "activities": [
+          "숲 소리 듣기",
+          "떨어진 잎의 모양 살펴보기",
+          "숲체험 프로그램 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "숲길 이용과 예약형 숲체험은 다를 수 있어요. 아이의 걷기 수준에 맞는 구간과 체험 일정을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 26,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "영산강대상공원 유아숲체험원",
+            "originalAddress": "북구 북문대로 272번길 16",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 영산강대상근린공원 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%98%81%EC%82%B0%EA%B0%95%EB%8C%80%EC%83%81&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 대표 위치",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "숲교육포털 fn_mapMarker 명시값. 첨부 주소와 일치."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%98%81%EC%82%B0%EA%B0%95%EB%8C%80%EC%83%81&pageIndex=1",
+        "mapQuery": "광주 영산강대상공원 유아숲체험원 북구 북문대로272번길 16"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-27",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8273934,
+          35.19910501
+        ]
+      },
+      "properties": {
+        "id": "forest-27",
+        "name": "완동공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 수완동의 공원입니다. 가까운 공원에서 아이와 걷고 계절 풍경을 관찰해 보세요.",
+        "address": "전남광주통합특별시 광산구 수완동 919",
+        "sourceAddress": "광산구 수완동 919",
+        "activities": [
+          "계절의 색 찾아보기",
+          "그늘 모양 관찰하기",
+          "걷고 쉬는 산책 계획하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 27,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "완동공원",
+            "originalAddress": "광산구 수완동 919",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 완동",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00091"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 완동공원 전남광주통합특별시 광산구 수완동 919"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-28",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.890483,
+          35.1835209
+        ]
+      },
+      "properties": {
+        "id": "forest-28",
+        "name": "용봉초록습지",
+        "district": "북구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "북구 용봉동의 초록습지입니다. 물과 식물, 주변 생물을 눈으로 관찰하는 생태 나들이를 준비해 보세요.",
+        "address": "북구 용봉동 1027",
+        "sourceAddress": "북구 용봉동 1027",
+        "activities": [
+          "습지 식물의 모양 살펴보기",
+          "생물을 만지지 않고 관찰하기",
+          "습지가 하는 일 이야기하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "물가·전망 구간에서는 안내된 길을 이용하고 날씨와 현장 통제 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 28,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "용봉초록습지",
+            "originalAddress": "북구 용봉동 1027",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 용봉초록습지",
+          "url": "https://www.openstreetmap.org/way/637172242",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "습지의 대표 위치예요. 관찰로 입구와 허용된 관찰 구간은 지도에서 확인하세요.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "directionPolicy": "search-only",
+        "noticeLabel": "습지 관찰로 입구 확인",
+        "mapQuery": "광주 북구 용봉초록습지"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-29",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8166443117,
+          35.1704109204
+        ]
+      },
+      "properties": {
+        "id": "forest-29",
+        "name": "운남근린공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 목련로의 근린공원입니다. 아이와 가볍게 걷고 주변 자연을 만나는 동네 나들이로 살펴보세요.",
+        "address": "전남광주통합특별시 광산구 목련로 156",
+        "sourceAddress": "광산구 목련로 156",
+        "activities": [
+          "산책하며 잎 모양 찾기",
+          "자연의 색으로 이야기 만들기",
+          "가족과 공원에서 쉬기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 29,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "운남근린공원",
+            "originalAddress": "광산구 목련로 156",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 운남",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00071"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 운남근린공원 전남광주통합특별시 광산구 목련로 156"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-30",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8644,
+          35.18325
+        ]
+      },
+      "properties": {
+        "id": "forest-30",
+        "name": "운암산",
+        "district": "북구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "북구 동림동의 산입니다. 산 전체 위치와 실제 등산로 입구를 구분하고 아이에게 맞는 산책 구간을 먼저 정하세요.",
+        "address": "북구 동림동 운암산",
+        "sourceAddress": "북구 동림동",
+        "activities": [
+          "허용된 숲길에서 자연 관찰하기",
+          "걷는 거리와 쉴 곳 정하기",
+          "숲에서 들리는 소리 찾기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "지도에는 산 정상 위치를 표시해요. 산책로 입구·개방 구간·경사를 확인하고 아이의 걷기 수준에 맞는 길을 선택하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 30,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "운암산",
+            "originalAddress": "북구 동림동",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 운암산 정상",
+          "url": "https://www.openstreetmap.org/node/10250287512",
+          "sourceDate": null,
+          "method": "osm-peak",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "운암산 정상 위치 · 방문할 입구는 지도에서 확인",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "gwangju-osm-pois.json에서 name=운암산,natural=peak,ele=133.9인 실제 산봉우리 노드.",
+          "정상 위치 표시일 뿐 유아 동반 산책 출발점·진입로 또는 주차장이 아님.",
+          "길찾기는 운암산 산책로/입구 명칭 검색만 사용하고 정상 좌표로 차량 경로를 만들지 말 것."
+        ],
+        "directionPolicy": "search-only",
+        "noticeLabel": "산 위치 · 탐방로 입구 확인",
+        "mapQuery": "광주 북구 운암산 등산로"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-31",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.816333247427,
+          35.1912328396163
+        ]
+      },
+      "properties": {
+        "id": "forest-31",
+        "name": "원당산근린공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 장덕동의 원당산근린공원입니다. 아이와 걸을 길을 정하고 숲과 주변 풍경을 살펴보세요.",
+        "address": "광산구 장덕로96번길 15 / 장덕동 1295 일대",
+        "sourceAddress": "광산구 장덕동 21-1",
+        "activities": [
+          "가족에게 맞는 산책길 고르기",
+          "나무와 풀의 모양 관찰하기",
+          "계절 풍경 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 31,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "원당산근린공원",
+            "originalAddress": "광산구 장덕동 21-1",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 원당산근린공원 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%9B%90%EB%8B%B9%EC%82%B0&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "원당산근린공원 내 유아숲체험원 기준",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "숲교육포털의 원당산근린공원 유아숲체험원 대표 위치를 공원 내부 방문 기준점으로 사용.",
+          "전국도시공원표준데이터 2026-06-29,원당산공원 관리번호29200-00089,장덕동1295 좌표 [126.8163332,35.19123284]와 일치.",
+          "첨부 장덕동21-1은 다른 대표 지번이므로 자료 원문 보존. 산림포털/국가공원자료가 교차 확인하는 공원 내부 지점을 안내.",
+          "2026-07-29 광산구 원당산 레코드 위도35.1995444257은 다른 좌표와 큰 차이가 나므로 배제."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%9B%90%EB%8B%B9%EC%82%B0&pageIndex=1",
+        "mapQuery": "광주 원당산근린공원 광산구 장덕로96번길 15 / 장덕동 1295 일대"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-32",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.871443495857,
+          35.1687987347845
+        ]
+      },
+      "properties": {
+        "id": "forest-32",
+        "name": "유적근린공원 유아숲체험원",
+        "district": "서구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "유적근린공원의 유아숲체험원입니다. 영유아와 함께 나뭇잎과 자연물을 관찰하며 숲놀이를 해볼 수 있습니다.",
+        "address": "서구 동천동 660",
+        "sourceAddress": "서구 동천동 660",
+        "activities": [
+          "나뭇잎으로 놀이하기",
+          "나무 징검다리 건너기",
+          "떨어진 나뭇가지로 집 모양 만들기"
+        ],
+        "activitySource": "provided",
+        "visitNote": "숲길 이용과 예약형 숲체험은 다를 수 있어요. 아이의 걷기 수준에 맞는 구간과 체험 일정을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 32,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "유적근린공원 유아숲체험원",
+            "originalAddress": "서구 동천동 660",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          },
+          {
+            "sourceId": "place-detail",
+            "filename": "image(20261101-010522).png",
+            "page": 23,
+            "originalName": "유적근린공원",
+            "originalAddress": "광주광역시 서구 동천동 660",
+            "collection": "place-detail",
+            "label": "제공된 장소별 소개 사진"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 유적근린공원 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%9C%A0%EC%A0%81%EA%B7%BC%EB%A6%B0%EA%B3%B5%EC%9B%90&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [
+          "유적근린공원"
+        ],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 지도 fn_mapMarker 함수의 시설명과 주소가 첨부와 일치.",
+          "최신 공원표준데이터 유적 항목의 지번은 동천동660이나 도로명·좌표는 농성동으로 엇갈려 사용하지 않음."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%EC%9C%A0%EC%A0%81%EA%B7%BC%EB%A6%B0%EA%B3%B5%EC%9B%90&pageIndex=1",
+        "mapQuery": "광주 유적근린공원 유아숲체험원 서구 동천동 660",
+        "activityNote": "책자에 실린 활동을 바탕으로 현장 규칙에 맞게 표현했습니다. 자연물을 꺾거나 채집하기보다 떨어진 재료를 이용해 주세요."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-33",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8997969,
+          35.1729782
+        ]
+      },
+      "properties": {
+        "id": "forest-33",
+        "name": "전남대학교수목원",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "전남대학교 용봉캠퍼스의 수목원입니다. 식물 이름과 모양을 살펴보는 자연 관찰 나들이를 준비해 보세요.",
+        "address": "북구 용봉로 77",
+        "sourceAddress": "북구 용봉로 77",
+        "activities": [
+          "식물 이름표 읽기",
+          "잎과 나무껍질의 모양 관찰하기",
+          "관찰한 식물 기록하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 33,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "전남대학교수목원",
+            "originalAddress": "북구 용봉로 77",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 수목원",
+          "url": "https://www.openstreetmap.org/way/1110335185",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 전남대학교수목원 북구 용봉로 77"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-34",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8634705,
+          35.128041
+        ]
+      },
+      "properties": {
+        "id": "forest-34",
+        "name": "중앙공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "서구 풍암동 일대의 넓은 중앙공원입니다. 풍암호수와 공원 각 구간의 위치를 구분해 가족 산책을 계획하세요.",
+        "address": "서구 풍암동 산152 일원",
+        "sourceAddress": "서구 풍암동 460",
+        "activities": [
+          "방문 가능한 산책 구간 알아보기",
+          "계절 풍경 관찰하기",
+          "공원의 나무 살펴보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "넓은 공원의 대표 위치예요. 공원 조성으로 이용 가능한 구간이 달라질 수 있으니 진입로와 개방 구간을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 34,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "중앙공원",
+            "originalAddress": "서구 풍암동 460",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "한국학중앙연구원 광주문화예술인문스토리플랫폼 중앙공원",
+          "url": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/%EC%A4%91%EC%95%99%EA%B3%B5%EC%9B%90",
+          "sourceDate": null,
+          "method": "institutional-poi-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-39"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "기본 정보 표의 위경도 명시값. 현재 장소별 현장 검증값이 아닌 출처상 대표 위치.",
+          "광범위한 공원으로 첨부의 풍암동460과 플랫폼의 풍암동산152는 다른 대표 주소. 원문 주소를 유지하고 대표 위치임을 표시.",
+          "풍암호수공원과 포함 관계에 있으나 서로 다른 목록 항목으로 유지.",
+          "공원 조성 사업으로 이용 가능한 구간이 달라질 수 있으므로 방문 전에 개방 구간을 확인. 좌표를 주출입구로 표시하지 말 것."
+        ],
+        "directionPolicy": "search-only",
+        "noticeLabel": "공사·개방 구간 확인",
+        "mapQuery": "광주 서구 중앙공원"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-35",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8318550772,
+          35.2174038637
+        ]
+      },
+      "properties": {
+        "id": "forest-35",
+        "name": "첨단응암공원",
+        "district": "광산구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "광산구 임방울대로의 첨단응암공원입니다. 아이와 가까운 야외 공간에서 산책하고 주변 자연을 살펴보세요.",
+        "address": "전남광주통합특별시 광산구 임방울대로 673-12",
+        "sourceAddress": "광산구 임방울대로 673-12",
+        "activities": [
+          "공원 산책길 정하기",
+          "잎의 모양 비교하기",
+          "자연의 색 찾기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 35,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "첨단응암공원",
+            "originalAddress": "광산구 임방울대로 673-12",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 응암",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-07-29",
+          "recordId": "29200-00036"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 첨단응암공원 전남광주통합특별시 광산구 임방울대로 673-12"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-36",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9178358,
+          35.1636139
+        ]
+      },
+      "properties": {
+        "id": "forest-36",
+        "name": "푸른길 산책로",
+        "district": "동구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "첨부 자료의 중앙로 구간 푸른길 산책로입니다. 동명동의 푸른길공원 항목과 구분해 방문할 구간을 확인하세요.",
+        "address": "동구 중앙로349-8 부근 푸른길공원 계림동 구간",
+        "sourceAddress": "동구 중앙로 349-8",
+        "activities": [
+          "걷고 싶은 짧은 구간 정하기",
+          "도심 속 나무 관찰하기",
+          "철길과 공원의 변화 이야기하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "중앙로의 계림동 푸른길 구간을 표시했어요. 도로를 건너는 곳과 산책 시작 지점을 지도에서 확인하고 아이에게 맞는 거리를 정하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 36,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "푸른길 산책로",
+            "originalAddress": "동구 중앙로 349-8",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 푸른길공원 계림동 구간",
+          "url": "https://www.openstreetmap.org/way/1388264524",
+          "sourceDate": null,
+          "method": "osm-park-section-representative",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "푸른길공원 계림동 구간 대표 위치",
+        "aliases": [],
+        "relatedIds": [
+          "culture-18"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "gwangju-osm-pois.json name=푸른길공원,leisure=park의 북쪽 계림동 구간 대표점.",
+          "광주환경운동연합 공식 2025-06-05 행사 안내는 중앙로349-8 사무실 뒤편 푸른길공원을 행사 장소로 설명. 같은 단체 주소는 광주시 환경/환경교육통합시스템에서 교차 확인.",
+          "주소349-8의 건물 자체를 산책로로 표시하지 않고 바로 인접한 실제 named 공원 구간을 표시함.",
+          "AKS 광주환경운동연합 좌표 [126.9193849,35.1630098]는 단체 사무실의 참고 위치. 산책로 입구나 주차장 좌표로 사용하지 않음.",
+          "문화목록 푸른길공원 동명동284-16과는 같은 선형 공원의 다른 구간. 이 forest 항목은 계림동 구간으로 독립 유지.",
+          "길찾기는 푸른길공원 계림동/광주환경운동연합 부근 명칭 검색으로 연결."
+        ],
+        "directionPolicy": "search-only",
+        "website": "https://gj.ekfem.or.kr/posts/70te6EV",
+        "mapQuery": "광주 푸른길공원 계림동 광주환경운동연합",
+        "noticeLabel": "산책 시작 구간 확인"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-37",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.90147745235325,
+          35.109013922112986
+        ]
+      },
+      "properties": {
+        "id": "forest-37",
+        "name": "풀빛공원 유아숲체험원",
+        "district": "남구",
+        "category": "forest",
+        "environment": "outdoor",
+        "summary": "남구 노대동 풀빛공원의 유아숲체험원입니다. 자연 관찰과 숲놀이를 계획하며 프로그램 안내를 살펴보세요.",
+        "address": "남구 효덕로 314-44",
+        "sourceAddress": "남구 노대동 731",
+        "activities": [
+          "떨어진 잎의 모양 비교하기",
+          "숲에서 들리는 소리 찾기",
+          "신청 가능한 숲체험 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "숲길 이용과 예약형 숲체험은 다를 수 있어요. 아이의 걷기 수준에 맞는 구간과 체험 일정을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 37,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "풀빛공원 유아숲체험원",
+            "originalAddress": "남구 노대동 731",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "산림청 숲교육포털 풀빛공원 유아숲체험원",
+          "url": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%ED%92%80%EB%B9%9B&pageIndex=1",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 대표 위치",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "숲교육포털 fn_mapMarker 명시값. 첨부 지번 노대동731에 해당하는 풀빛공원 내 숲체험원.",
+          "다른 구의 이름이 비슷한 공원과 혼동하지 않음."
+        ],
+        "website": "https://edu.forest.go.kr/eis/ils/selectEdctnInsttMapList.do?searchWord=%ED%92%80%EB%B9%9B&pageIndex=1",
+        "mapQuery": "광주 풀빛공원 유아숲체험원 남구 효덕로 314-44"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-38",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.883812,
+          35.129327
+        ]
+      },
+      "properties": {
+        "id": "forest-38",
+        "name": "풍암생활체육공원",
+        "district": "서구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "서구 풍암동의 생활체육공원입니다. 야외에서 몸을 움직이고 가까운 어린이생태학습도서관도 함께 알아볼 수 있습니다.",
+        "address": "서구 풍암동 20 일원",
+        "sourceAddress": "서구 풍암동 36",
+        "activities": [
+          "이용 가능한 공간에서 가볍게 움직이기",
+          "공원 산책하기",
+          "도서관과 연계해 생태 책 읽기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 38,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "풍암생활체육공원",
+            "originalAddress": "서구 풍암동 36",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 풍암생활체육공원",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=278",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "culture-32"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 관광페이지 myMarkerLat/myMarkerLng에서 추출.",
+          "관광포털은 풍암동20을 안내하며 첨부 풍암동36은 공원 부근 공영주차장 주소로 확인되는 다른 대표 지번. 공원명으로 확인한 공식 대표 위치 사용.",
+          "어린이생태학습도서관과 가까우나 별도 목적지로 유지."
+        ],
+        "website": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=278",
+        "mapQuery": "광주 풍암생활체육공원 서구 풍암동 20 일원"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-39",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8707485,
+          35.1299485
+        ]
+      },
+      "properties": {
+        "id": "forest-39",
+        "name": "풍암호수공원",
+        "district": "서구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "중앙공원 안의 풍암호수 주변 공간입니다. 호수 풍경을 살펴보고 이용 가능한 산책 구간을 확인해 보세요.",
+        "address": "서구 월드컵서로 71-3(풍암동)",
+        "sourceAddress": "서구 풍암동 460",
+        "activities": [
+          "개방된 구간에서 호수 풍경 보기",
+          "물가 식물 관찰하기",
+          "가족 산책 사진 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "호수 주변 공사로 산책 동선과 개방 구간이 달라질 수 있어요. 관리기관의 최신 안내와 현장 우회 동선을 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 39,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "풍암호수공원",
+            "originalAddress": "서구 풍암동 460",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "광주관광 풍암호수",
+          "url": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=279",
+          "sourceDate": null,
+          "method": "official-map-marker",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "시설 또는 공원 대표 위치이며, 출입구·주차장 위치나 실시간 개방 여부를 보증하지 않습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-34"
+        ],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공식 관광페이지 myMarkerLat/myMarkerLng에서 추출.",
+          "첨부 풍암동460은 중앙공원 전체를 가리키는 대표 주소이며, 관광포털은 월드컵서로71-3을 안내.",
+          "중앙공원 내부에 있는 호수공원으로 중앙공원과 별도 목적지 유지.",
+          "중앙공원·호수 주변 공사로 개방 구간이 달라질 수 있어 방문 전 관리기관에 개방 여부 확인을 안내. 운영시간을 확정해서 넣지 않음.",
+          "2025-08-22 광주시 발표를 인용한 뉴스1 보도에 따르면 2027년까지 개선 공사, 공사 중 산책로 부분 개방과 우회로 운영을 계획. 공사 중·개방 구간 확인 안내가 필요하며 전면 상시개방 또는 확정 전체폐쇄로 표시하지 않음."
+        ],
+        "directionPolicy": "search-only",
+        "noticeLabel": "공사·개방 구간 확인",
+        "mapQuery": "광주 서구 풍암호수공원",
+        "website": "https://tour.gwangju.go.kr/home/tour/info/park/003.cs?act=view&infoId=279"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-40",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.819001,
+          35.18597183
+        ]
+      },
+      "properties": {
+        "id": "forest-40",
+        "name": "풍영정천변길공원",
+        "district": "광산구",
+        "category": "landscape",
+        "environment": "outdoor",
+        "summary": "광산구 신가동의 풍영정천 주변 공원입니다. 하천과 가까운 산책 구간을 확인해 나들이를 준비하세요.",
+        "address": "광산구 풍영정천자전거길1030 / 신가동1051",
+        "sourceAddress": "광산구 신가동 1051",
+        "activities": [
+          "하천 주변 풍경 살펴보기",
+          "산책길의 나무 관찰하기",
+          "걷고 쉬는 짧은 코스 정하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "물가·전망 구간에서는 안내된 길을 이용하고 날씨와 현장 통제 안내를 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 40,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "풍영정천변길공원",
+            "originalAddress": "광산구 신가동 1051",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "전국관광지정보표준데이터 별밤미술관 in 수완",
+          "url": "https://www.data.go.kr/data/15021141/standard.do",
+          "sourceDate": "2026-07-28",
+          "method": "official-in-park-facility-coordinate",
+          "checkedAt": "2026-11-01"
+        },
+        "positionNote": "풍영정천변길공원 내 별밤미술관 기준",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "positionEvidenceNotes": [
+          "공공데이터포털 HTML 공개 표에서 별밤미술관in수완 주소 신가동1051,위도35.18597183,경도126.819001을 직접 확인.",
+          "첨부와 주소가 정확히 일치하며 광산구 공식 공지는 수완 별밤미술관의 위치를 풍영정천변길공원으로 명시.",
+          "따라서 공원 안의 별밤미술관을 방문 기준점으로 사용. 별밤미술관을 첨부에 없는 추가 목적지로 생성한 것은 아님.",
+          "길게 이어진 공원이므로 전국공원정보의 신가동1302/수완동1411 기준 대표점과 다를 수 있음. 첨부 지번에 맞는 공원 내부 시설 기준점을 우선."
+        ],
+        "website": "https://www.gwangsan.go.kr/boardView.do?boardId=NEWS_NEW&pageId=www3&seq=6501376",
+        "mapQuery": "광주 풍영정천변길공원 광산구 풍영정천자전거길1030 / 신가동1051"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-41",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8930303,
+          35.2128071
+        ]
+      },
+      "properties": {
+        "id": "forest-41",
+        "name": "한새봉농업생태공원",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 소해로의 농업생태공원입니다. 농업과 자연을 함께 관찰하는 생태 나들이를 알아볼 수 있는 곳입니다.",
+        "address": "북구 소해로 61",
+        "sourceAddress": "북구 소해로 61",
+        "activities": [
+          "논과 주변 생태 관찰하기",
+          "계절별 농사 이야기 나누기",
+          "참여 가능한 생태 프로그램 알아보기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 41,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "한새봉농업생태공원",
+            "originalAddress": "북구 소해로 61",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 한새봉 농업생태공원",
+          "url": "https://www.openstreetmap.org/way/503885214",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 한새봉농업생태공원 북구 소해로 61"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-42",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.867455,
+          35.104969
+        ]
+      },
+      "properties": {
+        "id": "forest-42",
+        "name": "효천근린공원",
+        "district": "남구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "남구 임암동의 효천근린공원입니다. 아이와 공원 주변 자연을 살펴보며 동네 산책을 계획해 보세요.",
+        "address": "전남광주통합특별시 남구 효천3로 38",
+        "sourceAddress": "남구 임암동 산51",
+        "activities": [
+          "산책길의 나무 관찰하기",
+          "계절의 색 찾아보기",
+          "공원에서 함께 쉬기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 42,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "효천근린공원",
+            "originalAddress": "남구 임암동 산51",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 효천공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-08-05",
+          "recordId": "29155-00044"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-44"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 효천근린공원 전남광주통합특별시 남구 효천3로 38"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-43",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.90458,
+          35.105132
+        ]
+      },
+      "properties": {
+        "id": "forest-43",
+        "name": "효천물빛근린공원",
+        "district": "남구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "남구 효우로의 효천물빛근린공원입니다. 효천물빛노닐터와 주소가 다른 별도 공원으로 살펴보세요.",
+        "address": "전남광주통합특별시 남구 효우로93번길 2",
+        "sourceAddress": "남구 효우로93번길 2",
+        "activities": [
+          "공원 산책하기",
+          "나무와 풀의 모양 비교하기",
+          "마음에 드는 풍경 남기기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 43,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "효천물빛근린공원",
+            "originalAddress": "남구 효우로93번길 2",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 물빛공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-08-05",
+          "recordId": "29155-00022"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 효천물빛근린공원 전남광주통합특별시 남구 효우로93번길 2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-44",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8646449,
+          35.104534
+        ]
+      },
+      "properties": {
+        "id": "forest-44",
+        "name": "효천물빛노닐터",
+        "district": "남구",
+        "category": "experience",
+        "environment": "outdoor",
+        "summary": "남구 효천로의 야외 놀이 공간입니다. 효우로의 물빛근린공원과 위치가 다르므로 방문할 장소를 구분해 보세요.",
+        "address": "남구 효천로 140",
+        "sourceAddress": "남구 효천로 140",
+        "activities": [
+          "현장 안내에 맞게 놀이하기",
+          "가족과 주변 산책하기",
+          "계절별 놀이 운영 안내 확인하기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "야외 놀이와 계절형 물놀이 운영 여부는 별도예요. 현재 운영 구간·시간·대상은 현장 또는 관리기관에서 확인하세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 44,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "효천물빛노닐터",
+            "originalAddress": "남구 효천로 140",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "poi-matched",
+        "coordinateSource": {
+          "title": "OpenStreetMap 기여자 · 효천물빛노닐터",
+          "url": "https://www.openstreetmap.org/way/298762174",
+          "method": "이름이 확인된 시설 도형의 대표점",
+          "checkedAt": "2026-11-01",
+          "license": "ODbL 1.0"
+        },
+        "positionNote": "시설·공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [
+          "forest-42"
+        ],
+        "informationSources": [],
+        "mapQuery": "광주 효천물빛노닐터 남구 효천로 140"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "forest-45",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9278995,
+          35.1795632
+        ]
+      },
+      "properties": {
+        "id": "forest-45",
+        "name": "희망어린이공원",
+        "district": "북구",
+        "category": "park",
+        "environment": "outdoor",
+        "summary": "북구 두암동의 어린이공원입니다. 동네에서 아이와 야외 활동을 계획할 때 살펴보세요.",
+        "address": "전남광주통합특별시 북구 두암동 564-1",
+        "sourceAddress": "북구 두암동 564-1",
+        "activities": [
+          "현장 안내에 따라 놀이하기",
+          "주변 나무 관찰하기",
+          "가족과 짧게 걷기"
+        ],
+        "activitySource": "suggestion",
+        "visitNote": "현장 안내에 맞춰 이용하고, 산책 구간과 편의시설 위치를 방문 전에 살펴보세요.",
+        "sourceRefs": [
+          {
+            "sourceId": "forest-map",
+            "number": 45,
+            "filename": "20261101_101037.jpg",
+            "page": 93,
+            "originalName": "희망어린이공원",
+            "originalAddress": "북구 두암동 564-1",
+            "collection": "forest-map",
+            "label": "우리 동네 유아숲체험원 — 숲·공원 목록"
+          }
+        ],
+        "locationStatus": "address-matched",
+        "coordinateSource": {
+          "title": "전국도시공원정보표준데이터 · 희망어린이공원",
+          "url": "https://www.data.go.kr/data/15012890/standard.do",
+          "method": "공원명·주소와 원문 위경도 대조",
+          "checkedAt": "2026-11-01",
+          "sourceDate": "2026-08-06",
+          "recordId": "29170-00014"
+        },
+        "positionNote": "공공자료의 공원 대표 위치이며 실제 출입구와 다를 수 있습니다.",
+        "aliases": [],
+        "relatedIds": [],
+        "informationSources": [],
+        "mapQuery": "광주 희망어린이공원 전남광주통합특별시 북구 두암동 564-1"
+      }
+    }
+  ]
+}

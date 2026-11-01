@@ -25,12 +25,12 @@ export class LayerSync {
 export class PendingMessages {
   constructor(limit=96){this.items=new Map();this.actions=[];this.limit=limit;}
   add(m) {
-    const key=m.type==='layer'||m.type==='raster'?`${m.type}:${m.id}`:['boundaries','camera','appearance','quality','visual','building-style','resize','sun'].includes(m.type)?m.type:null;
+    const key=m.type==='layer'||m.type==='raster'?`${m.type}:${m.id}`:['boundaries','family-extent','camera','appearance','quality','visual','building-style','resize','sun'].includes(m.type)?m.type:null;
     if(key){const old=this.items.get(key);this.items.set(key,m.type==='layer'&&!m.features&&old?{...old,...m}:m);return;}
     if(this.actions.length>=this.limit)throw Error('지도 초기화 대기 중 요청이 많습니다. 지도 준비 후 다시 실행하세요.');
     this.actions.push(m);
   }
-  drain(){const rank=m=>m.type==='boundaries'?0:m.type==='quality'||m.type==='visual'||m.type==='building-style'?1:m.type==='camera'?4:2;
+  drain(){const rank=m=>m.type==='boundaries'?0:m.type==='quality'||m.type==='visual'||m.type==='building-style'||m.type==='family-extent'?1:m.type==='camera'?4:2;
     const result=[...this.items.values()].sort((a,b)=>rank(a)-rank(b)).concat(this.actions);this.clear();return result;}
   clear(){this.items.clear();this.actions=[];}
 }
