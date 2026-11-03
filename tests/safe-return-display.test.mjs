@@ -7,6 +7,14 @@ const line=(id,type='MultiLineString')=>({type:'Feature',geometry:{type,coordina
 const point=(id,facilityType,coordinate=[126.855,35.15])=>({type:'Feature',geometry:{type:'Point',coordinates:coordinate},properties:{id:id+'-'+facilityType,routeId:id,routeName:'참고 귀갓길',facilityType}});
 const snapshot=()=>({type:'FeatureCollection',features:[line(first),line(second,'LineString'),point(first,'cctv'),point(first,'cctv-bell'),point(first,'logo-projector'),point(first,'route-sign')],metadata:{sourceName:'TEST ONLY 경찰 공개지도',sourceDate:'2026-08-13'}});
 
+test('optional CCTV display preserves route lines and non-camera markers',()=>{
+ const source=snapshot(),hidden=safeReturnMapFeatures(source,'all',{showCctv:false});
+ assert.equal(hidden.length,4);assert.ok(hidden.every(f=>!['cctv','cctv-bell'].includes(f.properties.facilityType)));
+ assert.equal(hidden.filter(f=>f.geometry.type!=='Point').length,2);
+ assert.equal(safeReturnMapFeatures(source,first,{showCctv:true}).length,5);
+ assert.equal(source.features.length,6);
+});
+
 test('reference lines and photo facilities have distinct colors and explicit source interpretation labels',()=>{
   const collection=snapshot(),before=structuredClone(collection),features=safeReturnMapFeatures(collection);
   assert.equal(features.length,6);assert.deepEqual(features.map(feature=>feature.properties.displayColor),['#f18720','#f18720','#9b3c74','#2358d5','#a56a14','#a56a14']);

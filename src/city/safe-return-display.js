@@ -4,10 +4,11 @@ export function isSafeReturnLine(feature){
  const geometry=feature?.geometry,lines=geometry?.type==='LineString'?[geometry.coordinates]:geometry?.type==='MultiLineString'?geometry.coordinates:[];
  return lines.length>0&&lines.length<=100&&lines.every(coordinates=>Array.isArray(coordinates)&&coordinates.length>=2&&coordinates.length<=5000&&coordinates.every(point)&&coordinates.some(p=>p[0]!==coordinates[0][0]||p[1]!==coordinates[0][1]));
 }
-export function safeReturnMapFeatures(collection,routeId='all'){
+export function safeReturnMapFeatures(collection,routeId='all',{showCctv=true}={}){
  const features=Array.isArray(collection?.features)?collection.features:[];
  return features.slice(0,500).flatMap((feature,index)=>{
   const p=feature?.properties||{},id=p.routeId||p.id,geometry=feature?.geometry;
+  if(!showCctv&&geometry?.type==='Point'&&['cctv','cctv-bell'].includes(p.facilityType))return [];
   if(typeof id!=='string'||routeId!=='all'&&id!==routeId)return [];
   const lines=geometry?.type==='LineString'?[geometry.coordinates]:geometry?.type==='MultiLineString'?geometry.coordinates:[];
   const line=isSafeReturnLine(feature);

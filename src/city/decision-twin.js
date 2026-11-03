@@ -9,6 +9,8 @@ import {escapeDecisionHtml as e, decisionWorkflowTitle, decisionSources, decisio
 const VIEW='decision-twin',LAYER='decision-twin-results',SAFE_RETURN_LAYER='safe-return-reference';
 const LIVING_TOPICS={care:{title:'돌봄·육아 생활지도',label:'돌봄·육아',preset:'childcare',intro:'어린이집·돌봄센터·수유실·도서관·장난감·놀이시설을 종류별로 찾으세요. 여성안심 탭에서 주변 생활안전시설도 볼 수 있습니다.',fallback:['childcare','kindergarten','kindergartens','childcare-centres','care-centres','childcare-official']},safety:{title:'여성안심 생활지도',label:'여성안심·생활안전',preset:'women-safety',intro:'공개된 비상벨·보안등·경찰관서 등의 위치와 자료 기준일을 함께 보고 현장 점검을 준비하세요.',fallback:['emergency-bells','emergency-bell','police','police-official','security-lights','security-light','toilets','toilet','cctv']}};
 const LIVING_COLORS=['#be5382','#1d7f78','#6f5ab4','#b17813','#2f69ac','#963d54'];
+const optionalDataset=(descriptor,kind)=>kind==='cctv'?/cctv/i.test(descriptor.id):/security-light/i.test(descriptor.id);
+const isOptionalDataset=descriptor=>optionalDataset(descriptor,'cctv')||optionalDataset(descriptor,'lighting');
 const COLORS={covered:'#687f96',uncovered:'#a74862',new:'#008575',lost:'#bd344b',service:'#bd7a17',proposed:'#205bd4'};
 const workflows=[['coverage','시설 추가','어디에 추가하면 공백이 줄어들까요?'],['inspection','점검 목록','어느 위치부터 살펴보면 좋을까요?'],['site','후보지 비교','같은 조건으로 주변 여건을 비교하세요.']];
 const list=value=>Array.isArray(value)?value:[];
@@ -40,6 +42,7 @@ export function installDecisionTwin(api){
   let conditionsOpen=false,selectedId='',showAll=false,interpretQuestion=false,planner=null,planNotice=null;
   let suspended=false,livingDirectory=null,livingReferences=null,livingSafeReturnGeometry=null,livingSafeReturnId='all';
   let living=false,livingTopic='care',livingData=[],livingQuery='',livingDataset='all',livingLimit=10;
+  const livingOptional={cctv:{enabled:false,busy:false,error:'',controller:null},lighting:{enabled:false,busy:false,error:'',controller:null}};
   const host=()=>document.getElementById('detail-body');
   const openNow=()=>api.state.view===VIEW;
   const regionName=()=>api.state.regionProfile?.name||regionId||'선택 지역';
@@ -54,6 +57,7 @@ export function installDecisionTwin(api){
   const cleanFilename=value=>String(value).replace(/[\\/:*?"<>|]/g,'_').slice(0,100);
 
   function reset(){
+    resetLivingOptional();
     clearSafeReturnMap();livingSafeReturnGeometry=null;livingSafeReturnId='all';
     controller?.abort();requestId++;regionId=api.state.regionProfile?.id||'seogu';scopeId=api.state.dong||'all';
     living=false;livingData=[];livingQuery='';livingDataset='all';livingLimit=10;
@@ -74,6 +78,7 @@ export function installDecisionTwin(api){
     return params;
   }
   async function calculate({explain=false,reopen=false}={}){
+    cancelLivingOptional();
     suspended=false;
     if(destroyed)return;
     if(!api.state.regionProfile||!api.state.scope){error='지역 자료를 준비하고 있습니다. 잠시 뒤 다시 계산하세요.';render();return;}
@@ -106,16 +111,21 @@ export function installDecisionTwin(api){
   }
 
   function livingRows(){
-    return livingFacilityRows(livingData,{query:livingQuery,datasetId:livingDataset,scope:api.state.scope});
+    return livingFacilityRows(visibleLivingData(),{query:livingQuery,datasetId:livingDataset,scope:api.state.scope});
   }
+  function visibleLivingData(){return livingData.filter(d=>Object.entries(livingOptional).every(([kind,state])=>!optionalDataset(d,kind)||state.enabled));}
+  function cancelLivingOptional(){for(const state of Object.values(livingOptional)){state.controller?.abort();state.controller=null;state.busy=false;}}
+  function resetLivingOptional(){cancelLivingOptional();for(const state of Object.values(livingOptional)){state.enabled=false;state.error='';}}
   function livingCollectedDate(value){const date=new Date(value);return Number.isFinite(date.getTime())?new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date):String(value||'미제공');}
   function livingSourceDate(d){return d.meta.sourceDate||d.sourceDate||(Array.isArray(d.sourceDateRange)?d.sourceDateRange.join(' ~ '):'기준일 미제공');}
   async function openLiving(topic='care',requestedScope=''){
     suspended=false;
     if(requestedScope&&(requestedScope==='all'||list(api.state.dongs).some(f=>f.properties.dongId===requestedScope))&&api.state.dong!==requestedScope){suppressScope=true;try{api.chooseDong?.(requestedScope,true);}finally{suppressScope=false;}}
     if(!regionId||regionId!==(api.state.regionProfile?.id||'seogu'))reset();
+    resetLivingOptional();
     controller?.abort();const sequence=++requestId;controller=new AbortController();const activeController=controller;
     clearSafeReturnMap();livingSafeReturnGeometry=null;livingSafeReturnId='all';livingDirectory=null;livingReferences=null;living=true;livingTopic=Object.hasOwn(LIVING_TOPICS,topic)?topic:'care';livingQuery='';livingDataset='all';livingLimit=10;livingData=[];selectedId='';error='';busy=true;scopeId=api.state.dong||'all';pick=null;document.body.classList.remove('decision-picking');renderLiving();
+    paintLivingMap();
     const timer=setTimeout(()=>activeController.abort(),25000);
     const read=async path=>{const response=await fetch(path,{signal:activeController.signal});if(!response.ok)throw Error(`자료를 불러오지 못했습니다 (${response.status}).`);return response.json();};
     try{
@@ -129,8 +139,13 @@ export function installDecisionTwin(api){
         try{const extra=await read(path);if(sequence!==requestId)return;if(livingTopic==='care')livingDirectory=extra;else livingReferences=extra;}catch(cause){if(cause.name==='AbortError')throw cause;}
         if(livingTopic==='safety')try{const geometry=await read('/data/walk/seogu/safe-return-image-routes.geojson');if(sequence!==requestId)return;if(geometry.metadata?.regionId==='seogu'&&Array.isArray(geometry.features)){livingSafeReturnGeometry=geometry;if(openNow()){paintSafeReturnMap();renderLiving();}}}catch(cause){if(cause.name==='AbortError')throw cause;}
       }
-      const descriptors=body.datasets.filter(d=>d.topic===livingTopic||Array.isArray(d.topics)&&d.topics.includes(livingTopic)||config.fallback.includes(d.id)).sort((a,b)=>livingTopic==='care'?Number(a.id==='childcare')-Number(b.id==='childcare'):0);
-      const loaded=await Promise.all(descriptors.map(async(d,index)=>{
+      const descriptors=body.datasets.filter(d=>!isOptionalDataset(d)&&(d.topic===livingTopic||Array.isArray(d.topics)&&d.topics.includes(livingTopic)||config.fallback.includes(d.id))).sort((a,b)=>livingTopic==='care'?Number(a.id==='childcare')-Number(b.id==='childcare'):0);
+      const loaded=await Promise.all(descriptors.map((d,index)=>loadLivingDescriptor(d,index,read)));
+      if(destroyed||sequence!==requestId)return;livingData=loaded;paintLivingMap();
+    }catch(cause){if(sequence!==requestId||destroyed)return;error=cause.name==='AbortError'?'자료를 가져오는 시간이 길어졌습니다. 다시 열어 주세요.':cause.message||'생활자료를 읽지 못했습니다.';}
+    finally{clearTimeout(timer);if(sequence===requestId&&!destroyed){busy=false;if(openNow())renderLiving();}}
+  }
+  async function loadLivingDescriptor(d,index,read){
         const item={...d,color:d.color||LIVING_COLORS[index%LIVING_COLORS.length],meta:{},features:[],error:''};
         try{
           // Static files stay inside this region's declared pack. A copied URL cannot read another region.
@@ -149,10 +164,37 @@ export function installDecisionTwin(api){
           if(!item.features.length)item.error=meta.complete===true?'공개 제공범위 내 수록 위치 없음':'검증된 위치자료 미수록';
         }catch(cause){if(cause.name==='AbortError')throw cause;item.error=cause.message||'자료 조회 실패';}
         return item;
-      }));
-      if(destroyed||sequence!==requestId)return;livingData=loaded;paintLivingMap();
-    }catch(cause){if(sequence!==requestId||destroyed)return;error=cause.name==='AbortError'?'자료를 가져오는 시간이 길어졌습니다. 다시 열어 주세요.':cause.message||'생활자료를 읽지 못했습니다.';}
-    finally{clearTimeout(timer);if(sequence===requestId&&!destroyed){busy=false;if(openNow())renderLiving();}}
+  }
+  async function toggleLivingOptional(kind){
+    if(destroyed||suspended||!living||livingTopic!=='safety'||busy)return;
+    const state=livingOptional[kind],matches=d=>optionalDataset(d,kind),name=kind==='cctv'?'CCTV':'보안등';
+    if(state.busy||state.enabled){
+      state.controller?.abort();state.controller=null;state.busy=false;state.enabled=false;state.error='';
+      if(matches({id:livingDataset}))livingDataset='all';
+      selectedId='';paintLivingMap();renderLiving();return;
+    }
+    const descriptors=list(manifest?.datasets).filter(matches),cached=livingData.filter(matches);
+    if(cached.length&&cached.every(d=>!d.error)){state.enabled=true;paintLivingMap();renderLiving();return;}
+    const activeController=new AbortController(),sequence=requestId;
+    state.controller=activeController;state.busy=true;state.error='';renderLiving();
+    // Let the loading notice paint before parsing and locating the optional markers.
+    await new Promise(resolve=>setTimeout(resolve,0));
+    const timer=setTimeout(()=>activeController.abort(),25000);
+    try{
+      if(activeController.signal.aborted)return;
+      const read=async path=>{const response=await fetch(path,{signal:activeController.signal});if(!response.ok)throw Error(`${name} 자료를 불러오지 못했습니다 (${response.status}).`);return response.json();};
+      const loaded=await Promise.all(descriptors.map((d,index)=>loadLivingDescriptor(d,index,read)));
+      if(destroyed||suspended||sequence!==requestId||state.controller!==activeController)return;
+      if(activeController.signal.aborted)throw new DOMException('조회 시간 초과','AbortError');
+      const failed=loaded.find(d=>d.error);if(failed)throw Error(failed.error);
+      livingData=[...livingData.filter(d=>!matches(d)),...loaded];state.enabled=true;paintLivingMap();
+    }catch(cause){
+      if(sequence!==requestId||state.controller!==activeController)return;
+      state.error=cause.name==='AbortError'?`${name} 조회 시간이 길어졌어요. 다시 눌러 주세요.`:cause.message||`${name} 자료를 불러오지 못했어요.`;
+    }finally{
+      clearTimeout(timer);
+      if(state.controller===activeController){state.controller=null;state.busy=false;if(openNow()&&!suspended)renderLiving();}
+    }
   }
   function paintLivingMap(){
     if(suspended||!living)return;
@@ -162,7 +204,7 @@ export function installDecisionTwin(api){
   }
   function clearSafeReturnMap(){api.send?.({type:'layer',id:SAFE_RETURN_LAYER,features:[],visible:false});}
   function paintSafeReturnMap(){
-    const features=!suspended&&living&&livingTopic==='safety'?safeReturnMapFeatures(livingSafeReturnGeometry,livingSafeReturnId):[];
+    const features=!suspended&&living&&livingTopic==='safety'?safeReturnMapFeatures(livingSafeReturnGeometry,livingSafeReturnId,{showCctv:livingOptional.cctv.enabled}):[];
     api.send?.({type:'layer',id:SAFE_RETURN_LAYER,features,visible:features.length>0});
   }
   async function focusSafeReturn(id='all'){
@@ -188,7 +230,7 @@ export function installDecisionTwin(api){
     if(destroyed)return;
     const scroll=host()?.scrollTop||0,config=LIVING_TOPICS[livingTopic];
     api.show('돌봄·육아 · 생활안전지도',livingGuideHtml({
-      topic:livingTopic,topics:LIVING_TOPICS,data:livingData,rows:livingRows(),directory:livingDirectory,reference:livingReferences,safeReturnGeometry:livingSafeReturnGeometry,selectedSafeReturnId:livingSafeReturnId,
+      topic:livingTopic,topics:LIVING_TOPICS,data:visibleLivingData(),rows:livingRows(),directory:livingDirectory,reference:livingReferences,safeReturnGeometry:livingSafeReturnGeometry,selectedSafeReturnId:livingSafeReturnId,optionalFacilities:livingOptional,
       query:livingQuery,datasetId:livingDataset,scopeId,scopeName:scopeId==='all'?regionName()+' 전체':api.state.dongs?.find(f=>f.properties.dongId===scopeId)?.properties.dongName||'선택 동네',
       regionId,regionName:regionName(),dongs:list(api.state.dongs),limit:livingLimit,selectedId,busy,error,hasPreset:presets().some(p=>p.id===config.preset),
     }),VIEW);
@@ -326,6 +368,8 @@ export function installDecisionTwin(api){
     registerAction('decision-living-topic',button=>openLiving(button.dataset.topic)),
     registerAction('decision-safe-return-map',button=>focusSafeReturn(button.dataset.id||'all')),
     registerAction('decision-living-retry',()=>openLiving(livingTopic)),
+    registerAction('decision-living-cctv',()=>toggleLivingOptional('cctv')),
+    registerAction('decision-living-lighting',()=>toggleLivingOptional('lighting')),
     registerAction('decision-living-more',()=>{livingLimit+=10;renderLiving();}),
     registerAction('decision-living-kind',button=>changeLivingDataset(button.dataset.dataset)),
     registerAction('decision-living-reset',()=>{livingQuery='';changeLivingDataset('all');}),
@@ -361,7 +405,7 @@ export function installDecisionTwin(api){
   return {
     open,
     homeSummary(){return result?{title:currentPreset().title||decisionWorkflowTitle(workflow),covered:result.baseline?.covered,newlyCovered:result.scenario?.newlyCovered,scope:scopeName()}:null;},
-    suspend(){suspended=true;clearSafeReturnMap();controller?.abort();requestId++;busy=false;explaining=false;pick=null;document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);},
+    suspend(){cancelLivingOptional();suspended=true;clearSafeReturnMap();controller?.abort();requestId++;busy=false;explaining=false;pick=null;document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);},
     scopeChanged(){if(suspended||suppressScope||!regionId)return;if(living){scopeId=api.state.dong||'all';livingLimit=10;paintLivingMap();if(openNow())renderLiving();return;}cancelPick();scopeId=api.state.dong||'all';proposedSites=undefined;excludedServiceIds=[];sites=undefined;result=null;ai=null;if(openNow())calculate();else{controller?.abort();requestId++;busy=false;api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);api.drawData();}},
     onEvent(message){if(suspended)return false;
       if(message.type==='select'&&message.layer===SAFE_RETURN_LAYER&&living){const feature=safeReturnMapFeatures(livingSafeReturnGeometry,livingSafeReturnId).find(item=>item.properties.id===String(message.id));if(feature)focusSafeReturn(feature.properties.safeReturnId);return true;}
@@ -384,7 +428,7 @@ export function installDecisionTwin(api){
       }
       if(message.type==='ready'&&living)paintLivingMap();else if(message.type==='ready'&&result)paintMap();return false;
     },
-    destroy(){destroyed=true;clearSafeReturnMap();controller?.abort();requestId++;offs.forEach(off=>off());host()?.removeEventListener('submit',handleSubmit);host()?.removeEventListener('change',change);host()?.removeEventListener('toggle',toggle,true);document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);},
+    destroy(){cancelLivingOptional();destroyed=true;clearSafeReturnMap();controller?.abort();requestId++;offs.forEach(off=>off());host()?.removeEventListener('submit',handleSubmit);host()?.removeEventListener('change',change);host()?.removeEventListener('toggle',toggle,true);document.body.classList.remove('decision-picking');api.state.enabled.delete(LAYER);api.state.entries.delete(LAYER);},
   };
 }
 

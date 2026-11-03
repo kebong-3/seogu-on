@@ -161,8 +161,83 @@ function livingSetup(){
  const state={regionProfile:{id:'seogu',name:'서구'},dong:'all',dongs,district:rectangle(126.8,127),scope:rectangle(126.8,127),entries:new Map(),enabled:new Set()};
  const api={state,show(title,body,view){html=body;state.view=view},drawData(){},send(message){messages.push(message)},chooseDong(id){state.dong=id;state.scope=id==='all'?state.district:dongs.find(f=>f.properties.dongId===id).geometry},toast(){}};
  const ui=installDecisionTwin(api);
- return {api,ui,calls,messages,get html(){return html},action:(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),change(id,value){listeners.get('change')({target:{id,value}})},search(query){return listeners.get('submit')({target:{matches:selector=>selector==='#living-search',values:{query}},preventDefault(){}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
+ return {api,ui,calls,messages,data,get html(){return html},action:(action,data={})=>runRegisteredAction({dataset:{action,...data}},api),change(id,value){listeners.get('change')({target:{id,value}})},search(query){return listeners.get('submit')({target:{matches:selector=>selector==='#living-search',values:{query}},preventDefault(){}})},cleanup(){ui.destroy();for(const [key,value]of Object.entries(saved))if(value===undefined)delete globalThis[key];else globalThis[key]=value;}};
 }
+
+function safetySetup(){
+ const env=livingSetup();
+ env.data['/data/decision/seogu/manifest.json'].datasets.push(
+  {id:'cctv',title:'CCTV 참고위치',topic:'safety',path:'/data/city/safety-cctv.geojson'},
+  {id:'security-light',title:'보안등',topic:'safety',path:'/data/city/security-light.geojson'},
+  {id:'emergency-bell',title:'비상벨',topic:'safety',path:'/data/city/safety-emergency-bell.geojson'});
+ env.data['/data/city/safety-cctv.geojson']={type:'FeatureCollection',features:[facility('camera','CCTV 시험위치')]};
+ env.data['/data/city/security-light.geojson']={type:'FeatureCollection',features:[facility('light','보안등 시험위치')]};
+ env.data['/data/city/safety-emergency-bell.geojson']={type:'FeatureCollection',features:[facility('bell','공개 비상벨')]};
+ env.data['/data/walk/seogu/safe-return-reference.json']={routes:[{id:'route-a',name:'시험길'}]};
+ env.data['/data/walk/seogu/safe-return-image-routes.geojson']={type:'FeatureCollection',metadata:{regionId:'seogu'},features:[
+  {type:'Feature',geometry:{type:'LineString',coordinates:[[126.85,35.15],[126.86,35.15]]},properties:{id:'route-a',routeId:'route-a'}},
+  ...['cctv','cctv-bell','route-sign'].map(kind=>({type:'Feature',geometry:{type:'Point',coordinates:[126.85,35.15]},properties:{id:kind,routeId:'route-a',facilityType:kind}}))
+ ]};
+ return env;
+}
+const mappedCctv=env=>env.api.state.entries.get('decision-twin-results').features.filter(f=>f.properties.datasetId==='cctv');
+const referenceCctv=env=>env.messages.filter(m=>m.id==='safe-return-reference').at(-1).features.filter(f=>/cctv/.test(f.properties.facilityType||''));
+
+test('safety opens without fetching or rendering CCTV; explicit toggle loads it, hides it, caches it, and resets on reopen',async()=>{
+ const env=safetySetup();try{
+  await env.action('decision-living-map',{topic:'safety'});
+  assert.ok(!env.calls.some(path=>path.includes('cctv')));assert.equal(mappedCctv(env).length,0);assert.equal(referenceCctv(env).length,0);
+  assert.match(env.html,/CCTV 표시하기/);assert.match(env.html,/확인사항.*시간이 오래 걸릴 수 있어요/);
+  assert.equal(env.api.state.entries.get('decision-twin-results').features.length,1);
+  await env.action('decision-living-cctv');assert.equal(mappedCctv(env).length,1);assert.equal(referenceCctv(env).length,2);assert.match(env.html,/CCTV 숨기기/);
+  env.change('living-dataset','cctv');await env.action('decision-living-cctv');assert.equal(mappedCctv(env).length,0);assert.equal(referenceCctv(env).length,0);
+  assert.equal(env.api.state.entries.get('decision-twin-results').features.length,1);
+  await env.action('decision-living-cctv');assert.equal(env.calls.filter(path=>path.includes('cctv')).length,1);
+  await env.action('decision-living-map',{topic:'safety'});assert.equal(mappedCctv(env).length,0);assert.equal(referenceCctv(env).length,0);
+  assert.equal(env.calls.filter(path=>path.includes('cctv')).length,1);
+ }finally{env.cleanup();}
+});
+
+test('CCTV cancellation and navigation ignore late responses and preserve the default hidden state',async()=>{
+ for(const leave of [false,true]){
+  const env=safetySetup();try{
+   await env.action('decision-living-map',{topic:'safety'});
+   const read=globalThis.fetch;let release,started;
+   const ready=new Promise(resolve=>started=resolve);
+   globalThis.fetch=async(path,options)=>{if(!path.includes('cctv'))return read(path,options);started();return new Promise(resolve=>release=()=>resolve({ok:true,json:async()=>env.data[path]}));};
+   const pending=env.action('decision-living-cctv');assert.match(env.html,/CCTV 불러오기 취소/);await ready;
+   if(leave)await env.action('decision-living-topic',{topic:'care'});else await env.action('decision-living-cctv');
+   release();await pending;assert.equal(mappedCctv(env).length,0);assert.doesNotMatch(env.html,/CCTV 숨기기/);
+   if(leave)assert.match(env.html,/어떤 시설을 찾으세요/);else assert.match(env.html,/CCTV 표시하기/);
+  }finally{env.cleanup();}
+ }
+});
+
+test('failed CCTV requests keep other safety facilities visible and support an explicit retry',async()=>{
+ const env=safetySetup();try{
+  await env.action('decision-living-map',{topic:'safety'});const read=globalThis.fetch;
+  globalThis.fetch=async(path,options)=>path.includes('cctv')?{ok:false,status:503}:read(path,options);
+  await env.action('decision-living-cctv');assert.match(env.html,/role="alert"/);assert.match(env.html,/CCTV 표시하기를 눌러 다시 시도/);
+  assert.equal(mappedCctv(env).length,0);assert.equal(env.api.state.entries.get('decision-twin-results').features.length,1);
+  globalThis.fetch=read;await env.action('decision-living-cctv');assert.equal(mappedCctv(env).length,1);assert.doesNotMatch(env.html,/role="alert"/);
+ }finally{env.cleanup();}
+});
+
+test('the large security-light layer stays unloaded by default and toggles independently from CCTV',async()=>{
+ const env=safetySetup();try{
+  await env.action('decision-living-map',{topic:'safety'});
+  assert.ok(!env.calls.some(path=>/cctv|security-light/.test(path)));assert.match(env.html,/보안등 표시하기/);
+  await env.action('decision-living-lighting');assert.equal(mappedCctv(env).length,0);
+  assert.equal(env.api.state.entries.get('decision-twin-results').features.filter(f=>f.properties.datasetId==='security-light').length,1);
+  assert.match(env.html,/보안등 숨기기/);assert.match(env.html,/CCTV 표시하기/);
+  await env.action('decision-living-cctv');assert.equal(mappedCctv(env).length,1);
+  await env.action('decision-living-lighting');assert.equal(mappedCctv(env).length,1);
+  assert.equal(env.api.state.entries.get('decision-twin-results').features.filter(f=>f.properties.datasetId==='security-light').length,0);
+  await env.action('decision-living-topic',{topic:'care'});assert.doesNotMatch(env.html,/표시 설정/);
+  await env.action('decision-living-topic',{topic:'safety'});assert.equal(mappedCctv(env).length,0);
+  assert.equal(env.api.state.entries.get('decision-twin-results').features.length,1);
+ }finally{env.cleanup();}
+});
 
 test('living controller connects category, verified dong search, scope reset, pagination, and explicit map actions',async()=>{
  const env=livingSetup();try{

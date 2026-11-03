@@ -299,4 +299,10 @@ body[data-large-text="true"] #app .detail-panel .living-map .living-safe-return-
 #app .detail-panel .living-map .living-safe-return-shortcut{width:100%;background:var(--living-blue-soft);border-color:var(--living-line);color:var(--living-blue);margin:0 0 15px;font-weight:750}
 #app .detail-panel .living-map .living-reference-key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:0 12px 12px;font-size:11px;line-height:1.5;color:var(--living-muted)}
 .living-reference-key i{display:inline-block;width:16px;height:4px;margin:0 5px 3px 0;border-radius:3px}
+#app .detail-panel .living-map .living-cctv-control{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;align-items:center;margin:0 0 14px;padding:12px;border:1px solid var(--living-warning-line);border-radius:12px;background:var(--living-warning-soft)}
+#app .detail-panel .living-map .living-cctv-control button{min-height:48px;padding:10px 12px;font-weight:750;color:var(--living-blue);background:var(--living-surface)}
+#app .detail-panel .living-map .living-cctv-control button[aria-pressed="true"]{background:#0752a7;color:#fff}
+#app .detail-panel .living-map .living-cctv-control p{margin:0;color:var(--living-warning);font-size:12px;line-height:1.65;overflow-wrap:anywhere}
+#app .detail-panel .living-map .living-cctv-control .living-cctv-status,#app .detail-panel .living-map .living-cctv-control [role="alert"]{grid-column:1/-1}
+@media(max-width:390px){#app .detail-panel .living-map .living-cctv-control{grid-template-columns:1fr}}
 #app .detail-panel .living-map .living-safe-return-sources li>small{display:block;margin:5px 0;color:var(--living-muted);font-size:12px}

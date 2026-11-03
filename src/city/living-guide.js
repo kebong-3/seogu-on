@@ -51,13 +51,13 @@ function returnRouteLine(feature){
 function returnArea(route){return String(route.area||'').split('공식 지도를 판독한 주변 설명이며')[0].trim();}
 
 /** Image-interpreted lines remain visibly distinct from official surveyed coordinates. */
-export function safeReturnGuide(reference,geometry,{selectedId='all',busy=false}={}){
+export function safeReturnGuide(reference,geometry,{selectedId='all',busy=false,showCctv=true}={}){
  if(!reference?.routes?.length)return '';
  const routes=reference.routes,hasLines=routes.some(route=>returnRouteFeatures(geometry,route).some(returnRouteLine));
  return `<section class="living-safe-return" aria-labelledby="living-safe-return-heading">
  <div class="living-safe-return-heading"><span class="living-eyebrow">여성안심 · 귀가 준비</span><h3 id="living-safe-return-heading">안심귀갓길부터 살펴보세요</h3><p>지정길 주변을 지도에서 보고, 안심시설을 함께 살피는 도보경로를 비교해요.</p></div>
  <span class="living-route-state">공식지도 판독 · 위치오차 가능</span>
- <div class="living-safe-return-actions"><button class="living-safe-return-primary" data-action="walk-routes" data-mode="safety">안심귀가 길찾기 ↗</button><button data-action="decision-safe-return-map" data-id="all"${hasLines?'':' disabled'}>지정길 ${num(routes.length)}곳 지도 보기</button></div><div class="living-reference-key" aria-label="귀갓길 지도 범례"><span><i style="background:#f18720"></i>사진 판독 귀갓길</span><span><i style="background:#2358d5"></i>CCTV·비상벨 표시</span><span><i style="background:#9b3c74"></i>CCTV 표시</span><span><i style="background:#a56a14"></i>위치표지·로고젝터</span></div>
+ <div class="living-safe-return-actions"><button class="living-safe-return-primary" data-action="walk-routes" data-mode="safety">안심귀가 길찾기 ↗</button><button data-action="decision-safe-return-map" data-id="all"${hasLines?'':' disabled'}>지정길 ${num(routes.length)}곳 지도 보기</button></div><div class="living-reference-key" aria-label="귀갓길 지도 범례"><span><i style="background:#f18720"></i>사진 판독 귀갓길</span>${showCctv?'<span><i style="background:#2358d5"></i>CCTV·비상벨 표시</span><span><i style="background:#9b3c74"></i>CCTV 표시</span>':''}<span><i style="background:#a56a14"></i>위치표지·로고젝터</span></div>
  <div class="living-safe-return-grid">${routes.map(route=>{
   const traced=returnRouteFeatures(geometry,route).some(returnRouteLine),focused=selectedId===route.id;
   return `<article class="living-safe-return-card${focused?' is-selected':''}"><div><h4>${e(route.name)}</h4><span class="living-route-state">${traced?'지도 판독 구간':busy?'구간 확인 중':'구간선 확인 중'}</span></div><p>${e(returnArea(route)||'주변 위치를 지도에서 확인하세요.')}</p><div class="living-safe-return-card-actions"><button data-action="decision-safe-return-map" data-id="${e(route.id)}" aria-label="${e(route.name)} 판독 구간 지도 보기"${traced?'':' disabled'}>구간 지도</button><button class="living-route-button" data-action="walk-routes" data-mode="safety" data-safe-return-id="${e(route.id)}" aria-label="${e(route.name)} 주변 안심귀가 길찾기"${traced?'':' disabled'}>이 주변 길찾기 ↗</button></div></article>`;
@@ -116,14 +116,26 @@ export function livingFacilityCard({descriptor:d,feature:f},{selectedId='',regio
  ${hasPreset?`<button class="living-review-button" data-action="decision-living-review" data-id="${e(p.id)}">담당자용 · 이 시설 주변 검토</button>`:''}</details></article>`;
 }
 
-export function livingGuideHtml({topic='care',topics={},data=[],rows=[],directory=null,reference=null,safeReturnGeometry=null,selectedSafeReturnId='all',query='',datasetId='all',scopeId='all',scopeName='',regionId='',regionName='서구',dongs=[],limit=10,selectedId='',busy=false,error='',hasPreset=false}={}){
+
+function optionalFacilityControl(kind,state={},disabled=false){
+ const camera=kind==='cctv',name=camera?'CCTV':'보안등',id='living-'+kind+'-note';
+ return `<section class="living-cctv-control" aria-label="${name} 표시 설정">
+ <button data-action="decision-living-${kind}" aria-pressed="${state.enabled===true}" aria-describedby="${id}"${disabled?' disabled':''}>${state.busy?name+' 불러오기 취소':state.enabled?name+' 숨기기':name+' 표시하기'}</button>
+ <p id="${id}"><strong>확인사항</strong> 표시할 ${name}${camera?'가':'이'} 많아 시간이 오래 걸릴 수 있어요. 필요할 때만 켜 주세요.</p>
+ <p class="living-cctv-status" role="status">${state.busy?name+(camera?'를':'을')+' 불러오고 있어요. 표시가 완료될 때까지 잠시 기다려 주세요.':state.enabled?name+' 표시 중':state.error?'':name+(camera?'는':'은')+' 기본으로 표시하지 않아요.'}</p>
+ ${state.error?`<p role="alert">${e(state.error)} ${name} 표시하기를 눌러 다시 시도해 주세요.</p>`:''}</section>`;
+}
+
+export function livingGuideHtml({topic='care',topics={},data=[],rows=[],directory=null,reference=null,safeReturnGeometry=null,selectedSafeReturnId='all',query='',datasetId='all',scopeId='all',scopeName='',regionId='',regionName='서구',dongs=[],limit=10,selectedId='',busy=false,error='',hasPreset=false,optionalFacilities={}}={}){
  const care=topic==='care',addressRows=care?careDirectoryRows(directory,{query,datasetId}):[],selected=rows.find(row=>row.feature.properties.id===selectedId),shown=(selected?[selected,...rows.filter(row=>row!==selected)]:rows).slice(0,limit),missing=data.filter(d=>d.error),hasFilter=!!query||datasetId!=='all';
  const mappedExtra=items(directory?.entries).filter(r=>point(r.coordinates)).length,addressExtra=careDirectoryRows(directory).length;
  const hasCategoryData=data.some(d=>!d.error&&livingDatasetMatches(d.id,datasetId));
  const category=LIVING_CARE_GROUPS.find(group=>`group:${group.id}`===datasetId)?.label||data.find(d=>d.id===datasetId)?.title||'전체 종류';
  return `<div class="decision-twin living-map" data-living-topic="${e(topic)}" aria-busy="${busy}">
  <nav class="living-topic-tabs" aria-label="생활정보 분야">${regionId==='seogu'?'<button class="living-family-tab" data-action="family-outings" aria-pressed="false">아이와 나들이</button>':''}${Object.entries(topics).sort(([a],[b])=>Number(b==='safety')-Number(a==='safety')).map(([id,c])=>`<button data-action="decision-living-topic" data-topic="${e(id)}" aria-pressed="${topic===id}">${e(c.label)}</button>`).join('')}</nav>
- ${care?(regionId==='seogu'?'<button class="living-safe-return-shortcut" data-action="decision-living-topic" data-topic="safety">여성안심 귀갓길·귀가 길찾기 ↗</button>':''):safeReturnGuide(reference,safeReturnGeometry,{selectedId:selectedSafeReturnId,busy})}
+ ${care?'':['cctv','lighting'].map(kind=>optionalFacilityControl(kind,optionalFacilities[kind],busy)).join('')}
+
+ ${care?(regionId==='seogu'?'<button class="living-safe-return-shortcut" data-action="decision-living-topic" data-topic="safety">여성안심 귀갓길·귀가 길찾기 ↗</button>':''):safeReturnGuide(reference,safeReturnGeometry,{selectedId:selectedSafeReturnId,busy,showCctv:optionalFacilities.cctv?.enabled===true})}
  ${care&&regionId==='seogu'?'<button class="living-family-entry" data-action="family-outings"><span><strong>아이와, 오늘 어디로 갈까요?</strong><small>육아지도 · 숲·공원·도서관·문화체험을 한눈에</small></span><span aria-hidden="true">↗</span></button>':''}
  <section class="living-welcome"><span class="living-eyebrow">${e(scopeName||regionName+' 전체')}</span><h3>${care?'어떤 시설을 찾으세요?':'우리 동네 안심시설 찾기'}</h3><p>${care?'시설을 고르고, 지도와 길찾기로 이어가세요.':'비상벨·보안등·경찰관서의 공개 위치를 살펴보세요.'}</p></section>
  ${care?`<div class="living-category-grid" role="group" aria-label="찾을 시설 종류"><button data-action="decision-living-kind" data-dataset="all" aria-pressed="${datasetId==='all'}">전체</button>${LIVING_CARE_GROUPS.map(group=>`<button data-action="decision-living-kind" data-dataset="group:${group.id}" aria-pressed="${datasetId===`group:${group.id}`}">${e(group.label)}</button>`).join('')}</div>`:''}
