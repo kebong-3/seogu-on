@@ -12,7 +12,7 @@
  */
 import {registerAction} from './actions.js';
 import {ASK_EXAMPLES} from './ask-examples.js';
-import {isDecisionQuestion,livingMapIntent} from '../../shared/decision-intent.js';
+import {heatPlanIntent,isDecisionQuestion,livingMapIntent} from '../../shared/decision-intent.js';
 import {frameFor} from './camera.js';
 import {esc} from './catalog.js';
 import {inside} from './geometry.js';
@@ -424,6 +424,12 @@ export function installAskAi(api) {
       if((currentRegion==='seogu'&&/순천/.test(text))||(currentRegion==='suncheon'&&/서구|풍암동|치평동/.test(text))){api.toast('질문의 지역과 선택한 지역이 다릅니다. 상단에서 지역을 바꾼 뒤 조회하세요.');return;}
       if((api.state.dongs||[]).filter(f=>text.includes(f.properties?.dongName)).length>1){api.toast('생활지도는 한 구역씩 조회합니다. 읍·면·동 하나 또는 지역 전체를 선택하세요.');return;}
       if(quickInput)quickInput.value=text;await api.run('decision-living-map',{...livingIntent,question:text});return;
+    }
+    const heatIntent=!reviewContext&&state.regionProfile.id==='seogu'?heatPlanIntent(text,{boundaries:{features:api.state.dongs||[]}}):null;
+    if(heatIntent){
+      if(quickInput)quickInput.value=text;
+      if(heatIntent.scopeId&&heatIntent.scopeId!==api.state.dong)api.chooseDong(heatIntent.scopeId);
+      await api.run('heat-plan');api.toast('폭염 대응계획에서 기존 시설 활용안과 추가 설치안을 같은 조건으로 비교합니다. 「두 안 비교하기」를 누르세요.');return;
     }
     if (!reviewContext && isDecisionQuestion(text)) { if (quickInput) quickInput.value=text; await api.run('decision-from-question',{question:text}); return; }
     if (view.status === 'loading') { if (!open()) show({focus: false}); return; }

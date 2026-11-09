@@ -8,6 +8,22 @@ export function isDecisionQuestion(question) {
     || /사업\s*(?:후보|위치|지)|후보지.{0,20}(?:비교|검토|주변)|어디.{0,12}(?:추가|설치|점검)|점검\s*(?:대상|우선|목록)/.test(q);
 }
 
+/**
+ * 폭염 대응에서 '기존 쉼터 활용'과 '추가 설치'를 함께 묻는 질문은 학교·정류장 단일 조건 비교보다
+ * 두 안(A 기존 활용 / B 기존 활용+추가 설치)을 같은 조건으로 계산하는 폭염 대응계획이 맞다.
+ */
+export function heatPlanIntent(question,{boundaries}={}) {
+  const q=String(question||'').normalize('NFKC').replace(/\s+/g,' ').trim();
+  if(!/폭염|무더위/.test(q)||!/그늘막|쉼터/.test(q))return null;
+  if(!/기존|활용/.test(q)||!/설치|추가|새로/.test(q))return null;
+  if(/학교|정류장|통학|어린이집|돌봄/.test(q))return null; // 대상이 정해진 질문은 기존 비교 흐름을 유지한다.
+  const named=(boundaries?.features||[]).filter(f=>q.includes(f.properties?.dongName));
+  const result={};
+  if(named.length===1)result.scopeId=named[0].properties.dongId;
+  if(/전체|전역/.test(q))result.scopeId='all';
+  return result;
+}
+
 /** A current-facility lookup must not silently create hypothetical new facilities. */
 export function livingMapIntent(question,{boundaries}={}) {
   const q=String(question||'').normalize('NFKC').replace(/\s+/g,' ').trim();
