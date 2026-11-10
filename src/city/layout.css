@@ -111,6 +111,8 @@
   border-radius: 5px;
 }
 .dong-label.selected { background: #0752a7; border-color: #a8e3ff; font-weight: 800; }
+.dong-label.has-bi { background: transparent; border: 0; }
+.dong-label.has-bi canvas { display: block; width: 100%; height: 100%; }
 
 /* ───────── 3. 상단 관측정보 띠 ───────── */
 button.live-reading { padding: 4px 6px; border-radius: 8px; text-align: left; }

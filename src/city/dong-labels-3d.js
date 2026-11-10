@@ -4,6 +4,7 @@
  * 브이월드 SDK 내부 객체는 건드리지 않고 공개 Cesium 엔티티 속성만 바꾼다.
  */
 import {planLabels,labelFontPx} from './label-layout.js';
+import {createDongBiLabels} from './dong-bi-labels.js';
 
 const LAYOUT_INTERVAL_MS = 140; // 카메라 이동 중 재배치 최소 간격
 
@@ -11,6 +12,8 @@ export function createDongLabels3D({C, viewer, source, requestRender, clampToGro
   let entries = [], selectedDong = 'all', lastSignature = '', lastRun = 0, dirty = false, lastCounts = null;
   const toWindow = C.SceneTransforms.worldToWindowCoordinates || C.SceneTransforms.wgs84ToWindowCoordinates;
   const hex = (value, alpha) => C.Color.fromCssColorString(value).withAlpha(alpha);
+  const heightReference = clampToGround ? C.HeightReference.CLAMP_TO_GROUND : C.HeightReference.NONE;
+  const dongBi = createDongBiLabels(() => layout(true));
 
   function clear() {
     for (const entry of entries) source.entities.remove(entry.entity);
@@ -39,9 +42,16 @@ export function createDongLabels3D({C, viewer, source, requestRender, clampToGro
           horizontalOrigin: C.HorizontalOrigin.CENTER,
           verticalOrigin: C.VerticalOrigin.CENTER,
           // 지형이 없는 도시모형은 높이 0에 그대로 둔다(지면 고정을 쓰면 먼 거리에서 글자가 어긋난다).
-          heightReference: clampToGround ? C.HeightReference.CLAMP_TO_GROUND : C.HeightReference.NONE,
+          heightReference,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           show: false // 배치 계산 전에는 겹친 채로 보이지 않게 한다.
+        },
+        billboard: {
+          horizontalOrigin: C.HorizontalOrigin.CENTER,
+          verticalOrigin: C.VerticalOrigin.CENTER,
+          heightReference,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          show: false
         }
       });
       return {entity, id: p.dongId, name: p.dongName, point};
@@ -75,51 +85,54 @@ export function createDongLabels3D({C, viewer, source, requestRender, clampToGro
     const fontPx = labelFontPx(viewport.width);
     const items = entries.map(entry => {
       const p = screenPoint(entry);
-      return {id: entry.id, x: p ? p.x : NaN, y: p ? p.y : NaN, name: entry.name, priority: entry.id === selectedDong ? 1 : 0};
+      const selected = entry.id === selectedDong;
+      const badge = dongBi.get(entry.id, entry.name, fontPx, selected);
+      return {id: entry.id, x: p ? p.x : NaN, y: p ? p.y : NaN, name: entry.name, priority: selected ? 1 : 0, badge};
     });
-    if (items.every(item => !Number.isFinite(item.x))) { fallback(fontPx); return; }
-    const plan = planLabels(items, viewport, {fontPx});
-    const byId = new Map(plan.labels.map(label => [label.id, label]));
-    let changed = false;
-    for (const entry of entries) {
-      const planned = byId.get(entry.id), label = entry.entity.label, selected = entry.id === selectedDong;
-      const key = `${planned.mode}|${Math.round(planned.dx)}|${Math.round(planned.dy)}|${fontPx}|${selected}`;
-      if (entry.key === key) continue;
-      entry.key = key; changed = true;
-      label.show = planned.mode !== 'hidden';
-      if (planned.mode === 'hidden') continue;
-      label.text = planned.text;
-      label.font = `${selected ? 'bold ' : ''}${fontPx}px sans-serif`;
-      label.backgroundColor = hex(selected ? '#0752a7' : '#102b46', 0.94);
-      label.pixelOffset = new C.Cartesian2(planned.dx, planned.dy);
-    }
+    const plan = items.every(item => !Number.isFinite(item.x))
+      ? fallback(items)
+      : planLabels(items, viewport, {fontPx});
     lastCounts = plan.counts;
-    if (changed) {
-      // 글자 그림(glyph)은 몇 프레임에 걸쳐 만들어진다. 요청 때만 그리는 모드에서도 끝까지 그려지도록 다시 요청한다.
+    const changes = entries.map((entry, i) => place(entry, plan.labels[i], items[i].badge, fontPx));
+    if (changes.some(Boolean)) {
+      // 글자와 BI 텍스처가 준비되는 동안 요청 시에만 그리는 지도에도 다음 프레임을 요청한다.
       requestRender();
       for (const delay of [80, 300, 900]) setTimeout(requestRender, delay);
     }
   }
 
-  /**
-   * 화면 좌표를 구하지 못하는 SDK(구버전 등)에서의 대비책.
-   * 겹침을 판단할 수 없으므로 선택한 동의 전체 이름만 표시한다.
-   */
-  function fallback(fontPx) {
-    for (const entry of entries) {
-      const selected = entry.id === selectedDong, key = `fallback|${fontPx}|${selected}`;
-      if (entry.key === key) continue;
-      entry.key = key;
-      const label = entry.entity.label;
-      label.show = selected;
-      label.text = entry.name;
+  function place(entry, planned, badge, fontPx) {
+    const {label, billboard} = entry.entity;
+    const selected = entry.id === selectedDong, visible = planned.mode !== 'hidden';
+    const branded = visible && Boolean(badge);
+    const key = `${visible}|${branded}|${Math.round(planned.dx)}|${Math.round(planned.dy)}|${fontPx}|${selected}`;
+    if (entry.key === key) return false;
+    entry.key = key;
+    label.show = visible && !branded;
+    billboard.show = branded;
+    if (!visible) return true;
+    const offset = new C.Cartesian2(planned.dx, planned.dy);
+    if (branded) {
+      billboard.image = badge.canvas;
+      billboard.width = badge.width;
+      billboard.height = badge.height;
+      billboard.pixelOffset = offset;
+    } else {
       label.font = `${selected ? 'bold ' : ''}${fontPx}px sans-serif`;
       label.backgroundColor = hex(selected ? '#0752a7' : '#102b46', 0.94);
-      label.pixelOffset = new C.Cartesian2(0, 0);
+      label.pixelOffset = offset;
     }
-    const shown = entries.filter(entry => entry.id === selectedDong).length;
-    lastCounts = {name: shown, hidden: entries.length - shown};
-    requestRender();
+    return true;
+  }
+
+  /**
+   * 화면 좌표를 구하지 못하는 SDK(구버전 등)에서의 대비책.
+   * 겹침을 판단할 수 없으므로 선택한 동의 이름표만 표시한다.
+   */
+  function fallback(items) {
+    const labels = items.map(item => ({mode: item.id === selectedDong ? 'name' : 'hidden', dx: 0, dy: 0}));
+    const shown = labels.filter(label => label.mode === 'name').length;
+    return {labels, counts: {name: shown, hidden: labels.length - shown}};
   }
 
   const onPostRender = () => layout(false);
@@ -131,6 +144,6 @@ export function createDongLabels3D({C, viewer, source, requestRender, clampToGro
     set,
     layout,
     counts: () => lastCounts,
-    destroy() { clearInterval(timer); viewer.scene.postRender?.removeEventListener(onPostRender); clear(); }
+    destroy() { clearInterval(timer); viewer.scene.postRender?.removeEventListener(onPostRender); dongBi.destroy(); clear(); }
   };
 }

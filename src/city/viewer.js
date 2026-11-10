@@ -6,6 +6,7 @@ import {multi,boundsOf,representative,inside,fc,distance} from './geometry.js';
 import {esc,LAYER_BY_ID,iconData,PATHS} from './catalog.js';
 import {planLabels,labelFontPx} from './label-layout.js';
 import {createDomDongLabels} from './dong-labels-dom.js';
+import {createDongBiLabels} from './dong-bi-labels.js';
 const loadScript=src=>new Promise((resolve,reject)=>{if(document.querySelector(`script[src="${src}"]`))return resolve();const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.append(s);});
 export const pointSelectionScope=(tool,bounds)=>['walk-start','walk-end'].includes(tool)?bounds?.district||bounds?.scope:bounds?.scope;
 /** Keep the lightweight renderer on the same cancellable camera lifecycle as the 3D view. */
@@ -56,6 +57,7 @@ function drawMarker(c,x,y,layer,color,count=0){
 }
 /* Offline mode is an actual administrative boundary drawing, explicitly not a VWorld/3D city. */
 export class BoundaryView{
+ dongBi=createDongBiLabels(()=>this.draw());
  constructor(element,onEvent,options={}){this.element=element;this.onEvent=onEvent;this.layers=new Map();this.pose={center:options.profile?.center||[126.86,35.145],range:16500,heading:320,pitch:-52};this.canvas=document.createElement('canvas');this.canvas.className='boundary-canvas';this.canvas.tabIndex=0;this.canvas.setAttribute('aria-label','실제 행정경계 도식 · 3D 지형과 건물이 없는 모드');element.replaceChildren(this.canvas);this.ctx=this.canvas.getContext('2d');this.director=new CameraDirector({read:()=>this.pose,write:p=>{this.pose=p;this.draw();},onChange:state=>onEvent({type:'motion',state})});this.observer=new ResizeObserver(()=>this.draw());this.observer.observe(element);this.bind();queueMicrotask(()=>onEvent({type:'ready',engine:'boundary',capabilities:{terrain:false,glb:false,raster:false}}));}
  project(p){const w=this.element.clientWidth,h=this.element.clientHeight,scale=h/Math.max(100,this.pose.range)*1.3,a=(this.pose.heading||0)*Math.PI/180;const x=(p[0]-this.pose.center[0])*111320*Math.cos(p[1]*Math.PI/180),y=(p[1]-this.pose.center[1])*111320;const k=.82;return [w/2+(x*Math.cos(a)-y*Math.sin(a))*scale,h/2-(x*Math.sin(a)+y*Math.cos(a))*scale*k];}
  inverse(p){const w=this.element.clientWidth,h=this.element.clientHeight,scale=h/this.pose.range*1.3,a=(this.pose.heading||0)*Math.PI/180,x=(p[0]-w/2)/scale,y=-(p[1]-h/2)/scale/.82;const xx=x*Math.cos(a)+y*Math.sin(a),yy=-x*Math.sin(a)+y*Math.cos(a);return [this.pose.center[0]+xx/(111320*Math.cos(this.pose.center[1]*Math.PI/180)),this.pose.center[1]+yy/111320];}
@@ -74,10 +76,15 @@ export class BoundaryView{
  drawDongLabels(c,w,h,night){
   const fontPx=labelFontPx(w),features=this.bounds.features,selectedId=this.bounds.dong;
   const measure=(text,px)=>{c.font=`bold ${px}px system-ui`;return {width:c.measureText(text).width+18,height:px*1.9};};
-  const items=features.map(f=>{const [x,y]=this.project(f.properties.labelPoint);return {id:f.properties.dongId,x,y,name:f.properties.dongName,priority:f.properties.dongId===selectedId?1:0};});
+  const items=features.map(f=>{
+   const {dongId:id,dongName:name,labelPoint}=f.properties,[x,y]=this.project(labelPoint),selected=id===selectedId;
+   return {id,x,y,name,priority:selected?1:0,badge:this.dongBi.get(id,name,fontPx,selected)};
+  });
   const plan=planLabels(items,{width:w,height:h},{fontPx,measure});this.labelPlan=plan;
   c.textAlign='center';c.textBaseline='middle';
-  for(const label of plan.labels){if(label.mode==='hidden')continue;const selected=label.id===selectedId,b=label.box;
+  for(const [index,label] of plan.labels.entries()){if(label.mode==='hidden')continue;const selected=label.id===selectedId,b=label.box;
+   const badge=items[index].badge;
+   if(badge){c.drawImage(badge.canvas,b.x,b.y,b.width,b.height);continue;}
    c.font=`${selected?'bold ':''}${fontPx}px system-ui`;c.fillStyle=selected?'#0752a7':night?'#18334eef':'#fffffff5';c.strokeStyle=selected?'#a8e3ff':night?'#83a6ce':'#b9cde5';c.lineWidth=1;
    c.beginPath();if(c.roundRect)c.roundRect(b.x+.5,b.y+.5,b.width-1,b.height-1,5);else c.rect(b.x+.5,b.y+.5,b.width-1,b.height-1);c.fill();c.stroke();
    c.fillStyle=selected||night?'#fff':'#173c60';c.fillText(label.text,b.x+b.width/2,b.y+b.height/2+1);}
@@ -85,7 +92,7 @@ export class BoundaryView{
  }
  bind(){let drag;this.canvas.addEventListener('pointerdown',e=>{this.director.stop();this.onEvent({type:'interaction'});drag={x:e.offsetX,y:e.offsetY,pose:{...this.pose,center:[...this.pose.center]}};this.canvas.setPointerCapture(e.pointerId);});this.canvas.addEventListener('pointermove',e=>{if(!drag)return;const scale=this.element.clientHeight/this.pose.range*1.3;const a=this.pose.heading*Math.PI/180,dx=(e.offsetX-drag.x)/scale,dy=-(e.offsetY-drag.y)/scale/.82;this.pose={...drag.pose,center:[drag.pose.center[0]-(dx*Math.cos(a)+dy*Math.sin(a))/(111320*Math.cos(drag.pose.center[1]*Math.PI/180)),drag.pose.center[1]-(-dx*Math.sin(a)+dy*Math.cos(a))/111320]};this.draw();});this.canvas.addEventListener('pointerup',e=>{if(drag&&Math.hypot(e.offsetX-drag.x,e.offsetY-drag.y)<6){const point=this.inverse([e.offsetX,e.offsetY]);if(this.tool){if(inside(point,pointSelectionScope(this.tool,this.bounds))){const tool=this.tool;if(tool!=='operation-route')this.tool=null;this.onEvent({type:'point',point,tool});}else this.onEvent({type:'error',message:'선택 구역 안에서 클릭하세요.'});}else{const hit=this.hits.filter(v=>v.layer!=='shade-result'&&(Math.hypot(v.x-e.offsetX,v.y-e.offsetY)<(v.cluster?18:15)||(v.f&&multi(v.f.geometry).length&&inside(point,v.f.geometry)))).at(-1);if(hit?.cluster)this.director.fly({...this.pose,center:point,range:Math.max(150,this.pose.range*.45)},{duration:500,arch:false});else if(hit)this.onEvent({type:'select',id:hit.f.properties.id||hit.f.id,layer:hit.layer});else{const f=this.bounds?.features.find(f=>inside(point,f.geometry));if(f)this.onEvent({type:'dong',id:f.properties.dongId});}}}drag=null;this.onEvent({type:'pose',pose:this.pose});});this.canvas.addEventListener('wheel',e=>{e.preventDefault();this.director.stop();this.onEvent({type:'interaction'});this.pose.range=clamp(this.pose.range*(e.deltaY>0?1.13:.88),150,36000);this.draw();},{passive:false});}
  send(m){if(m.type==='family-extent'){this.familyExtent=m.active===true;this.draw();}if(m.type==='appearance'){this.appearance=m.options;this.draw();this.onEvent({type:'appearance-result',note:'경계도에는 UI 테마를 적용했습니다. 3D 항공영상이 없는 모드입니다.'});}if(m.type==='diagnostics')this.onEvent({type:'diagnostics',engine:'boundary',webgl:false,rendered:false,css:[this.canvas.clientWidth,this.canvas.clientHeight],note:'경계도 모드: 실제 3D 렌더링 시험이 아닙니다.'});if(m.type==='boundaries'){this.bounds=m;this.draw();}if(m.type==='layer'){this.layers.set(m.id,{...this.layers.get(m.id),...m});this.draw();}if(m.type==='camera')this.director.fly(m.pose,{duration:m.duration??1900,orbitAfter:m.orbitAfter===true});if(m.type==='zoom')this.director.fly({...this.pose,range:clamp(this.pose.range*(m.delta>0?.7:1.4),150,120000)},{duration:450,arch:false});if(m.type==='rotate')this.director.fly({...this.pose,heading:this.pose.heading+(m.angle||45)},{duration:600,arch:false});if(m.type==='orbit')this.director.orbiting?this.director.stop():this.director.orbit();if(m.type==='stop'){this.director.stop();this.tool=null;}if(m.type==='tool'){this.director.stop();if(['inspect','flood-point','operation-point','operation-route','decision-site','walk-start','walk-end'].includes(m.tool))this.tool=m.tool;else this.onEvent({type:'tool-result',kind:m.tool,error:'이 기능은 실제 브이월드 3D에서 실행하세요.'});}if(m.type==='raster'&&m.visible)this.onEvent({type:'raster-state',id:m.id,state:'unsupported'});if(m.type==='building-style')this.onEvent({type:'building-style-result',applied:false,note:'브이월드 원본 지도에서만 변경할 수 있습니다.'});if(m.type==='quality')this.onEvent({type:'quality-result',mode:m.mode,unsupported:['3D 렌더러 없음'],note:'경계도에는 3D 화질 옵션이 적용되지 않습니다.'});if(m.type==='visual'&&this.bounds){this.bounds.visual=m.options;this.draw();}if(m.type==='resize')this.draw();if(m.type==='glb'||(m.type==='sun'&&!m.silent))this.onEvent({type:'error',message:'브이월드 3D에서 사용할 수 있습니다.'});}
- destroy(){this.director.stop();this.observer.disconnect();this.canvas.remove();}
+ destroy(){this.director.stop();this.observer.disconnect();this.dongBi.destroy();this.canvas.remove();}
 }
 export class LibreView{
  constructor(element,onEvent,options={}){this.element=element;this.onEvent=onEvent;this.profile=options.profile;this.queue=[];this.ready=false;this.ids=new Set();this.layers=new Map();this.destroyed=false;this.init();}

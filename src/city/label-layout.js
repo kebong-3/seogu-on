@@ -47,7 +47,7 @@ function candidateOffsets(size) {
 }
 
 /**
- * @param {Array<{id:string,x:number,y:number,name:string,priority?:number}>} items 화면 좌표의 기준점
+ * @param {Array<{id:string,x:number,y:number,name:string,priority?:number,badge?:{width:number,height:number}}>} items 화면 좌표의 기준점
  * @param {{width:number,height:number}} viewport
  * @param {{fontPx?:number,measure?:Function,inset?:object,occupied?:Array}} options
  * @returns {{labels:Array,counts:{name:number,hidden:number},fontPx:number}}
@@ -69,7 +69,7 @@ export function planLabels(items, viewport, options = {}) {
 
   const placed = new Map();
   const tryPlace = (item, text) => {
-    const size = measure(text, fontPx);
+    const size = item.badge || measure(text, fontPx);
     for (const [dx, dy] of candidateOffsets(size)) {
       const box = boxAt(item.x + dx, item.y + dy, size);
       if (!insideViewport(box, viewport, inset)) continue;

@@ -73,6 +73,16 @@ test('label layout: the selected dong keeps its full name first', () => {
   assert.deepEqual([plan.labels[9].dx, plan.labels[9].dy], [0, 0]);
 });
 
+test('label layout: the selected BI badge takes priority without covering nearby names', () => {
+  const items = [
+    {id: 'nearby', name: '치평동', x: 160, y: 150},
+    {id: 'selected', name: '풍암동', x: 160, y: 150, priority: 1, badge: {width: 74, height: 70}}
+  ];
+  const plan = planLabels(items, {width: 320, height: 300});
+  assert.deepEqual(plan.labels[1].box, {x: 123, y: 115, width: 74, height: 70});
+  assertNoOverlap(plan.labels);
+});
+
 test('label layout: anchors behind the camera or off screen are hidden instead of guessed', () => {
   const plan = planLabels([{id: 'a', name: '양동', x: NaN, y: 10}, {id: 'b', name: '풍암동', x: 5000, y: 5000}], {width: 400, height: 400});
   assert.deepEqual(plan.labels.map(l => l.mode), ['hidden', 'hidden']);
@@ -98,7 +108,24 @@ test('label layout: off-screen dongs do not displace visible names (dong close-u
   assert.deepEqual(plan.labels.map(l => l.mode), ['name', 'name', 'name', 'hidden', 'hidden']);
 });
 
-test('3D label fallback: unavailable screen coordinates show only the selected full name', () => {
+test('3D label fallback: the selected name stays visible until its official BI loads', t => {
+  const images = new Map(), frames = [], drawn = [];
+  globalThis.Image = class {
+    set src(path) { images.set(path, this); }
+  };
+  globalThis.requestAnimationFrame = fn => frames.push(fn);
+  globalThis.document = {createElement: () => ({
+    getContext: () => ({
+      scale() {}, beginPath() {}, roundRect() {}, fill() {}, stroke() {},
+      drawImage: image => drawn.push(image), fillText: text => drawn.push(text)
+    })
+  })};
+  t.after(() => {
+    delete globalThis.Image;
+    delete globalThis.requestAnimationFrame;
+    delete globalThis.document;
+  });
+
   const entities = [];
   const C = {
     SceneTransforms: {},
@@ -122,6 +149,16 @@ test('3D label fallback: unavailable screen coordinates show only the selected f
     assert.equal(shown.length, 1);
     assert.equal(shown[0].label.text, '상무1동');
     assert.deepEqual(labels.counts(), {name: 1, hidden: 17});
+    assert.equal(images.size, 18);
+    const bi = images.get('/brand/dongs/seogu-08.png');
+    Object.assign(bi, {naturalWidth: 342, naturalHeight: 101});
+    bi.onload();
+    frames.shift()();
+    assert.deepEqual(drawn, [bi, '상무1동']);
+    assert.equal(shown[0].label.show, false);
+    assert.equal(shown[0].billboard.show, true);
+    assert.equal(shown[0].billboard.width, 64);
+    assert.equal(entities.filter(entity => entity.billboard.show).length, 1);
     labels.set(dongs, {visible: false});
     assert.equal(entities.length, 0);
     assert.deepEqual(labels.counts(), {name: 0, hidden: 0});
